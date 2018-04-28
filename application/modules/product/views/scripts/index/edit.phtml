@@ -2,8 +2,6 @@
 defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $form=$this->form;
-
-
 	$url_submit =  $this->url(array('module'=>'product','controller'=>'index','action'=>'edit'));
     $url_cencel =  $this->url(array('module'=>'product','controller'=>'index','action'=>'index'),null, true);
     $url_check =  $this->url(array('module'=>'product','controller'=>'index','action'=>'check'));
@@ -456,7 +454,7 @@ $form=$this->form;
 <script>
 $( document ).ready(function() {
 	addProLocation();
-	addPriceType();
+	getMeasureLabel();
 	$('#product_id').on('keyup keypress', function(e) {
 		var keyCode = e.keyCode || e.which;
 	  if (keyCode === 13) { 
@@ -465,7 +463,6 @@ $( document ).ready(function() {
 	  }
 	});
 });
-
 	function getMeasureLabel(){
 		var sel = $("#measure");
 		var text = $("option:selected",sel).text();
@@ -499,7 +496,6 @@ $( document ).ready(function() {
 			} else {$('#identity').val(inx);}
 		<?php }}?>
 	}
-	
 		function addNewProLocation(){
 			index++;
 			var branch_text = $("#branch");
@@ -519,9 +515,7 @@ $( document ).ready(function() {
 				var identity = $('#identity').val();
 				$('#identity').val(identity+','+index);
 			} else {$('#identity').val(index);}
-			
 	}
-	
 	function totalQty(index){
 		o_measure = $('#qty_unit').val();
 		unit_qty = $('#current_qty_'+index).val();
@@ -550,48 +544,8 @@ $( document ).ready(function() {
 		}
 		var strings = arrays.join(',');
 	}
-	function addPriceType(){
-		<?php if(!empty($this->rs_price)){foreach ($this->rs_price as $key=> $rs){?>
-		indexs++;
-		id_price = '<?php echo $rs["type_id"];?>';
-		inx_price = '<?php echo $key+1;?>';
-			template='<tr id="row_price_<?php echo $key+1;?>">';
-			template+='<td><?php echo $key+1;?></td>';
-			template+='<td><?php echo $rs["name"];?><input type="hidden" id="price_type_<?php echo $key+1;?>" name="price_type_<?php echo $key+1;?>" value="'+id_price+'"</td>';
-			template+='<td><input type="text" id="price_<?php echo $key+1;?>" name="price_<?php echo $key+1;?>" value="<?php echo $rs["price"];?>" class="form-control"></td>'; 
-			//template+='<td><input type="text" id="cost_price_<?php echo $key+1;?>" name="cost_price_<?php echo $key+1;?>" value="<?php echo $rs["cost_price"];?>" class="form-control"></td>'; 
-			template+='<td><input type="text" id="price_remark_<?php echo $key+1;?>" name="price_remark_<?php echo $key+1;?>" value="<?php echo $rs["remark"];?>" class="form-control"></td>'; 
-			template+='<td><button type="button" onClick="deleteRecord(<?php echo $key+1;?>,2)" name="save_close" class="btn default"><?php echo $tr->translate("DELETE");?></button></td>';
-			template+='</tr>';
-			$('#tr_price_type').append(template);
-			if($('#identity_price').val()!="") {
-				var identity_price = $('#identity_price').val();
-				$('#identity_price').val(identity_price+','+inx_price);
-			} else {$('#identity_price').val(inx_price);}
-		<?php }}?>
-	}
 	
 	indexs=0;
-	function addNewPriceType(){
-			indexs++;
-			var price_text = $("#price_type");
-			var txt_pr = $("option:selected",price_text).text();
-			var price_id = $("#price_type").val();
-			template='<tr id="row_price_'+indexs+'">';
-			template+='<td>'+indexs+'</td>';
-			template+='<td>'+txt_pr+'<input type="hidden" id="price_type_'+indexs+'" name="price_type_'+indexs+'" value="'+price_id+'" </td>';
-			template+='<td><input type="text" id="price_'+indexs+'" name="price_'+indexs+'" class="form-control"></td>'; 
-			//template+='<td><input type="text" id="cost_price_'+indexs+'" name="cost_price_'+indexs+'" value="0" class="form-control"></td>'; 
-			template+='<td><input type="text" id="price_remark_'+indexs+'" name="price_remark_'+indexs+'" class="form-control"></td>'; 
-			template+='<td><button type="button" onClick="deleteRecord('+indexs+',2)" name="save_close" class="btn default"><?php echo $tr->translate("DELETE");?></button></td>';
-			template+='</tr>';
-			$('#tr_price_type').append(template);
-			if($('#identity_price').val()!="") {
-				var identity_price = $('#identity_price').val();
-				$('#identity_price').val(identity_price+','+indexs);
-			} else {$('#identity_price').val(indexs);}
-			
-	}
 	function deleteRecord(index,type) {
 		if(type==1){
 			var identity = $('#identity').val();
@@ -600,12 +554,10 @@ $( document ).ready(function() {
 			var identity = $('#identity_price').val();
 			var arrays = identity.split(',');
 		}
-		
 		for(var i=0;i<arrays.length;i++) {
 			if(arrays[i] == index) arrays.splice(i,1);
 		}
 		var strings = arrays.join(',');
-		
 		if(type==1){
 			$('#identity').val(strings);
 			$("#row_location_"+index).remove();
@@ -613,33 +565,25 @@ $( document ).ready(function() {
 			$('#identity_price').val(strings);
 			$("#row_price_"+index).remove();
 		}
-		
-
-		// total price
 	}
-	
 	function getPopupBrand(){
 		val = $('#brand').val();
-		//alert(1);
 		if(val==-1){
 			$('#brandpopup').modal('show');
 		}
 	}
-	
 	function getPopupCategory(){
 		val = $('#category').val();
 		if(val==-1){
 			$('#categorypopup').modal('show');
 		}
 	}
-	
 	function getPopupMeasure(){
 		val = $('#measure').val();
 		if(val==-1){
 			$('#measurepopup').modal('show');
 		}
 	}
-	
 	function getPopupColor(){
 		val = $('#color').val();
 		if(val==-1){
@@ -651,7 +595,6 @@ $( document ).ready(function() {
 			$('#savecolor').show();
 		}
 	}
-	
 	function getPopupModel(){
 		val = $('#model').val();
 		if(val==-1){
@@ -663,7 +606,6 @@ $( document ).ready(function() {
 			$('#savemodel').show();
 		}
 	}
-	
 	function getPopupSize(){
 		val = $('#size').val();
 		if(val==-1){
@@ -675,10 +617,8 @@ $( document ).ready(function() {
 			$('#savesize').show();
 		}
 	}
-	
 	<?php $url_add_brand =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-brand')); ?>
 	function addNewBrand(){
-		//alert(1);
 		var brand_name  = $("#brand_name").val();
 		$.ajax({
 			url: "<?php echo $url_add_brand;?>",
@@ -696,10 +636,8 @@ $( document ).ready(function() {
 			}
 		});
 	}
-	
 	<?php $url_add_category =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-category')); ?>
 	function addNewCategory(){
-		//alert(1);
 		var cat_name  = $("#cat_name").val();
 		$.ajax({
 			url: "<?php echo $url_add_category;?>",
@@ -713,14 +651,11 @@ $( document ).ready(function() {
 			},
 			error:function(err){
 				alert("faile insert");
-			   
 			}
 		});
 	}
-	
 	<?php $url_add_measure =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-measure')); ?>
 	function addNewMeasure(){
-		//alert(1);
 		var measure_name  = $("#measure_name").val();
 		$.ajax({
 			url: "<?php echo $url_add_measure;?>",
@@ -734,14 +669,11 @@ $( document ).ready(function() {
 			},
 			error:function(err){
 				alert("faile insert");
-			   
 			}
 		});
 	}
-	
 	<?php $url_add_color =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-other')); ?>
 	function addNewColor(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",
@@ -755,13 +687,10 @@ $( document ).ready(function() {
 			},
 			error:function(err){
 				alert("faile insert");
-			   
 			}
 		});
 	}
-	
 	function addNewModel(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",
@@ -775,13 +704,10 @@ $( document ).ready(function() {
 			},
 			error:function(err){
 				alert("faile insert");
-			   
 			}
 		});
 	}
-	
 	function addNewSize(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",

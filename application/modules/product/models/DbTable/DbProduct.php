@@ -133,7 +133,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   		$s_where[]= " REPLACE(p.item_name,' ','') LIKE '%{$s_search}%'";
   		$s_where[]=" REPLACE(p.barcode,' ','') LIKE '%{$s_search}%'";
   		$s_where[]= " REPLACE(p.item_code,' ','') LIKE '%{$s_search}%'";
-  		$s_where[]= " REPLACE(p.serial_number,' ','') LIKE '%{$s_search}%'";
   		$where.=' AND ('.implode(' OR ', $s_where).')';
   	}
   	if($data["branch"]!=""){
@@ -191,7 +190,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 	  		$s_where[]=" REPLACE(p.item_name,' ','') LIKE '%{$s_search}%'";
 	  		$s_where[]=" REPLACE(p.barcode,' ','') LIKE '%{$s_search}%'";
 	  		$s_where[]=" REPLACE(p.item_code,' ','') LIKE '%{$s_search}%'";
-	  		$s_where[]=" REPLACE(p.serial_number,' ','') LIKE '%{$s_search}%'";
 	  		$where.=' AND ('.implode(' OR ', $s_where).')';
 	  	}
 	  	if($data["branch"]!=""){
@@ -224,7 +222,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  p.`barcode`,
 			  p.`item_code`,
 			  p.`item_name` ,
-  			  p.`serial_number`,
 			  (SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status,
 			  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
 			  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
@@ -247,7 +244,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   		$s_where[]= " p.item_name LIKE '%{$s_search}%'";
   		$s_where[]=" p.barcode LIKE '%{$s_search}%'";
   		$s_where[]= " p.item_code LIKE '%{$s_search}%'";
-  		$s_where[]= " p.serial_number LIKE '%{$s_search}%'";
   		//$s_where[]= " cate LIKE '%{$s_search}%'";
   		$where.=' AND ('.implode(' OR ', $s_where).')';
   	}
@@ -291,7 +287,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  p.`barcode`,
 			  p.`item_code`,
 			  p.`item_name` ,
-  			  p.`serial_number`,
 			  (SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status,
 			  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
 			  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
@@ -314,7 +309,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   		$s_where[]= " p.item_name LIKE '%{$s_search}%'";
   		$s_where[]=" p.barcode LIKE '%{$s_search}%'";
   		$s_where[]= " p.item_code LIKE '%{$s_search}%'";
-  		$s_where[]= " p.serial_number LIKE '%{$s_search}%'";
   		//$s_where[]= " cate LIKE '%{$s_search}%'";
   		$where.=' AND ('.implode(' OR ', $s_where).')';
   	}
@@ -330,9 +324,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   	if($data["category"]!=""){
   		$where.=' AND p.cate_id='.$data["category"];
   	}
-  	if($data["model"]!=""){
-  		$where.=' AND p.model_id='.$data["model"];
-  	}
+  	
   	if($data["size"]!=""){
   		$where.=' AND p.size_id='.$data["size"];
   	}
@@ -344,9 +336,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   	}
   	$location = $db_globle->getAccessPermission('pl.`location_id`');
   	$group_by = " GROUP BY p.id";
-  	//echo $sql.$where.$location;
   	return $db->fetchAll($sql.$where.$location.$group_by);
-  	
   }
   
   function getProductById($id){
@@ -390,13 +380,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
 		
-		$user_info = new Application_Model_DbTable_DbGetUserInfo();
-		$result = $user_info->getUserInfo();
-		$session_user=new Zend_Session_Namespace('auth');
-		$request=Zend_Controller_Front::getInstance()->getRequest();
-		 $level = $result["level"];
     	try {
-			
     		$arr = array(
     			'item_name'		=>	$data["name"],
     			'item_code'		=>	$data["pro_code"],
@@ -434,27 +418,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     				$this->insert($arr1);
     			}
     		}
-// 			if($level==1 OR  $level==2){
-// 				if(!empty($data['identity_price'])){
-// 					$identitys = explode(',',$data['identity_price']);
-// 					foreach($identitys as $i)
-// 					{
-// 						$arr2 = array(
-// 								'pro_id'			=>	$id,
-// 								'location_id'		=>	$data["branch_id_".$i],
-// 								'type_id'			=>	$data["price_type_".$i],
-// 								'price'				=>	$data["price_".$i],
-// 								'remark'			=>	$data["price_remark_".$i],
-// 								//'last_mod_userid'	=>	$this->getUserId(),
-// 								//'location_id'		=>	$data["current_qty_".$i],
-// 								//'last_mod_date'		=>	new Zend_Date(),
-// 								//'cost_price'		=>	$data["cost_price_".$i],
-// 						);
-// 						$this->_name = "tb_product_price";
-// 						$this->insert($arr2);
-// 					}
-// 				}
-// 			}
     		$db->commit();
     	}catch (Exception $e){
     		$db->rollBack();
@@ -463,44 +426,33 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     }
     
     public function edit($data){
-    	//print_r($data);exit();
     	$db = $this->getAdapter();
     	$db->beginTransaction();
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
 		$result = $user_info->getUserInfo();
-		$session_user=new Zend_Session_Namespace('auth');
-		$request=Zend_Controller_Front::getInstance()->getRequest();
-		 $level = $result["level"];
     	try {
     		$arr = array(
-    				'item_name'		=>	$data["name"],
-    				'item_code'		=>	$data["pro_code"],
-    				'barcode'		=>	$data["barcode"],
-    				'cate_id'		=>	$data["category"],
-    				'brand_id'		=>	$data["brand"],
-    				//'model_id'		=>	$data["model"],
-    				'color_id'		=>	$data["color"],
-    				'measure_id'	=>	$data["measure"],
-    				//'size_id'		=>	$data["size"],
-    				//'serial_number'	=>	$data["serial"],
-    				'qty_perunit'	=>	$data["qty_unit"],
-    				'unit_label'	=>	$data["label"],
-    				'user_id'		=>	$this->getUserId(),
-    				'note'			=>	$data["description"],
-    				'status'		=>	$data["status"],
-					
+    			'item_name'		=>	$data["name"],
+    			'item_code'		=>	$data["pro_code"],
+    			'barcode'		=>	$data["barcode"],
+    			'cate_id'		=>	$data["category"],
+    			'brand_id'		=>	$data["brand"],
+    			'color_id'		=>	$data["color"],
+    			'measure_id'	=>	$data["measure"],
+    			'is_service'	=>	$data["product_type"],
+    			'is_costprice'	=>	$data["cost_pricetype"],
+    			'selling_price'	=>	$data["selling_price"],
+    			"price"			=>  $data["price"],
+    			'qty_perunit'	=>	$data["qty_unit"],
+    			'unit_label'	=>	$data["label"],
+    			'user_id'		=>	$this->getUserId(),
+    			'note'			=>	$data["description"],
+    			'status'		=>	$data["status"],
     		);
 			$this->_name="tb_product";
-			if($level==1 OR  $level==2){
-				$arrs =array("price" =>$data["price"]);
-				$where = $db->quoteInto("id=?", $data["id"]);
-				$this->update($arrs, $where);
-			}
-    		
     		$where = $db->quoteInto("id=?", $data["id"]);
     		$this->update($arr, $where);
     
-    		// For Product Location Section
     		$sql = "DELETE FROM tb_prolocation WHERE pro_id=".$data["id"];
     		$db->query($sql);
     		$location_id = 1;
@@ -521,35 +473,10 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     				$this->insert($arr1);
     			}
     		}
-    		if($level==1 OR  $level==2){
-    		// For Product Price
-    		$sql = "DELETE FROM tb_product_price WHERE pro_id=".$data["id"];
-    		$db->query($sql);
-			
-				if(!empty($data['identity_price'])){
-					$identitys = explode(',',$data['identity_price']);
-					foreach($identitys as $i)
-					{
-						$arr2 = array(
-								'pro_id'			=>	$data["id"],
-								'type_id'			=>	$data["price_type_".$i],
-								'location_id'		=>	$location_id,
-								'price'				=>	$data["price_".$i],
-								//'cost_price'		=>	$data["cost_price_".$i],
-								'remark'			=>	$data["price_remark_".$i],
-								//'last_mod_userid'	=>	$this->getUserId(),
-								//'last_mod_date'		=>	new Zend_Date(),
-						);
-						$this->_name = "tb_product_price";
-						$this->insert($arr2);
-					}
-				}
-			}
     		$db->commit();
     	}catch (Exception $e){
     		$db->rollBack();
     		Application_Model_DbTable_DbUserLog::writeMessageError($e);
-    		echo $e->getMessage();exit();
     	}
     }
     public function getOrderItemVeiw($id){
@@ -753,7 +680,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     				'color_id'		=>	$data["color"],
     				'measure_id'	=>	$data["measure"],
     				'size_id'		=>	$data["size"],
-    				'serial_number'	=>	$data["serial"],
     				'qty_perunit'	=>	$data["qty_unit"],
     				'unit_label'	=>	$data["label"],
     				'user_id'		=>	$this->getUserId(),
