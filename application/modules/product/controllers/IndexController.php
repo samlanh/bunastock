@@ -35,15 +35,15 @@ public function init()
     			'status'	=>	1
     		);
     	}
-		if($level==1 or $level==2){
+// 		if($level==1 or $level==2){
 			$rows = $db->getAllProductForAdmin($data);
 			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
-		}else{
-			$rows = $db->getAllProduct($data);
-			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"CATEGORY","MEASURE","QTY","MASTER_PRICE","DEALER_PRICE","USER","STATUS");
-		}
+					"PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
+// 		}else{
+// 			$rows = $db->getAllProduct($data);
+// 			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
+// 					"CATEGORY","MEASURE","QTY","MASTER_PRICE","DEALER_PRICE","USER","STATUS");
+// 		}
 		$link=array(
 				'module'=>'product','controller'=>'index','action'=>'edit',
 		);

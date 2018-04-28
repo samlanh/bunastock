@@ -29,7 +29,7 @@
 					<div class="portlet-body form">
 							<div class="form-body">
 										<div class="form-group">
-											<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_NAME");?></label>
+											<label class="col-md-2 control-label"><strong><?php echo $tr->translate("PRODUCT_NAME");?></strong></label>
 											<div class="col-md-4">
 												<?php echo $form->getElement('name');?>
 											</div>
@@ -86,22 +86,35 @@
 												<?php echo $form->getElement('status');?>
 											</div>
 										</div>
-										<?php if($level==1 OR $level==2){?>
 										<div class="form-group">
 											<label class="col-md-2 control-label"><?php echo $tr->translate("COST_PRICE");?></label>
-											<div class="col-md-4">
+											<div class="col-md-2">
+												<select onchange="checkCostprice();" name="cost_pricetype" id="cost_pricetype" class="form-control select2me">
+													<option value="1">គិតថ្លៃដើម</option>
+													<option value="0">មិនគិតថ្លៃដើម</option>
+												</select>
+											</div>
+											<div class="col-md-2">
 												<?php echo $form->getElement('price');?>
 											</div>
 											<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_PRICE_INFO");?></label>
 											<div class="col-md-4">
-														<?php echo $form->getElement('price_type');?>
+												<?php echo $form->getElement('price_type');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label"><strong><?php echo $tr->translate("OPTION_TYPE");?></strong></label>
+											<div class="col-md-4">
+												<select name="product_type" class="form-control"><option value="0">ប្រភេទទំនិញ</option><option value="1">ប្រភេទសេវាកម្ម</option></select>
+											</div>
+											<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_PRICE_INFO");?></label>
+											<div class="col-md-4">
 												<table class="table table-bordered" style="font-size: 11px;">
 													<thead>
 														<tr>
 															<th>#</th>
 															<th><?php echo $tr->translate("TYPE_NAME");?></th>
 															<th><?php echo $tr->translate("PRICE");?></th>
-															<!--<th><?php //echo $tr->translate("COST_PRICE");?></th>-->
 															<th><?php echo $tr->translate("REMARK");?></th>
 															<th><?php echo $tr->translate("ACTION");?></th>
 														</tr>
@@ -111,14 +124,11 @@
 												</table>
 											</div>
 										</div>
-										
-										<?php }?>
 										<h3 class="form-section"><?php echo $tr->translate("");?></h3>
 										<div class="portlet box blue">
 											<div class="portlet-title">
 												<div class="caption" style="width:100%">
 												<?php echo $form->getElement('branch');?>
-												
 												</div>
 											</div>
 										</div>
@@ -143,11 +153,10 @@
 													</tr>
 													</thead>
 													<tbody id="tr_location">
-													
 													</tbody>
 													</table>
 												</div>
-												<input type="hidden" name="identity" id="identity" value="<?php //echo $identity;?>" >
+												<input type="hidden" name="identity" id="identity" value="" >
 											</div>
 										</div>
 								</div>
@@ -741,9 +750,13 @@ $( document ).ready(function() {
 			}
 		});
 	}
-	
+	function checkCostprice(){
+		cost_pricetype = $("#cost_pricetype").val();	
+		if(cost_pricetype==0){
+			 $("#price").val(0);	
+		}
+	}
 	function addNewSize(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",

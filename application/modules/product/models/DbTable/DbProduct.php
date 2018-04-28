@@ -172,6 +172,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  p.`item_code`,
 			  p.`item_name` ,
 			  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
+			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=16  AND p.`is_service`=v.`key_code` LIMIT 1) AS is_service,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
 			  SUM(pl.`qty`) AS qty,
 			  (SELECT pp.`price` FROM `tb_product_price` AS pp WHERE pp.`pro_id`=p.`id` AND `type_id`=1 LIMIT 1) AS master_price,
@@ -401,7 +402,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   }
   // Insert and  Update section
     public function add($data){
-    	//print_r($data);exit();
     	$db = $this->getAdapter();
     	$db->beginTransaction();
 		
@@ -420,8 +420,8 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     			'brand_id'		=>	$data["brand"],
     			'color_id'		=>	$data["color"],
     			'measure_id'	=>	$data["measure"],
-    			//'size_id'		=>	$data["size"],
-    			//'serial_number'	=>	$data["serial"],
+    			'is_service'		=>	$data["product_type"],
+    			'is_costprice'	=>	$data["cost_pricetype"],
     			//'model_id'		=>	$data["model"],
     			'qty_perunit'	=>	$data["qty_unit"],
     			'unit_label'	=>	$data["label"],

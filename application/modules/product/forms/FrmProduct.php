@@ -15,26 +15,22 @@ class Product_Form_FrmProduct extends Zend_Form
 		$name = new Zend_Form_Element_Text("name");
 		$name->setAttribs(array(
 				'class'=>'form-control',
-				'required'=>'1'
-		));
+				'required'=>'1'));
 		
 		$pro_code = new Zend_Form_Element_Text("pro_code");
 		$pro_code->setAttribs(array(
 				'class'=>'form-control',
-				//'required'=>'required'
 		));
 		$pro_code->setValue($p_code);
 		 
 		$serial = new Zend_Form_Element_Text("serial");
 		$serial->setAttribs(array(
 				'class'=>'form-control',
-				//'required'=>'required'
 		));
 		 
 		$barcode = new Zend_Form_Element_Text("barcode");
 		$barcode->setAttribs(array(
 				'class'=>'form-control',
-				//'required'=>'required'
 		));
 		$barcodevalue = $db->getProductbarcode();
 		$barcode->setValue($barcodevalue);
@@ -44,7 +40,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$brand->setAttribs(array(
 				'class'=>'form-control select2me',
 				'onChange'=>'getPopupBrand();',
-				//'required'=>'required'
 		));
 		$row_brand= $db->getBrand();
 		if(!empty($row_brand)){
@@ -59,7 +54,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$model->setAttribs(array(
 				'class'=>'form-control select2me',
 				'onChange'=>'getPopupModel()',
-				//'required'=>'required'
 		));
 		$row_model = $db->getModel();
 		if(!empty($row_model)){
@@ -74,7 +68,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$category->setAttribs(array(
 				'class'=>'form-control select2me',
 				'onChange'=>'getPopupCategory()',
-				//'required'=>'required'
 		));
 		$row_cat = $db->getCategory();
 		if(!empty($row_cat)){
@@ -89,7 +82,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$color->setAttribs(array(
 				'class'=>'form-control select2me',
 				'onChange'=>'getPopupColor()',
-				//'required'=>'required'
 		));
 		$row_color = $db->getColor();
 		if(!empty($row_color)){
@@ -104,7 +96,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$size->setAttribs(array(
 				'class'=>'form-control select2me',
 				'onChange'=>'getPopupSize()',
-				//'required'=>'required'
 		));
 		$row_size = $db->getSize();
 		if(!empty($row_size)){
@@ -134,7 +125,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$measure = new Zend_Form_Element_Select("measure");
 		$measure->setAttribs(array(
 				'class'=>'form-control select2me',
-				//'required'=>'required',
 				'Onchange'	=>	'getMeasureLabel();getPopupMeasure();'
 		));
 		$row_measure= $db->getMeasure();
@@ -148,13 +138,11 @@ class Product_Form_FrmProduct extends Zend_Form
 		$label = new Zend_Form_Element_Text("label");
 		$label->setAttribs(array(
 				'class'=>'form-control',
-				//'required'=>'required'
 		));
 		 
 		$description = new Zend_Form_Element_Text("description");
 		$description->setAttribs(array(
 				'class'=>'form-control',
-				//'required'=>'required'
 		));
 		
 		$price = new Zend_Form_Element_Text("price");
@@ -168,7 +156,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$status->setAttribs(array(
 				'class'=>'form-control select2me',
 				'required'=>'required',
-				//'Onchange'	=>	'getMeasureLabel()'
 		));
 		$status->setMultiOptions($opt);
 		
@@ -182,7 +169,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$branch->setAttribs(array(
 				'class'=>'form-control select2me',
-				//'required'=>'required',
 				'Onchange'	=>	'addNewProLocation()'
 		));
 		$branch->setMultiOptions($opt);
@@ -197,7 +183,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$price_type->setAttribs(array(
 				'class'=>'form-control select2me',
-				//'required'=>'required',
 				'Onchange'	=>	'addNewPriceType()'
 		));
 		$price_type->setMultiOptions($opt);

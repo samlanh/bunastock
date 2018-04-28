@@ -1,0 +1,308 @@
+<?php 
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$module = $request->getModuleName();
+	$controller=$request->getControllerName();
+?>						 
+<title>កម្មវិធីបុណ្យ</title>
+<body>
+	<form class="form-horizontal" id="product_id" method="post" action="" >				
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i><strong>កម្មវិធីបុណ្យ</strong>
+				</div>
+				<div class="tools">
+					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="tabbable-custom ">
+					<div class="portlet-body form">
+						<div class="form-body">
+							<div class="row">
+							<div class="col-md-4">
+								<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់សព</h4>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ឈ្មោះអ្នកស្លាប់
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ឈ្មោះ(ចិន)
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ភេទ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ឆ្នាំ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										អាយុ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ថ្ងៃកំណើត
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ស្លាប់នៅថ្ងៃទី
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ទីកន្លែងកំណើត
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4" style="text-align: left !important;">
+									<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ដៃគូសព</h4>
+								<div class="form-group" >
+									<label class="col-md-4 control-label">
+										ដែគូឈ្មោះ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ឈ្មោះ(ចិន)
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ភេទ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ឆ្នាំ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										អាយុ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ស្លាប់-រស់
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ទីកន្លែងកំណើត
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4" style="text-align: left !important;">
+								<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានទីតាំង</h4>
+								<div class="form-group" >
+									<label class="col-md-4 control-label">
+										ទីតាំងបុណ្យ
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ប្រភេទរំលាយសព
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										ទីតាំងបញ្ចុះ/បូជា
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-4 control-label">
+										សម្គាល់
+									</label>
+									<div class="col-md-8">
+										<input type="text" class="form-control select2me" />
+									</div>
+								</div>
+							</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<ul class="nav nav-tabs ">
+										<li class="active">
+											<a href="#tab_1" data-toggle="tab">
+											<strong>កំណត់វេលាពិធី</strong></a>
+										</li>
+										<li>
+											<a href="#tab_2" data-toggle="tab"><strong>ឆ្នាំកូនប្រុស-ស្រី</strong></a>
+										</li>
+										<li>
+											<a href="#tab_3" data-toggle="tab"><strong>រូបភាពកម្មវិធី</strong></a>
+										</li>
+									</ul>
+								</div>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab_1">
+										<div class="col-md-4">
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ថ្ងៃលើកសពចូលម្ឈូស
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													វេលាម៉ោង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ឆ្នាំឆុង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ថ្ងៃហែសពចេញ
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													វេលាម៉ោង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ឆ្នាំឆុង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ថ្ងៃហែសពចេញ
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													វេលាម៉ោង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ឆ្នាំឆុង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control select2me" />
+												</div>
+											</div>
+										</div>
+									</div><!-- end tab1 -->
+									<div class="tab-pane " id="tab_2">
+										Tab2
+									</div>
+									<div class="tab-pane " id="tab_3">
+										Tab3
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3"></div>
+								<div class="col-md-3">
+									<a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>
+								</div>
+								<div class="col-md-3">
+									<div class="input-icon right">
+										<button type="submit" name="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-save"></i> រក្សាទុក</button>
+									</div>
+								</div>
+								<div class="col-md-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+</body>
+</html>
