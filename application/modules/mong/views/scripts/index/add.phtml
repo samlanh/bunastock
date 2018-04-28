@@ -3,13 +3,13 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>						 
-<title>ការឧបត្ថមរបស់សប្បុរសជន</title>
+<title>ផ្នែកលក់ម៉ុងចេតិយ</title>
 <body>
 	<form class="form-horizontal" id="product_id" method="post" action="" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>ការឧបត្ថមរបស់សប្បុរសជន</strong>
+					<i class="fa fa-gift"></i><strong>ផ្នែកលក់ម៉ុងចេតិយ</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -20,107 +20,601 @@
 					<div class="portlet-body form">
 						<div class="form-body">
 							<div class="row">
-								<div class="col-md-1">
+								<div class="col-md-12">
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a href="#tab_1" data-toggle="tab">
+											<strong>ការលក់</strong></a>
+										</li>
+										<li>
+											<a href="#tab_2" data-toggle="tab"><strong>ព័ត៌មានលម្អិតអំពីម៉ុង/ចេតិយ</strong></a>
+										</li>
+										<li>
+											<a href="#tab_3" data-toggle="tab"><strong>ព័ត៌មានលម្អិតសព</strong></a>
+										</li>
+										<li>
+											<a href="#tab_4" data-toggle="tab"><strong>ព័ត៌មានការសាងសង់</strong></a>
+										</li>
+									</ul>
 								</div>
-								<div class="col-md-5" style="text-align: left !important;border:1px solid #ccc;">
-										<h4 style="border-bottom: 1px solid #ccc;" class="center">ការឧបត្ថមរបស់សប្បុរសជន</h4>
-									<div class="form-group" >
-										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab_1">
+										<div class="form-body">
+											<div class="row">
+												<div class="col-md-6" style="text-align: left !important;">
+													<div class="form-group" >
+														<label class="col-md-4 control-label">ឈ្មោះអតិថិជន</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">ភេទ</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															លេខទូរស័ព្ទ
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															អាស័យដ្ឋានកម្មវិធី
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" >
+														<label class="col-md-4 control-label">ជ្រើសរើសសព</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															សម្គាល់ផ្សេងៗ
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															ថ្ងៃគិតប្រាក់
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6" style="text-align: left !important;">
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															លេខវិក័យបត្រ
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															ថ្ងៃលក់
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">អ្នកណែនាំ</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															លេខទូរស័ព្ទ
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															កំរៃជើងសា
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															អ្នកទទួលប្រាក់
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															សម្គាល់ផ្សេងៗ
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-1"></div>
+												<div class="col-md-8">
+													<div class="form-group" style=""></div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															<strong>ស្វែងរកមុខទំនិញ</strong>
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1"></div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													 <table id="table_row"  style=";border-collapse: collapse; border:1px solid #ccc;width:100%;">
+														<thead>
+															<tr id="head-title" class="table table-bordered" align="right" style="background:#ccc">
+																<th class="aligncenter">#</th>
+																<th class="aligncenter">មុខទំនិញ/សេវាកម្ម</th>
+																<th class="aligncenter">ស្តុក</th>
+																<th class="aligncenter">បរិ.ដុំ</th>
+																<th class="aligncenter">បរិ.រាយ</th>
+																<th class="aligncenter">បរិមាណ</th>
+																<th class="aligncenter">តម្លៃលក់</th>
+																<th class="aligncenter">សរុប</th>
+																<th class="aligncenter">លុប</th>
+															</tr>
+															<tr>
+																<td colspan="11" id="lbl_noproduct" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
+															</tr>
+														</thead>
+													</table>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-1"></div>
+												<div class="col-md-6"></div>
+												<div class="col-md-5" style="text-align: left !important;">
+													<div class="form-group" style=""></div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															តម្លៃសរុប
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															បានបង់ពីមុនសុរប
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															បានបង់សរុប
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															នៅខ្វះ
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" name="" id="" />
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
+										
+									</div><!-- end tab1 -->
+									<div class="tab-pane " id="tab_2">
+										<div class="col-md-4">
+												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ម៉ុង/ចេតិយ</h4>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ប្រភេទ ម៉ុង-ចេតិយ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ប្រភេទម៉ុង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														អ្នកកសាង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														លេខកូដម៉ុង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														លេខម៉ុង/ឡូតិ៍
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														អាស័យដ្ឋានម៉ុង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														អ្នកទទួលខុសត្រូរការងារ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														សម្គាល់
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+											</div>
+											
+											<!-- blog2 -->
+											
+											<div class="col-md-4">
+												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតទំហំម៉ុង និងពេលវេលា</h4>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														បណ្តោយដី
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទទឹងដី
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														បណ្តោយម៉ុង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទទឹងម៉ុង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ថ្ងៃបញ្ចាប់សាងសង់
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ថ្ងៃសែនបើកឆាក
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ម៉ោង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ថ្ងៃឆ្លងម៉ុង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ម៉ោង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<h4 style="border-bottom: 1px solid #ccc;" class="center">រូបភាពផ្សេងៗ</h4>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+													</label>
+													<div class="col-md-8">
+													</div>
+												</div>
+											</div>
 									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">លេខទូរស័ព្ទ</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+									<div class="tab-pane " id="tab_3">
+										<div class="row">
+											<div class="col-md-4">
+												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់សព</h4>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ឈ្មោះអ្នកស្លាប់
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ឈ្មោះ(ចិន)
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ភេទ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ឆ្នាំ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														អាយុ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ថ្ងៃកំណើត
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ស្លាប់នៅថ្ងៃទី
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទីកន្លែងកំណើត
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4" style="text-align: left !important;">
+													<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ដៃគូសព</h4>
+												<div class="form-group" >
+													<label class="col-md-4 control-label">
+														ដែគូឈ្មោះ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ឈ្មោះ(ចិន)
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ភេទ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ឆ្នាំ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														អាយុ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ស្លាប់-រស់
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទីកន្លែងកំណើត
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4" style="text-align: left !important;">
+												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានទីតាំង</h4>
+												<div class="form-group" >
+													<label class="col-md-4 control-label">
+														ទីតាំងបុណ្យ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ប្រភេទរំលាយសព
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទីតាំងបញ្ចុះ/បូជា
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														សម្គាល់
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+											</div>
+											</div>
+									</div>
+									<div class="tab-pane " id="tab_4">
+										<div class="row">
+											<div class="col-md-6">
+												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតពីការជួល និងសម្ភារ</h4>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ជាងសាងសង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														លេខទូរស័ព្ទ
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ប្រភេទជាង
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control select2me" />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-12 control-label">
+														សម្ភារផ្សេងៗ
+													</label>
+												</div>
+											</div>
 										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											អាស័យដ្ឋាន
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+										<div class="row">
+											<div class="form-group" style="">
+												<div class="col-md-12 control-label">
+													<table id="table_row"  style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
+														<thead>
+															<tr id="head-title" class="table table-bordered" align="right" style="background:#ccc">
+																<th class="aligncenter">#</th>
+																<th class="aligncenter">សម្ភារ</th>
+																<th class="aligncenter">បរិ.រាយ</th>
+																<th class="aligncenter">បរិមាណ</th>
+																<th class="aligncenter">តម្លៃរាយ</th>
+																<th class="aligncenter">តម្លៃលក់</th>
+																<th class="aligncenter">សរុប</th>
+																<th class="aligncenter">លុប</th>
+															</tr>
+															<tr>
+																<td colspan="11" id="lbl_noproduct" align="center">មិនមាន សម្ភារទេ</td>
+															</tr>
+														</thead>
+													</table>
+												</div>
+											</div>
 										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											តម្រូវការប្រើប្រាស់
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" >
-										<label class="col-md-4 control-label">ខែប្រើប្រាស់យូរបំផុត</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											សម្គាល់ផ្សេងៗ
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-								</div>
-								<div class="col-md-5" style="text-align: left !important;border:1px solid #ccc;">
-									<h4 style="border-bottom: 1px solid #ccc;" class="center">ការបង់ប្រាក់</h4>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											លេខបង្កាន់ដៃបង់
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											ថ្ងៃបង់ប្រាក់
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">ចំនួនម្ឈូស</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											តម្លៃរាយ
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											តម្លៃសរុប
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
-											សម្គាល់
-										</label>
-										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
-										</div>
-									</div>
-								</div>
-								<div class="col-md-1" style="text-align: left !important;">
+									</div><!-- tab4 -->
+									
 								</div>
 							</div>
+
+							
 							<div class="form-group">
-								<br />
 								<div class="col-md-3"></div>
 								<div class="col-md-3">
 									<a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>

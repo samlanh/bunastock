@@ -23,122 +23,141 @@ $form=$this->form;
 <title><?php echo $tr->translate("EDIT_PRODUCT");?></title>
 <body>
 
-		<form class="form-horizontal" id="product_id" method="post" action="<?php //echo $url_submit;?>" >				
-					<div class="portlet box blue">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-gift"></i><?php echo $tr->translate("EDIT_PRODUCT");?>
-							</div>
-							<div class="tools">
-									<label><a href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></button></a></label>
-							</div>
-						</div>
-						<div style="<?php echo $disable;?>">
-						<div class="portlet-body">
-							<div class="tabbable-custom ">
-								<ul class="nav nav-tabs ">
-									<li class="active">
-										<a href="#tab_5_1" data-toggle="tab">
-										<?php echo $tr->translate("PRODUCT_INFO");?> </a>
-									</li>
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane active" id="tab_5_1">
-									<!--<div class="portlet box blue">
-								<div class="portlet-title">
-									<div class="caption">
-											<i class="fa fa-globe"></i><?php echo $tr->translate("PRODUCT_INFO");?>
-									</div>
-									
-								</div>-->
-								<div class="portlet-body form">
-									 
+<form class="form-horizontal" id="product_id" method="post" action="" >				
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-gift"></i><?php echo $tr->translate("EDIT_PRODUCT");?>
+				</div>
+				<div class="tools">
+						<label><a href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></button></a></label>
+				</div>
+			</div>
+			<div style="<?php echo $disable;?>">
+			<div class="portlet-body">
+				<div class="tabbable-custom ">
+					<ul class="nav nav-tabs ">
+						<li class="active">
+							<a href="#tab_5_1" data-toggle="tab">
+							<?php echo $tr->translate("PRODUCT_INFO");?> </a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab_5_1">
+							<div class="portlet-body form">
+								<div class="form-body">
+								<div class="row">
+									<div class="col-md-4">
 										<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_NAME");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('name');?>
-														</div>
-														
-														<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_CODE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('pro_code');?>
-														</div>	
-													</div>
-														
-													<div class="form-group">
-																		
-														<label class="col-md-2 control-label"><?php echo $tr->translate("BARCODE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('barcode');?>
-														</div>
-														<label class="col-md-2 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('brand');?>
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_CATEGORY");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('category');?>
-														</div>
-														<label class="col-md-2 control-label"><?php echo $tr->translate("COLOR");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('color');?>
-														</div>
-													</div>
-													
-													
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("MEASURE");?></label>
-														<div class="col-md-2">
-															<?php echo $form->getElement('measure');?>
-														</div>
-														
-														<div class="col-md-2">
-															<?php echo $form->getElement('unit');?>
-														</div>
-														<label class="col-md-1 control-label" id="lb_measure" style="text-align: center;"></label>
-														
-														<label class="col-md-1 control-label" style="text-align: center;">=</label>
-														<div class="col-md-2">
-															<?php echo $form->getElement('qty_unit');?>
-														</div>
-														
-														<div class="col-md-2">
-															<?php echo $form->getElement('label');?>
-														</div>
-														
-													</div>
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("NOTE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('description');?>
-														</div>
-														
-														<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('status');?>
-														</div>
-													</div>
-													<?php if($level==1 OR $level==2){?>
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("COST_PRICE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('price');?>
-														</div>
-														<label class="col-md-2 control-label"></label>
-														<div class="col-md-4"></div>
-													</div>
-													<?php }?>
-													<h3 class="form-section"></h3>
-													<div class="portlet box blue">
-														<div class="portlet-title">
-															<div class="caption" style="width:100%">
-															<?php echo $form->getElement('branch');?>
-															</div>
-														</div>
-													</div>
-													
+											<label class="col-md-4 control-label"><strong><?php echo $tr->translate("OPTION_TYPE");?></strong></label>
+											<div class="col-md-8">
+												<select name="product_type" class="form-control"><option value="0">ប្រភេទទំនិញ</option><option value="1">ប្រភេទសេវាកម្ម</option></select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><strong><?php echo $tr->translate("PRODUCT_NAME");?></strong></label>
+											<div class="col-md-8">
+												<?php echo $form->getElement('name');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><?php echo $tr->translate("PRODUCT_CODE");?></label>
+											<div class="col-md-8">
+												<?php echo $form->getElement('pro_code');?>
+											</div>	
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><?php echo $tr->translate("BARCODE");?></label>
+											<div class="col-md-8">
+												<?php echo $form->getElement('barcode');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
+											<div class="col-md-8">
+												<?php echo $form->getElement('brand');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><?php echo $tr->translate("PRODUCT_CATEGORY");?></label>
+											<div class="col-md-8">
+												<?php echo $form->getElement('category');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><?php echo $tr->translate("COLOR");?></label>
+											<div class="col-md-8">
+												<?php echo $form->getElement('color');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label"><?php echo $tr->translate("MEASURE");?></label>
+											<div class="col-md-2">
+												<?php echo $form->getElement('unit');?>
+											</div>
+											<div class="col-md-6">
+												<?php echo $form->getElement('measure');?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label"  id="lb_measure" ></label>
+											<label class="col-md-1 control-label">=</label>
+											<div class="col-md-4">
+												<?php echo $form->getElement('qty_unit');?>
+											</div>
+											<div class="col-md-4">
+												<?php echo $form->getElement('label');?>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="col-md-8">
+											<div class="form-group">
+												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("COST_PRICE");?></strong></label>
+												<div class="col-md-4">
+													<select onchange="checkCostprice();" name="cost_pricetype" id="cost_pricetype" class="form-control select2me">
+														<option value="1">គិតថ្លៃដើម</option>
+														<option value="0">មិនគិតថ្លៃដើម</option>
+													</select>
+												</div>
+												<div class="col-md-4">
+													<?php echo $form->getElement('price');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("PRODUCT_PRICE_INFO");?></strong></label>
+												<div class="col-md-8">
+													<?php echo $form->getElement('selling_price');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-4 control-label"><?php echo $tr->translate("NOTE");?></label>
+												<div class="col-md-8">
+													<?php echo $form->getElement('description');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-4 control-label"><?php echo $tr->translate("STATUS");?></label>
+												<div class="col-md-8">
+													<?php echo $form->getElement('status');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("BRANCH_NAME");?></strong></label>
+												<div class="col-md-8">
+													<?php echo $form->getElement('branch');?>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											
+										</div>
+										<div class="row" style="">
+										</div>
+										<div class="row" style="">
+											<div class="form-group">
+											<div class="col-md-1"></div>
+											<div class="col-md-11">
 													<div class="portlet box blue">
 														<div class="portlet-title">
 															<div class="caption">
@@ -160,67 +179,42 @@ $form=$this->form;
 																</tr>
 																</thead>
 																<tbody id="tr_location">
-																
 																</tbody>
 																</table>
 															</div>
-															<input type="hidden" name="identity" id="identity" value="<?php //echo $identity;?>" >
+															<input type="hidden" name="identity" id="identity" value="" >
 														</div>
 													</div>
-											</div>
-										</div>
-										<?php if($level==1 OR  $level==2){?>
-										<h3 class="form-section"><?php echo $tr->translate("PRODUCT_PRICE_INFO");?></h3>
-										<div class="portlet box blue">
-											<div class="portlet-title">
-												<div class="caption" style="width:100%">
-															<?php echo $form->getElement('price_type');?>
 												</div>
 											</div>
 										</div>
 										
-										<div class="portlet-body">
-											<div class="table-responsive">
-												<table class="table table-bordered">
-													<thead>
-														<tr>
-															<th>#</th>
-															<th><?php echo $tr->translate("TYPE_NAME");?></th>
-															<th><?php echo $tr->translate("PRICE");?></th>
-															<!--<th><?php //echo $tr->translate("COST_PRICE");?></th>-->
-															<th><?php echo $tr->translate("REMARK");?></th>
-															<th><?php echo $tr->translate("ACTION");?></th>
-														</tr>
-													</thead>
-													<tbody id="tr_price_type">
-													</tbody>
-												</table>
-											</div>
-												<input type="hidden" name="identity_price" id="identity_price" value="<?php //echo $identity;?>" >
-										</div>
-										<?php }?>
-										<div class="form-group">
-											<div class="col-md-3">
-											</div>
-											<div class="col-md-3">
-												<a href="<?php echo $this->baseUrl();?>/product/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
-											</div>
-											<div class="col-md-3">
-												<div class="input-icon right">
-													<button type="submit" name="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
-												</div>
-											</div>
-											<div class="col-md-3">
-											</div>
-										</div>
-									</div>
+									</div><!-- end of 8col -->
 								</div>
 							</div>
-						
+										
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-3">
+							</div>
+							<div class="col-md-3">
+								<a href="<?php echo $this->baseUrl();?>/product/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+							</div>
+							<div class="col-md-3">
+								<div class="input-icon right">
+									<button type="submit" name="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+								</div>
+							</div>
+							<div class="col-md-3">
+							</div>
+						</div>
 						</div>
 					</div>
-							
-			</form>		
+				</div>
+			</div>
+		</div>
+</form>		
 <!--Popup Form Brand-->
 <?php $formBrand = $this->frmBrand; ?>
 <div id="brandpopup" class="modal fade" tabindex="-1" data-width="1200">

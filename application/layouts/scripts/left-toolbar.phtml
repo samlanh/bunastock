@@ -89,7 +89,6 @@
 					</div>
 					<!-- END SIDEBAR TOGGLER BUTTON -->
 				</li>
-				<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
 				<?php if($level==1 OR $level==4  OR $level==9 ){?>
 				<li class="<?php if($module=='product'){echo $class_active;}?>">
 					<a href="javascript:;">
@@ -99,32 +98,18 @@
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="<?php echo $url_pro_add[0]; ?>">
-							<i class="icon-bar-chart"></i><?php echo $tr->translate($url_pro_add[1])?></a>
-						</li>
-						<li>
 							<a href="<?php echo $url_pro_list[0]; ?>">
 							<i class="icon-bulb"></i><?php echo $tr->translate($url_pro_list[1])?></a>
+						</li>
+						<li>
+							<a href="<?php echo $this->url(array('module'=>'stock','controller'=>'package','action'=>'index'),null, true); ?>">
+							<i class="icon-bulb"></i>កញ្ចប់ទំនិញ/សេវាកម្ម</a>
 						</li>
 						<li>
 							<a href="<?php echo $url_damagedstock[0]; ?>">
 							<i class="icon-bulb"></i><?php echo $tr->translate($url_damagedstock[1])?></a>
 						</li>
-						<!-- <li>
-							<a href="<?php //echo $url_curr[0]; ?>">
-							<i class="icon-graph"></i><?php //echo $tr->translate($url_curr[1])?></a>
-						</li> -->
-						<?php //if($result["level"]==3 ){ ?>
-	            		<!--<li>
-	            			<a href="<?php //echo $url_adj[0]; ?>">
-							      <i class="icon-bulb"></i>  <?php //echo $tr->translate($url_adj[1])?>
-		            		</a>
-	            		</li>
-	            		<li>
-	            			<a href="<?php echo $url_transfer[0]; ?>">
-							      <i class="icon-bulb"></i><?php echo $tr->translate($url_transfer[1])?>
-		            		</a>
-	            		</li>-->
+						
 	            		<li>
 	            			<a href="<?php echo $url_adj[0]; ?>">
 							    <i class="icon-bulb"></i><?php echo $tr->translate($url_adj[1])?>
@@ -141,10 +126,6 @@
 							   <i class="icon-bulb"></i> <?php echo $tr->translate($url_brand[1]);?>
 		            		</a>
 	            		</li>
-	            		 <li>
-	            			<a href="<?php echo $url_pricelevel[0]; ?>">
-							    <i class="icon-bulb"></i><?php echo $tr->translate($url_pricelevel[1]);?></a>
-	            		<li> 
 	            		<li>
 	            			<a href="<?php echo $url_other[0]; ?>">
 							    <i class="icon-bulb"></i> <?php echo $tr->translate($url_other[1]);?>
@@ -173,11 +154,6 @@
 	            		<li>
 	            			<a href="<?php echo $url_add_purchase[0]; ?>">
 							    <i class="icon-arrow-right"></i><?php echo $tr->translate($url_add_purchase[1]);?>
-		            		</a>
-	            		</li> 
-	            		<li>
-	            			<a  href="<?php echo $this->url(array('module'=>'purchase','controller'=>'agreement','action'=>'index'),null, true); ?>">
-							    <i class="icon-arrow-right"></i><?php echo $tr->translate("PO_AGREEMENT");?>
 		            		</a>
 	            		</li> 
 	            		<li>
@@ -226,51 +202,85 @@
 		            		</a>
 	            		</li> 
 	            		<li>
-	            			<a  href="<?php echo $this->url(array('module'=>'sales','controller'=>'agreement','action'=>'index'),null, true); ?>">
-							    <i class="icon-arrow-right"></i><?php echo $tr->translate("AGREEMENT");?>
+	            			<a  href="<?php echo $this->url(array('module'=>'sales','controller'=>'program','action'=>'index'),null, true); ?>">
+							    <i class="icon-arrow-right"></i><?php echo $tr->translate("ផ្នែកកម្មវិធីបុណ្យ");?>
 		            		</a>
 	            		</li> 
-	            		<!-- <li>
-	            			<a href="<?php echo $url_quotelist[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_quotelist[1])?>
-		            	    </a>
-	            		</li>  -->
 		            	<li>
 	            			<a href="<?php echo $url_cust_list[0]; ?>">
 							    <i class="icon-arrow-right"></i><?php echo $tr->translate($url_cust_list[1]);?>
 		            		</a>
 	            		</li> 
-						
-	            		<li>
-	            			<a href="<?php echo $url_add_cust[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_add_cust[1])?>
-		            		</a>
-	            		</li>
 	            		<li>
 	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'payment','action'=>'index'),null, true); ?>">
 		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("CUSTOMER_PAYMENT");?>
 		            		</a>
 	            		</li>
 						<li>
-	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'comment','action'=>'index'),null, true); ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("CUSTOMER_COMMENT");?>
+	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'partnerservice','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("ដៃគូសេវាកម្ម");?>
 		            		</a>
 	            		</li>
-						<li>
-	            			<a href="<?php echo $url_customer_type[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_customer_type[1])?>
-		            		</a>
-	            		</li>
-	            		
-	            		
 	            		<li>
 	            			<a href="<?php echo $url_termcondiction[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_termcondiction[1]);?>
+		            			<i class="icon-arrow-right"></i>បង់ប្រាក់សេវាកម្ម
 		            		</a>
 	            		</li>
 					</ul>
 				</li>
-				
+				<li class="<?php if($module=='donors'){echo $class_active;}?>">
+					<a href="javascript:;">
+					<i class="icon-screen-desktop"></i>
+					<span class="title"><?php echo ($tr->translate("ផ្នែកសប្បុរសជន"));?></span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+            			<li>
+	            			<a href="<?php echo $this->url(array('module'=>'donors','controller'=>'index','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i>ផ្នែកសប្បុរសជន
+		            		</a>
+            			</li>
+            			<li>
+	            			<a href="<?php echo $this->url(array('module'=>'donors','controller'=>'donate','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i>ផ្នែកប្រគល់អោយសព
+		            		</a>
+            			</li>
+					</ul>
+				</li>
+				<li class="<?php if($module=='mong'){echo $class_active;}?>">
+					<a href="javascript:;">
+					<i class="icon-screen-desktop"></i>
+					<span class="title"><?php echo ($tr->translate("ផ្នែកម៉ុង/ចេតិយ"));?></span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+            			<li>
+	            			<a href="<?php echo $this->url(array('module'=>'mong','controller'=>'index','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i>ផ្នែកលក់
+		            		</a>
+            			</li>
+            			<li>
+	            			<a href="<?php echo $url_report_product[0];?>">
+		            			<i class="icon-arrow-right"></i>អតិថិជនបង់ប្រាក់បន្ថែម
+		            		</a>
+            			</li>
+            			<li>
+	            			<a href="<?php echo $this->url(array('module'=>'mong','controller'=>'contractor','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i>ផ្នែកជាង
+		            		</a>
+            			</li>
+            			<li>
+	            			<a href="<?php echo $this->url(array('module'=>'mong','controller'=>'payment','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i>បង់ប្រាក់ផ្នែកជាង
+		            		</a>
+            			</li>
+            			<li>
+	            			<a href="<?php //echo $url_report_product[0];?>">
+		            			<i class="icon-arrow-right"></i>អ្នកទទួលខុសត្រូវការងារ
+		            		</a>
+            			</li>
+					</ul>
+				</li>
 				<li class="<?php if($module=='report'){echo $class_active;}?>">
 					<a href="javascript:;">
 					<i class="icon-screen-desktop"></i>

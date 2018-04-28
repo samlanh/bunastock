@@ -1,5 +1,5 @@
 <?php
-class Donors_DonateController extends Zend_Controller_Action
+class Mong_PaymentController extends Zend_Controller_Action
 {
 	public function init()
     {

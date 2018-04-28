@@ -49,19 +49,19 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$brand->setMultiOptions($opt);
 		 
-		$opt = array(''=>$tr->translate("SELECT_MODEL"),-1=>$tr->translate("ADD_NEW_MODEL"));
-		$model = new Zend_Form_Element_Select("model");
-		$model->setAttribs(array(
-				'class'=>'form-control select2me',
-				'onChange'=>'getPopupModel()',
-		));
-		$row_model = $db->getModel();
-		if(!empty($row_model)){
-			foreach ($row_model as $rs){
-				$opt[$rs["key_code"]] = $rs["name"];
-			}
-		}
-		$model->setMultiOptions($opt);
+// 		$opt = array(''=>$tr->translate("SELECT_MODEL"),-1=>$tr->translate("ADD_NEW_MODEL"));
+// 		$model = new Zend_Form_Element_Select("model");
+// 		$model->setAttribs(array(
+// 				'class'=>'form-control select2me',
+// 				'onChange'=>'getPopupModel()',
+// 		));
+// 		$row_model = $db->getModel();
+// 		if(!empty($row_model)){
+// 			foreach ($row_model as $rs){
+// 				$opt[$rs["key_code"]] = $rs["name"];
+// 			}
+// 		}
+// 		$model->setMultiOptions($opt);
 		 
 		$opt = array(''=>$tr->translate("SELECT_CATEGORY"),-1=>$tr->translate("ADD_NEW_CATEGORY"));
 		$category = new Zend_Form_Element_Select("category");
@@ -91,19 +91,19 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$color->setMultiOptions($opt);
 		 
-		$opt = array(''=>$tr->translate("SELECT_SIZE"),-1=>$tr->translate("ADD_NEW_SIZE"));
-		$size = new Zend_Form_Element_Select("size");
-		$size->setAttribs(array(
-				'class'=>'form-control select2me',
-				'onChange'=>'getPopupSize()',
-		));
-		$row_size = $db->getSize();
-		if(!empty($row_size)){
-			foreach ($row_size as $rs){
-				$opt[$rs["key_code"]] = $rs["name"];
-			}
-		}
-		$size->setMultiOptions($opt);
+// 		$opt = array(''=>$tr->translate("SELECT_SIZE"),-1=>$tr->translate("ADD_NEW_SIZE"));
+// 		$size = new Zend_Form_Element_Select("size");
+// 		$size->setAttribs(array(
+// 				'class'=>'form-control select2me',
+// 				'onChange'=>'getPopupSize()',
+// 		));
+// 		$row_size = $db->getSize();
+// 		if(!empty($row_size)){
+// 			foreach ($row_size as $rs){
+// 				$opt[$rs["key_code"]] = $rs["name"];
+// 			}
+// 		}
+// 		$size->setMultiOptions($opt);
 		 
 		$unit = new Zend_Form_Element_Text("unit");
 		$unit->setAttribs(array(
@@ -151,6 +151,12 @@ class Product_Form_FrmProduct extends Zend_Form
 				'required'=>'required'
 		));
 		
+		$selling_price = new Zend_Form_Element_Text("selling_price");
+		$selling_price->setAttribs(array(
+				'class'=>'validate[required,custom[number]] form-control',
+				'required'=>'required'
+		));
+		
 		$status = new Zend_Form_Element_Select("status");
 		$opt = array('1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
 		$status->setAttribs(array(
@@ -191,22 +197,22 @@ class Product_Form_FrmProduct extends Zend_Form
 			$name->setValue($data["item_name"]);
 			$pro_code->setValue($data["item_code"]);
 			$barcode->setValue($data["barcode"]);
-			$serial->setValue($data["serial_number"]);
+			$selling_price->setValue($data["selling_price"]);
 			$brand->setValue($data["brand_id"]);
 			$category->setValue($data["cate_id"]);
-			$model->setValue($data["model_id"]);
+// 			$model->setValue($data["model_id"]);
 			$color->setValue($data["color_id"]);
-			$size->setValue($data["size_id"]);
+// 			$size->setValue($data["size_id"]);
 			$measure->setValue($data["measure_id"]);
 			$label->setValue($data["unit_label"]);
 			$description->setValue($data["note"]);
 			$qty_per_unit->setValue($data["qty_perunit"]);
-			//$qty_unit->setValue($data["qty_perunit"]);
 			$status->setValue($data["status"]);
 			$price->setValue($data["price"]);
 		}
 		
-		$this->addElements(array($price,$price_type,$branch,$status,$pro_code,$name,$serial,$brand,$model,$barcode,$category,$size,$color,$measure,$qty_per_unit,$unit,$label,$description));
+		$this->addElements(array($selling_price,$price,$price_type,$branch,$status,$pro_code,$name,$serial,$brand,$barcode,$category,
+				$color,$measure,$qty_per_unit,$unit,$label,$description));
 		return $this;
 	}
 	function productFilter(){
