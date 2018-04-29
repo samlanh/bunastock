@@ -381,6 +381,20 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     	$db->beginTransaction();
 		
     	try {
+			$part= PUBLIC_PATH.'/images/product/';
+    		$name = $_FILES['photo']['name'];
+    		$size = $_FILES['photo']['size'];
+			if (!file_exists($part)) {
+				mkdir($part, 0777, true);
+			}
+    		$photo='';
+			$dbg = new Application_Model_DbTable_DbGlobal();
+    		if (!empty($name)){
+    			$tem =explode(".", $name);
+    			$new_image_name = "product".date("Y").date("m").date("d").time().".".end($tem);
+    			$photo = $dbg->resizeImase($_FILES['photo'], $part,$new_image_name);
+    		}
+			
     		$arr = array(
     			'item_name'		=>	$data["name"],
     			'item_code'		=>	$data["pro_code"],
@@ -398,6 +412,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     			'user_id'		=>	$this->getUserId(),
     			'note'			=>	$data["description"],
     			'status'		=>	$data["status"],
+				'photo'			=>	$photo,
     		);
     		$this->_name="tb_product";
     		$id = $this->insert($arr);
@@ -449,6 +464,22 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     			'note'			=>	$data["description"],
     			'status'		=>	$data["status"],
     		);
+			
+			$part= PUBLIC_PATH.'/images/product/';
+    		$name = $_FILES['photo']['name'];
+    		$size = $_FILES['photo']['size'];
+			if (!file_exists($part)) {
+				mkdir($part, 0777, true);
+			}
+    		$photo='';
+			$dbg = new Application_Model_DbTable_DbGlobal();
+    		if (!empty($name)){
+    			$tem =explode(".", $name);
+    			$new_image_name = "product".date("Y").date("m").date("d").time().".".end($tem);
+    			$photo = $dbg->resizeImase($_FILES['photo'], $part,$new_image_name);
+				$arr['photo']=$photo;
+    		}
+			
 			$this->_name="tb_product";
     		$where = $db->quoteInto("id=?", $data["id"]);
     		$this->update($arr, $where);
