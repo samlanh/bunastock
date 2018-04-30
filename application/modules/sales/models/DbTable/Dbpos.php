@@ -4,7 +4,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 {
 	protected $_name="tb_invoice";
 	function getAllProductName(){
-		$sql="SELECT id,CONCAT(item_name) AS name FROM `tb_product` WHERE item_name!='' AND status=1 ";
+		$sql="SELECT id,CONCAT(item_name) AS name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
 		//$sql="SELECT id,CONCAT(item_name,' ',barcode) AS name FROM `tb_product` WHERE item_name!='' AND status=1 ";
 		return $this->getAdapter()->fetchAll($sql);
 	}

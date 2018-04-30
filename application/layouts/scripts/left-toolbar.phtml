@@ -80,14 +80,10 @@
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 		<div class="page-sidebar navbar-collapse collapse">
-			
 			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-				<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
 				<li class="sidebar-toggler-wrapper">
-					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 					<div class="sidebar-toggler">
 					</div>
-					<!-- END SIDEBAR TOGGLER BUTTON -->
 				</li>
 				<?php if($level==1 OR $level==4  OR $level==9 ){?>
 				<li class="<?php if($module=='product'){echo $class_active;}?>">
@@ -102,7 +98,7 @@
 							<i class="icon-bulb"></i><?php echo $tr->translate($url_pro_list[1])?></a>
 						</li>
 						<li>
-							<a href="<?php echo $this->url(array('module'=>'stock','controller'=>'package','action'=>'index'),null, true); ?>">
+							<a href="<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'index'),null, true); ?>">
 							<i class="icon-bulb"></i>កញ្ចប់ទំនិញ/សេវាកម្ម</a>
 						</li>
 						<li>
