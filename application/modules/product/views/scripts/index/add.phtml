@@ -482,6 +482,7 @@ input.btn_borwse_image {
     </div>
  </div>
 <script>
+
 $('#product_id').submit(function() {
 	category = $("#category").val();
     if(category==''){
@@ -489,6 +490,10 @@ $('#product_id').submit(function() {
         $('#category').select2('open');
         return false;
     }
+    if(maxSize == 1){
+      	 alert('<?php echo $tr->translate("Image size more than 5Mb can not upload");?>');
+      	 return false;
+      	}
 	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 	if (r == true) {
 	    return true;
@@ -780,7 +785,34 @@ $( document ).ready(function() {
             reader.readAsDataURL(input.files[0]);
         }
     }
+    var maxSize = 0;
     $("#photo").change(function(){
+    	var iSize = ($("#photo")[0].files[0].size / 1024); 
+        if (iSize / 1024 > 1) 
+        { 
+           if (((iSize / 1024) / 1024) > 1) 
+           { 
+               iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
+               maxSize = 0;
+               //$("#lblSize").html( iSize + "Gb"); 
+           }else{ 
+               iSize = (Math.round((iSize / 1024) * 100) / 100);
+               if(iSize>5){
+                   alert('<?php echo $tr->translate("Image size more than 5Mb can not upload");?>');
+                   maxSize = 1;
+                   $('#image_viewbg').attr('src', "<?php echo $this->baseUrl().'/images/no-image.png';?>");
+                   return false;
+               }
+               //$("#lblSize").html( iSize + "Mb"); 
+           } 
+        } 
+        else 
+        {
+           iSize = (Math.round(iSize * 100) / 100);
+           maxSize = 0;
+           //$("#lblSize").html( iSize  + "kb"); 
+        }    
+        
         readURL(this);
     });
 </script>		
