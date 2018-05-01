@@ -528,7 +528,6 @@ function addNewVendor(){
         type: "post",
         data: $('#frmvendor').serialize(),
         success: function(data){
-			alert(222);
             val = $.parseJSON(data);
 		      val = $.parseJSON(data);
 		    $('#v_name').append($("<option></option>").attr("value",val['vid']).attr("selected",true).text(v_name));                       

@@ -52,14 +52,14 @@ public function init()
 	}
 	public function addAction()
 	{
-			$db = new Product_Model_DbTable_DbProduct();
+			$db = new Product_Model_DbTable_DbPackage();
 			if($this->getRequest()->isPost()){ 
 				try{
 					$post = $this->getRequest()->getPost();
-					$db->add($post);
+					$db->addPackage($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index');
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/package');
 					}else{
 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
 					}
@@ -69,9 +69,11 @@ public function init()
 			}
 			$db = new Product_Model_DbTable_DbProduct();
 			$this->view-> caters = $db->getCategory();
+			$this->view->pro_code = $db->getProductCode();
 			
 			$db = new Sales_Model_DbTable_Dbpos();
 			$this->view->rsproduct = $db->getAllProductName();
+			
 	}
 	public function editAction()
 	{
