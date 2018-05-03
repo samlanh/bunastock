@@ -20,170 +20,213 @@
 					<div class="portlet-body form">
 						<div class="form-body">
 							<div class="row">
-							<div class="col-md-4">
-								<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់សព</h4>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ឈ្មោះអ្នកស្លាប់
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+								<div class="col-md-4">
+									<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់សព</h4>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ឈ្មោះអ្នកស្លាប់
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="dead_name" id="dead_name" />
+										</div>
 									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ឈ្មោះ(ចិន)
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ឈ្មោះ(ចិន)
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="dead_name_chinese" id="dead_name_chinese" />
+										</div>
 									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ភេទ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label ">
+											ភេទ
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="dead_sex" id="dead_sex" >
+												<option value="1">ប្រុស</option>
+												<option value="2">ស្រី</option>
+											</select>
+										</div>
 									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ឆ្នាំ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ឆ្នាំ
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="dead_khmer_year" id="dead_khmer_year" >
+												<option value="">ជ្រើសរើស</option>
+												<?php if(!empty($this->khmer_year)){foreach ($this->khmer_year as $rs){?>
+												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+												<?php }}?>
+											</select>
+										</div>
 									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										អាយុ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											អាយុ
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="dead_age" id="dead_age" />
+										</div>
 									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ថ្ងៃកំណើត
-									</label>
-									<div class="col-md-8 right">
-										<div class="input-icon right"><i class="fa fa-calendar"></i>
-										<input type="text" class="form-control date-picker" />
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ថ្ងៃកំណើត
+										</label>
+										<div class="col-md-8 right">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="dead_dob" id="dead_dob" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ស្លាប់នៅថ្ងៃទី
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control " name="date_time_dead" id="date_time_dead" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ទីកន្លែងកំណើត
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="dead_pob" id="dead_pob" />
 										</div>
 									</div>
 								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ស្លាប់នៅថ្ងៃទី
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+								
+								
+								<div class="col-md-4" style="text-align: left !important;">
+										<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ដៃគូសព</h4>
+									<div class="form-group" >
+										<label class="col-md-4 control-label">
+											ដែគូឈ្មោះ
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="partner_name" id="partner_name" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ឈ្មោះ(ចិន)
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="partner_name_chinese" id="partner_name_chinese" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label ">
+											ភេទ
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="partner_sex" id="partner_sex" >
+												<option value="1">ប្រុស</option>
+												<option value="2">ស្រី</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ឆ្នាំ
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="partner_khmer_year" id="partner_khmer_year" >
+												<option value="">ជ្រើសរើស</option>
+												<?php if(!empty($this->khmer_year)){foreach ($this->khmer_year as $rs){?>
+												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+												<?php }}?>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											អាយុ
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="partner_age" id="partner_age" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ថ្ងៃកំណើត
+										</label>
+										<div class="col-md-8 right">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="partner_dob" id="partner_dob" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ស្លាប់-រស់
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="partner_status" id="partner_status" >
+												<option value="1">រស់</option>
+												<option value="0">ស្លាប់</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ទីកន្លែងកំណើត
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="partner_pob" id="partner_pob" />
+										</div>
 									</div>
 								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ទីកន្លែងកំណើត
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
+								
+								
+								
+								<div class="col-md-4" style="text-align: left !important;">
+									<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានទីតាំង</h4>
+									<div class="form-group" >
+										<label class="col-md-4 control-label">
+											ទីតាំងបុណ្យ
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="place_of_program" id="place_of_program" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ប្រភេទរំលាយសព
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="type_romleay_sop" id="type_romleay_sop" >
+												<option value="1">បញ្ចុះ</option>
+												<option value="2">បូជា</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ទីតាំងបញ្ចុះ/បូជា
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="place_pjos_sop" id="place_pjos_sop"  />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											សម្គាល់
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="note" id="note"  />
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4" style="text-align: left !important;">
-									<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ដៃគូសព</h4>
-								<div class="form-group" >
-									<label class="col-md-4 control-label">
-										ដែគូឈ្មោះ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ឈ្មោះ(ចិន)
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ភេទ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ឆ្នាំ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										អាយុ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ស្លាប់-រស់
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ទីកន្លែងកំណើត
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" style="text-align: left !important;">
-								<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានទីតាំង</h4>
-								<div class="form-group" >
-									<label class="col-md-4 control-label">
-										ទីតាំងបុណ្យ
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ប្រភេទរំលាយសព
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										ទីតាំងបញ្ចុះ/បូជា
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-								<div class="form-group" style="">
-									<label class="col-md-4 control-label">
-										សម្គាល់
-									</label>
-									<div class="col-md-8">
-										<input type="text" class="form-control" />
-									</div>
-								</div>
-							</div>
-							</div>
+							
 							<div class="row">
 								<div class="col-md-12">
 									<ul class="nav nav-tabs ">
@@ -207,7 +250,10 @@
 													ថ្ងៃលើកសពចូលម្ឈូស
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<div class="input-icon right">
+														<i class="fa fa-calendar"></i>
+														<input type="text" class="form-control date-picker" name="lerk_sop_date" id="lerk_sop_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+													</div>
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -215,7 +261,7 @@
 													វេលាម៉ោង
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<input type="text" class="form-control" name="lerk_sop_time" id="lerk_sop_time" />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -223,7 +269,12 @@
 													ឆ្នាំឆុង
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<select class="form-control select2me" name="lerk_sop_opposite_year" id="lerk_sop_opposite_year" >
+														<option value="">ជ្រើសរើស</option>
+														<?php if(!empty($this->khmer_year)){foreach ($this->khmer_year as $rs){?>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+														<?php }}?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -233,7 +284,10 @@
 													ថ្ងៃហែសពចេញ
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<div class="input-icon right">
+														<i class="fa fa-calendar"></i>
+														<input type="text" class="form-control date-picker" name="hae_sop_date" id="hae_sop_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+													</div>
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -241,7 +295,7 @@
 													វេលាម៉ោង
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<input type="text" class="form-control" name="hae_sop_time" id="hae_sop_time"  />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -249,7 +303,12 @@
 													ឆ្នាំឆុង
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<select class="form-control select2me" name="hae_sop_opposite_year" id="hae_sop_opposite_year" >
+						 								<option value="">ជ្រើសរើស</option>
+														<?php if(!empty($this->khmer_year)){foreach ($this->khmer_year as $rs){?>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+														<?php }}?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -259,7 +318,10 @@
 													ថ្ងៃ​បញ្ចុះ
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<div class="input-icon right">
+														<i class="fa fa-calendar"></i>
+														<input type="text" class="form-control date-picker" name="pjos_sop_date" id="pjos_sop_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+													</div>
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -267,7 +329,7 @@
 													វេលាម៉ោង
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<input type="text" class="form-control" name="pjos_sop_time" id="pjos_sop_time" />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -275,19 +337,124 @@
 													ឆ្នាំឆុង
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" />
+													<select class="form-control select2me" name="pjos_sop_opposite_year" id="pjos_sop_opposite_year" >
+														<option value="">ជ្រើសរើស</option>
+														<?php if(!empty($this->khmer_year)){foreach ($this->khmer_year as $rs){?>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+														<?php }}?>
+													</select>
 												</div>
 											</div>
 										</div>
 									</div><!-- end tab1 -->
-									<div class="tab-pane " id="tab_2">
-										Tab2
+									
+									<div class="tab-pane" id="tab_2">
+										<div class="row">
+											<div class="col-md-5" >
+												<div class="form-group" style=""></div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														<strong>ជ្រើសរើសឆ្នាំ</strong>
+													</label>
+													<div class="col-md-8">
+														<select name="khmer_year_boy" id="khmer_year_boy" onchange="addKhmerYearBoyRow();" class="form-control select2me">
+															<option value="-1">ជ្រើសរើសឆ្នាំ</option>
+															<?php if(!empty($this->khmer_year)){ foreach($this->khmer_year as $rs){?>
+															<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
+															<?php }}?>
+										    			</select>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-md-1"></div>
+											
+											<div class="col-md-6" style="margin-left: 90px;">
+												<div class="form-group" style=""></div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														<strong>ជ្រើសរើសឆ្នាំ</strong>
+													</label>
+													<div class="col-md-7">
+														<select name="khmer_year_girl" id="khmer_year_girl" onchange="addKhmerYearGirlRow();" class="form-control select2me">
+															<option value="-1">ជ្រើសរើសឆ្នាំ</option>
+															<?php if(!empty($this->khmer_year)){ foreach($this->khmer_year as $rs){?>
+															<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
+															<?php }}?>
+										    			</select>
+													</div>
+													<div class="col-md-1"></div>
+												</div>
+											</div>
+										</div>
+									
+									
+										<div class="row">
+											<div class="col-md-5" style="margin-left: 30px;">
+												 <div class="portlet box blue">
+													<div class="portlet-title">
+														<div class="caption">
+															<i class="fa fa-calendar"></i>ឆ្នាំកូនប្រុស
+														</div>
+													</div>
+													 <div class="portlet-body">
+														<div class="table-responsive">
+															 <table id="table_row" class="table table-bordered" style="font-size:12px !important;">
+																<thead>
+																	<tr style="text-align: center !important;">
+																		<th style="width:35px;text-align: center ;">#</th>
+																		<th style="width:100px;white-space: nowrap;text-align: center ;">ឆ្នាំ</th>
+																		<th style="width:230px;white-space: nowrap;text-align: center;">សម្គាល់</th>
+																		<th style="width:65px;text-align: center;">លុប</th>
+																	</tr>
+																</thead>
+																<tbody id="lbl_khmer_year_boy">
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-md-1">
+												<input id="identity_boy" name="identity_boy" type="text" />
+												<input id="identity_girl" name="identity_girl" type="text" />
+											</div>
+											
+											<div class="col-md-5" style="margin-left: 30px;">
+												 <div class="portlet box blue">
+													<div class="portlet-title">
+														<div class="caption" style="text-align: center;">
+															<i class="fa fa-calendar"></i>ឆ្នាំកូនស្រី
+														</div>
+													</div>
+													 <div class="portlet-body">
+														<div class="table-responsive">
+															 <table id="table_row" class="table table-bordered" style="font-size:12px !important;">
+																<thead>
+																	<tr style="text-align: center !important;">
+																		<th style="width:35px;text-align: center ;">#</th>
+																		<th style="width:100px;white-space: nowrap;text-align: center ;">ឆ្នាំ</th>
+																		<th style="width:230px;white-space: nowrap;text-align: center;">សម្គាល់</th>
+																		<th style="width:65px;text-align: center;">លុប</th>
+																	</tr>
+																</thead>
+																<tbody id="lbl_khmer_year_girl">
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
+									
 									<div class="tab-pane " id="tab_3">
 										Tab3
 									</div>
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<div class="col-md-3"></div>
 								<div class="col-md-3">
@@ -308,3 +475,82 @@
 	</form>	
 </body>
 </html>
+
+<script type="text/javascript">
+	$(function () {
+		$('#date_time_dead').datetimepicker({
+            inline: true,
+			sideBySide: true
+		});
+	});
+
+
+	index_boy=0;
+	function addKhmerYearBoyRow(){
+		index_boy++;
+		var khmer_year_boy_name = $("#khmer_year_boy");
+		var txt_khmer_year = $("option:selected",khmer_year_boy_name).text();
+		var khmer_year_boy_id = $("#khmer_year_boy").val();
+		
+		if(khmer_year_boy_id<0){return false;}
+		template='<tr align="center" id="row_khmer_year_boy_'+index_boy+'">';
+		template+='<td>'+index_boy+'</td>';
+		template+='<td>'+txt_khmer_year+'<input type="hidden" id="khmer_year_boy_'+index_boy+'" name="khmer_year_boy_'+index_boy+'" value="'+khmer_year_boy_id+'" </td>';
+		template+='<td><input type="text" id="boy_note_'+index_boy+'" name="boy_note_'+index_boy+'" value="" class="form-control"></td>';
+		template+='<td><button type="button" onClick="deleteKhmerYearBoyRecord('+index_boy+')" name="delete_boy" class="btn default red">លុប</button></td>';
+		template+='</tr>';
+		$('#lbl_khmer_year_boy').append(template);
+		if($('#identity_boy').val()!="") {
+			var identity = $('#identity_boy').val();
+			$('#identity_boy').val(identity+','+index_boy);
+		} else {$('#identity_boy').val(index_boy);}
+	}
+	
+	function deleteKhmerYearBoyRecord(index_boy) {
+		var identity = $('#identity_boy').val();
+		var arrays = identity.split(',');
+		
+		for(var i=0;i<arrays.length;i++) {
+			if(arrays[i] == index_boy) arrays.splice(i,1);
+		}
+		var strings = arrays.join(',');
+		$('#identity_boy').val(strings);
+		$("#row_khmer_year_boy_"+index_boy).remove();
+	}
+
+	
+	index_girl=0;
+	function addKhmerYearGirlRow(){
+		index_girl++;
+		var khmer_year_girl_name = $("#khmer_year_girl");
+		var txt_khmer_year = $("option:selected",khmer_year_girl_name).text();
+		var khmer_year_girl_id = $("#khmer_year_girl").val();
+		
+		if(khmer_year_girl_id<0){return false;}
+		template='<tr align="center" id="row_khmer_year_girl_'+index_girl+'">';
+		template+='<td>'+index_girl+'</td>';
+		template+='<td>'+txt_khmer_year+'<input type="hidden" id="khmer_year_girl_'+index_girl+'" name="khmer_year_girl_'+index_girl+'" value="'+khmer_year_girl_id+'" </td>';
+		template+='<td><input type="text" id="girl_note_'+index_girl+'" name="girl_note_'+index_girl+'" value="" class="form-control"></td>';
+		template+='<td><button type="button" onClick="deleteKhmerYearGirlRecord('+index_girl+')" name="delete_girl" class="btn default red">លុប</button></td>';
+		template+='</tr>';
+		$('#lbl_khmer_year_girl').append(template);
+		if($('#identity_girl').val()!="") {
+			var identity = $('#identity_girl').val();
+			$('#identity_girl').val(identity+','+index_girl);
+		} else {$('#identity_girl').val(index_girl);}
+	}
+
+	function deleteKhmerYearGirlRecord(index_girl) {
+		var identity = $('#identity_girl').val();
+		var arrays = identity.split(',');
+		
+		for(var i=0;i<arrays.length;i++) {
+			if(arrays[i] == index_girl) arrays.splice(i,1);
+		}
+		var strings = arrays.join(',');
+		$('#identity_girl').val(strings);
+		$("#row_khmer_year_girl_"+index_girl).remove();
+	}
+	
+</script>
+

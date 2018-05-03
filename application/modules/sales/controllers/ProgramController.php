@@ -46,30 +46,32 @@ class Sales_ProgramController extends Zend_Controller_Action
 	}
 	public function addAction()
 	{
-// 		$db = new Product_Model_DbTable_DbProduct();
-// 			if($this->getRequest()->isPost()){ 
-// 				try{
-// 					$post = $this->getRequest()->getPost();
-// 					$db->add($post);
-// 					if(isset($post["save_close"]))
-// 					{
-// 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index');
-// 					}else{
-// 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-// 					}
-// 				  }catch (Exception $e){
-// 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-// 				  }
-// 			}
-// 			$rs_branch = $db->getBranch();
-// 			$this->view->branch = $rs_branch;
-			
-// 			$this->view->price_type = $db->getPriceType();
-			
-// 			$formProduct = new Product_Form_FrmProduct();
-// 			$formStockAdd = $formProduct->add(null);
-// 			Application_Model_Decorator::removeAllDecorator($formStockAdd);
-// 			$this->view->form = $formStockAdd;
+		$db = new Sales_Model_DbTable_DbProgram();
+		if($this->getRequest()->isPost()){ 
+			try{
+				$data = $this->getRequest()->getPost();
+				$db->addProgram($data);
+				if(isset($data["save_close"]))
+				{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/sales/program/index');
+				}else{
+					Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				}
+			  }catch (Exception $e){
+			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  	echo $e->getMessage();exit();
+			  }
+		}
+		
+		$db=new Sales_Model_DbTable_DbProgram();
+		$khmer_year = $db->getAllKhmerYear();
+		$this->view->khmer_year = $khmer_year;
+		
+		$time = strtotime('20/10/2003');
+		
+		$newformat = date('Y-m-d',$time);
+		
+// 		echo $newformat;exit();
 	}
 	public function editAction()
 	{
