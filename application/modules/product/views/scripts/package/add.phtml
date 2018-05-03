@@ -5,7 +5,25 @@
 ?>						 
 <title>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</title>
 <body>
-	<form class="form-horizontal" id="frmproduct_id" method="post" action="" >				
+	<form class="form-horizontal" id="frm" method="post" action="" >				
+		<script>
+		$('#frm').submit(function() {
+			identity = $("#identity").val();
+		    if(identity==''){
+		        alert("សូមជ្រើសរើស ផលិតផល/សេវាកម្ម! ");
+		        $('#product_id').select2('open');
+		        return false;
+		    }
+			var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+			if (r == true) {
+			    return true;
+			} else {
+			   return false;
+			    
+			}
+		});
+			
+		</script>
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -34,7 +52,7 @@
 											<div class="form-group" >
 												<label class="col-md-4 control-label">កញ្ចប់ទំនិញ/សេវាកម្ម</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" required="true" name="product_name" id="product_name" />
+													<input type="text" class="validate[required] form-control"  name="product_name" id="product_name" />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -127,7 +145,7 @@
 											</div>
 										</div>
 										<div class="col-md-1">
-											<input id="identity" name="identity" type="text" />
+											<input id="identity" name="identity" type="hidden" />
 										</div>
 									</div>
 								</div>
@@ -167,8 +185,8 @@ function addProductRow(){
 	template='<tr id="row_location_'+index+'">';
 	template+='<td>'+index+'</td>';
 	template+='<td>'+txt_br+'<input type="hidden" id="product_id'+index+'" name="product_id'+index+'" value="'+pro_id+'" </td>';
-	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="form-control"></td>'; 
-	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" value="0" class="form-control"></td>'; 
+	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
 	template+='<td><input readonly="readonly" type="text" id="total_'+index+'" name="total_'+index+'"  class="form-control"></td>'; 
 	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="0" class="form-control"></td>';
 	template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';

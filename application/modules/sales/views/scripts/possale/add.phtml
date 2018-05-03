@@ -32,228 +32,268 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
     return false;
    }
 </script>
-	<div class="row" >
-		<div class="col-md-12">
-				<div class="portlet-body form">
-					<form method="post" action="">
-							<label class="control-label col-md-9">
-								<div class="portlet box blue">
-	                                    <div class="portlet-title">
-	                                        <div class="caption">
-	                                            <i class="fa fa-cogs"></i>ទំនិញដែលបានទិញ
-	                                          </div>
-	                                        <div class="tools">
-	                                            <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
-	                                        </div>
-	                                        <label class="control-label col-md-4" style="margin-top:10px;float:right">
-	                                          <lable class="col-md-13">
-												    <a href="<?php echo $url_back;?>" class="btn btn-bg blue  pull-right">
-														<i class="fa fa-back"></i>&nbsp;<?php echo $tr->translate("GO_BACK");?>
-													</a>
-												 </lable>
-	                                          </label>
-	                                    </div>
-	                                    <div class="portlet-body">
-	                                        <div class="table-responsive">
-	                                        	<label class="control-label col-md-12" style="margin-left: -4px;">
-				                                    <div style="background: #cccccc;padding: 10px;">
-											    		<input id="product_id" />
-											    		<input type="hidden" name="identity" id="identity" />
-									    				<input type="hidden" name="identity_term" id="identity_term" />
-									    				<input type="hidden" name="branch_id" id="branch_id" value="1" />
-									    				<input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
-										    		</div>
-								    			</label>
-		                                        <table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
-													<thead>
-														<tr id="head-title" class="table table-bordered" align="right" style="">
-															<th class="aligncenter">#</th>
-															<th class="aligncenter">ឈ្មោះមុខទំនិញ</th>
-															<th class="aligncenter">ស្តុក</th>
-															<th class="aligncenter">បរិ.ដុំ</th>
-															<th class="aligncenter">បរិ.រាយ</th>
-															<th class="aligncenter">បរិមាណ</th>
-															<th class="aligncenter">តម្លៃលក់</th>
-															<th class="aligncenter">បញ្ចុះតម្លៃ</th>
-															<th class="aligncenter">សរុប</th>
-															<th class="aligncenter">លុប</th>
-														</tr>
-														<tr>
-															<td colspan="11" id="lbl_noproduct" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
-														</tr>
-													</thead>
-												</table><br />
-												 <div style="clear:both;"></div>
-												  <label class="control-label col-md-12" >
-												  	Term Condition
-												  	<div style="border:1px solid #ccc;">
-														<textarea style="height: 120px;width:100%;" name="term_condition" id="term_condition" data-dojo-type="dijit/Editor"></textarea>
+<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i><strong>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</strong>
+				</div>
+				<div class="tools">
+					<label><a href="<?php //echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="tabbable-custom">
+					<div class="portlet-body form">
+						<div class="form-body">
+							<div class="row">
+								<div class="form-body">
+									<div class="row">
+										<div class="col-md-12">
+											<ul class="nav nav-tabs ">
+												<li class="active">
+													<a href="#tab_1" data-toggle="tab">
+													<strong>ការលក់</strong></a>
+												</li>
+												<li>
+													<a href="#tab_2" data-toggle="tab"><strong>ការជួលដៃគូខាងក្រៅ</strong></a>
+												</li>
+												<li>
+													<a href="#tab_3" data-toggle="tab"><strong>ផ្សេងៗ</strong></a>
+												</li>
+											</ul>
+										</div>
+										<div class="tab-content">
+											<div class="tab-pane active" id="tab_1">
+													<div class="col-md-4" style="text-align: left !important;">
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																ឈ្មោះអតិថិជន
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																ភេទ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																លេខទូរស័ព្ទ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																អាស័យដ្ឋានកម្មវិធី
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																ជ្រើសរើសសព
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																សម្គាល់ផ្សេងៗ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																ថ្ងៃគិតប្រាក់
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
 													</div>
-												</label>
-	                                        </div>
-	                                    </div>
-	                                     <div style="clear:both;"></div>
-	                                </div>
-	                                <div style="clear:both;"></div>
-	                               
-							</label>
-							<label class="control-label col-md-3" style="background: #eee;">
-							<div class="portlet box blue">
-	                                    <div class="portlet-title">
-	                                        <div class="caption">
-	                                            <i class="fa fa-cogs"></i>អតិថិជន/ការទូទាត់</div>
-	                                        <div class="tools">
-	                                        </div>
-	                                    </div>
-	                                    <label class="control-label col-md-12" style="background: #eee;">
-	                                    	<label class="control-label col-md-12" style="margin-top:10px;" >
-				                            	<input type="text" id="customer_id" />       
-								    		</label>
-		                                    <label class="control-label col-md-6" style="background: #eee;">
-	                                    		<select class="fullside" name="agreement_no" id="agreement_no" dojoType="dijit.form.FilteringSelect" onchange="addProductRow();">
-													<option value="-1">ជ្រើសរើសលេខ កិច្ចសន្យា</option>
-													<?php if(!empty($this->rs_agreement)){ foreach($this->rs_agreement as $rs){?>
-														<option value="<?php echo $rs['id']?>"><?php echo $rs['agreement_no'].'-'.$rs['customer_name']?></option>
-													<?php }}?>
-								    			</select>
-		                                    </label>
-		                                    <label class="control-label col-md-6" style="background: #eee;">
-		                                    	<button type="button" name="btnsavenew" onclick="getSuppliyer();" class="btn red btn-block btn-md"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;បន្ថែមអតិថិជន</button>
-	                                    	</label>
-	                                    </label>
-	                                    <div class="portlet-body">
-	                                        <div class="table-responsive">
-	                                            <table class="table table-bordered calculate" style="font-size:14px;">
-	                                                <tr>
-	                                                <thead>
-	                                                	 <tr>
-	                                                        <th style="white-space: nowrap;"><strong>ថ្ងៃលក់ចេញ</strong></th>
-	                                                        <th><input dojoType="dijit.form.DateTextBox" required="1" constraints="{datePattern:'dd/MM/yyyy'}"
-		                                                        class="full_width" value="<?php echo date("Y-m-d");?>" type="text" name="sale_date" id="sale_date" />
-	                                                        </th>
-	                                                    </tr>
-	                                                	<tr >
-		                                                	<th style="white-space: nowrap;background:#d84a38;color:#fff;">អាត្រាប្តូរប្រាក់ 1$= </th>
-		                                                    <th><input onkeyup="netTotal();" style="background:#d84a38;color:#fff" dojoType="dijit.form.NumberTextBox" class="full_width" value="<?php echo $this->rsrate;?>" type="text" name="exchange_rate" id="exchange_rate" /></th>
-	                                                    </tr>
-	                                                </thead>
-	                                                <tbody>
-	                                                	<tr>
-	                                                        <th>សរុបរង $</th>
-	                                                        <th><input readonly dojoType="dijit.form.NumberTextBox" class="full_width" type="text" name="sub_total" id="sub_total" />
-	                                                        	<input dojoType="dijit.form.TextBox" onkeyup="netTotal();" class="full_width" type="hidden" name="tax" id="tax" />
-	                                                        </th>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <td>បញ្ចុះតម្លៃ </td>
-	                                                        <td><input dojoType="dijit.form.NumberTextBox" onkeyup="netTotal();" class="full_width" type="text" name="discount" id="discount" /></td>
-	                                                    </tr>
-	                                                   
-	                                                    <tr>
-	                                                        <td style="white-space: nowrap;">ថ្លៃសេវាដឹកជញ្ជូន</td>
-	                                                        <td><input type="text"  dojoType="dijit.form.NumberTextBox" onkeyup="netTotal();" class="full_width" name="transport_fee" id="transport_fee" /></td>
-	                                                    </tr>
-	                                                    <tr style="font-weight: bold;">
-	                                                        <td> សរុបរួមជាដុល្លារ </td>
-	                                                        <td><input readonly type="text" style="background:#b93524;color: #fff;" dojoType="dijit.form.NumberTextBox" class="full_width" name="total_dollar" id="total_dollar" /></td>
-	                                                    </tr>
-	                                                    <tr style="font-weight: bold;">
-	                                                        <td> សរុបរួមជារៀល </td>
-	                                                        <td> <input readonly type="text" style="background:#b93524;color: #fff;" dojoType="dijit.form.NumberTextBox" class="full_width" name="total_riel" id="total_riel" /> </td>
-	                                                    </tr>
-	                                                </tbody>
-	                                            </table>
-	                                            <hr />
-	                                            <table class="table table-bordered calculate" style="font-size:14px;">
-	                                                <tr>
-	                                                <tbody>
-	                                                	<tr>
-	                                                        <th style="white-space: nowrap;">ប្រាក់ទទួលជា ដុល្លារ </th>
-	                                                        <th><input type="text" required="1" onkeyup="calCualtepaid();" dojoType="dijit.form.NumberTextBox" class="full_width" name="receive_dollar" id="receive_dollar" /></th>
-	                                                    </tr>
-	                                                    <tr>
-	                                                        <th>ប្រាក់ទទួលជា រៀល </th>
-	                                                        <th> <input type="text" required="1" onkeyup="calCualtepaid();" value="0" dojoType="dijit.form.NumberTextBox" class="full_width" name="receive_riel" id="receive_riel" /></th>
-	                                                    </tr>
-	                                                     <tr>
-	                                                        <th>ប្រាក់ទទួលសរុប</th>
-	                                                        <th>
-	                                                         <label class="control-label col-md-6" style="background: #eee;">
-						                                    	<button type="button" name="btnsavenew" onclick="Fullpaid();" class="btn red btn-block btn-md"><i class="fa fa-usd" aria-hidden="true"></i>&nbsp;&nbsp;បង់គ្រប់</button>
-						                                    </label>
-						                                     <label class="control-label col-md-6" style="background: #eee;">
-	                                                        	<input type="text" required="1" readonly dojoType="dijit.form.NumberTextBox" class="full_width" name="total_paid" id="total_paid" />
-	                                                        </label>	
-	                                                        </th>
-	                                                    </tr>
-	                                                    <tr style="background: #c8c8ff">
-	                                                        <td> ប្រាក់អាប់ដុល្លា</td>
-	                                                        <td><input readonly type="text" value="0" dojoType="dijit.form.NumberTextBox" class="full_width" name="return_amount" id="return_amount" /> </td>
-	                                                    </tr>
-	                                                    <tr style="background: #4b8df8">
-	                                                        <td> ប្រាក់អាប់ជារៀល </td>
-	                                                        <td><input readonly type="text" value="0" dojoType="dijit.form.NumberTextBox" class="full_width" name="return_amountriel" id="return_amountriel" /> </td>
-	                                                    </tr>
-	                                                    <tr style="background: #c8c8ff">
-	                                                        <td> ជំពាក់ជាដុល្លា </td>
-	                                                        <td><input readonly type="text" value="0" dojoType="dijit.form.NumberTextBox" class="full_width" name="balance" id="balance" /> </td>
-	                                                    </tr>
-	                                                    
-	                                                    <tr style="background: #c8c8ff">
-	                                                        <td> ជំពាក់ជារៀល  </td>
-	                                                        <td><input readonly type="text" value="0" dojoType="dijit.form.NumberTextBox" class="full_width" name="balance_reil" id="balance_reil" /> </td>
-	                                                    </tr>
-	                                                    <tr style="background: #c8c8ff">
-	                                                        <td colspan="2">
-	                                                        </td>
-	                                                    </tr>
-	                                                </tbody>
-	                                            </table>
-	                                             <lable class="col-md-13">
-	                                			<button type="button" onclick="showReceipt();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i> រក្សាទុក/បោះ ពុម្ភ </button>
-											</lable>
-	                                        </div>
-	                                       
-	                                    </div>
-	                                     <div style="clear:both;"></div>
-	                                </div>
-										<!--  <lable class="col-md-13">
-											<lable class="col-md-6">
-		                                 		<button type="button" onclick="showReceipt();" name="btnsavenew" class="btn red btn-block btn-lg"><i class="fa fa-print"></i> បោះបង់</button>
-											</lable>
-											<lable class="col-md-6">
-		                                 		<button type="button" name="btnsavenew" class="btn red btn-block btn-lg"><i class="fa fa-print"></i> ផ្អាក</button>
-											</lable>
-										</lable>-->
-	                               </label>
-					</form> 
-			   </div>
-		</div>
+													<!-- end blog1 -->
+													<div class="col-md-4" style="text-align: left !important;">
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																លេខវិក័យបត្រ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																ថ្ងៃលក់
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																អ្នកណែនាំ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																លេខទូរស័ព្ទ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																កំរៃជើងសា
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																អ្នកទទួលប្រាក់
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+													</div>
+													<div class="col-md-4" style="text-align: left !important;">
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																សម្គាល់ផ្សេងៗ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+													</div>
+												<div class="row">
+													<div class="col-md-2" style="text-align: left !important;">
+														<div class="form-group"><label><a href="#"><button type="button" name="calcel" class="btn blue"><i class="fa fa-search"></i>ស្វែងរកមុខទំនិញ</button></a></label></div>
+													</div>
+													<div class="col-md-6" style="text-align: left !important;">
+														<div class="form-group">
+														  <input id="product_id" />
+														  <input type="hidden" name="identity" id="identity" />
+										    			  <input type="hidden" name="identity_term" id="identity_term" />
+										    			  <input type="hidden" name="branch_id" id="branch_id" value="1" />
+										    			  <input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
+														</div>
+													</div>
+													<div class="col-md-4">
+													</div>
+												</div>
+												<div class="row">
+														<div class="col-md-12">
+															<table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
+																<thead>
+																	<tr id="head-title" class="table table-bordered" align="right" style="">
+																		<th class="aligncenter">#</th>
+																		<th class="aligncenter">មុខទំនិញ/សេវាកម្ម</th>
+																		<th class="aligncenter">ស្តុក</th>
+																		<th class="aligncenter">បរិ.ដុំ</th>
+																		<th class="aligncenter">បរិ.រាយ</th>
+																		<th class="aligncenter">បរិមាណ</th>
+																		<th class="aligncenter">តម្លៃលក់</th>
+																		<th class="aligncenter">សរុប</th>
+																		<th class="aligncenter">លុប</th>
+																	</tr>
+																	<tr>
+																		<td colspan="10" id="lbl_noproduct" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
+																	</tr>
+																</thead>
+															</table>
+														</div>
+												</div>
+													<div class="col-md-4">
+													</div>
+													<div class="col-md-4">
+													</div>
+													<div class="col-md-4" style="text-align: left !important;">
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																តម្លៃសរុប
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																បានបង់ពីមុនសុរប
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																បានបង់សរុប
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+														<div class="form-group" style="">
+															<label class="col-md-4 control-label">
+																នៅខ្វះ
+															</label>
+															<div class="col-md-8">
+																<input type="text" class="form-control" />
+															</div>
+														</div>
+													</div>
+											</div>
+											<div class="tab-pane" id="tab_2">tab2</div>
+											<div class="tab-pane" id="tab_3">tab3</div>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 	</div>
+</div>
 </form>
 <div class="dijitHidden" style="width: 20cm !important; height: 12cm ; padding: 0px; margin: 0px;">
 <div id="invoice" data-dojo-type="dijit.Dialog" style="width:24cm;height: 18cm ;" align="center" data-dojo-props="title:'<?php echo $tr->translate("OFFICIAL_RECEIPT");?>'"  >
 	<div id="PrintReceipt" style="border:1px dashed #ccc;width:18cm !important; padding: 0px; margin-bottom:30px; ">
-			<style>
+	<style>
 		.hearder_table{height:25px !important;}
 		.defaulheight{line-height: 22px !important;}
 		#PrintReceipt{display: table;}
 		#pageFooter {
-		    display: table-footer-group;
-		}
-		
-#pageFooter:after {
-    counter-increment: page;
-    content:"Page " counter(page);
-    left: 0; 
-    top: 100%;
-    white-space: nowrap; 
-    z-index: 20px;
-    -moz-border-radius: 5px; 
-    -moz-box-shadow: 0px 0px 4px #222;  
-    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
-    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
-  }
+		   display: table-footer-group;
+	}
+	#pageFooter:after {
+	    counter-increment: page;
+	    content:"Page " counter(page);
+	    left: 0; 
+	    top: 100%;
+	    white-space: nowrap; 
+	    z-index: 20px;
+	    -moz-border-radius: 5px; 
+	    -moz-box-shadow: 0px 0px 4px #222;  
+	    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
+	    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
+	  }
 	</style>
 		<table class="print" cellspacing="0"  cellpadding="0" style="width:98%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top:0 auto;white-space:nowrap;">
 			<tr height="40px;">
@@ -633,8 +673,7 @@ function showReceipt(){
 		  var rowIDArray = rowId.split(',');
 		  i=0;		  	
 		for(var n = 0; n < rowIDArray.length; n++) {
-			i++;
-			
+			  i++;
 			  temp+='<tr style=" font-size:12px !important; text-align:center;font-weight:bold;">';
 			  temp+='<td style="border:1px solid #000;">'+i+'</td>';
 			  temp+='<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;'+$('#product_name'+rowIDArray[n]).val();+'</strong></td>';
@@ -644,24 +683,12 @@ function showReceipt(){
 					unit_label = $('#unit_label'+rowIDArray[n]).val();
 					label = label+" "+qtydetail+""+unit_label;
 			  }
-			  
 			  temp+='<td style="border:1px solid #000;"><strong style="color:#000;">'+dijit.byId('qty_'+rowIDArray[n]).get("value")+' '+label;'</strong></td>';
 			  temp+='<td style="border:1px solid #000;"><strong style="color:#000;">$ '+dojo.number.format(dijit.byId('price_'+rowIDArray[n]).get("value"),{places:3});+'</strong></td>';
 			  temp+='<td style="border:1px solid #000;"><strong style="color:#000;">$ '+dojo.number.format(dijit.byId('sub_total'+rowIDArray[n]).get("value"),{places:3});+'</strong></td>';
-		  temp+='</tr>';
-		}
-		  transport_fee = dijit.byId("transport_fee").get("value");
-		  transport_fee = isNaN(transport_fee)?0:transport_fee;
-		 if(transport_fee>0){
-			 i++;
-			 temp+='<tr style=" font-size:12px; text-align:center;font-weight:bold;">';
-			  temp+='<td style="border:1px solid #000;">'+i+'</td>';
-			  temp+='<td style="border:1px solid #000;text-align:left"><strong style="color:#000;">ថ្លៃសេវាដឹកជញ្ជូន</strong></td>';
-			  temp+='<td style="border:1px solid #000;"><strong style="color:#000;">1</strong></td>';
-			  temp+='<td style="border:1px solid #000;"><strong style="color:#000;">$ '+dojo.number.format(transport_fee,{places:3})+'</strong></td>';
-			  temp+='<td style="border:1px solid #000;"><strong style="color:#000;">$ '+dojo.number.format(transport_fee,{places:3})+'</strong></td>';
 		  	  temp+='</tr>';
-			 }
+		}
+		
 		 for(j=i;i<=13;i++){
 			 j++;
 	    	 temp+='<tr style="height:25px;;text-align:right;font-weight:bold;">';
@@ -759,7 +786,6 @@ function addNewCustomer(){
 function getCustomerInfo(){
 	customer_id = dijit.byId("customer_id").get("value");
 	if(customer_id==-1){
-		//$('#customerpopup').modal('show');
 	}else{
 		dojo.xhrPost({
 		    url: "<?php echo $url_getcustomerinfo;?>",
@@ -809,13 +835,12 @@ function addProductRow(){
 			dojo.byId('lbl_noproduct').innerHTML = '';
 		}
 		template+='<td style="min-width:20px;text-align:center">'+col+'</td>';
-		template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-		template+='<td style="min-width:170px"><lable style="font-size:12px;" id="lblcurrent_qty'+col+'"></lable><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'"/><input type="hidden" readonly dojoType="dijit.form.TextBox" id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" dojoType="dijit.form.TextBox" name="measur_name'+col+'" id="measur_name'+col+'"/></td>';
-		template+='<td style="min-width:50px"><input type="hidden" dojoType="dijit.form.TextBox" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="fullblog" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
+		template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="text"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
+		template+='<td style="min-width:170px"><lable style="font-size:12px;" id="lblcurrent_qty'+col+'"></lable><input type="text" name="qty_perunit'+col+'" id="qty_perunit'+col+'"/><input type="text" readonly dojoType="dijit.form.TextBox" id="current_qty'+col+'" name="current_qty'+col+'" /><input type="text" dojoType="dijit.form.TextBox" name="measur_name'+col+'" id="measur_name'+col+'"/></td>';
+		template+='<td style="min-width:50px"><input type="text" dojoType="dijit.form.TextBox" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="fullblog" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
 		template+='<td style="min-width:50px"><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="fullblog" id="qtydetail_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
 		template+='<td style="min-width:50px"><input required="1" readonly name="qty_sold'+col+'" class="fullblog" id="qty_sold'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
-		template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="fullblog" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" dojoType="dijit.form.TextBox" /></td>';
-		template+='<td style="min-width:50px"><input type="text"  onkeyup="calCualtePrice('+col+');"  name="discount_'+col+'" class="fullblog" id="discount_'+col+'" dojoType="dijit.form.TextBox" placeholder=""/></td>';
+		template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="fullblog" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/><input type="text" name="cost_price'+col+'" id="cost_price'+col+'" dojoType="dijit.form.TextBox" /></td>';
 		template+='<td style="min-width:60px"><input type="text" name="sub_total'+col+'" class="fullblog" id="sub_total'+col+'" dojoType="dijit.form.NumberTextBox" readonly/></td>';
 		template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 		tmp='<tr id="row'+col+'" class="hover">';
@@ -846,10 +871,7 @@ function calCualtePrice(index){
 	price = dijit.byId("price_"+index).get("value");
 	dijit.byId("qty_sold"+index).attr("value",qty_sold);
 
-	discount = dijit.byId("discount_"+index).get("value");
-	discount = isNaN(tax)?0:discount;
-
-	total = (price*qty_sold)-discount;
+	total = (price*qty_sold);
 	dijit.byId("sub_total"+index).attr("value",total);
 	
 	netTotal();

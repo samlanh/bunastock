@@ -26,8 +26,7 @@ class Sales_CustomerController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_DbCustomer();
 		$rows = $db->getAllCustomer($search);
 		$list = new Application_Form_Frmlist();
-		$columns=array("BRANCH_NAME","CUSTOMER_NAME","CUSTOMER_TYPE",
-		"CONTACT_NAME","CONTACT_NUMBER","ADDRESS","CREDIT_TERM","CREDIT_LIMIT","STATUS","BY_USER");
+		$columns=array("BRANCH_NAME","CUSTOMER_NAME","CONTACT_NUMBER","ADDRESS","STATUS","BY_USER");
 		$link=array(
 				'module'=>'sales','controller'=>'customer','action'=>'edit',
 		);
@@ -36,12 +35,6 @@ class Sales_CustomerController extends Zend_Controller_Action
         $formFilter = new Sales_Form_FrmSearch();
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
-		
-		//$db = new Application_Model_DbTable_DbGlobal();
- 	   // $db->getUpdatetermcustomer();
-		
-		//$db = new Sales_Model_DbTable_DbCustomer();
- 	   // $db->updatecustomerId();
 		
 	}
 	public function addAction()
@@ -52,24 +45,17 @@ class Sales_CustomerController extends Zend_Controller_Action
 			try{
 				$db = new Sales_Model_DbTable_DbCustomer();
 				$db->addCustomer($post);
-				if(!empty($post['saveclose']))
-				{
-// 					Application_Form_FrmMessage::Sucessfull('INSERT_SUCCESS', sel . '/customer/index');
-				}else{
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-				}
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		/////////////////for veiw form
 		$formcustomer = new Sales_Form_FrmCustomer(null);
 		$formStockAdd = $formcustomer->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formcustomer);
 		$this->view->form = $formcustomer;
-	
 	}	
 	public function editAction() {
 		$id = $this->getRequest()->getParam('id');
@@ -77,20 +63,17 @@ class Sales_CustomerController extends Zend_Controller_Action
 		{
 			try{
 				$post = $this->getRequest()->getPost();
-				//$post["id"]=$id;
 				$customer= new Sales_Model_DbTable_DbCustomer();
 				$customer->updateCustomer($post);
 				Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ',"/sales/customer");
-				//$this->_redirect('/sales/customer/index');
 			}catch (Exception $e){
-				
 				Application_Form_FrmMessage::message("Update customer failed !");
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
 		
-			$sql = "SELECT c.* FROM `tb_customer`AS c WHERE c.id=".$id." LIMIT 1";
+		$sql = "SELECT c.* FROM `tb_customer`AS c WHERE c.id=".$id." LIMIT 1";
 		$db = new Application_Model_DbTable_DbGlobal();
 		$row = $db->getGlobalDbRow($sql);
 		// lost item info
@@ -99,7 +82,6 @@ class Sales_CustomerController extends Zend_Controller_Action
 		Application_Model_Decorator::removeAllDecorator($formStockEdit);// omit default zend html tag
 		$this->view->form = $formStockEdit;
 	
-		//control action
 		$formControl = new Application_Form_FrmAction(null);
 		$formViewControl = $formControl->AllAction(null);
 		Application_Model_Decorator::removeAllDecorator($formViewControl);

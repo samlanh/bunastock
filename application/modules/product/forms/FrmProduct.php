@@ -179,19 +179,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		));
 		$branch->setMultiOptions($opt);
 		
-		$price_type = new Zend_Form_Element_Select("price_type");
-		$opt = array();
-		$row_price = $db->getPriceType();
-		if(!empty($row_price)){
-			foreach ($row_price as $rs){
-				$opt[$rs["id"]] = $rs["name"];
-			}
-		}
-		$price_type->setAttribs(array(
-				'class'=>'form-control select2me',
-				'Onchange'	=>	'addNewPriceType()'
-		));
-		$price_type->setMultiOptions($opt);
 		
 		if($data!=null){
 			$name->setValue($data["item_name"]);
@@ -211,7 +198,7 @@ class Product_Form_FrmProduct extends Zend_Form
 			$price->setValue($data["price"]);
 		}
 		
-		$this->addElements(array($selling_price,$price,$price_type,$branch,$status,$pro_code,$name,$serial,$brand,$barcode,$category,
+		$this->addElements(array($selling_price,$price,$branch,$status,$pro_code,$name,$serial,$brand,$barcode,$category,
 				$color,$measure,$qty_per_unit,$unit,$label,$description));
 		return $this;
 	}

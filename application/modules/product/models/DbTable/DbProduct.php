@@ -174,7 +174,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=16  AND p.`is_service`=v.`key_code` LIMIT 1) AS is_service,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
 			  SUM(pl.`qty`) AS qty,
-			  (SELECT pp.`price` FROM `tb_product_price` AS pp WHERE pp.`pro_id`=p.`id` AND `type_id`=1 LIMIT 1) AS master_price,
+			  p.selling_price AS master_price,
 			  p.price,
 			  (SELECT `fullname` FROM `tb_acl_user` WHERE `user_id`=p.`user_id` LIMIT 1) AS user_name,
   			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status
@@ -365,11 +365,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   	return $db->fetchAll($sql);
   }
   
-  function getPriceType(){
-  	$db = $this->getAdapter();
-  	$sql ="SELECT p.`id`,p.`name` FROM `tb_price_type` AS p WHERE p.`status`=1";
-  	return $db->fetchAll($sql);
-  }
   function getProductPrcie($id){
   	$db = $this->getAdapter();
   	$sql ="SELECT p.`id`,p.`pro_id`,p.`price`,p.`cost_price`,pt.`name`,p.`remark`,p.`type_id` FROM `tb_product_price` AS p,`tb_price_type` AS pt WHERE p.`type_id`=pt.`id` AND p.`pro_id`=$id";

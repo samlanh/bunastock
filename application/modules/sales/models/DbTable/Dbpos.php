@@ -9,7 +9,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchAll($sql);
 	}
 	function getAllCustomerName(){
-		$sql="SELECT id,CONCAT(cust_name,contact_name) AS name FROM `tb_customer` WHERE status=1 ";
+		$sql="SELECT id,cust_name AS name FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
 		return $this->getAdapter()->fetchAll($sql);
 	}
 	function getProductById($product_id,$branch_id,$agreement_id=null){

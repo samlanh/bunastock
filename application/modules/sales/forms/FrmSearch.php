@@ -15,10 +15,10 @@ public function init()
 		$nameElement->setValue($nameValue);
 		$this->addElement($nameElement);
 		
-		$rs=$db->getGlobalDb('SELECT id,cust_name,`phone`,`contact_phone` FROM tb_customer WHERE cust_name!="" AND status=1 ');
+		$rs=$db->getGlobalDb('SELECT id,cust_name,`phone` FROM tb_customer WHERE cust_name!="" AND status=1 ');
 		$options=array($tr->translate('Choose Customer'));
 		$vendorValue = $request->getParam('customer_id');
-		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['cust_name']."-".$read['contact_phone'];
+		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['cust_name']."-".$read['phone'];
 		$vendor_element=new Zend_Form_Element_Select('customer_id');
 		$vendor_element->setMultiOptions($options);
 		$vendor_element->setAttribs(array(
@@ -33,7 +33,6 @@ public function init()
 		
 		if($endDateValue==""){
 			$endDateValue=date("m/d/Y");
-			//$startDateValue=date("m/d/Y");
 		}
 		
 		$startDateElement = new Zend_Form_Element_Text('start_date');
@@ -43,8 +42,6 @@ public function init()
 				'placeholder'=>'Start Date'
 		));
 		$this->addElement($startDateElement);
-		
-// 		Application_Form_DateTimePicker::addDateField(array('start_date','end_date'));
 		
 		$options="";
 		$sql = "SELECT id, name FROM tb_sublocation WHERE name!='' ";

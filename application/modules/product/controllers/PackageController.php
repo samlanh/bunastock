@@ -13,7 +13,7 @@ public function init()
     }
     public function indexAction()
     {
-    	$db = new Product_Model_DbTable_DbProduct();
+    	$db = new Product_Model_DbTable_DbPackage();
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
 		$result = $user_info->getUserInfo();
 		$level = $result["level"];
@@ -31,20 +31,15 @@ public function init()
     			'status'	=>	1
     		);
     	}
-// 		if($level==1 or $level==2){
 			$rows = $db->getAllProductForAdmin($data);
-			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
-// 		}else{
-// 			$rows = $db->getAllProduct($data);
-// 			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-// 					"CATEGORY","MEASURE","QTY","MASTER_PRICE","DEALER_PRICE","USER","STATUS");
-// 		}
+			$columns=array("ITEM_CODE","ITEM_NAME",
+					"PRODUCT_CATEGORY","OPTION_TYPE","SOLD_PRICE","USER","STATUS");
+
 		$link=array(
-				'module'=>'product','controller'=>'index','action'=>'edit',
+				'module'=>'product','controller'=>'package','action'=>'edit',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'branch'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'cat'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
@@ -68,57 +63,39 @@ public function init()
 				  }
 			}
 			$db = new Product_Model_DbTable_DbProduct();
-			$this->view-> caters = $db->getCategory();
+			$this->view->caters = $db->getCategory();
 			$this->view->pro_code = $db->getProductCode();
 			
 			$db = new Sales_Model_DbTable_Dbpos();
 			$this->view->rsproduct = $db->getAllProductName();
-			
 	}
 	public function editAction()
 	{
 		$id = $this->getRequest()->getParam("id"); 
-		$db = new Product_Model_DbTable_DbProduct();
+		$dbp = new Product_Model_DbTable_DbPackage();
 		if($this->getRequest()->isPost()){ 
 				try{
 					$post = $this->getRequest()->getPost();
 					$post["id"] = $id;
-					$db->edit($post);
+					$dbp->editPackage($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/index');
+						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/package');
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
 		}
-		$this->view->rs_location = $db->getProductLocation($id);
-		$this->view->rs_price = $db->getProductPrcie($id);
-		$rs = $db->getProductById($id);
-		$formProduct = new Product_Form_FrmProduct();
-		$formStockAdd = $formProduct->add($rs);
-		Application_Model_Decorator::removeAllDecorator($formStockAdd);
-		$this->view->form = $formStockAdd;
+		$db = new Product_Model_DbTable_DbProduct();
+		$this->view->rs = $db->getProductById($id);
 		
-		$formBrand = new Product_Form_FrmBrand();
-			$frmBrand = $formBrand->Brand();
-			$this->view->frmBrand = $frmBrand;
-			Application_Model_Decorator::removeAllDecorator($frmBrand);
+		$this->view->caters = $db->getCategory();
+		$this->view->pro_code = $db->getProductCode();
 			
-			$formCat = new Product_Form_FrmCategory();
-			$frmCat = $formCat->cat();
-			$this->view->frmCat = $frmCat;
-			Application_Model_Decorator::removeAllDecorator($frmCat);
-			
-			$formMeasure = new Product_Form_FrmMeasure();
-			$frmMesure = $formMeasure->measure();
-			$this->view->frmMesure = $frmMesure;
-			Application_Model_Decorator::removeAllDecorator($frmMesure);
-			
-			$fmOther = new Product_Form_FrmOther();
-			$frmOther = $fmOther->add();
-			Application_Model_Decorator::removeAllDecorator($frmOther);
-			$this->view->frmOther = $frmOther;
+		$db = new Sales_Model_DbTable_Dbpos();
+		$this->view->rsproduct = $db->getAllProductName();
+		
+		$this->view->rspakage = $dbp->getProductByPackageid($id);
 	}
 	
 	public function addBrandAction(){

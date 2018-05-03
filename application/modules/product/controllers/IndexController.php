@@ -76,8 +76,6 @@ public function init()
 			$rs_branch = $db->getBranch();
 			$this->view->branch = $rs_branch;
 			
-			$this->view->price_type = $db->getPriceType();
-			
 			$formProduct = new Product_Form_FrmProduct();
 			$formStockAdd = $formProduct->add(null);
 			Application_Model_Decorator::removeAllDecorator($formStockAdd);
