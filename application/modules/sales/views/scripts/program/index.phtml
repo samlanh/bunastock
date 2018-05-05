@@ -1,7 +1,7 @@
 <?php 
 	$url_new = $this->url(array('module'=>'sales','controller'=>'program','action'=>'add',));
-	$url_edit = $this->url(array('module'=>'product','controller'=>'index','action'=>'edit',));
-	$url_delete = $this->url(array('module'=>'product','controller'=>'index','action'=>'delete',));
+	$url_edit = $this->url(array('module'=>'sales','controller'=>'program','action'=>'edit',));
+	$url_delete = $this->url(array('module'=>'sales','controller'=>'program','action'=>'delete',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
@@ -18,7 +18,7 @@
 				</a>
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form id="frm" method="post" autocomplete="off" action="<?php echo $formFilter->getAction(); ?>">
 					<div class="form-group">
 							<label class="control-label col-md-3">
 								<?php echo $formFilter->getElement('ad_search');?>
@@ -49,8 +49,117 @@
 						</div>				
 				</form> 
 				<div class="contain_form" style="clear: both;">
-						<?php echo $this->list; ?>
+						<?php //echo $this->list; ?>
+						
+					<table class="collape tablesorter" id="table" width="100%">
+						<thead>
+							<tr>
+								<th rowspan="2" class="tdheader">ល.រ</th>
+								<th colspan="6" class="tdheader">ព័ត៌មានលម្អិតរបស់សព</th>
+								<th colspan="5" class="tdheader">ព័ត៌មានលម្អិតរបស់ដៃគូសព</th>
+								<th colspan="4" class="tdheader">ព័ត៌មានទីតាំង</th>
+								<th rowspan="2" class="tdheader">ថ្ងៃបង្កើត</th>
+								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>
+							</tr>
+							<tr>
+								<th class="tdheader">ឈ្មោះ</th>
+								<th class="tdheader">ឈ្មោះ(ចិន)</th>
+								<th class="tdheader">ភេទ</th>
+								<th class="tdheader">ឆ្នាំ</th>
+								<th class="tdheader">អាយុ</th>
+								<th class="tdheader">ស្លាប់នៅថ្ងៃ</th>
+								
+								<th class="tdheader">ឈ្មោះ</th>
+								<th class="tdheader">ឈ្មោះ(ចិន)</th>
+								<th class="tdheader">ភេទ</th>
+								<th class="tdheader">ឆ្នាំ</th>
+								<th class="tdheader">អាយុ</th>
+								
+								<th class="tdheader">ទីតាំងបុណ្យ</th>
+								<th class="tdheader">ប្រភេទរំលាយសព</th>
+								<th class="tdheader">ទីតាំងបញ្ចុះ/បូជា</th>
+								<th class="tdheader">សម្គាល់</th>
+							</tr>
+						</thead>
+						
+						<?php 
+							$link=$this->baseUrl()."/sales/program/edit/id/";
+							//echo $link;
+						?>
+						
+						<tbody>
+							<?php $i=0;if(!empty($this->rs)){foreach ($this->rs as $rs){ $i++; ?>
+							<tr class="normal"> 
+								<td class="items-no"><?php echo $i;?></td>
+								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name'];?></a></td>
+								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name_chinese'];?></a></td>
+								<td class="items" align="center" ><?php echo $rs['dead_sex'];?></td>
+								<td class="items" align="center"><?php echo $rs['dead_khmer_year'];?></td>
+								<td class="items" align="center"><?php echo $rs['dead_age'];?></td>
+								<td class="items" align="center"><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo date("d-m-Y H:i",strtotime($rs['date_time_dead']));?></a></td>
+								
+								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['partner_name'];?></a></td>
+								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['partner_name_chinese'];?></a></td>
+								<td class="items" align="center"><?php echo $rs['partner_sex'];?></td>
+								<td class="items" align="center"><?php echo $rs['partner_khmer_year'];?></td>
+								<td class="items" align="center"><?php echo $rs['partner_age'];?></td>
+								
+								<td class="items" ><?php echo $rs['place_of_program'];?></td>
+								<td class="items" align="center"><?php echo $rs['type_romleay_sop'];?></td>
+								<td class="items" ><?php echo $rs['place_pjos_sop'];?></td>
+								<td class="items" ><?php echo $rs['note'];?></td>
+								
+								<td class="items" align="center"><?php echo date("d-m-Y",strtotime($rs['create_date']));?></td>
+								<td class="items" align="center"><?php echo $rs['user_id'];?></td>
+							</tr>
+							<?php }}?>
+						</tbody>
+					</table>	
 			    </div>
+			    
+			    <div class="footer_list">
+			    <?php if(!empty($this->rs)){?>
+			    
+				    <script type="text/javascript">
+						$(document).ready(function(){
+							$("#table").tablesorter();
+							$("#table").tablesorter().tablesorterPager({container: $("#pagination_table"),size:15});
+							$("#pagedisplay").focus(function(){ this.blur(); 
+		                   });
+						});
+					</script>
+					<div id="pagination_table" class="pager" >
+						<form >
+							<table  style="width: 200px;"><tr>
+							<td><img src="/bunastock/trunk/public/images/first.gif" class="first"/></td>
+							<td><img src="/bunastock/trunk/public/images/previous.gif" class="prev"/></td>
+							<td><input id="pagedisplay" type="text" class="pagedisplay"/></td>
+							<td><img src="/bunastock/trunk/public/images/next.gif" class="next"/></td>
+							<td><img src="/bunastock/trunk/public/images/last.gif" class="last"/></td>
+							<td><select class="pagesize" >
+								<option   value="10">10</option>
+								<option selected="selected"  value="15">15</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+								<option value="50">50</option>
+								<option value="60">60</option>
+								<option value="70">70</option>
+								<option value="80">80</option>
+								<option value="90">90</option>
+								<option value="100">100</option>
+								</select>
+						    </td>
+							</tr>
+							</table>
+						</form>
+					</div>
+					<span class="row_num">ចំនួនជួរ<?php echo $i;?></span>
+				
+				<?php }else{?>
+						<center style="font-size:18pt;">No record</center>
+				<?php }?>
+				</div>
 		   </div>
 		</div>
 	</div>
