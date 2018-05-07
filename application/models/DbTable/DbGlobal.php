@@ -676,15 +676,20 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	}
    }
    public function getReceiptNumber($branch_id = 1){
-    	$this->_name='tb_receipt';
     	$db = $this->getAdapter();
-    	$sql=" SELECT COUNT(id)  FROM $this->_name WHERE branch_id=".$branch_id." LIMIT 1 ";
-    	$pre = $this->getPrefixCode($branch_id)."R";
-    	$acc_no = $db->fetchOne($sql);
-    
-    	$new_acc_no= (int)$acc_no+1;
-    	$acc_no= strlen((int)$acc_no+1);
-    	for($i = $acc_no;$i<5;$i++){
+    	$sql=" SELECT COUNT(id)  FROM tb_sales_order WHERE branch_id=".$branch_id." LIMIT 1 ";
+    	$sale_order = $db->fetchOne($sql);
+    	
+    	$sql1=" SELECT COUNT(id)  FROM tb_donors WHERE branch_id=".$branch_id." LIMIT 1 ";
+    	$donor = $db->fetchOne($sql1);
+    	
+    	//$pre = $this->getPrefixCode($branch_id)."R";
+    	$pre="R";
+    	
+    	$new_acc_no= (int)$sale_order+(int)$donor+1;
+    	
+    	$lenght= strlen($new_acc_no);
+    	for($i = $lenght;$i<5;$i++){
     		$pre.='0';
     	}
     	return $pre.$new_acc_no;
