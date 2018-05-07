@@ -9,14 +9,10 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 		$sql = "SELECT 
 				  sg.id,
 				  l.name AS branch_name,
-				  sg.`code`,
 				  sg.name,
 				  sg.phone,
 				  sg.email,
 				  sg.address,
-				  sg.job_title,
-				  sg.`start_working_date`,
-				  sg.description ,
 				  (SELECT v.name_kh FROM tb_view as v WHERE v.key_code=sg.status AND v.type=5) AS status
 				FROM
 				  tb_sale_agent AS sg 
@@ -37,8 +33,6 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 			$s_where[] = " sg.phone LIKE '%{$s_search}%'";
 			$s_where[] = " sg.email LIKE '%{$s_search}%'";
 			$s_where[] = " sg.address LIKE '%{$s_search}%'";
-			$s_where[] = " sg.job_title LIKE '%{$s_search}%'";
-			$s_where[] = " sg.description LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch_id']>0){
@@ -75,95 +69,25 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		$userName=$session_user->user_name;
 		$GetUserId= $session_user->user_id;
-		
 		try{
-		// photo image
-			$part= PUBLIC_PATH.'/images/stuffdocument/';
-			
-			$arr=array(
-					"username"  		=>	$data['user_name'],
-					"password"   		=> 	md5($data['password']),
-					"email"      		=>	$data['email'],
-					"LocationId"   		=>	$data['branch_id'],
-					"user_type_id"		=>	$data["user_type"],
-					"fullname"			=>	$data['name'],
-					'created_date'		=>	date("Y-m-d"),
-					"modified_date"		=>	date("Y-m-d"),
-					"status"			=>	$data["status"]
-			);
-			$this->_name = "tb_acl_user";
-			$id = $this->insert($arr);
-			
-			$arr_u= array(
-				'user_id'		=>	$id,
-				'location_id'	=>	$data["branch_id"],
-			);
-			$this->_name="tb_acl_ubranch";
-			$this->insert($arr_u);
-			
-			$photo = $_FILES['photo'];
-			if($photo["name"]!=""){
-				$temp = explode(".", $photo["name"]);
-				$newfilename = "photo".$data["code"]. '.' . end($temp);
-				move_uploaded_file($_FILES['photo']["tmp_name"], $part . $newfilename);
-				$photo_name = $newfilename;
-			}
-			
-			$document = $_FILES['document'];
-			if($document["name"]!=""){
-				$temp = explode(".", $photo["name"]);
-				$newfilename = "document".$data["code"]. '.' . end($temp);
-				move_uploaded_file($_FILES['document']["tmp_name"], $part . $newfilename);
-				$document_name = $newfilename;
-			}
-			
-			$signature = $_FILES['signature'];
-			if($signature["name"]!=""){
-				$temp = explode(".", $photo["name"]);
-				$newfilename = "signature".$data["code"]. '.' . end($temp);
-				move_uploaded_file($_FILES['signature']["tmp_name"], $part . $newfilename);
-				$signature_name= $newfilename;
-			}
-			
-			
 			$datainfo=array(
-					"code"					=>	$data["code"],
 					"name"		 			=>	$data['name'],
-					"user_name"  			=>	$data['user_name'],
-					"password"   			=> 	md5($data['password']),
 					"phone"      			=>	$data['phone'],
 					"email"      			=>	$data['email'],
 					"address"    			=>	$data['address'],
-					"pob"		 			=>	$data['pob'],
-					"dob"		 			=>	$data['dob'],
-					"job_title"  			=>	$data['job_title'],
 					"branch_id"   			=>	$data['branch_id'],
-					"user_type"				=>	$data["user_type"],
-					"manage_by"				=>	$data["manage_by"],
-					"bank_acc"				=>	$data["bank_acc"],
-					"start_working_date"	=>	$data["start_working_date"],
-					"refer_name"			=>	$data["refer_name"],
-					"refer_phone"			=>	$data["refer_phone"],
-					"refer_add"				=>	$data["refer_address"],
-					"photo"					=>	$photo_name,
-					"document"				=>	$document_name,
-					"signature"				=>	$signature_name,
-					"description"			=>	$data['description'],	
+					"note"					=>	$data['description'],
 					'user_id'				=>	$GetUserId,
 					"date"					=>	date("Y-m-d"),
-					"acl_user"				=>	$id,
-					"status"			=>	$data["status"]
 			);
 			$this->_name="tb_sale_agent";
 			$this->insert($datainfo);
 			
-			
-		$db->commit();
+			$db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
 			$err = $e->getMessage();
 			Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			echo $err; exit();
 		}
 	}
 	
@@ -175,107 +99,20 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 		$userName=$session_user->user_name;
 		$GetUserId= $session_user->user_id;
 		try{
-			// photo image
-			$part= PUBLIC_PATH.'/images/stuffdocument/';
-				
-			$sql = "SELECT u.* FROM `tb_acl_user` AS u WHERE u.`user_id`="."'".$data['user_id']."'";
-			//echo $sql;
-			$row = $db->fetchRow($sql);
-			$arr=array(
-					"username"  		=>	$data['user_name'],
-					//"password"   		=> 	md5($data['password']),
-					"email"      		=>	$data['email'],
-					"LocationId"   		=>	$data['branch_id'],
-					"user_type_id"		=>	$data["user_type"],
-					"fullname"			=>	$data['name'],
-					//'created_date'		=>	date("Y-m-d"),
-					"modified_date"		=>	date("Y-m-d"),
-					"status"			=>	$data["status"]
-			);
-			$this->_name = "tb_acl_user";
-				
-			if(!empty($row)){
-				$where=$this->getAdapter()->quoteInto('user_id=?',$data['user_id']);
-				$this->update($arr,$where);
-				$id = $data['user_id'];
-			}else{
-				$id = $this->insert($arr);
-			}
-			
-			$sqls = "DELETE FROM `tb_acl_ubranch` WHERE `user_id`="."'".$data["user_id"]."'"." AND `location_id`=".$data["branch_id"];
-			$db->query($sqls);
-			
-			$arr_u= array(
-					'user_id'		=>	$id,
-					'location_id'	=>	$data["branch_id"],
-			);
-			$this->_name="tb_acl_ubranch";
-				$this->insert($arr_u);
-			
-			$photo = $_FILES['photo'];
-			if($photo["name"]!=""){
-				$temp = explode(".", $photo["name"]);
-				$newfilename = "photo".$data["code"]. '.' . end($temp);
-				move_uploaded_file($_FILES['photo']["tmp_name"], $part . $newfilename);
-				$photo_name = $newfilename;
-			}else {
-				$photo_name = $data["old_photo"];
-			}
-				
-			$document = $_FILES['document'];
-			if($document["name"]!=""){
-				$temp = explode(".", $photo["name"]);
-				$newfilename = "document".$data["code"]. '.' . end($temp);
-				move_uploaded_file($_FILES['document']["tmp_name"], $part . $newfilename);
-				$document_name = $newfilename;
-			}else {
-				$document_name = $data["old_document"];
-			}
-				
-			$signature = $_FILES['signature'];
-			if($signature["name"]!=""){
-				$temp = explode(".", $photo["name"]);
-				$newfilename = "signature".$data["code"]. '.' . end($temp);
-				move_uploaded_file($_FILES['signature']["tmp_name"], $part . $newfilename);
-				$signature_name= $newfilename;
-			}else{
-				$signature_name = $data["old_signature"];
-			}
-				
-			
-				
 			$datainfo=array(
-					"code"					=>	$data["code"],
 					"name"		 			=>	$data['name'],
-					"user_name"  			=>	$data['user_name'],
-					//"password"   			=> 	md5($data['password']),
 					"phone"      			=>	$data['phone'],
 					"email"      			=>	$data['email'],
 					"address"    			=>	$data['address'],
-					"pob"		 			=>	$data['pob'],
-					"dob"		 			=>	$data['dob'],
-					"job_title"  			=>	$data['job_title'],
 					"branch_id"   			=>	$data['branch_id'],
-					"user_type"				=>	$data["user_type"],
-					"manage_by"				=>	$data["manage_by"],
-					"bank_acc"				=>	$data["bank_acc"],
-					"start_working_date"	=>	$data["start_working_date"],
-					"refer_name"			=>	$data["refer_name"],
-					"refer_phone"			=>	$data["refer_phone"],
-					"refer_add"				=>	$data["refer_address"],
-					"photo"					=>	$photo_name,
-					"document"				=>	$document_name,
-					"signature"				=>	$signature_name,
-					"description"			=>	$data['description'],
+					"note"			=>	$data['description'],
 					'user_id'				=>	$GetUserId,
 					"date"					=>	date("Y-m-d"),
-					"acl_user"				=>	$id,
 					"status"			=>	$data["status"],
 			);
 			$this->_name="tb_sale_agent";
 			$where=$this->getAdapter()->quoteInto('id=?',$data['id']);
 			$this->update($datainfo,$where);
-			//exit();
 			$db->commit();
 		}catch (Exception $e){
 			$db->rollBack();

@@ -28,7 +28,7 @@ public function init()
 		$db = new Sales_Model_DbTable_DbSalesAgent();
 		$rows= $db->getAllSaleAgent($search);
         $list = new Application_Form_Frmlist();
-    	$columns=array("BRANCH_NAME","AGENT_CODE","SALE_AGENT","CONTACT_NUM","EMAIL","ADDRESS","POSTION","START_WORKING_DATE","DESC_CAP","STATUS");
+    	$columns=array("BRANCH_NAME","SALE_AGENT","CONTACT_NUM","EMAIL","ADDRESS","STATUS");
     	$link=array(
     		'module'=>'sales','controller'=>'saleagent','action'=>'edit',
     	);
@@ -76,20 +76,15 @@ public function init()
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
     		$data["id"] = $id;
-    		if(isset($data["saveclose"])){
     			$update_agent = new Sales_Model_DbTable_DbSalesAgent();
     			$update_agent ->editSalesAgent($data);
     			$this->_redirect("sales/saleagent/index");
-    		}
-    		else{
-    			$this->_redirect("sales/saleagent/index");    		}
     	}
     	// show form with value
 		$this->view->id = $id;
 		
     	$sql="SELECT * FROM tb_sale_agent where id=".$id;
     	$rows= $db->getGlobalDbRow($sql);
-		$this->view->user_id = $rows["acl_user"];
     	$formAgent = new Sales_Form_FrmStock(null);
 		$formShowAgent = $formAgent->showSaleAgentForm($rows);
 		Application_Model_Decorator::removeAllDecorator($formShowAgent);
