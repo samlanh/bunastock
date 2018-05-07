@@ -6,8 +6,7 @@ class Sales_Model_DbTable_DbProvince extends Zend_Db_Table_Abstract
     protected $_name = 'ln_province';
     public function getUserId(){
     	$session_user=new Zend_Session_Namespace('auth');
-    	return $session_user->user_id;
-    	 
+    	return $session_user->user_id;  	 
     }
     public function addNewProvince($_data){
     	$_arr=array(

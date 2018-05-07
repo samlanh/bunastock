@@ -5,7 +5,7 @@
 ?>						 
 <title>ដៃគូសេវាកម្មខាងក្រៅ</title>
 <body>
-	<form class="form-horizontal" id="product_id" method="post" action="" >				
+	<form class="form-horizontal" id="frm" method="post" action="" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -29,7 +29,7 @@
 											ឈ្មោះដៃគូ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" id="partner_name" name="partner_name" class="validate[required] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -37,7 +37,10 @@
 											ភេទ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<select name="gender" id="gender" class="form-control">
+										    <option value="1" label="Active">ប្រុស</option>
+										    <option value="2" label="Deactive">ស្រី</option>
+										</select>	
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -45,7 +48,7 @@
 											លេខទូរស័ព្ទ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" id="tel" name="tel"  class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -53,7 +56,7 @@
 											អាស័យដ្ឋាន
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" id="addresss" name="addresss"  class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -61,7 +64,11 @@
 											សេវាកម្មផ្តល់អោយ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<select  name="service_fee" id="service_fee"  class="form-control select2me" value="1">
+												<?php if(!empty($this->rsservice)){foreach ($this->rsservice as $rs){?>
+													<option value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
+												<?php }}?>
+											</select>
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -69,7 +76,7 @@
 											តម្លៃជួល
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" id="service_cool" name="service_cool" class="validate[required,custom[number]] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -77,7 +84,7 @@
 											ពណ៍នា
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" id="description" name="description"  class="form-control" />
 										</div>
 									</div>
 								</div>
