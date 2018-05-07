@@ -23,13 +23,13 @@
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6" style="text-align: left !important;border:1px solid #ccc;">
-										<h4 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្មខាងក្រៅ</h4>
+										<h3 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្មខាងក្រៅ</h3>
 									<div class="form-group" >
 										<label class="col-md-4 control-label">
-											ឈ្មោះដៃគូ
+											<strong>ឈ្មោះដៃគូ*</strong>
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="partner_name" name="partner_name" class="validate[required] form-control" />
+											<input type="text" id="partner_name" name="partner_name" class="validate[required] form-control" />	
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -64,7 +64,7 @@
 											សេវាកម្មផ្តល់អោយ
 										</label>
 										<div class="col-md-8">
-											<select  name="service_fee" id="service_fee"  class="form-control select2me" value="1">
+											<select  name="service_cate" id="service_cate"  class="form-control select2me" value="1">
 												<?php if(!empty($this->rsservice)){foreach ($this->rsservice as $rs){?>
 													<option value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
 												<?php }}?>
@@ -76,7 +76,7 @@
 											តម្លៃជួល
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="service_cool" name="service_cool" class="validate[required,custom[number]] form-control" />
+											<input type="text" id="service_fee" name="service_fee" class="validate[required,custom[number]] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">

@@ -2,12 +2,12 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
-	$service = $this->service;
-	print_($service);
+	$result=$this->service;
+//	print_r($this->service);
 ?>						 
 <title>ដៃគូសេវាកម្មខាងក្រៅ</title>
 <body>
-	<form class="form-horizontal" id="product_id" method="post" action="" >				
+	<form class="form-horizontal" id="frm" method="post" action="" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -28,10 +28,10 @@
 										<h4 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្មខាងក្រៅ</h4>
 									<div class="form-group" >
 										<label class="col-md-4 control-label">
-											ឈ្មោះដៃគូ
+											<strong>ឈ្មោះដៃគូ*</strong>
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="partner_name" name="partner_name" class="form-control select2me" />
+											<input type="text" id="partner_name" name="partner_name"  value="<?php echo $result['partner_name']?>" class="validate[required] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -39,9 +39,9 @@
 											ភេទ
 										</label>
 										<div class="col-md-8">
-											<select name="gender" id="gender" class="form-control select2me">
-										    <option value="1" label="Active">ប្រុស</option>
-										    <option value="2" label="Deactive">ស្រី</option>
+											<select name="gender" id="gender" class="form-control">
+										    <option value="1" <?php if($result['gender']==1) echo"selected";?> label="Active">ប្រុស</option>
+										    <option value="2" <?php if($result['gender']==2) echo"selected";?> label="Deactive">ស្រី</option>
 										</select>	
 										</div>
 									</div>
@@ -50,7 +50,7 @@
 											លេខទូរស័ព្ទ
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="tel" name="tel"  class="form-control select2me" />
+											<input type="text" id="tel" name="tel" value="<?php echo $result['tel']?>" class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -58,7 +58,7 @@
 											អាស័យដ្ឋាន
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="addresss" name="addresss"  class="form-control select2me" />
+											<input type="text" id="addresss" name="addresss"  value="<?php echo $result['addresss']?>" class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -68,7 +68,7 @@
 										<div class="col-md-8">
 											<select  name="service_cate" id="service_cate"  class="form-control select2me" value="1">
 												<?php if(!empty($this->rsservice)){foreach ($this->rsservice as $rs){?>
-													<option <?php echo $rs["id"];?>><?php echo $rs["partner_name"].'-'.$rs["barcode"];?></option>
+													<option <?php if($rs["id"]==$result['service_cate']){echo"selected";}?>  value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
 												<?php }}?>
 											</select>
 										</div>
@@ -78,7 +78,7 @@
 											តម្លៃជួល
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="service_cool" name="service_cool" class="form-control select2me" />
+											<input type="text" id="service_fee" name="service_fee" value="<?php echo $result['service_fee']?>" class="validate[required,custom[number]] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -86,7 +86,7 @@
 											ពណ៍នា
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="description" name="description"  class="form-control select2me" />
+											<input type="text" id="description" name="description" value="<?php echo $result['description']?>" class="form-control" />
 										</div>
 									</div>
 								</div>
