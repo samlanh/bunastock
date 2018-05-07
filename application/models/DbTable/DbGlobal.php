@@ -699,9 +699,6 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql=' SELECT id ,name FROM `tb_sale_agent` WHERE name!="" AND status=1  ';
     	$result = $this->getUserInfo();
-    	if($result['level']==6){
-    		$sql.=" AND acl_user = ".$result['user_id'];
-    	}
     	$rows = $db->fetchAll($sql);
     	if($option!=null){
     	  $opt=array();  
@@ -811,9 +808,15 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 			// Save the image to file and free memory quality 60%
 			imagejpeg($im, $uploadimage, 80);
 		}
-	//	imagedestroy($uploadimage);
 		return $new_name;
 			
+	}
+	function getAllDiePeople(){
+		$sql="SELECT id,dead_name,dead_name_chinese,dead_dob 
+			FROM `tb_program` 
+		WHERE status=1 AND dead_name!='' 
+			ORDER BY id DESC";
+		return $this->getAdapter()->fetchAll($sql);;
 	}
 }
 ?>

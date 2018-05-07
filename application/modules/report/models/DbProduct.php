@@ -19,21 +19,17 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 				  p.`barcode`,
 				  p.`item_code`,
 				  p.`item_name` ,
-	  			  p.`serial_number`,
 	  			  p.`status`,
 	  			  p.`unit_label`,
 				  p.`qty_perunit`,
-				   p.`price`,
+				  p.`price`,
+				  p.selling_price,
 				  pl.`location_id`,
 				   (SELECT b.`name` FROM `tb_sublocation` AS b WHERE b.`id`=pl.`location_id` LIMIT 1) AS branch,
 				  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
 				  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
-				  (SELECT m.name FROM `tb_model` AS m WHERE m.id=p.`model_id` LIMIT 1) AS model,
-				  (SELECT s.name FROM `tb_size` AS s WHERE s.id=p.`size_id` LIMIT 1) AS size,
-				  (SELECT c.name FROM `tb_color` AS c WHERE c.id=p.`color_id` LIMIT 1) AS color,
+				  
 				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
-				  (SELECT pp.`price` FROM `tb_product_price` AS pp WHERE pp.`pro_id`=p.`id` AND `type_id`=1 LIMIT 1) AS master_price,
-				(SELECT pp.`price` FROM `tb_product_price` AS pp WHERE pp.`pro_id`=p.`id` AND `type_id`=2 LIMIT 1) AS dealer_price,
 				  SUM(pl.`qty`) AS qty
 				FROM
 				  `tb_product` AS p ,
@@ -48,7 +44,6 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 			$s_where[]= " p.item_name LIKE '%{$s_search}%'";
 			$s_where[]=" p.barcode LIKE '%{$s_search}%'";
 			$s_where[]= " p.item_code LIKE '%{$s_search}%'";
-			$s_where[]= " p.serial_number LIKE '%{$s_search}%'";
 			$where.=' AND ('.implode(' OR ', $s_where).')';
 		}
 		if($data["branch"]!=""){

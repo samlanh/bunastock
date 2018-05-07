@@ -206,7 +206,12 @@
 	            			<a href="<?php echo $url_cust_list[0]; ?>">
 							    <i class="icon-arrow-right"></i><?php echo $tr->translate($url_cust_list[1]);?>
 		            		</a>
-	            		</li> 
+	            		</li>
+	            		<li>
+	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'saleagent','action'=>'index'),null, true); ?>">
+							    <i class="icon-arrow-right"></i>ភ្នាក់ងារលក់
+		            		</a>
+	            		</li>  
 	            		<li>
 	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'payment','action'=>'index'),null, true); ?>">
 		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("CUSTOMER_PAYMENT");?>

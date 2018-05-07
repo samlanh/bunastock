@@ -64,16 +64,6 @@ public function init()
 				'class'=>'form-control form-control-inline date-picker'
 		));
 		
-		$opt=array(-1=>"Choose Sale Person");
-		$rows = $db->getGlobalDb('SELECT id ,name FROM `tb_sale_agent` WHERE name!="" AND status=1');
-		if(!empty($rows)) {
-			foreach($rows as $rs) $opt[$rs['id']]=$rs['name'];
-		}
-		$saleagent_id = new Zend_Form_Element_Select('saleagent_id');
-		$saleagent_id->setAttribs(array('class'=>'demo-code-language form-control select2me'));
-		$saleagent_id->setMultiOptions($opt);
-		$saleagent_id->setValue($request->getParam("saleagent_id"));
-		$this->addElement($saleagent_id);
 		
 		$rows= $db->getGlobalDb('SELECT v.key_code,v.`name_en`,v.`name_kh` FROM `tb_view` AS v WHERE v.`status`=1 AND v.`name_en`!="" AND v.`type`=6');
 		$opt= array(0=>"Choose Customer Type");
@@ -84,17 +74,6 @@ public function init()
 		$customer_type->setAttribs(array('class'=>'form-control select2me'));
 		$customer_type->setMultiOptions($opt);
 		$this->addElement($customer_type);
-		/*$options="";
-		$sql = "SELECT id,name FROM `tb_price_type` WHERE name!='' ";
-		$sql.=" ORDER BY id DESC ";
-		$rs=$db->getGlobalDb($sql);
-		$options=array(0=>"Choose Level");
-		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['name'];
-		$locationID = new Zend_Form_Element_Select('level');
-		$locationID ->setAttribs(array('class'=>'validate[required] form-control select2me'));
-		$locationID->setMultiOptions($options);
-		$locationID->setattribs(array(
-				'Onchange'=>'AddLocation()',));
-		$this->addElement($locationID);*/
+		
 	}
 }

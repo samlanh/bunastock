@@ -62,14 +62,19 @@ class Sales_PossaleController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->rsproduct = $db->getAllProductName();
+		$this->view->rsservice = $db->getAllProductName(1);
+		
 		$this->view->rscustomer = $db->getAllCustomerName();
 	
 		$formpopup = new Sales_Form_FrmCustomer(null);
 		$formpopup = $formpopup->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
 		$this->view->form_customer = $formpopup;
+		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getSalesNumber(1);
+		$this->view->saleagent = $db->getSaleAgent();
+		$this->view->diepeople = $db->getAllDiePeople();
 	
 		$db = new Sales_Model_DbTable_Dbexchangerate();
 		$this->view->rsrate= $db->getExchangeRate();
@@ -159,13 +164,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_Dbpos();
-			$agreement_id=-1;
-			if(!empty($post['agreement_id'])){
-				if($post['agreement_id']>0){
-					$agreement_id = $post['agreement_id'];
-				}
-			}
-			$rs =$db->getProductById($post['product_id'],$post['branch_id'],$agreement_id);
+			$rs =$db->getProductById($post['product_id'],$post['branch_id']);
 			print_r(Zend_Json::encode($rs));
 			exit();
 		}
