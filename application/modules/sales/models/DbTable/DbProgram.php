@@ -43,12 +43,18 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     	$order=" order by id DESC";
     	$where = '';
     	
+    	$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " create_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+    	$where .= " AND ".$from_date." AND ".$to_date;
+    	
     	if(!empty($search['title'])){
 	    	$s_where=array();
 	    	$s_search=addslashes(trim($search['title']));
-	    	$s_where[]=" code LIKE '%{$s_search}%'";
-	    	$s_where[]=" province_en_name LIKE '%{$s_search}%'";
-	    	$s_where[]=" province_kh_name LIKE '%{$s_search}%'";
+	    	$s_where[]=" dead_name LIKE '%{$s_search}%'";
+	    	$s_where[]=" dead_name_chinese LIKE '%{$s_search}%'";
+	    	$s_where[]=" partner_name LIKE '%{$s_search}%'";
+	    	$s_where[]=" partner_name_chinese LIKE '%{$s_search}%'";
+	    	$s_where[]=" place_of_program LIKE '%{$s_search}%'";
 	    	$where.=' AND ('.implode(' OR ', $s_where).')';
     	}
     	if($search['status']>-1){

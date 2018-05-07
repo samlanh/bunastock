@@ -201,6 +201,7 @@ function initilize(){
 			var identity = $('#identity').val();
 			$('#identity').val(identity+','+index);
 		} else {$('#identity').val(index);}
+		
 		$("#qty_"+index).val("<?php echo $rs['qty'];?>");
 		$("#price_"+index).val("<?php echo $rs['price'];?>");
 		$("#total_"+index).val("<?php echo $rs['total'];?>");

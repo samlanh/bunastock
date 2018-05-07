@@ -227,7 +227,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$branch->setValue($request->getParam("branch"));
 		
 		$status = new Zend_Form_Element_Select("status");
-		$opt = array('-1'=>$tr->translate("ALL"),'1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
+		$opt = array('-1'=>$tr->translate("All"),'1'=>$tr->translate("Active"),'0'=>$tr->translate("Deactive"));
 		$status->setAttribs(array(
 				'class'=>'form-control select2me',
 		));
@@ -312,7 +312,33 @@ class Product_Form_FrmProduct extends Zend_Form
 		$status_qty->setMultiOptions($opt);
 		$status_qty->setValue($request->getParam("status_qty"));
 		
-		$this->addElements(array($status_qty,$ad_search,$branch,$brand,$model,$category,$color,$size,$status));
+		//date
+		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
+		$start_date->setAttribs(array(
+				'class'=>'form-control date-picker ',
+				'data-date-format'=>"dd-mm-yyyy",
+		));
+		$_date = $request->getParam("start_date");
+		
+		if(!empty($_date)){
+			$start_date->setValue($_date);
+		}
+		
+		
+		$end_date= new Zend_Dojo_Form_Element_DateTextBox('end_date');
+		$date = date("Y-m-d");
+		$end_date->setAttribs(array(
+				'class'=>'form-control date-picker',
+				'data-date-format'=>"dd-mm-yyyy",
+		));
+		$_date = $request->getParam("end_date");
+		if(empty($_date)){
+			$_date = date("d-m-Y");
+		}
+		$end_date->setValue($_date);
+		
+		
+		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$category,$color,$size,$status));
 		return $this;
 	}
 }

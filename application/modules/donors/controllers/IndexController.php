@@ -17,84 +17,69 @@ class Donors_IndexController extends Zend_Controller_Action
 // 	}
     public function indexAction()
     {
-    	$db = new Product_Model_DbTable_DbProduct();
+    	$db = new Donors_Model_DbTable_DbIndex();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
     			'branch'	=>	'',
-    			'brand'		=>	'',
-    			'category'	=>	'',
-    			'model'		=>	'',
-    			'color'		=>	'',
-    			'size'		=>	'',
-    			'status'	=>	1
+    			'status'	=>	-1,
+    			'start_date'=> date('Y-m-d'),
+    			'end_date'=>date('Y-m-d')
     		);
     	}
-		$rows = $db->getAllProductForAdmin($data);
-		$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
+		$rows = $db->getAllDonor($data);
+		$columns=array("ឈ្មោះ","ទូរស័ព្ទ","អាស័យដ្ឋាន","តម្រូវការ","ប្រើយូរបំផុត","សម្គាល់ផ្សេងៗ","លេខបង្កាន់ដៃ","ថ្ងៃបង់ប្រាក់","ចំនួនម្ឈូស","តម្លៃរាយ","តម្លៃសរុប","សម្គាល់","ថ្ងៃបង្កើត","USER","STATUS");
 		$link=array(
-				'module'=>'product','controller'=>'index','action'=>'edit',
+				'module'=>'donors','controller'=>'index','action'=>'edit',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'branch'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('donor_name'=>$link,'tel'=>$link,'address'=>$link,'receipt_no'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
 	public function addAction()
 	{
-// 		$db = new Product_Model_DbTable_DbProduct();
-// 			if($this->getRequest()->isPost()){ 
-// 				try{
-// 					$post = $this->getRequest()->getPost();
-// 					$db->add($post);
-// 					if(isset($post["save_close"]))
-// 					{
-// 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index');
-// 					}else{
-// 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-// 					}
-// 				  }catch (Exception $e){
-// 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-// 				  }
-// 			}
-// 			$rs_branch = $db->getBranch();
-// 			$this->view->branch = $rs_branch;
+		$db = new Donors_Model_DbTable_DbIndex();
+		if($this->getRequest()->isPost()){ 
+			try{
+				$data = $this->getRequest()->getPost();
+				$db->addDonor($data);
+				if(isset($data["save_close"]))
+				{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/donors/index/index');
+				}else{
+					Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				}
+			  }catch (Exception $e){
+			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  }
+		}
+
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$receipt = $_db->getReceiptNumber();
+		$this->view->receipt_no =  $receipt;
 			
-// 			$this->view->price_type = $db->getPriceType();
-			
-// 			$formProduct = new Product_Form_FrmProduct();
-// 			$formStockAdd = $formProduct->add(null);
-// 			Application_Model_Decorator::removeAllDecorator($formStockAdd);
-// 			$this->view->form = $formStockAdd;
 	}
 	public function editAction()
 	{
-// 		$id = $this->getRequest()->getParam("id"); 
-// 		$db = new Product_Model_DbTable_DbProduct();
-// 		if($this->getRequest()->isPost()){ 
-// 				try{
-// 					$post = $this->getRequest()->getPost();
-// 					$post["id"] = $id;
-// 					$db->edit($post);
-// 					if(isset($post["save_close"]))
-// 					{
-// 						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/index');
-// 					}
-// 				  }catch (Exception $e){
-// 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-// 				  }
-// 		}
-// 		$this->view->rs_location = $db->getProductLocation($id);
-// 		$this->view->rs_price = $db->getProductPrcie($id);
-// 		$rs = $db->getProductById($id);
-// 		$formProduct = new Product_Form_FrmProduct();
-// 		$formStockAdd = $formProduct->add($rs);
-// 		Application_Model_Decorator::removeAllDecorator($formStockAdd);
-// 		$this->view->form = $formStockAdd;
+		echo $id = $this->getRequest()->getParam("id"); 
+		$db = new Donors_Model_DbTable_DbIndex();
+		if($this->getRequest()->isPost()){ 
+			try{
+				$data = $this->getRequest()->getPost();
+				$db->editDonor($data,$id);
+				if(isset($data["save_close"]))
+				{
+					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/donors/index/index');
+				}
+			  }catch (Exception $e){
+			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  }
+		}
+		$this->view->row = $db->getDonorById($id);
 
 	}
 }

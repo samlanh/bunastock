@@ -5,7 +5,7 @@
 ?>						 
 <title>ការឧបត្ថមរបស់សប្បុរសជន</title>
 <body>
-	<form class="form-horizontal" id="product_id" method="post" action="" >				
+	<form id="frm" class="form-horizontal" id="product_id" method="post" action="" autocomplete="off" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -27,13 +27,13 @@
 									<div class="form-group" >
 										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="validate[required] form-control " id="donor_name" name="donor_name"  />
 										</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">លេខទូរស័ព្ទ</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="form-control " id="tel" name="tel"  />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -41,7 +41,7 @@
 											អាស័យដ្ឋាន
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="form-control " id="address" name="address"  />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -49,13 +49,16 @@
 											តម្រូវការប្រើប្រាស់
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="form-control " id="required_using" name="required_using"  />
 										</div>
 									</div>
 									<div class="form-group" >
 										<label class="col-md-4 control-label">ខែប្រើប្រាស់យូរបំផុត</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="invalid_date" id="invalid_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+											</div>
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -63,7 +66,7 @@
 											សម្គាល់ផ្សេងៗ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="form-control " name="note" id="note" />
 										</div>
 									</div>
 								</div>
@@ -71,10 +74,10 @@
 									<h4 style="border-bottom: 1px solid #ccc;" class="center">ការបង់ប្រាក់</h4>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											លេខបង្កាន់ដៃបង់
+											លេខបង្កាន់ដៃ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="form-control " name="receipt_no" id="receipt_no" value="<?php echo $this->receipt_no;?>" readonly />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -82,29 +85,32 @@
 											ថ្ងៃបង់ប្រាក់
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="paid_date" id="paid_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+											</div>
 										</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">ចំនួនម្ឈូស</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="number" class="validate[required] form-control " name="qty" id="qty" onclick="calculateTotal();" onkeyup="calculateTotal();" />
 										</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											តម្លៃរាយ
+											តម្លៃរាយ ($)
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="number" class="validate[required] form-control " name="unit_price" id="unit_price" onclick="calculateTotal();" onkeyup="calculateTotal();" />
 										</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											តម្លៃសរុប
+											តម្លៃសរុប ($)
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="validate[required] form-control " name="total_amount" id="total_amount" readonly />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -112,7 +118,7 @@
 											សម្គាល់
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control select2me" />
+											<input type="text" class="form-control " name="payment_note" id="payment_note" />
 										</div>
 									</div>
 								</div>
@@ -140,3 +146,20 @@
 	</form>	
 </body>
 </html>
+
+<script>
+	function calculateTotal(){
+		var qty = $('#qty').val();
+		var unit_price = $('#unit_price').val();
+
+		qty = isNaN(qty)?0:qty;
+		unit_price = isNaN(unit_price)?0:unit_price;
+
+		total = qty * unit_price;
+		$('#total_amount').val(total);
+		
+	}
+	
+</script>
+
+

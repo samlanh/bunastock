@@ -1,0 +1,125 @@
+<?php 
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$module = $request->getModuleName();
+	$controller=$request->getControllerName();
+?>						 
+<title>ការប្រគល់ការ ឧបត្ថម</title>
+<body>
+	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off" >				
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i><strong>ការប្រគល់ការ ឧបត្ថម</strong>
+				</div>
+				<div class="tools">
+					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="tabbable-custom ">
+					<div class="portlet-body form">
+						<div class="form-body">
+							<div class="row">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-5" style="text-align: left !important;border:1px solid #ccc;">
+										<h4 style="border-bottom: 1px solid #ccc;" class="center">ការប្រគល់ការ ឧបត្ថម</h4>
+									<div class="form-group" >
+										<label class="col-md-4 control-label">ឈ្មោះសព</label>
+										<div class="col-md-8">
+											<input type="text" class="validate[required] form-control " name="dead_name" id="dead_name" value="<?php echo $this->row['dead_name']?>"/>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">ភេទ</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="dead_sex" id="dead_sex" >
+												<option value="1" <?php if($this->row['dead_sex']==1){echo "selected='selected'";}?>>ប្រុស</option>
+												<option value="2" <?php if($this->row['dead_sex']==2){echo "selected='selected'";}?>>ស្រី</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											អាយុ
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control " name="dead_age" id="dead_age" value="<?php echo $this->row['dead_age']?>" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											អាស័យដ្ឋាន
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control " name="dead_address" id="dead_address" value="<?php echo $this->row['dead_address']?>" />
+										</div>
+									</div>
+									<div class="form-group" >
+										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
+										<div class="col-md-8">
+											<select type="text" class="validate[required] form-control select2me" name="donor_id" id="donor_id"  >
+												<option value="-1" <?php echo "disabled='disabled'";?>>ជ្រើសរើសសប្បុរសជន</option>
+												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
+												<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['donor_id']){echo "selected='selected'";}else{echo "disabled='disabled'";}?>><?php echo $rs['name']?></option>
+												<?php }}?>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ថ្ងៃចេញម្ឈូស
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="date_jenh" id="date_jenh" value="<?php echo date("d-m-Y",strtotime($this->row['date_jenh']))?>" data-date-format="dd-mm-yyyy" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-5" style="text-align: left !important;">
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											សម្គាល់
+										</label>
+										<div class="col-md-8">
+											<textarea class="form-control " name="note" id="note" style="height: 245px;" ><?php echo $this->row['note']?></textarea>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ស្ថានការ
+										</label>
+										<div class="col-md-8">
+											<select type="text" class="form-control select2me" name="status" id="status" >
+												<option value="1" <?php if($this->row['status']==1){echo "selected='selected'";}?>>Active</option>
+												<option value="0" <?php if($this->row['status']==0){echo "selected='selected'";}?>>Deactive</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1" style="text-align: left !important;">
+								</div>
+							</div>
+							<div class="form-group">
+								<br />
+								<div class="col-md-3"></div>
+								<div class="col-md-3">
+									<a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>
+								</div>
+								<div class="col-md-3">
+									<div class="input-icon right">
+										<button type="submit" name="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-save"></i> រក្សាទុក</button>
+									</div>
+								</div>
+								<div class="col-md-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+</body>
+</html>

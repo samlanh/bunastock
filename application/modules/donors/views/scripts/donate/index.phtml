@@ -1,50 +1,43 @@
 <?php 
-	$url_new = $this->url(array('module'=>'product','controller'=>'index','action'=>'add',));
-	$url_edit = $this->url(array('module'=>'product','controller'=>'index','action'=>'edit',));
-	$url_delete = $this->url(array('module'=>'product','controller'=>'index','action'=>'delete',));
+	$url_new = $this->url(array('module'=>'donors','controller'=>'donate','action'=>'add',));
+	$url_edit = $this->url(array('module'=>'donors','controller'=>'donate','action'=>'edit',));
+	$url_delete = $this->url(array('module'=>'donors','controller'=>'donate','action'=>'delete',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
 ?>
+<title>ការប្រគល់ការ ឧបត្ថម</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("PRODUCT_LIST");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ការប្រគល់ការ ឧបត្ថម");?>
 				</div>
 				<a href="<?php echo $url_new;?>" class="btn btn-bg blue  pull-right">
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
 				</a>
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off"  >
 					<div class="form-group">
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
 								<?php echo $formFilter->getElement('ad_search');?>
 							</label>
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
 								<?php echo $formFilter->getElement('branch');?>
 							</label>
-							<label class="control-label col-md-3">
-								<?php echo $formFilter->getElement('brand');?>
+							<label class="control-label col-md-2">
+								<?php echo $formFilter->getElement('start_date');?>
 							</label>
-							<label class="control-label col-md-3">
-								<?php echo $formFilter->getElement('category');?>
+							<label class="control-label col-md-2">
+								<?php echo $formFilter->getElement('end_date');?>
 							</label>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">
-								<?php echo $formFilter->getElement('model');?>
-							</label>
-							<label class="control-label col-md-3">
-								<?php echo $formFilter->getElement('color');?>
-							</label>
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
 								<?php echo $formFilter->getElement('status');?>
 							</label>
-							<label class="control-label col-md-3">
-								<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+							<label class="control-label col-md-2">
+								<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-search"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 							</label>
 						</div>				
 				</form> 

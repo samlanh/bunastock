@@ -114,6 +114,7 @@
 										</div>
 										<div class="col-md-3"></div>
 									</div>
+									
 									<div class="row">
 										<div class="col-md-1"></div>
 										<div class="col-md-10">
@@ -191,6 +192,7 @@ function addProductRow(){
 	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="0" class="form-control"></td>';
 	template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
 	template+='</tr>';
+	
 	$('#lbl_noproduct').append(template);
 	if($('#identity').val()!="") {
 		var identity = $('#identity').val();

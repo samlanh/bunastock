@@ -24,12 +24,9 @@ class Sales_ProgramController extends Zend_Controller_Action
     		$data = array(
     			'ad_search'	=>	'',
     			'branch'	=>	'',
-    			'brand'		=>	'',
-    			'category'	=>	'',
-    			'model'		=>	'',
-    			'color'		=>	'',
-    			'size'		=>	'',
-    			'status'	=>	1,
+    			'status'	=>	-1,
+    			'start_date'=> date('Y-m-d'),
+    			'end_date'=>date('Y-m-d')
     		);
     	}
 		$rows = $db->getAllProgram($data);
