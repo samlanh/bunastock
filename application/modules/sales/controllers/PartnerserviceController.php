@@ -14,8 +14,8 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
-    			'branch'	=>	'',
-    			'brand'		=>	'',
+//     			'branch'	=>	'',
+//     			'brand'		=>	'',
     		);
     	}
 		$rows = $db->getAllPartnerService($data);

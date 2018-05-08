@@ -24,11 +24,8 @@ class Sales_Model_DbTable_DbPartnerService extends Zend_Db_Table_Abstract
     		$s_where[]=" partner_name LIKE '%{$s_search}%'";
     		$where.=' AND ('.implode(' OR ', $s_where).')';
     	} 
-//     	     	if($search['partner_name']>0){
-//     	     		$where.= " AND partner_name = ".$db->quote($search['partner_name']);
-//     	     	}
      	$order=" ORDER BY id DE​SC ";
-    // 	echo $sql.$where;
+     //	echo $sql.$where;
     	return $db->fetchAll($sql);
     }
     public function addService($post){

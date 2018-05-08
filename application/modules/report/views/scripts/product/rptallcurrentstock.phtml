@@ -127,11 +127,11 @@ $db = new report_Model_DbProduct();
 		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
 								<!--<td><?php echo $tr->translate("BRANCH");?></td>
 								<td><?php echo $tr->translate("ITEM_CODE");?></td>-->									
-								<td><?php echo $tr->translate("BARCODE");?></td>
-								<td><?php echo $tr->translate("BRAND");?></td>
-								<td><?php echo $tr->translate("CATEGORY");?></td>
-								<td><?php echo $tr->translate("MEASURE");?></td>
-								<td><?php echo $tr->translate("QTY");?></td>
+								<td><?php echo $tr->translate("លេខកូដ");?></td>
+								<td><?php echo $tr->translate("ឈ្មោះទំនិញ/សេវាកម្ម");?></td>
+								<td><?php echo $tr->translate("ប្រភេទ");?></td>
+								<td><?php echo $tr->translate("ឯកតា");?></td>
+								<td><?php echo $tr->translate("តម្លៃលក់");?></td>
 								<!--<td><?php echo $tr->translate("STATUS");?></td>-->
 		                </tr>
 		                </thead>
@@ -162,9 +162,9 @@ $db = new report_Model_DbProduct();
 						?>
 								<tr class='row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
 									<td align="center" style="width:3% !important">&nbsp;<?php echo $index+1 ?></td>
-									<!--<td style="white-space: nowrap;" class="center"><?php echo $row["branch"]?></td>
+									<!--<td style="white-space: nowrap;" class="center"><?php echo $row["branch"]?></td>			
 									<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_code"]?>&nbsp;&nbsp;</td>-->
-									<td style="width:8% !important;white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["barcode"]?>&nbsp;&nbsp;</td>
+									<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
 									<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_name"]?>&nbsp;&nbsp;</td>									
 									<td style="width:10% !important;white-space: nowrap;" class="center"><?php echo $row["cat"]?></td>
 									<?php
