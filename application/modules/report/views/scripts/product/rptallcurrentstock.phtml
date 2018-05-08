@@ -96,8 +96,8 @@ $db = new report_Model_DbProduct();
 		                	<td width="20%" valign="top"><!--<img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="55px">--></td>
 		                	<td width="60%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:15px; font-family:'Khmer OS Muol Light'">តារាងលក់</li>
+		                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'">បញ្ជីរាយឈ្មោះទំនិញ</li>
+		                			<li style="text-align:center; font-size:15px; font-family:'Khmer OS Muol Light'">សេវាកម្មលក់</li>
 		                			<!--<li style="text-align:center; font-size:13px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>-->
 		                		</ul>
 		                	</td>
@@ -121,7 +121,7 @@ $db = new report_Model_DbProduct();
 		    </tr>
 		    <tr>
 		    	<td id="exportExcel">
-		            <table class="table2excel" border="1"  style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">               
+		            <table class="table2excel" border="1"  style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">               
 		                 <thead>
 		                 <tr bgcolor="#B0C4DE" class="style" align="center" style="font-weight:bold; line-height: 27px; font-size:13px; padding:1px 0px; white-space: nowrap; ">
 		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
@@ -189,7 +189,7 @@ $db = new report_Model_DbProduct();
 										}
 									?>		
 									<?php }?>
-									<td style="width:8% !important;white-space: nowrap;" class="center">&nbsp;&nbsp;<?php echo $l_qty;?>&nbsp;&nbsp;</td>
+									<td style="width:5% !important" class="center"><?php echo $row["measure"];?></td>
 									<td style="width:8% !important" class="center"><?php echo $row["price"];?></td>
 							</tr>
 						  <?php }?>
@@ -214,10 +214,6 @@ $db = new report_Model_DbProduct();
 			</tbody>
 		</table>
 		</div>
-		<center>
-		<button dojoType="dijit.form.Button" id="printselected" iconClass="dijitEditorIcon dijitEditorIconPrint"
-					type="button" onclick="printSelected();">Print Selected</button>
-		</center>
 	  </div>		
 	</div>
 	 </div>
