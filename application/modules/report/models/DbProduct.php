@@ -79,6 +79,71 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		$group = " GROUP BY p.`id` ORDER BY p.`item_name`";
 		return $db->fetchAll($sql.$where.$location.$group);
 	}
+	function getAllcurrentstock($data){
+		$db = $this->getAdapter();
+		$db_globle = new Application_Model_DbTable_DbGlobal();
+		$sql ="SELECT
+		p.`id`,
+		p.`barcode`,
+		p.`item_code`,
+		p.`item_name` ,
+		p.`status`,
+		p.`unit_label`,
+		p.`qty_perunit`,
+		p.`price`,
+		p.selling_price,
+		pl.`location_id`,
+		(SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
+		(SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
+		SUM(pl.`qty`) AS qty
+		FROM
+		`tb_product` AS p ,
+		`tb_prolocation` AS pl
+		WHERE
+		p.status=1
+		AND p.`id`=pl.`pro_id` ";
+		$where = '';
+		if($data["ad_search"]!=""){
+			$s_where=array();
+			$s_search = addslashes(trim($data['ad_search']));
+			$s_where[]= " p.item_name LIKE '%{$s_search}%'";
+			$s_where[]=" p.barcode LIKE '%{$s_search}%'";
+			$s_where[]= " p.item_code LIKE '%{$s_search}%'";
+			$where.=' AND ('.implode(' OR ', $s_where).')';
+		}
+		if($data["branch"]!=""){
+			$where.=' AND pl.`location_id`='.$data["branch"];
+		}
+		if($data["brand"]!=""){
+			$where.=' AND p.brand_id='.$data["brand"];
+		}
+		if($data["category"]!=""){
+			$where.=' AND p.cate_id='.$data["category"];
+		}
+		if($data["category"]!=""){
+			$where.=' AND p.cate_id='.$data["category"];
+		}
+		if($data["model"]!=""){
+			$where.=' AND p.model_id='.$data["model"];
+		}
+		if($data["size"]!=""){
+			$where.=' AND p.size_id='.$data["size"];
+		}
+		if($data["color"]!=""){
+			$where.=' AND p.color_id='.$data["color"];
+		}
+		if($data["status_qty"]>-1){
+			if($data["status_qty"]==1){
+				$where.=' AND pl.qty>0';
+			}else{
+				$where.=' AND pl.qty=0';
+			}
+				
+		}
+		$location = $db_globle->getAccessPermission('pl.`location_id`');
+		$group = " GROUP BY p.`id` ORDER BY p.`item_name`";
+		return $db->fetchAll($sql.$where.$location.$group);
+	}
 	
 	function getQtyProductByProIdLoca($id,$loc_id){
 		$db = $this->getAdapter();

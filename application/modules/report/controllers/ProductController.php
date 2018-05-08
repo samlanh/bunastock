@@ -60,7 +60,7 @@ class report_ProductController extends Zend_Controller_Action
     				'status_qty'=>	-1
     		);
     	}
-    	$this->view->product = $db->getAllProduct($data);
+    	$this->view->product = $db->getAllcurrentstock($data);
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
