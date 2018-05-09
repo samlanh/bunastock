@@ -156,12 +156,15 @@ class Application_Form_purchase extends Zend_Form
 
     	$date_inElement = new Zend_Form_Element_Text('date_in');
     	$date =new Zend_Date();
-    	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker'));
+    	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$date_inElement ->setValue($date->get('MM/d/Y'));
     	$this->addElement($date_inElement);
     	
     	$dateOrderElement = new Zend_Form_Element_Text('order_date');
-    	$dateOrderElement ->setAttribs(array('format:'=>'DD/MM/YYYY','class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date'));
+    	$dateOrderElement ->setAttribs(array(
+		'data-date-format'=>"dd-mm-yyyy",
+		'class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date'));
     	$dateOrderElement ->setValue($date->get('M/d/Y'));
     	$this->addElement($dateOrderElement);
     	 
@@ -196,7 +199,8 @@ class Application_Form_purchase extends Zend_Form
 		
 		$date_issuecheque = new Zend_Form_Element_Text('date_issuecheque');
     	$date =new Zend_Date();
-    	$date_issuecheque ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker'));
+    	$date_issuecheque ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$date_issuecheque ->setValue($date->get('MM/d/Y'));
     	$this->addElement($date_issuecheque);
 		

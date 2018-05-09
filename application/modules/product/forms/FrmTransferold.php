@@ -116,7 +116,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
 		$tran_num->setValue($db->getRequestTransferNo($result["branch_id"]));
     	
-    	$date =date("m/d/Y");
+    	$date =date("d-m-Y");
     	$tran_date = new Zend_Form_Element_Text('tran_date');
     	$tran_date->setValue($date);
     	$tran_date->setAttribs(array('class'=>'form-control date-picker', 'required'=>'required',));
@@ -207,7 +207,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
 		$result = $user_info->getUserInfo();
 		
-		$date =date("m/d/Y");
+		$date =date("d-m-Y");
 	
 		$tran_num = new Zend_Form_Element_Text('tran_num');
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
@@ -217,7 +217,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$re_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
 		//$re_num->setValue($db->getRequestTransferNo());
     	
-    	$date =date("m/d/Y");
+    	$date =date("d-m-Y");
     	$tran_date = new Zend_Form_Element_Text('tran_date');
     	$tran_date->setValue($date);
     	$tran_date->setAttribs(array('class'=>'form-control date-picker', 'required'=>'required',));
@@ -336,7 +336,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
 		$result = $user_info->getUserInfo();
 		
-		$date =date("m/d/Y");
+		$date =date("d-m-Y");
 	
 		$tran_num = new Zend_Form_Element_Text('tran_num');
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
@@ -346,7 +346,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$re_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
 		//$re_num->setValue($db->getRequestTransferNo());
     	
-    	$date =date("m/d/Y");
+    	$date =date("d-m-Y");
     	$tran_date = new Zend_Form_Element_Text('tran_date');
     	$tran_date->setValue($date);
     	$tran_date->setAttribs(array('class'=>'form-control date-picker', 'required'=>'required',));
@@ -465,14 +465,14 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$tran_num->setAttribs(array('class'=>'form-control'));
 		$tran_num->setValue($request->getParam("avd_search"));
 		 
-		$date = date("m/d/Y");
+		$date = date("d-m-Y");
 		$start_date = new Zend_Form_Element_Text('start_date');
 		$start_date->setValue($date);
 		$start_date->setAttribs(array('class'=>'form-control date-picker'));
 		if($request->getParam("start_date") !=""){
 			$date = $request->getParam("start_date");
 		}else{
-			$date = date("m/d/Y");
+			$date = date("d-m-Y");
 		}
 		$start_date->setValue($date);
 		
@@ -482,7 +482,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		if($request->getParam("end_date") !=""){
 			$date = $request->getParam("end_date");
 		}else{
-			$date = date("m/d/Y");
+			$date = date("d-m-Y");
 		}
 		$end_date->setValue($date);
 		

@@ -98,7 +98,7 @@ class Product_Form_FrmReceive extends Zend_Form
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
 		$tran_num->setValue($db->getRequestTransferNo());
     	
-    	$date =date("m/d/Y");
+    	$date =date("d-m-Y");
     	$tran_date = new Zend_Form_Element_Text('tran_date');
     	$tran_date->setValue($date);
     	$tran_date->setAttribs(array('class'=>'form-control date-picker', 'required'=>'required',));
@@ -171,7 +171,7 @@ class Product_Form_FrmReceive extends Zend_Form
 		$rs_loc = $db->getLocation(2);
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		
-		$date =date("m/d/Y");
+		$date =date("d-m-Y");
 		
 		$receive_num = new Zend_Form_Element_Text('receive_num');
 		$receive_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
@@ -186,7 +186,7 @@ class Product_Form_FrmReceive extends Zend_Form
 		$re_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
 		//$re_num->setValue($db->getRequestTransferNo());
     	
-    	$date =date("m/d/Y");
+    	$date =date("d-m-Y");
     	$tran_date = new Zend_Form_Element_Text('tran_date');
     	$tran_date->setValue($date);
     	$tran_date->setAttribs(array('class'=>'form-control date-picker', 'required'=>'required',));

@@ -87,8 +87,8 @@ public function init()
     	}else{
     		$data = array(
     			'avd_search'	=>	'',
-    			'start_date'	=>	date("m/d/Y"),
-    			'end_date'		=>	date("m/d/Y"),
+    			'start_date'	=>	date("d-m-Y"),
+    			'end_date'		=>	date("d-m-Y"),
     			'status'		=>	1,
     			'branch'		=>	-1,
     		);
@@ -156,8 +156,8 @@ public function init()
     	}else{
     		$data = array(
     			'avd_search'	=>	'',
-    			'start_date'	=>	date("m/d/Y"),
-    			'end_date'		=>	date("m/d/Y"),
+    			'start_date'	=>	date("d-m-Y"),
+    			'end_date'		=>	date("d-m-Y"),
     			'status'		=>	1,
     			'branch'		=>	-1,
     		);
@@ -200,8 +200,8 @@ public function init()
     	}else{
     		$data = array(
     			'avd_search'	=>	'',
-    			'start_date'	=>	date("m/d/Y"),
-    			'end_date'		=>	date("m/d/Y"),
+    			'start_date'	=>	date("d-m-Y"),
+    			'end_date'		=>	date("d-m-Y"),
     			'status'		=>	1,
     			'branch'		=>	-1,
     		);
@@ -275,8 +275,8 @@ public function init()
     	}else{
     		$data = array(
     			'avd_search'	=>	'',
-    			'start_date'	=>	date("m/d/Y"),
-    			'end_date'		=>	date("m/d/Y"),
+    			'start_date'	=>	date("d-m-Y"),
+    			'end_date'		=>	date("d-m-Y"),
     			'status'		=>	1,
     			'branch'		=>	-1,
     		);

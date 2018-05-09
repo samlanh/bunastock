@@ -5,35 +5,33 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 	protected $_name="tb_sales_order";
 	function getAllSaleOrder($search){
 			$db= $this->getAdapter();
-			$sql=" SELECT id,
-			(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
-			(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=tb_sales_order.customer_id LIMIT 1 ) AS customer_name,
-			(SELECT contact_name FROM `tb_customer` WHERE tb_customer.id=tb_sales_order.customer_id LIMIT 1 ) AS contact_name,	
-			sale_no, date_sold,
-			net_total,discount_value,transport_fee,all_total,
-			(SELECT SUM(paid) FROM `tb_receipt_detail` WHERE STATUS=1 AND invoice_id=tb_sales_order.id ) AS paid,
-			(all_total-(SELECT SUM(paid) FROM `tb_receipt_detail` WHERE STATUS=1 AND invoice_id=tb_sales_order.id )) AS balance,
+			$sql=" SELECT s.id,
+			(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
+			(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
+			(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS contact_name,	
+			(SELECT (dead_name) FROM `tb_program` WHERE id=s.program_id LIMIT 1) as program_name,
+			(SELECT name FROM `tb_sale_agent` WHERE id=s.saleagent_id LIMIT 1) AS saleagent,
+			s.sale_no,s.date_sold,
+			s.all_total,
 			'វិក្កយបត្រ','លុបវិក្កយបត្រ',
-			(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1) AS user_name
-			FROM `tb_sales_order` ";
+			(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
+			FROM `tb_sales_order` AS s ";
 			
-			$from_date =(empty($search['start_date']))? '1': " date_sold >= '".$search['start_date']." 00:00:00'";
-			$to_date = (empty($search['end_date']))? '1': " date_sold <= '".$search['end_date']." 23:59:59'";
+			$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
+			$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
 			$where = " WHERE ".$from_date." AND ".$to_date;
 			if(!empty($search['text_search'])){
 				$s_where = array();
 				$s_search = trim(addslashes($search['text_search']));
-				$s_where[] = " sale_no LIKE '%{$s_search}%'";
-				$s_where[] = " net_total LIKE '%{$s_search}%'";
-				$s_where[] = " paid LIKE '%{$s_search}%'";
-				$s_where[] = " balance LIKE '%{$s_search}%'";
+				$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
+				$s_where[] = " s.all_total LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['branch_id']>0){
-				$where .= " AND branch_id = ".$search['branch_id'];
+				$where .= " AND s.branch_id = ".$search['branch_id'];
 			}
 			if($search['customer_id']>0){
-				$where .= " AND customer_id =".$search['customer_id'];
+				$where .= " AND s.customer_id =".$search['customer_id'];
 			}
 			$dbg = new Application_Model_DbTable_DbGlobal();
 			$where.=$dbg->getAccessPermission();
@@ -58,7 +56,6 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 					"sale_no"       => 	$so,//$data['txt_order'],
 					"date_sold"     => 	date("Y-m-d",strtotime($data['order_date'])),
 					"saleagent_id"  => 	$data['saleagent_id'],
-					//"payment_method" => $data['payment_name'],
 					"currency_id"    => 1,//$data['currency'],
 					"remark"         => 	$data['remark'],
 					"all_total"      => 	$data['totalAmoun'],
@@ -68,6 +65,7 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 					//"paid"         => 	$data['paid'],
 					//"balance"      => 	$data['remain'],
 					//"tax"			 =>     $data["total_tax"],
+					//"payment_method" => $data['payment_name'],
 					"user_mod"       => 	$GetUserId,
 					'pending_status' =>3,
 					"date"      => 	date("Y-m-d"),

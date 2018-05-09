@@ -61,7 +61,8 @@ class Product_Form_FrmAdjust extends Zend_Form
 		$start_date = New Zend_Form_Element_Text("start_date");
 		$start_date->setAttribs(array(
 				'class'=>'validate[required] form-control form-control-inline date-picker',
-				'placeholder' => 'Click to Choose Start Date'
+				'placeholder' => 'Click to Choose Start Date',
+				'data-date-format'=>"dd-mm-yyyy"
 		));
 		$re_start_date = $request->getParam("start_date");
 		if(!empty($re_start_date)){
@@ -73,7 +74,8 @@ class Product_Form_FrmAdjust extends Zend_Form
 		$end_date = New Zend_Form_Element_Text("end_date");
 		$end_date->setAttribs(array(
 				'class'=>'validate[required] form-control form-control-inline date-picker',
-				'placeholder' => 'Click to Choose End Date'
+				'placeholder' => 'Click to Choose End Date',
+				'data-date-format'=>"dd-mm-yyyy"
 		));
 		$re_end_date = $request->getParam("end_date");
 		if(!empty($re_end_date)){

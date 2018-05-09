@@ -75,13 +75,11 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"receipt_no"    => $data['receipt'],
 						"receipt_date"  => date("Y-m-d",strtotime($data['sale_date'])),
 						"date_input"    => date("Y-m-d"),
-						
 						'begining_balance'=>$data['sub_total'],
 						'paid_before'=>$data['paid_before'],
 						"total"         => $data['sub_total'],
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
-						
 						"user_id"       => $GetUserId,
 						'status'        =>1,
 						"bank_name"     => 	'',

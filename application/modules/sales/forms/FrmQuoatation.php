@@ -120,7 +120,8 @@ class Sales_Form_FrmQuoatation extends Zend_Form
 
     	$date =new Zend_Date();
     	$dateOrderElement = new Zend_Form_Element_Text('order_date');
-    	$dateOrderElement ->setAttribs(array('class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date'));
+    	$dateOrderElement ->setAttribs(array('class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$dateOrderElement ->setValue($date->get('MM/d/Y'));
     	$this->addElement($dateOrderElement);
 		

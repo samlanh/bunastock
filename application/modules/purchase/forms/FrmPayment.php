@@ -80,7 +80,8 @@ class Purchase_Form_FrmPayment extends Zend_Form
     	
     	$date_inElement = new Zend_Form_Element_Text('expense_date');
     	$date =new Zend_Date();
-    	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker'));
+    	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$date_inElement ->setValue($date->get('MM/d/Y'));
     	$this->addElement($date_inElement);
     	
@@ -91,13 +92,15 @@ class Purchase_Form_FrmPayment extends Zend_Form
     	
     	$cheque_issue = new Zend_Form_Element_Text('cheque_issuedate');
     	$date =new Zend_Date();
-    	$cheque_issue ->setAttribs(array('class'=>'form-control form-control-inline date-picker'));
+    	$cheque_issue ->setAttribs(array('class'=>'form-control form-control-inline date-picker',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$cheque_issue ->setValue($date->get('MM/d/Y'));
     	$this->addElement($cheque_issue);
     	
     	$cheque_withdraw = new Zend_Form_Element_Text('cheque_withdrawdate');
     	$date =new Zend_Date();
-    	$cheque_withdraw ->setAttribs(array('class'=>'form-control form-control-inline date-picker'));
+    	$cheque_withdraw ->setAttribs(array('class'=>'form-control form-control-inline date-picker',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$cheque_withdraw ->setValue($date->get('MM/d/Y'));
     	$this->addElement($cheque_withdraw);
     	

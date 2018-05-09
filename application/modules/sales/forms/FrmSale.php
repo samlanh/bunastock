@@ -131,12 +131,14 @@ class Sales_Form_FrmSale extends Zend_Form
     	
     	$date_inElement = new Zend_Form_Element_Text('date_in');
     	$date =new Zend_Date();
-    	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker'));
+    	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$date_inElement ->setValue($date->get('MM/d/Y'));
     	$this->addElement($date_inElement);
     	
     	$dateOrderElement = new Zend_Form_Element_Text('order_date');
-    	$dateOrderElement ->setAttribs(array('class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date'));
+    	$dateOrderElement ->setAttribs(array('class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date',
+		'data-date-format'=>"dd-mm-yyyy"));
     	$dateOrderElement ->setValue($date->get('MM/d/Y'));
     	$this->addElement($dateOrderElement);
     	

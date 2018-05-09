@@ -23,9 +23,10 @@ class Sales_Form_Frmcustomercomment extends Zend_Form
 		
 		$start_date=new Zend_Dojo_Form_Element_TextBox("start_date");
 		$start_date->setAttribs(array(
-				'class'=>'form-control form-control-inline date-picker'));
+				'class'=>'form-control form-control-inline date-picker',
+				'data-date-format'=>"dd-mm-yyyy"));
 		
-		$start_date->setValue(date("m/d/Y"));
+		$start_date->setValue(date("d-m-Y"));
 		
 		$_description = new Zend_Dojo_Form_Element_Textarea('description');
 		$_description->setAttribs(array('dojoType'=>'dijit.form.SimpleTextarea',

@@ -9,10 +9,10 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			$sql=" SELECT r.id,
 			(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND name!='' LIMIT 1) AS branch_name,
 			r.`receipt_no`,
-			(SELECT CONCAT(c.cust_name,' ',c.contact_name) FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
-			r.`date_input`, r.`total`,r.`paid`,r.`balance`,
-			(SELECT payment_name FROM `tb_paymentmethod` WHERE payment_typeId=r.`payment_id`) as payment_name,
-			(SELECT name_en FROM `tb_view` WHERE type=10 AND key_code=r.`payment_type` LIMIT 1 ) payment_by,
+			(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
+			r.`date_input`,
+			(SELECT sale_no FROM `tb_sales_order` WHERE id=r.invoice_id) AS invoice_no,
+			 r.`total`,r.paid_before,r.`paid`,r.`balance`,
 			'បោះពុម្ភ','លុប',r.remark,
 			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
 			FROM `tb_receipt` AS r ";
@@ -285,8 +285,8 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 	function getRecieptById($id){
 		$db = $this->getAdapter();
 		$sql=" SELECT r.*,
-			(SELECT CONCAT(c.cust_name,' ',c.contact_name) FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
-			(SELECT c.contact_phone FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS contact_phone,
+			(SELECT c.cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
+			(SELECT c.phone FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS contact_phone,
 			(SELECT c.address FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS address,
 			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
 		FROM $this->_name as r WHERE r.id = $id LIMIT 1 ";

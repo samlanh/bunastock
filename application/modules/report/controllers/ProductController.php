@@ -121,7 +121,7 @@ class report_ProductController extends Zend_Controller_Action
     	}else{
     		$data = array(
     			'tran_num'	=>	'',
-    			'tran_date'	=>	date("m/d/Y"),
+    			'tran_date'	=>	date("d-m-Y"),
     			'type'		=>	'',
     			'status'	=>	1,
     			'to_loc'	=>	'',

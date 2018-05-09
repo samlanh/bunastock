@@ -29,8 +29,8 @@ class Sales_IndexController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_DbSaleOrder();
 		$rows = $db->getAllSaleOrder($search);
-		$columns=array("BRANCH_NAME","Com.Name","CON_NAME","INVOICE_NO","SALE_DATE",
-				"SUB_TOTAL","DISCOUNT","TRANSPORT_FEE","TOTAL_AMOUNT","PAID","BALANCE","PRINT","លុបវិក្កយបត្រ","BY_USER");
+		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","កម្មវិធីបុណ្យ","អ្នកណែនាំ","INVOICE_NO","SALE_DATE",
+				"តម្លៃសរុប","PRINT","លុបវិក្កយបត្រ","BY_USER");
 		$link=array(
 				'module'=>'sales','controller'=>'possale','action'=>'edit',
 		);

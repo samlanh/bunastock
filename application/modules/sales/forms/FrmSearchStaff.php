@@ -20,14 +20,15 @@ public function init()
 		$endDateValue = $request->getParam('end_date');
 		
 		if($endDateValue==""){
-			$endDateValue=date("m/d/Y");
+			$endDateValue=date("d-m-Y");
 		}
 		
 		$startDateElement = new Zend_Form_Element_Text('start_date');
 		$startDateElement->setValue($startDateValue);
 		$startDateElement->setAttribs(array(
 				'class'=>'form-control form-control-inline date-picker',
-				'placeholder'=>'Start Date'
+				'placeholder'=>'Start Date',
+				'data-date-format'=>"dd-mm-yyyy"
 		));
 		$this->addElement($startDateElement);
 		
@@ -48,7 +49,8 @@ public function init()
 		$endDateElement->setValue($endDateValue);
 		$this->addElement($endDateElement);
 		$endDateElement->setAttribs(array(
-				'class'=>'form-control form-control-inline date-picker'
+				'class'=>'form-control form-control-inline date-picker',
+				'data-date-format'=>"dd-mm-yyyy"
 		));
 		
 		$opt_s = array("-1"=>"All",1=>"Active",0=>"Deactive");

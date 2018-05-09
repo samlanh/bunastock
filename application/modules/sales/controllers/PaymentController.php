@@ -30,8 +30,8 @@ class Sales_PaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","RECIEPT_NO","CUSTOMER_NAME","DATE",
-			"TOTAL","PAID","BALANCE","PAYMENT_TYPE","PAYMENT_METHOD","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
+		$columns=array("BRANCH_NAME","RECIEPT_NO","CUSTOMER_NAME","DATE","លេខវិក័យបត្រ",
+			"TOTAL","បានបង់ពីមុន","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
 		$link=array(
 			'module'=>'sales','controller'=>'payment','action'=>'edit',
 		);
@@ -105,7 +105,6 @@ class Sales_PaymentController extends Zend_Controller_Action
 		Application_Model_Decorator::removeAllDecorator($form_pay);
 		$this->view->form_sale = $form_pay;
 				 
-		// item option in select
 		$items = new Application_Model_GlobalClass();
 		$this->view->items = $items->getProductOption();
 		$this->view->term_opt = $db->getAllTermCondition(1);
@@ -124,7 +123,6 @@ class Sales_PaymentController extends Zend_Controller_Action
 		$dbq = new Sales_Model_DbTable_Dbpayment();
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		$this->view->rs = $dbq->getRecieptById($id);
-		$this->view->rsdetail = $dbq->getRecieptDetailforPrint($id);
 	}
 	public function deleteAction(){
 		$id = $this->getRequest()->getParam("id");

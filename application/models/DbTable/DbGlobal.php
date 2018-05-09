@@ -588,7 +588,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    function getAllCustomerPayment($opt=null){
     	$db=$this->getAdapter();
     	$sql=" SELECT DISTINCT (c.id) AS id,
-    	CONCAT(c.cust_name,' ',c.contact_name) AS cust_name
+    	(c.cust_name) AS cust_name
     	FROM `tb_sales_order` AS s,tb_customer AS c
     	WHERE c.id=s.`customer_id` AND s.balance>0 ";
     	$row =  $db->fetchAll($sql);
