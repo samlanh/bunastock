@@ -63,7 +63,6 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
-		
 		$this->view->rscustomer = $db->getAllCustomerName();
 	
 		$formpopup = new Sales_Form_FrmCustomer(null);

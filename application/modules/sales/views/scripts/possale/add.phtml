@@ -66,7 +66,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										</div>
 										<div class="tab-content">
 											<div class="tab-pane active" id="tab_1">
-													<div class="row">
+												<div class="row">
 													<div class="col-md-4" style="text-align: left !important;">
 														<div class="form-group" style="">
 															<label class="col-md-4 control-label">
@@ -220,97 +220,98 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													</div>
 												</div>
 												<div class="row">
-														<div class="col-md-12">
-															<table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
-																<thead>
-																	<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;">
-																		<th class="aligncenter">#</th>
-																		<th class="aligncenter">មុខទំនិញ/សេវាកម្ម</th>
-																		<th class="aligncenter">ស្តុក</th>
-																		<th class="aligncenter">បរិ.ដុំ</th>
-																		<th class="aligncenter">បរិ.រាយ</th>
-																		<th class="aligncenter">បរិមាណសរុប</th>
-																		<th class="aligncenter">តម្លៃលក់</th>
-																		<th class="aligncenter">សរុប</th>
-																		<th class="aligncenter">លុប</th>
-																	</tr>
-																	<tr>
-																		<td colspan="10" id="lbl_noproduct" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
-																	</tr>
-																</thead>
-															</table>
-														</div>
+													<div class="col-md-12">
+														<table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
+															<thead>
+																<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;">
+																	<th class="aligncenter">#</th>
+																	<th class="aligncenter">មុខទំនិញ/សេវាកម្ម</th>
+																	<th class="aligncenter">ស្តុក</th>
+																	<th class="aligncenter">បរិ.ដុំ</th>
+																	<th class="aligncenter">បរិ.រាយ</th>
+																	<th class="aligncenter">បរិមាណសរុប</th>
+																	<th class="aligncenter">តម្លៃលក់</th>
+																	<th class="aligncenter">សរុប</th>
+																	<th class="aligncenter">លុប</th>
+																</tr>
+																<tr>
+																	<td colspan="10" id="lbl_noproduct" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
+																</tr>
+															</thead>
+														</table>
+													</div>
 												</div>
-													<div class="col-md-4">
-													</div>
-													<div class="col-md-4">
-													</div>
-													<div class="col-md-4" style="text-align: left !important;font-weight: bold;">
-														<div class="form-group" style="">
-															<label class="col-md-4 control-label">
-															</label>
-															<div class="col-md-8">
-															</div>
-														</div>
-														<div class="form-group" style="">
-															<label class="col-md-4 control-label">
-																<strong style="font-size: 16px;">តម្លៃសរុប</strong>
-															</label>
-															<div class="col-md-8">
-																<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox"  name="sub_total" id="sub_total" readOnly />
-															</div>
-														</div>
-														<div class="form-group" style="">
-															<label class="col-md-4 control-label">
-																បានបង់ពីមុនសុរប
-															</label>
-															<div class="col-md-8">
-																<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="paid_before" id="paid_before" />
-															</div>
-														</div>
-														<div class="form-group" style="">
-															<label class="col-md-4 control-label">
-																<strong style="font-size: 16px;color: red;">បានបង់សរុប</strong>
-															</label>
-															<div class="col-md-8">
-																<input style="font-size: 16px;" type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="paid" id="paid" onkeyup="calCualtepaid();" />
-															</div>
-														</div>
-														<div class="form-group" style="">
-															<label class="col-md-4 control-label">
-																<strong>នៅខ្វះ</strong>
-															</label>
-															<div class="col-md-8">
-																<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="balance" id="balance" readOnly />
-															</div>
-														</div>
-														<div class="form-group" style="">
-															<label class="col-md-4 control-label">
-																ប្រាក់អាប់
-															</label>
-															<div class="col-md-8">
-																<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="return_amount" id="return_amount" readOnly />
-															</div>
+												<div class="col-md-4">
+												</div>
+												<div class="col-md-4">
+												</div>
+												<div class="col-md-4" style="text-align: left !important;font-weight: bold;">
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+														</label>
+														<div class="col-md-8">
 														</div>
 													</div>
-											</div>
-											<div class="tab-pane" id="tab_2">
-												<div class="row">
-													<div class="form-group">
-														<div class="col-md-2" style="text-align: left !important;">
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															<strong style="font-size: 16px;">តម្លៃសរុប</strong>
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox"  name="sub_total" id="sub_total" readOnly />
 														</div>
-														<div class="col-md-6" style="text-align: left !important;">
-															  <input id="service_id" />
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															បានបង់ពីមុនសុរប
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="paid_before" id="paid_before" />
 														</div>
-														<div class="col-md-2" style="text-align: left !important;">
-															<button type="button" name="calcel" class="btn blue col-md-12"><i class="fa fa-search"></i>ស្វែងរកមុខទំនិញ</button>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															<strong style="font-size: 16px;color: red;">បានបង់សរុប</strong>
+														</label>
+														<div class="col-md-8">
+															<input style="font-size: 16px;" type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="paid" id="paid" onkeyup="calCualtepaid();" />
 														</div>
-														<div class="col-md-2">
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															<strong>នៅខ្វះ</strong>
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="balance" id="balance" readOnly />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															ប្រាក់អាប់
+														</label>
+														<div class="col-md-8">
+															<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox" name="return_amount" id="return_amount" readOnly />
 														</div>
 													</div>
 												</div>
 											</div>
-											<div class="tab-pane" id="tab_3"></div>
+										</div>	
+										<div class="tab-pane" id="tab_2">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-2" style="text-align: left !important;">
+													</div>
+													<div class="col-md-6" style="text-align: left !important;">
+														  <input id="service_id" />
+													</div>
+													<div class="col-md-2" style="text-align: left !important;">
+														<button type="button" name="calcel" class="btn blue col-md-12"><i class="fa fa-search"></i>ស្វែងរកមុខទំនិញ</button>
+													</div>
+													<div class="col-md-2">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="tab_3">
 										</div>
 								</div>
 									<div class="form-group">
@@ -1017,10 +1018,11 @@ function getProductinfo(index,product_id){
 			$("#qty_perunit"+index).val(data.qty_perunit);
 			calCualtePrice(index);
 	   },		
+	   
 	    error: function(err) {
 			   alert(err);
-		    }
-		});
+		}
+	});
 }
 
 </script>

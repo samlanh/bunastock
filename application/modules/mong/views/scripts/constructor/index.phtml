@@ -1,18 +1,18 @@
 <?php 
-	$url_new = $this->url(array('module'=>'mong','controller'=>'index','action'=>'add',));
-	$url_edit = $this->url(array('module'=>'mong','controller'=>'index','action'=>'edit',));
-	$url_delete = $this->url(array('module'=>'mong','controller'=>'index','action'=>'delete',));
+	$url_new = $this->url(array('module'=>'mong','controller'=>'constructor','action'=>'add',));
+	$url_edit = $this->url(array('module'=>'mong','controller'=>'constructor','action'=>'edit',));
+	$url_delete = $this->url(array('module'=>'mong','controller'=>'constructor','action'=>'delete',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
 ?>
-<title>ផ្នែកលក់ម៉ុងចេតិយ</title>
+<title>ជាងសាងសង់</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("ផ្នែកលក់ម៉ុងចេតិយ");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ជាងសាងសង់");?>
 				</div>
 				<a href="<?php echo $url_new;?>" class="btn btn-bg blue  pull-right">
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
@@ -21,16 +21,19 @@
 			<div class="portlet-body form frmfilter">
 				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
 					<div class="form-group">
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
 								<?php echo $formFilter->getElement('ad_search');?>
 							</label>
-							<label class="control-label col-md-3">
-								<?php echo $formFilter->getElement('branch');?>
+							<label class="control-label col-md-2">
+								<?php echo $formFilter->getElement('start_date');?>
 							</label>
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
+								<?php echo $formFilter->getElement('end_date');?>
+							</label>
+							<label class="control-label col-md-2">
 								<?php echo $formFilter->getElement('status');?>
 							</label>
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
 								<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 							</label>
 						</div>				
