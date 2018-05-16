@@ -10,7 +10,7 @@
 </style>
 
 <body>
-	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off" >				
+	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off" enctype="multipart/form-data" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -970,19 +970,23 @@
 						qty = data.qty;
 						if(qty==null){qty=0;}
 						qtyall_detail = qty*(data.qty_perunit);//eg;qty 1.5 and 1unit =24cans; =>1.5*24 =36cans.
-						qty_unitlable = qtyall_detail % (data.qty_perunit);//រកចំនួនរាយ
+						qty_unitlable = (qtyall_detail % (data.qty_perunit)).toFixed(0);//រកចំនួនរាយ
 						if(qty_unitlable>0){qty_unitlable=qty_unitlable+""+data.unit_label;}else{qty_unitlable=""; }
 						qty=parseInt(qty);
 			            measure_name = data.measue_name;
 						if(data.measue_name==null){measure_name='';}
-						if(qty_unitlable==''){
-							qty_unitlable = "";
-						}else{
-							qty_unitlable = "និង"+qty_unitlable;
-						}
+						
+						// if(qty_unitlable==''){
+							// qty_unitlable = "";
+						// }else{
+							// qty_unitlable = "និង"+qty_unitlable;
+						// }
+						
 						current_stock = qty+""+measure_name;//data.unit_label;
-						if(qty<1){
+						if(qty<=0){
 							current_stock = '';
+						}else{
+							current_stock = current_stock + " និង ";
 						}
 						$("#lblcurrent_qty_"+index_sale).val(current_stock+""+qty_unitlable);
 						

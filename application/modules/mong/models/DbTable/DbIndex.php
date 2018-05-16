@@ -55,6 +55,29 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		try{	
 			$db = $this->getAdapter();
 			$db->beginTransaction();
+			
+			$array_photo_name = "";
+			 
+			$part= PUBLIC_PATH.'/images/';
+			$photo_name = $_FILES['photo']['name'];
+			 
+			if (!empty($photo_name)){
+				foreach($photo_name as $key=>$tmp_name){
+					$tem = explode(".", $photo_name[$key]);
+					$image_name = time().$key.".".end($tem);
+					$tmp = $_FILES['photo']['tmp_name'][$key];
+					if(move_uploaded_file($tmp, $part.$image_name)){
+						move_uploaded_file($tmp, $part.$image_name);
+						if($key==0){
+							$comma = "";
+						}else{
+							$comma = ",";
+						}
+						$array_photo_name = $array_photo_name.$comma.$image_name;
+					}
+				}
+			}
+			
 			$array=array(
 	 			'customer_id'			=> $data['customer_id'],
 				'note'					=> $data['note'],
@@ -89,7 +112,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'time_sen'				=> $data['time_sen'],
 				'date_chlong_mong'		=> date("Y-m-d",strtotime($data['date_chlong_mong'])),
 				'time_chlong_mong'		=> $data['time_chlong_mong'],
-				'photo'					=> $data['photo'],
+				'photo'					=> $array_photo_name,
 					
 				'dead_id'				=> $data['dead_id'],
 					
@@ -105,6 +128,19 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			if(!empty($data['identity_sale'])){
 				$iden = explode(",", $data['identity_sale']);
 				foreach ($iden as $i){
+					
+					$_db = new Sales_Model_DbTable_Dbpos();
+					$rs = $_db->getProductByProductId($data['pro_'.$i], $data["branch_id"]);//check if service not need update stock
+					
+					if(!empty($rs)){
+						$this->_name='tb_prolocation';
+						$arr = array(
+								'qty'=>$rs['qty']-$data['qty_sold_'.$i]
+						);
+						$where=" id =".$rs['id'];
+						$this->update($arr, $where);
+					}
+					
 					$arr=array(
 						'mong_id'		=> $mong_id,
 						'pro_id'		=> $data['pro_'.$i],
@@ -135,6 +171,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$this->insert($arra);
 				}
 			}
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
