@@ -132,7 +132,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		var txt;
 		var r = confirm('áž�áž¾áž›áŸ„áž€áž¢áŸ’áž“áž€áž–áž·áž�áž…áž„áŸ‹áž›áž»áž”ážœáž·áž€áŸ’áž€áž™áž”áž�áŸ’ážšáž“áŸ�áŸ‡áž«!');
 		if (r == true) {";
-			//$db->deleteSale($id);
+			
 			echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/possale/deleteitem/id/".$id."'";
 		echo"}";
 		echo"else {";
