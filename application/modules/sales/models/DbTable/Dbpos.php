@@ -267,12 +267,11 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}
 	function getInvoiceById($id){
 		$sql=" SELECT s.*,
-				(net_total+transport_fee) AS net_total,
-			(SELECT CONCAT(cust_name,' ',contact_name) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
-			(SELECT contact_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS contact_name,	
+				(all_total) AS net_total,
+			(SELECT (cust_name) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
 			(SELECT address FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS address,	
-			(SELECT contact_phone FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS contact_phone,	
-			(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id =s.user_mod LIMIT 1) AS user_name
+		
+			(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id =s.user_id LIMIT 1) AS user_name
 		FROM tb_sales_order AS s WHERE s.id= ".$id;
 		return $this->getAdapter()->fetchRow($sql);
 	}

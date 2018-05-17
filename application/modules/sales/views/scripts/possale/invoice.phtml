@@ -80,7 +80,7 @@
 						<tr>
 							<td>&nbsp;ទូរសព្ទ</td>
 							<td colspan="1"> :</td>
-							<td><label id="lbl_phone" class="one"><?php echo $rs['contact_phone']?></label></td>
+							<td><label id="lbl_phone" class="one"><?php //echo $rs['contact_phone']?></label></td>
 						</tr>
 						<tr>
 							<td>&nbsp;អាសយដ្ឋាន </td>
@@ -137,16 +137,7 @@
 											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo $item['price'];?></strong></td>
 											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo $item['sub_total'];?></strong></td>
 										</tr>
-										<?php }
-										if($rs['transport_fee']>0){?>
-											<tr style=" font-size:12px !important; text-align:center;font-weight:bold;">
-											<td style="border:1px solid #000;"><?php echo $key+1;?></td>
-											<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;ថ្លៃសេវាដឹកជញ្ជូន</strong></td>
-											<td style="border:1px solid #000;"><strong style="color:#000;">1<?php //echo $item['qty_order'];?></strong></td>
-											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo $rs['transport_fee'];?></strong></td>
-											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo $rs['transport_fee'];?></strong></td>
-										</tr>
-										<?php }}
+										<?php } }
 										for($index;$index<=16;$index++){
 										?>
 										<tr style=" font-size:12px !important; text-align:center;font-weight:bold;">
@@ -158,13 +149,13 @@
 										</tr>
 										<?php }?>
 										<tr style="height:25px;;text-align:right;font-weight:bold;">
-											<td style="border:1px solid #fff;border-right:1px solid #000" colspan="3"> <?php echo number_format($rs['all_total_riel'],3)?> រៀល&nbsp;</td>
+											<td style="border:1px solid #fff;border-right:1px solid #000" colspan="3"> <?php //echo number_format($rs['all_total_riel'],3)?> រៀល&nbsp;</td>
 											<td style="border:1px solid #000;><strong style=" color:#000;">សរុប&nbsp;</td>
-											<td style="border:1px solid #000;><strong style=" color:#000;">$ <?php echo number_format($rs['net_total'],3)?> &nbsp;</td></tr>
+											<td style="border:1px solid #000;><strong style=" color:#000;">$ <?php //echo number_format($rs['net_total'],3)?> &nbsp;</td></tr>
 											<tr style=" font-size:12px; text-align:right;font-weight:bold;">
 											<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="3">- សូមពិនិត្យទំនិញអោយបានត្រឹមត្រូវ</td>
 											<td style="border:1px solid #000;><strong style=" color:#000;">បញ្ចុះតម្លៃ&nbsp;</td>
-											<td style="border:1px solid #000;><strong style=" color:#000;">$ <?php echo number_format($rs['discount_value'],3)?> &nbsp;</td></tr>
+											<td style="border:1px solid #000;><strong style=" color:#000;">$ <?php //echo number_format($rs['discount_value'],3)?> &nbsp;</td></tr>
 											<tr style=" font-size:12px; text-align:right;font-weight:bold;">
 												<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="3">- ទំនិញដែលទិញហើយមិនអាចប្តូរវិញបានទេ</td>
 												<td style="border:1px solid #000;font-size:12px !important;"><strong style="color:#000;">សរុបដុល&nbsp;</strong></td>
