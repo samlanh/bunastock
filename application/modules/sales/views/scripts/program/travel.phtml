@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php 
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$module = $request->getModuleName();
+	$controller=$request->getControllerName();
+	$row = $this->row;
+?>
 <html lang="en">
 <head>
 
@@ -74,8 +79,9 @@
 		  				</tr>
 		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
 		  					<td>
-		  						<li>ថ្ងៃទី&nbsp;&nbsp;ខែ&nbsp;&nbsp;ឆ្នាំ201&nbsp;&nbsp;វេលាម៉ោងៈ</li>
-		  						<li>ឆុងនឹងឆុងៈ</li>
+		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
+		  							វេលាម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?></li>
+		  						<li>ឆុងនឹងឆុងៈ <?php echo $this->row['hae_sop_jol_mchhos']?></li>
 		  					</td>
 		  				</tr>
 		  			</table>
@@ -86,8 +92,9 @@
 		  				</tr>
 		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
 		  					<td>
-		  						<li>ថ្ងៃទី&nbsp;&nbsp;ខែ&nbsp;&nbsp;ឆ្នាំ201&nbsp;&nbsp;វេលាម៉ោងៈ</li>
-		  						<li>ឆុងនឹងឆ្នាំៈ</li>
+		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
+		  							វេលាម៉ោងៈ  <?php echo $this->row['hae_sop_time']?></li>
+		  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?></li>
 		  				</td>
 		  			</tr>
 		  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
@@ -97,8 +104,9 @@
 		  				</tr>
 		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
 		  					<td>
-		  						<li>វេលាម៉ោងៈ</li>
-		  						<li>ឆុងនឹងឆ្នាំៈ</li>
+		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
+		  							វេលាម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?></li>
+		  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?></li>
 		  				</td>
 		  			</tr>
 		  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">

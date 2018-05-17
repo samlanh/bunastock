@@ -93,4 +93,11 @@ class Sales_ProgramController extends Zend_Controller_Action
 		$this->view->khmer_year = $khmer_year;
 		
 	}
+	function travelAction(){
+		$id = $this->getRequest()->getParam("id");
+		$db = new Sales_Model_DbTable_DbProgram();
+		
+		$this->view->row = $db->getTravelById($id);
+		
+	}
 }

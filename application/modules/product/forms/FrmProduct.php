@@ -91,20 +91,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$color->setMultiOptions($opt);
 		 
-// 		$opt = array(''=>$tr->translate("SELECT_SIZE"),-1=>$tr->translate("ADD_NEW_SIZE"));
-// 		$size = new Zend_Form_Element_Select("size");
-// 		$size->setAttribs(array(
-// 				'class'=>'form-control select2me',
-// 				'onChange'=>'getPopupSize()',
-// 		));
-// 		$row_size = $db->getSize();
-// 		if(!empty($row_size)){
-// 			foreach ($row_size as $rs){
-// 				$opt[$rs["key_code"]] = $rs["name"];
-// 			}
-// 		}
-// 		$size->setMultiOptions($opt);
-		 
 		$unit = new Zend_Form_Element_Text("unit");
 		$unit->setAttribs(array(
 				'class'=>'form-control',

@@ -8,7 +8,6 @@ class Donors_IndexsController extends Zend_Controller_Action
     }
     public function rptServiceAction()
     {
-//     	$db = new Donors_Model_DbTable_DbIndex();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
     	}else{

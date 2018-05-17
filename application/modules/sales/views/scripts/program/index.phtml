@@ -52,7 +52,8 @@
 								<th colspan="5" class="tdheader">ព័ត៌មានលម្អិតរបស់ដៃគូសព</th>
 								<th colspan="4" class="tdheader">ព័ត៌មានទីតាំង</th>
 								<th rowspan="2" class="tdheader">ថ្ងៃបង្កើត</th>
-								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>
+								<th rowspan="2" class="tdheader">សប្បុសជន</th>
+								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>								
 							</tr>
 							<tr>
 								<th class="tdheader">ឈ្មោះ</th>
@@ -77,6 +78,7 @@
 						
 						<?php 
 							$link=$this->baseUrl()."/sales/program/edit/id/";
+							$link1=$this->baseUrl()."/sales/program/travel/id/";
 							//echo $link;
 						?>
 						
@@ -103,6 +105,7 @@
 								<td class="items" ><?php echo $rs['note'];?></td>
 								
 								<td class="items" align="center"><?php echo date("d-m-Y",strtotime($rs['create_date']));?></td>
+								<td class="items" align="center"><a href="<?php echo $link1.$rs['id'];?>" target="_blank">កំណត់ពេលវេលាពិធី</a></td>
 								<td class="items" align="center"><?php echo $rs['user_id'];?></td>
 							</tr>
 							<?php }}?>
