@@ -3,6 +3,12 @@
 class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 {
 	protected $_name="tb_invoice";
+	
+	function getUserId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->user_id;
+	}
+	
 	function getAllProductName($is_service=null){
 		$sql="SELECT id,CONCAT(item_name) AS name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
 		if($is_service!=null){
@@ -34,17 +40,14 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		try{
 			
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
-			$dbc=new Application_Model_DbTable_DbGlobal();
-			$so = $dbc->getSalesNumber($data["branch_id"]);
-	
+			$invoice = $db_global->getInvoiceNumber(1);
+			$receipt = $db_global->getReceiptNumber(1);
+			
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
 					'program_id'	=> $data['programe_id'],
 					"branch_id"     => $data["branch_id"],
-					"sale_no"       => $so,
+					"sale_no"       => $invoice,
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
 					"all_total"     => $data['sub_total'],
 					"paid"          => $data['paid'],
@@ -53,7 +56,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					"balance_after" => $data['balance'],
 					'return_amount' => $data['return_amount'],
 					'receiver_name' => $data['receiver_name'],
-					"user_id"       => $GetUserId,
+					"user_id"       => $this->getUserId(),
 					
 					'comission' => $data['comission'],
 					'clear_paymentdate' => $data['date_clearpayment'],
@@ -66,24 +69,24 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$sale_id = $this->insert($info_purchase_order);
 			
 			if($data['paid']>0){
-				$data['receipt'] = $db_global->getReceiptNumber(1);
 				$info_purchase_order=array(
 						"branch_id"   	=> $data['branch_id'],
 						'invoice_id'    => $sale_id,
 						"customer_id"   => $data["customer_id"],
 						"payment_id"    => 1,	//payment by cash/paypal/cheque
-						"receipt_no"    => $data['receipt'],
+						"receipt_no"    => $receipt,
 						"receipt_date"  => date("Y-m-d",strtotime($data['sale_date'])),
 						"date_input"    => date("Y-m-d"),
 						'begining_balance'=>$data['sub_total'],
-						'paid_before'=>$data['paid_before'],
+						'paid_before'	=>$data['paid_before'],
 						"total"         => $data['sub_total'],
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
-						"user_id"       => $GetUserId,
-						'status'        =>1,
+						"user_id"       => $this->getUserId(),
+						'status'        => 1,
 						"bank_name"     => 	'',
 						"cheque_number" => 	'',
+						"type"        	=> 1, // 
 						
 				);
 				$this->_name="tb_receipt";

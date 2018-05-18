@@ -15,11 +15,11 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			 r.`total`,r.paid_before,r.`paid`,r.`balance`,
 			'បោះពុម្ភ','លុប',r.remark,
 			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
-			FROM `tb_receipt` AS r ";
+			FROM `tb_receipt` AS r where type=1";
 			
 			$from_date =(empty($search['start_date']))? '1': " r.`receipt_date` >= '".$search['start_date']." 00:00:00'";
 			$to_date = (empty($search['end_date']))? '1': " r.`receipt_date` <= '".$search['end_date']." 23:59:59'";
-			$where = " WHERE ".$from_date." AND ".$to_date;
+			$where = " and ".$from_date." AND ".$to_date;
 			if(!empty($search['text_search'])){
 				$s_where = array();
 				$s_search = trim(addslashes($search['text_search']));
@@ -289,7 +289,7 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			(SELECT c.phone FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS contact_phone,
 			(SELECT c.address FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS address,
 			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
-		FROM $this->_name as r WHERE r.id = $id LIMIT 1 ";
+		FROM tb_receipt as r WHERE r.id = $id LIMIT 1 ";
 		return $db->fetchRow($sql);
 	}
 	function getRecieptDetail($reciept_id){
