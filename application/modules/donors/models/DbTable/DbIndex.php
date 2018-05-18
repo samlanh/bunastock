@@ -14,6 +14,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$sql=" SELECT 
 					id,
 					donor_name,
+					donor_female,
 					tel,
 					address,
 					required_using,
@@ -68,6 +69,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$arr=array(
 				'branch_id'			=> 1,
  				'donor_name'		=> $data['donor_name'],
+				'donor_female'		=> $data['donor_female'],
 				'tel'				=> $data['tel'],
 				'address'			=> $data['address'],
 				'required_using'	=> $data['required_using'],
@@ -92,6 +94,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$arr=array(
 				'branch_id'			=> 1,
  				'donor_name'		=> $data['donor_name'],
+				'donor_female'		=> $data['donor_female'],
 				'tel'				=> $data['tel'],
 				'address'			=> $data['address'],
 				'required_using'	=> $data['required_using'],

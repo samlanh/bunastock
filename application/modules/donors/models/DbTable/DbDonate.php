@@ -15,12 +15,12 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					id,
 					dead_name,
 					(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
-					dead_age,
+					dead_age,date_jom,
 					dead_address,
 					(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,
 					date_jenh,
-					note,
-					create_date,
+					note,notes,
+					create_date,'សប្បុរសជនជំនួយ',
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=d.status LIMIT 1) status
 		 		FROM 
@@ -62,12 +62,14 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
 				'dead_age'			=> $data['dead_age'],
+				'date_jom'			=> date("Y-m-d",strtotime($data['date_jom'])),
 				'dead_address'		=> $data['dead_address'],
 				
 				'donor_id'			=> $data['donor_id'],
 				'qty_donate'		=> 1,
 				'date_jenh'			=> date("Y-m-d",strtotime($data['date_jenh'])),
 				'note'				=> $data['note'],
+				'notes'				=> $data['notes'],
 				
 				'user_id'			=> $this->getUserId(),
 				'create_date'		=> date("Y-m-d H:i:s"),
@@ -86,17 +88,19 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$this->update($array, $where);
 	}
 	public function editDonate($data,$id){
-		print_r($data);exit();
+// 		print_r($data);exit();
 		$arr=array(
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
 				'dead_age'			=> $data['dead_age'],
+				'date_jom'			=> date("Y-m-d",strtotime($data['date_jom'])),
 				'dead_address'		=> $data['dead_address'],
 				
 				'donor_id'			=> $data['donor_id'],
 				'qty_donate'		=> 1,
 				'date_jenh'			=> date("Y-m-d",strtotime($data['date_jenh'])),
 				'note'				=> $data['note'],
+				'notes'				=> $data['notes'],
 				
 				'modify_by'			=> $this->getUserId(),
 				'modify_date'		=> date("Y-m-d H:i:s"),
@@ -122,7 +126,11 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		
 		
 	}
-	
+	function getDonorpeopleById($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM tb_donor_donate where id = $id limit 1";
+		return $db->fetchRow($sql);
+	}
 	
 	function getDonateById($id){
     	$db = $this->getAdapter();
@@ -132,7 +140,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
     
     function getAllDonor(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,donor_name as name FROM tb_donors where status=1";
+    	$sql = "SELECT id,donor_name as name, donor_female FROM tb_donors where status=1";
     	return $db->fetchAll($sql);
     }
 

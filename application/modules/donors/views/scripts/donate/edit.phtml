@@ -49,6 +49,17 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
+											ថ្ងៃចេញម្ឈូស
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="date_jom" id="date_jom" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
 											អាស័យដ្ឋាន
 										</label>
 										<div class="col-md-8">
@@ -84,7 +95,15 @@
 											សម្គាល់
 										</label>
 										<div class="col-md-8">
-											<textarea class="form-control " name="note" id="note" style="height: 245px;" ><?php echo $this->row['note']?></textarea>
+											<textarea class="form-control " name="note" id="note" style="height: 125px;" ><?php echo $this->row['note']?></textarea>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											CHINESE NOTE
+										</label>
+										<div class="col-md-8">
+											<textarea class="form-control " name="notes" id="notes" style="height: 125px;" ><?php echo $this->row['notes']?></textarea>
 										</div>
 									</div>
 									<div class="form-group" style="">

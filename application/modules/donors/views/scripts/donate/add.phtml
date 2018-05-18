@@ -49,6 +49,17 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
+											ថ្ងៃចេញម្ឈូស
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control date-picker" name="date_jom" id="date_jom" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
 											អាស័យដ្ឋាន
 										</label>
 										<div class="col-md-8">
@@ -61,14 +72,14 @@
 											<select type="text" class="validate[required] form-control select2me" name="donor_id" id="donor_id" >
 												<option value="-1">ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
-												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']." - ".$rs['donor_female']?></option>
 												<?php }}?>
 											</select>
 										</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ថ្ងៃចេញម្ឈូស
+											ថ្ងៃជំនួយ
 										</label>
 										<div class="col-md-8">
 											<div class="input-icon right">
@@ -84,7 +95,17 @@
 											សម្គាល់
 										</label>
 										<div class="col-md-8">
-											<textarea class="form-control " name="note" id="note" style="height: 300px;" > </textarea>
+											<textarea class="form-control " name="note" id="note" style="height: 170px;" > </textarea>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-5" style="text-align: left !important;">
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											CHINESE NOTE
+										</label>
+										<div class="col-md-8">
+											<textarea class="form-control " name="notes" id="notes" style="height: 170px;" > </textarea>
 										</div>
 									</div>
 								</div>

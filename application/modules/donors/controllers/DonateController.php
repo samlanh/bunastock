@@ -30,12 +30,15 @@ class Donors_DonateController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllDonate($data);
-		$columns=array("ឈ្មោះសព","ភេទ","អាយុ","អាស័យដ្ឋាន","ឈ្មោះសប្បុរសជន","ថ្ងៃចេញម្ឈូស","សម្គាល់","ថ្ងៃបង្កើត","USER","STATUS");
+		$columns=array("ឈ្មោះសព","ភេទ","អាយុ","ថ្ងៃជំនួយ","អាស័យដ្ឋាន","ឈ្មោះសប្បុរសជន","ថ្ងៃចេញម្ឈូស","សម្គាល់","CHINESE NOTE","ថ្ងៃបង្កើត","សប្បុសជន","USER","STATUS");
 		$link=array(
 				'module'=>'donors','controller'=>'donate','action'=>'edit',
 		);
+		$link1=array(
+				'module'=>'donors','controller'=>'donate','action'=>'donorpeople',
+		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('dead_name'=>$link,'donor_name'=>$link,'date_jenh'=>$link,'dead_sex'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('សប្បុរសជនជំនួយ'=>$link1,'dead_name'=>$link,'donor_name'=>$link,'dat_jenh'=>$link,'dead_sex'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
@@ -80,5 +83,12 @@ class Donors_DonateController extends Zend_Controller_Action
 		$this->view->donor = $db->getAllDonor();
 		$this->view->row = $db->getDonateById($id);
 
+	}
+	function donorpeopleAction(){
+		$id = $this->getRequest()->getParam("id");
+ 		$db = new Donors_Model_DbTable_DbDonate();
+ 		
+ 		$this->view->row = $db->getDonorpeopleById($id);
+		
 	}
 }
