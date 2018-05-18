@@ -9,25 +9,38 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		return $session_user->user_id;
 	}
 	
-	function getAllConstructor($search){
+	function getAllMong($search){
 		$db = $this->getAdapter();
 		
 		$sql=" SELECT 
 					id,
-					name,
-					(select name_kh from tb_view where type=19 and key_code=sex LIMIT 1) as sex,
-					phone,
-					email,
-					address,
-					(select name_kh from tb_view where type=20 and key_code=constructor_type LIMIT 1) as constructor_type,
-					note,
+					invoice_no,
+					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
+					
+					(SELECT name FROM `tb_sale_agent` AS s WHERE s.id=m.sale_agent LIMIT 1 ) as sale_agent,
+					
+					(select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) as dead_id,
+					(select name_kh from tb_view where type=20 and key_code=m.construct_type LIMIT 1) as construct_type,
+					mong_code,
+					builder,
+					(SELECT name FROM `tb_person_in_charge` AS p WHERE p.id=m.person_in_charge LIMIT 1 ) as person_in_charge,
+					(SELECT name FROM `tb_constructor` AS c WHERE c.id=m.constructor LIMIT 1 ) as constructor,
+					date_finish,
+					sale_date,
+					sub_total,
+					paid,
+					balance_after,
+					
+					'វិក្កយបត្រ',
+					
+					other_note,
 					create_date,
 					(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status
 		 		FROM 
-					tb_constructor
+					tb_mong as m
 				WHERE 
-					name!=''
+					1
 			";
 		
 		$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
@@ -56,6 +69,10 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$db = $this->getAdapter();
 			$db->beginTransaction();
 			
+			$db_global = new Application_Model_DbTable_DbGlobal();
+			$invoice = $db_global->getInvoiceNumber(1);
+			$receipt = $db_global->getReceiptNumber(1);
+			
 			$array_photo_name = "";
 			 
 			$part= PUBLIC_PATH.'/images/';
@@ -83,7 +100,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'note'					=> $data['note'],
 				'date_clearpayment'		=> date("Y-m-d",strtotime($data['date_clearpayment'])),
 				'receiver_name'			=> $data['receiver_name'],
-				'receipt_no'			=> $data['receipt_no'],
+				'invoice_no'			=> $invoice,
 				'sale_date'				=> date("Y-m-d",strtotime($data['sale_date'])),
 				'sale_agent'			=> $data['sale_agent'],
 				'comission'				=> $data['comission'],
@@ -92,8 +109,8 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'paid_before'			=> $data['paid_before'],
 				'paid'					=> $data['paid'],
 				'balance'				=> $data['balance'],
+				'balance_after'			=> $data['balance'],
 				'return_amount'			=> $data['return_amount'],
-					
 					
 				'construct_type'		=> $data['construct_type'],
 				'mong_type'				=> $data['mong_type'],
@@ -124,6 +141,34 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'create_date'		=> date("Y-m-d H:i:s"),
 			);
 			$mong_id = $this->insert($array);
+			
+			
+			if($data['paid']>0){
+				$arr_receipt = array(
+						"branch_id"   		=> $data['branch_id'],
+						"invoice_id"    	=> $mong_id,
+						"customer_id"   	=> $data['customer_id'],
+						"payment_id"    	=> 1,//payment by cash/paypal/cheque
+						"receipt_no"    	=> $receipt,
+						"receipt_date"  	=> date("Y-m-d",strtotime($data['sale_date'])),
+						"date_input"    	=> date("Y-m-d"),
+						"begining_balance"	=> $data['sub_total'],
+						"total"         	=> $data['sub_total'],
+						"paid"          	=> $data['paid'],
+						"balance"       	=> $data['balance'],
+						"remark" 			=> $data['other_note'],
+						"user_id"       	=> $this->getUserId(),
+						"status"        	=> 1,
+						"bank_name"     	=> '',
+						"cheque_number" 	=> '',
+						"type"        		=> 2, // from mong sale 
+			
+				);
+				$this->_name="tb_receipt";
+				$this->insert($arr_receipt);
+			}
+			
+			
 			
 			if(!empty($data['identity_sale'])){
 				$iden = explode(",", $data['identity_sale']);
@@ -261,4 +306,33 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$sql="select price from tb_constructor_item where id=$id limit 1 ";
 		return $db->fetchOne($sql);
 	}
+	
+	function getInvoiceById($id){
+		$sql=" SELECT 
+					m.*,
+					(SELECT (cust_name) FROM `tb_customer` WHERE tb_customer.id=m.customer_id LIMIT 1 ) AS customer_name,
+					(SELECT (phone) FROM `tb_customer` WHERE tb_customer.id=m.customer_id LIMIT 1 ) AS phone,
+					(SELECT address FROM `tb_customer` WHERE tb_customer.id=m.customer_id LIMIT 1 ) AS address,
+					(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = m.user_id LIMIT 1) AS user_name
+				FROM 
+					tb_mong AS m 
+				WHERE 
+					m.id = $id 
+			";
+		return $this->getAdapter()->fetchRow($sql);
+	}
+	
+	function getInvoiceDetailById($id){
+		$sql=" SELECT 
+					msi.*,
+					(SELECT item_name FROM `tb_product` WHERE id=msi.pro_id) As pro_name
+				FROM 
+					tb_mong_sale_item as msi 
+				WHERE 
+					msi.mong_id = $id
+			";
+		return $this->getAdapter()->fetchAll($sql);
+	}
+	
+	
 }

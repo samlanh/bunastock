@@ -17,7 +17,7 @@ class Mong_IndexController extends Zend_Controller_Action
 // 	}
     public function indexAction()
     {
-    	$db = new Product_Model_DbTable_DbProduct();
+    	$db = new Mong_Model_DbTable_DbIndex();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
     	}else{
@@ -32,17 +32,20 @@ class Mong_IndexController extends Zend_Controller_Action
     			'status'	=>	1
     		);
     	}
-		$rows = $db->getAllProductForAdmin($data);
-		$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
+		$rows = $db->getAllMong($data);
+		$columns=array("វិក័យបត្រ","អតិថិជន","អ្នកណែនាំ","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដ","អ្នកកសាង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃបញ្ចាប់","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","បង្កាន់ដៃបង់","សម្គាល់","ថ្ងៃបង្កើត","USER","STATUS");
 		$link=array(
 				'module'=>'mong','controller'=>'index','action'=>'edit',
 		);
+		$link_invoice=array(
+				'module'=>'mong','controller'=>'index','action'=>'invoice',
+		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'branch'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'វិក្កយបត្រ'=>$link_invoice));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
+    	
 	}
 	public function addAction()
 	{
@@ -78,7 +81,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->rscustomer = $db->getAllCustomerName();
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getReceiptNumber(1);
+		$this->view->invoice = $db->getInvoiceNumber(1);
 		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 	}
@@ -118,11 +121,24 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->rscustomer = $db->getAllCustomerName();
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getReceiptNumber(1);
+		$this->view->invoice = $db->getInvoiceNumber(1);
 		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 
 	}
+	
+	
+	public function invoiceAction()
+	{
+		$id = $this->getRequest()->getParam("id");
+		$db = new Mong_Model_DbTable_DbIndex();
+		$row = $this->view->row = $db->getInvoiceById($id);
+		$row_detail = $this->view->row_detail = $db->getInvoiceDetailById($id);
+		
+// 		print_r($row_detail);
+		
+	}
+	
 	
 	function getDeadDetailAction(){
 		if($this->getRequest()->isPost()){

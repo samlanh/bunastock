@@ -1,100 +1,146 @@
 <?php
 class Mong_CustomerpaymentController extends Zend_Controller_Action
-{
-	public function init()
+{	
+	
+    public function init()
     {
-        /* Initialize action controller here */
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
+    	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
     }
-//     protected function GetuserInfoAction(){
-//     	$user_info = new Application_Model_DbTable_DbGetUserInfo();
-//     	$result = $user_info->getUserInfo();
-//     	return $result;
-//     }
-// 	function updatecodeAction(){
-// 		$db = new Product_Model_DbTable_DbProduct();
-// 		$db->getProductCoded();
-// 	}
-    public function indexAction()
-    {
-    	$db = new Product_Model_DbTable_DbProduct();
-    	if($this->getRequest()->isPost()){
-    		$data = $this->getRequest()->getPost();
-    	}else{
-    		$data = array(
-    			'ad_search'	=>	'',
-    			'branch'	=>	'',
-    			'brand'		=>	'',
-    			'category'	=>	'',
-    			'model'		=>	'',
-    			'color'		=>	'',
-    			'size'		=>	'',
-    			'status'	=>	1
-    		);
-    	}
-		$rows = $db->getAllProductForAdmin($data);
-		$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
-		$link=array(
-				'module'=>'product','controller'=>'index','action'=>'edit',
-		);
+    protected function GetuserInfoAction(){
+    	$user_info = new Application_Model_DbTable_DbGetUserInfo();
+    	$result = $user_info->getUserInfo();
+    	return $result;
+    }
+   	public function indexAction()
+	{
+		if($this->getRequest()->isPost()){
+			$search = $this->getRequest()->getPost();
+			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+		}
+		else{
+			$search =array(
+					'text_search'=>'',
+					'start_date'=>date("Y-m-d"),
+					'end_date'=>date("Y-m-d"),
+					'branch_id'=>-1,
+					'customer_id'=>-1,
+					);
+		}
+		$db = new Mong_Model_DbTable_DbCustomerPayment();
+		$rows = $db->getAllReciept($search);
+		$columns=array("BRANCH_NAME","RECIEPT_NO","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
+		
+		$link=array('module'=>'sales','controller'=>'payment','action'=>'edit',);
+		
+ 		$receipt=array('module'=>'sales','controller'=>'payment','action'=>'receipt',);
+ 		
+ 		$delete=array('module'=>'sales','controller'=>'payment','action'=>'delete',);
+ 				
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'branch'=>$link));
-    	$formFilter = new Product_Form_FrmProduct();
-    	$this->view->formFilter = $formFilter->productFilter();
-    	Application_Model_Decorator::removeAllDecorator($formFilter);
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បោះពុម្ភ'=>$receipt,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
+				'date_input'=>$link));
+		
+		$formFilter = new Sales_Form_FrmSearch();
+		$this->view->formFilter = $formFilter;
+	    Application_Model_Decorator::removeAllDecorator($formFilter);
+	}	
+	function addAction(){
+		$db = new Application_Model_DbTable_DbGlobal();
+		if($this->getRequest()->isPost()) {
+			$data = $this->getRequest()->getPost();
+			try {
+				$dbq = new Mong_Model_DbTable_DbCustomerPayment();
+				if(!empty($data['identity'])){
+					$dbq->addReceiptPayment($data);
+				}
+				Application_Form_FrmMessage::message("INSERT_SUCESS");
+				if(!empty($data['btnsavenew'])){
+					Application_Form_FrmMessage::redirectUrl("/sales/payment/add");
+				}
+				Application_Form_FrmMessage::redirectUrl("/sales/payment/index");
+			}catch (Exception $e){
+				Application_Form_FrmMessage::message('INSERT_FAIL');
+				$err =$e->getMessage();
+				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			}
+		}
+		///link left not yet get from DbpurchaseOrder
+		$frm = new Sales_Form_FrmPayment(null);
+		$form_pay = $frm->Payment(null);
+		Application_Model_Decorator::removeAllDecorator($form_pay);
+		$this->view->form_sale = $form_pay;
+		 
+		// item option in select
+		$items = new Application_Model_GlobalClass();
+		$this->view->items = $items->getProductOption();
+		
 	}
-	public function addAction()
-	{
-// 		$db = new Product_Model_DbTable_DbProduct();
-// 			if($this->getRequest()->isPost()){ 
-// 				try{
-// 					$post = $this->getRequest()->getPost();
-// 					$db->add($post);
-// 					if(isset($post["save_close"]))
-// 					{
-// 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index');
-// 					}else{
-// 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-// 					}
-// 				  }catch (Exception $e){
-// 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-// 				  }
-// 			}
-// 			$rs_branch = $db->getBranch();
-// 			$this->view->branch = $rs_branch;
-			
-// 			$this->view->price_type = $db->getPriceType();
-			
-// 			$formProduct = new Product_Form_FrmProduct();
-// 			$formStockAdd = $formProduct->add(null);
-// 			Application_Model_Decorator::removeAllDecorator($formStockAdd);
-// 			$this->view->form = $formStockAdd;
+	function editAction(){
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$dbq = new Mong_Model_DbTable_DbCustomerPayment();
+		$db = new Application_Model_DbTable_DbGlobal();
+		if($this->getRequest()->isPost()) {
+			$data = $this->getRequest()->getPost();
+			$data['id']=$id;
+			try {
+				if(!empty($data['identity'])){
+					$dbq->updatePayment($data);
+				}
+				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/payment");
+			}catch (Exception $e){
+				Application_Form_FrmMessage::message('UPDATE_FAIL');
+				$err =$e->getMessage();
+				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			}
+		}
+		$row = $dbq->getRecieptById($id);
+		$this->view->reciept_detail = $dbq->getRecieptDetail($id);
+		$frm = new Sales_Form_FrmPayment(null);
+		$form_pay = $frm->Payment($row);
+		Application_Model_Decorator::removeAllDecorator($form_pay);
+		$this->view->form_sale = $form_pay;
+				 
+		$items = new Application_Model_GlobalClass();
+		$this->view->items = $items->getProductOption();
+		$this->view->term_opt = $db->getAllTermCondition(1);
+	}	
+	
+	public function getinvoiceAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Application_Model_DbTable_DbGlobal();
+			$rs = $db->getAllInvoicePayment($post['post_id'], $post['type_id']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
 	}
-	public function editAction()
-	{
-// 		$id = $this->getRequest()->getParam("id"); 
-// 		$db = new Product_Model_DbTable_DbProduct();
-// 		if($this->getRequest()->isPost()){ 
-// 				try{
-// 					$post = $this->getRequest()->getPost();
-// 					$post["id"] = $id;
-// 					$db->edit($post);
-// 					if(isset($post["save_close"]))
-// 					{
-// 						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/index');
-// 					}
-// 				  }catch (Exception $e){
-// 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-// 				  }
-// 		}
-// 		$this->view->rs_location = $db->getProductLocation($id);
-// 		$this->view->rs_price = $db->getProductPrcie($id);
-// 		$rs = $db->getProductById($id);
-// 		$formProduct = new Product_Form_FrmProduct();
-// 		$formStockAdd = $formProduct->add($rs);
-// 		Application_Model_Decorator::removeAllDecorator($formStockAdd);
-// 		$this->view->form = $formStockAdd;
-
+	function receiptAction(){
+		$dbq = new Mong_Model_DbTable_DbCustomerPayment();
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$this->view->rs = $dbq->getRecieptById($id);
 	}
+	public function deleteAction(){
+		$id = $this->getRequest()->getParam("id");
+		$db = new Sales_Model_DbTable_Dbpos();
+		echo "<script language='javascript'>
+		var txt;
+		var r = confirm('តើលោកអ្នកពិតចង់លុបប្រតិបត្តិការណ៍នេះឫ!')​​;
+		if (r == true) {";
+		//$db->deleteSale($id);
+		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/payment/deleteitem/id/".$id."'";
+		echo"}";
+		echo"else {";
+		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/payment/'";
+		echo"}
+		</script>";
+	
+	}
+	function deleteitemAction(){
+		$id = $this->getRequest()->getParam("id");
+		$db = new Mong_Model_DbTable_DbCustomerPayment();
+		$db->delettePayment($id);
+		$this->_redirect("sales/payment");
+	}	
 }

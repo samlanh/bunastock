@@ -95,7 +95,7 @@
 															លេខវិក័យបត្រ
 														</label>
 														<div class="col-md-8">
-															<input type="text" class="form-control" name="receipt_no" id="receipt_no" />
+															<input type="text" class="form-control" readOnly name="receipt_no" id="receipt_no" value="<?php echo $this->invoice;?>" />
 														</div>
 													</div>
 													<div class="form-group" style="">
@@ -204,14 +204,6 @@
 													</label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="sub_total" id="sub_total" readOnly />
-													</div>
-												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														បានបង់ពីមុនសុរប
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control" name="paid_before" id="paid_before" />
 													</div>
 												</div>
 												<div class="form-group" style="">
@@ -985,7 +977,7 @@
 						current_stock = qty+""+measure_name;//data.unit_label;
 						if(qty<=0){
 							current_stock = '';
-						}else{
+						}else if(qty>0 && qty_unitlable!=''){
 							current_stock = current_stock + " និង ";
 						}
 						$("#lblcurrent_qty_"+index_sale).val(current_stock+""+qty_unitlable);
