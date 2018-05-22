@@ -1,0 +1,88 @@
+<?php 
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$module = $request->getModuleName();
+	$controller=$request->getControllerName();
+	$row = $this->row;
+?>	
+<body>
+	<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:24cm;margin: 0 auto;min-height: 20cm;padding: 0.5cm;">
+			 <style>
+		    	.wrapper{
+		    		width: 100%;
+		    		margin: 0px;
+		    		padding: 0px;
+		    	}
+		    	.contain{
+		    		width: 1024px;
+		    		margin: 0 auto;
+		    	}
+				table {
+		    		border-collapse: collapse;
+		    		width: 100%;
+				}
+				th, td {
+		    		padding: 4px;
+				}
+				.border-td td{
+					border:solid 1px #ddd;
+				}
+				.img-logo img{
+					width: 130px;
+				}
+				.ul-li li{
+					
+				}
+				p{line-height: 25px;text-align: justify;}
+				.center-no-next{text-align: center;}
+				.back-color,.back-footer{background-color: #eee;}
+				.back-color td{padding: 20px;}
+				.text-left td{text-align: right;}
+				.img-size img{height: 15px;}
+				tr.line td{ border-bottom: 2px solid #000; }
+		    </style>
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr class="no-boder">
+					<td>
+					<table width="100%" >
+						<tr>
+							<td width="20%" align="center">
+								<img style="max-height:100px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
+								<span style="font-family: Freestyle Script;font-size: 20px;"></span>
+								
+							</td>
+							<td width="60%">
+								<table   style="text-align:center;border:solid 1px #FFF;">
+									<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;color:red;">
+										<td>វេលាល្អ</td>
+										<td><img style="width: 25%;height: 25px;" src="<?php echo $this->baseUrl().'/images/kbach1.png'?>"></td>
+									</tr>
+					
+								</table>
+							</td>
+							<td width="20%" >&nbsp;</td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+			  	<tr>
+			  		<td>
+		  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
+		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:60px;font-weight: bold; list-style:none; color:#60A0E0;">
+		  					<td>
+		  						<li>សែនបើកឆាក</li>
+		  					</td>
+		  				</tr>
+		  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:55px;font-weight: bold; list-style:none; color:#800080;">
+		  					<td>
+		  						<li>ថ្ងៃទីៈ <?php echo date("d",strtotime($row['date_sen']));?> ខែ <?php echo date("m",strtotime($row['date_sen']));?>
+		  						ឆ្នាំ 20<?php echo date("y",strtotime($row['date_sen']));?></li>
+		  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong']?> ព្រឹក</li>
+		  					</td>
+		  				</tr>
+		  			</table>
+			</table>
+		</div>
+	</body>
+</html>
+
+

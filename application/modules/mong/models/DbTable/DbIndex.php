@@ -17,24 +17,21 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					invoice_no,
 					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
 					
-					(SELECT name FROM `tb_sale_agent` AS s WHERE s.id=m.sale_agent LIMIT 1 ) as sale_agent,
-					
 					(select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) as dead_id,
 					(select name_kh from tb_view where type=20 and key_code=m.construct_type LIMIT 1) as construct_type,
 					mong_code,
-					builder,
+					
 					(SELECT name FROM `tb_person_in_charge` AS p WHERE p.id=m.person_in_charge LIMIT 1 ) as person_in_charge,
 					(SELECT name FROM `tb_constructor` AS c WHERE c.id=m.constructor LIMIT 1 ) as constructor,
-					date_finish,
 					sale_date,
 					sub_total,
 					paid,
 					balance_after,
 					
 					'វិក្កយបត្រ',
-					
+					'សែនបើកឆាក',
+					'សែនឆ្លងម៉ុង',
 					other_note,
-					create_date,
 					(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status
 		 		FROM 
@@ -243,6 +240,17 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	}
 	
 	
+	function getGoodtimeById($id){
+		$db=$this->getAdapter();
+		$sql="select * from tb_mong where id = $id";
+		return $db->fetchRow($sql);
+	}
+	function getTimemolById($id){
+		$db=$this->getAdapter();
+		$sql="select * from tb_mong where id = $id";
+		return $db->fetchRow($sql);
+	}
+	
 	function getConstructorById($id){
 		$db=$this->getAdapter();
 		$sql="select * from tb_constructor where id = $id";
@@ -297,7 +305,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	
 	function getConstructorDetail($id){
 		$db=$this->getAdapter();
-		$sql="select * from tb_constructor where id=$id limit 1 ";
+		$sql="select * from tb_mong where id=$id limit 1 ";
 		return $db->fetchRow($sql);
 	}
 	

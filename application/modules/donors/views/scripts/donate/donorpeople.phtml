@@ -5,7 +5,7 @@
 	$row = $this->row
 ?>	
 <body>
-	<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 31cm;padding: 0.5cm;">
+	<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 34cm;padding: 0.5cm;">
 			 <style>
 		    	.wrapper{
 		    		width: 100%;
@@ -76,8 +76,8 @@
   										</td> 											
   									</tr>
   									<tr>
-  										<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:red;">
-  											លោកស្រី <?php echo $this->row['donor_female']?> នឹងបុត្រ ព្រមទាំងចៅ 
+  										<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; color:red;">
+  											<?php echo $this->row['donor_female']?> នឹងបុត្រ ព្រមទាំងចៅ 
   										</td>
   									</tr>
   									<tr>
@@ -90,12 +90,12 @@
 			  			</tr>
 		  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; ">
 		  					<td>
-		  						<?php echo $this->row['note']?>
+		  						<?php echo $this->row['notes']?>
 							</td>
 		  				</tr>
 			  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
 		  					<td>
-		  						<?php echo $this->row['notes']?>
+		  						<?php echo $this->row['note']?>
 		  					</td>
 		  				</tr>
 		  				<tr style="font-family:  Khmer OS Muol; font-size:28px;font-weight: bold;  line-height:70px; color: #6A5ACD; list-style:none;">
