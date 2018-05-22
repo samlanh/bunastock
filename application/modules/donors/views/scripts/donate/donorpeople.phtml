@@ -61,51 +61,49 @@
 		  	<tr>
 		  		<td>
 		  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
-		  					<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:23px;">
-			  					他好看　(សប្បុរសជន):
-			  					</div>
-			  					<tr>
-			  					<tr>
-  									<td width="47%"><br /></td>
-  								</tr>
-			  					<td>
-  									<table style="line-height: 80px; margin-top: -10px;"> 										
-  										<tr>
-  											<td colspan="3" align="center" style="list-style:25px; font-family:   Khmer OS Muol; font-size:58px;font-weight: bold; color:red;">
-  												lkjhgfd
-  											</td> 											
-  										</tr>
-  										<tr>
-  											<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:red;">
-  												លោកស្រី អ៊ុយ ចាន់នារីនឹងបុត្រ ព្រមទាំងចៅ 
-  											</td>
-  										</tr>
-  										<tr>
-  											<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:red;">
-  												0770942229
-  											</td>
-  										</tr>
-  									</table>
-			  					</td>
-			  				</tr>
-			  				<tr>
-			  					<td>
-				  					<p>Congratulations on being successfully awardedenrolled at
-				  					in  Program. Please refer to the attached document for term
-				  					and condition of </p>
-								</td>
-			  				</tr>
-			  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+		  				<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:23px;">
+		  					他好看　(សប្បុរសជន):
+		  				</div>
+			  			<tr>
+  							<td width="47%"><br /></td>
+  						</tr>
+  						<tr>
+			  				<td>
+  								<table style="line-height: 80px; margin-top: -10px;"> 										
+  									<tr>
+  										<td colspan="3" align="center" style="list-style:25px; font-family:   Khmer OS Muol; font-size:58px;font-weight: bold; color:red;">
+  											<?php echo $this->row['donor_name']?>
+  										</td> 											
+  									</tr>
+  									<tr>
+  										<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:red;">
+  											លោកស្រី <?php echo $this->row['donor_female']?> នឹងបុត្រ ព្រមទាំងចៅ 
+  										</td>
+  									</tr>
+  									<tr>
+  										<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:red;">
+  											<?php echo $this->row['donor_phone']?>
+  										</td>
+  									</tr>
+  								</table>
+			  				</td>
+			  			</tr>
+		  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; ">
 		  					<td>
-		  						មានចិត្តសន្ធាជ្រះថ្លាជួយឡានដង្ហែរជូនដល់សពក្រីក្រ 
+		  						<?php echo $this->row['note']?>
+							</td>
+		  				</tr>
+			  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+		  					<td>
+		  						<?php echo $this->row['notes']?>
 		  					</td>
 		  				</tr>
 		  				<tr style="font-family:  Khmer OS Muol; font-size:28px;font-weight: bold;  line-height:70px; color: #6A5ACD; list-style:none;">
 		  					<td>
 		  						<li>ឈ្មោះ ៖  <?php echo $this->row['dead_name']?></li>
-		  						<li>ភេទ  ៖ ស្រី</li>
-		  						<li>អាយុ ៖ <?php echo $this->row['dead_age']?> ឆ្នាំ</li>
-		  						<li>លំណៅដ្ឋានសព្វថ្ងៃ៖ <?php echo $this->row['dead_address']?> </li>
+		  						<li>ភេទ  ៖  <?php echo $this->row['dead_sex']?></li>
+		  						<li>អាយុ ៖ <?php echo $this->row['dead_age']?>&nbsp;&nbsp;ឆ្នាំ</li>
+		  						<li>លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?> </li>
 		  						<li>ថ្ងៃទី  <?php echo date("d",strtotime($row['date_jenh']));?> ខែ <?php echo date("m",strtotime($row['date_jenh']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_jenh']));?></li>
 		  					</td>
 		  				</tr>

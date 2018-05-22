@@ -30,8 +30,7 @@ class Sales_PaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","RECIEPT_NO","CUSTOMER_NAME","DATE","លេខវិក័យបត្រ",
-			"TOTAL","បានបង់ពីមុន","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
+		$columns=array("BRANCH_NAME","RECIEPT_NO","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
 		$link=array(
 			'module'=>'sales','controller'=>'payment','action'=>'edit',
 		);
@@ -39,7 +38,7 @@ class Sales_PaymentController extends Zend_Controller_Action
  			'module'=>'sales','controller'=>'payment','action'=>'receipt',);
  		
  		$delete=array(
- 				'module'=>'sales','controller'=>'payment','action'=>'delete',);
+ 				'module'=>'sales','controller'=>'payment','action'=>'deleteitem',);
 		
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បោះពុម្ភ'=>$receipt,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
@@ -55,29 +54,21 @@ class Sales_PaymentController extends Zend_Controller_Action
 			$data = $this->getRequest()->getPost();
 			try {
 				$dbq = new Sales_Model_DbTable_Dbpayment();
-				if(!empty($data['identity'])){
-					$dbq->addReceiptPayment($data);
-				}
+				$dbq->addReceiptPayment($data);
 				Application_Form_FrmMessage::message("INSERT_SUCESS");
-				if(!empty($data['btnsavenew'])){
-					Application_Form_FrmMessage::redirectUrl("/sales/payment/add");
-				}
 				Application_Form_FrmMessage::redirectUrl("/sales/payment/index");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+				echo $e->getMessage();
 			}
 		}
-		///link left not yet get from DbpurchaseOrder
-		$frm = new Sales_Form_FrmPayment(null);
-		$form_pay = $frm->Payment(null);
-		Application_Model_Decorator::removeAllDecorator($form_pay);
-		$this->view->form_sale = $form_pay;
-		 
-		// item option in select
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
+		
+		$db = new Sales_Model_DbTable_Dbpayment();
+		$this->view->customer_name = $db->getSaleCustomerName();
+		$this->view->customer_invoice = $db->getSaleInvoice();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->receipt = $_db->getReceiptNumber(1);
 		
 	}
 	function editAction(){
@@ -128,13 +119,10 @@ class Sales_PaymentController extends Zend_Controller_Action
 		$id = $this->getRequest()->getParam("id");
 		$db = new Sales_Model_DbTable_Dbpos();
 		echo "<script language='javascript'>
-		var txt;
 		var r = confirm('តើលោកអ្នកពិតចង់លុបប្រតិបត្តិការណ៍នេះឫ!')​​;
 		if (r == true) {";
-		//$db->deleteSale($id);
 		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/payment/deleteitem/id/".$id."'";
-		echo"}";
-		echo"else {";
+		echo"}else {";
 		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/payment/'";
 		echo"}
 		</script>";
@@ -142,8 +130,30 @@ class Sales_PaymentController extends Zend_Controller_Action
 	}
 	function deleteitemAction(){
 		$id = $this->getRequest()->getParam("id");
+		//echo $id;exit();
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$db->delettePayment($id);
 		$this->_redirect("sales/payment");
-	}	
+	}
+	
+	public function getCustomerInfoAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpayment();
+			$rs = $db->getCustomerInfo($post['id']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	public function getReceiptAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpayment();
+			$rs = $db->getReceipt($post['mong_id'],$post['cus_id'],$post['type_id']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
 }

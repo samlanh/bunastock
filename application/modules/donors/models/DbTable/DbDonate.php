@@ -61,7 +61,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$arr=array(
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
-				'dead_age'			=> $data['dead_age'],
+				'dead_khmer_year'	=> $data['dead_khmer_year'],
 				'date_jom'			=> date("Y-m-d",strtotime($data['date_jom'])),
 				'dead_address'		=> $data['dead_address'],
 				
@@ -92,7 +92,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$arr=array(
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
-				'dead_age'			=> $data['dead_age'],
+				'dead_khmer_year'	=> $data['dead_khmer_year'],
 				'date_jom'			=> date("Y-m-d",strtotime($data['date_jom'])),
 				'dead_address'		=> $data['dead_address'],
 				
@@ -123,12 +123,22 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 			$where = " id = ".$data['donor_id'];
 			$this->update($array, $where);
 		}
-		
-		
 	}
+	
 	function getDonorpeopleById($id){
 		$db = $this->getAdapter();
-		$sql = "SELECT * FROM tb_donor_donate where id = $id limit 1";
+		$sql = "SELECT 
+					*,
+					(select name_kh from tb_view where type=19 and key_code = dead_sex) as dead_sex,
+					(select tel from tb_donors where tb_donors.id = donor_id) as donor_phone,
+					(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,  
+					(select donor_female from tb_donors where tb_donors.id = donor_id) as donor_female 
+				FROM 
+					tb_donor_donate 
+				where 
+					id = $id 
+				limit 1
+			";
 		return $db->fetchRow($sql);
 	}
 	

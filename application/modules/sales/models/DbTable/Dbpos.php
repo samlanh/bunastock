@@ -59,7 +59,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					"user_id"       => $this->getUserId(),
 					
 					'comission' => $data['comission'],
-					'clear_paymentdate' => $data['date_clearpayment'],
+					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
 					'payment_note' => $data['note'],
 					'other_note'=> $data['other_note'],
 					"date"          => date("Y-m-d"),

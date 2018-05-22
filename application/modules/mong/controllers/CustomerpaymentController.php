@@ -30,63 +30,54 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		}
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","RECIEPT_NO","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
+		$columns=array("BRANCH_NAME","RECIEPT_NO","បង់លើវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
 		
-		$link=array('module'=>'sales','controller'=>'payment','action'=>'edit',);
+		$link=array('module'=>'mong','controller'=>'customerpayment','action'=>'edit',);
 		
- 		$receipt=array('module'=>'sales','controller'=>'payment','action'=>'receipt',);
+ 		$receipt=array('module'=>'mong','controller'=>'customerpayment','action'=>'receipt',);
  		
- 		$delete=array('module'=>'sales','controller'=>'payment','action'=>'delete',);
+ 		$delete=array('module'=>'mong','controller'=>'customerpayment','action'=>'deleteitem',);
  				
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បោះពុម្ភ'=>$receipt,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
-		$formFilter = new Sales_Form_FrmSearch();
-		$this->view->formFilter = $formFilter;
-	    Application_Model_Decorator::removeAllDecorator($formFilter);
+		$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
 	}	
 	function addAction(){
-		$db = new Application_Model_DbTable_DbGlobal();
+		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			try {
-				$dbq = new Mong_Model_DbTable_DbCustomerPayment();
-				if(!empty($data['identity'])){
-					$dbq->addReceiptPayment($data);
-				}
+				$db->addCustomerPayment($data);
 				Application_Form_FrmMessage::message("INSERT_SUCESS");
-				if(!empty($data['btnsavenew'])){
-					Application_Form_FrmMessage::redirectUrl("/sales/payment/add");
-				}
-				Application_Form_FrmMessage::redirectUrl("/sales/payment/index");
+				Application_Form_FrmMessage::redirectUrl("/mong/customerpayment/index");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+				echo $e->getMessage();
 			}
 		}
-		///link left not yet get from DbpurchaseOrder
-		$frm = new Sales_Form_FrmPayment(null);
-		$form_pay = $frm->Payment(null);
-		Application_Model_Decorator::removeAllDecorator($form_pay);
-		$this->view->form_sale = $form_pay;
-		 
-		// item option in select
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
+		
+		$db = new Mong_Model_DbTable_DbCustomerPayment();
+		$this->view->customer_name = $db->getMongCustomerName();
+		$this->view->customer_invoice = $db->getMongInvoice();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->receipt = $_db->getReceiptNumber(1);
 		
 	}
 	function editAction(){
-		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		$dbq = new Mong_Model_DbTable_DbCustomerPayment();
-		$db = new Application_Model_DbTable_DbGlobal();
+		$id = $this->getRequest()->getParam('id');
+		$db = new Mong_Model_DbTable_DbCustomerPayment();
+		
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			$data['id']=$id;
 			try {
 				if(!empty($data['identity'])){
-					$dbq->updatePayment($data);
+					$db->updatePayment($data);
 				}
 				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/payment");
 			}catch (Exception $e){
@@ -95,43 +86,22 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$row = $dbq->getRecieptById($id);
-		$this->view->reciept_detail = $dbq->getRecieptDetail($id);
-		$frm = new Sales_Form_FrmPayment(null);
-		$form_pay = $frm->Payment($row);
-		Application_Model_Decorator::removeAllDecorator($form_pay);
-		$this->view->form_sale = $form_pay;
-				 
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
-		$this->view->term_opt = $db->getAllTermCondition(1);
+		$row = $db->getRecieptById($id);
 	}	
 	
-	public function getinvoiceAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$rs = $db->getAllInvoicePayment($post['post_id'], $post['type_id']);
-			echo Zend_Json::encode($rs);
-			exit();
-		}
-	}
 	function receiptAction(){
 		$dbq = new Mong_Model_DbTable_DbCustomerPayment();
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		$this->view->rs = $dbq->getRecieptById($id);
 	}
+	
 	public function deleteAction(){
 		$id = $this->getRequest()->getParam("id");
-		$db = new Sales_Model_DbTable_Dbpos();
 		echo "<script language='javascript'>
-		var txt;
 		var r = confirm('តើលោកអ្នកពិតចង់លុបប្រតិបត្តិការណ៍នេះឫ!')​​;
 		if (r == true) {";
-		//$db->deleteSale($id);
 		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/payment/deleteitem/id/".$id."'";
-		echo"}";
-		echo"else {";
+		echo"}else {";
 		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/payment/'";
 		echo"}
 		</script>";
@@ -139,8 +109,29 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 	}
 	function deleteitemAction(){
 		$id = $this->getRequest()->getParam("id");
+		//echo $id;exit();
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
-		$db->delettePayment($id);
-		$this->_redirect("sales/payment");
-	}	
+		$db->deletePayment($id);
+		$this->_redirect("mong/customerpayment");
+	}
+	
+	public function getCustomerInfoAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Mong_Model_DbTable_DbCustomerPayment();
+			$rs = $db->getCustomerInfo($post['id']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	public function getReceiptAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Mong_Model_DbTable_DbCustomerPayment();
+			$rs = $db->getReceipt($post['mong_id'],$post['cus_id'],$post['type_id']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
 }

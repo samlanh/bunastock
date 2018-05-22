@@ -22,8 +22,11 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<select name="customer_id" id="customer_id" class="form-control select2me" >
+									<select name="customer_id" id="customer_id" class="form-control select2me" onchange="getCustomerInfo(1);" >
 										<option value="-1">ជ្រើសរើសអតិថិជន</option>
+										<?php if(!empty($this->customer_name)){foreach($this->customer_name as $customer){?>
+										<option value="<?php echo $customer['id']?>"><?php echo $customer['name']?></option>
+										<?php }}?>
 									</select>
 								</div>
 							</div>
@@ -33,26 +36,29 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<select name="invoice_id" id="invoice_id" class="form-control select2me" >
+									<select name="invoice_id" id="invoice_id" class="form-control select2me" onchange="getCustomerInfo(2);" >
 										<option value="-1">ជ្រើសរើសវិក័យបត្រ</option>
+										<?php if(!empty($this->customer_invoice)){foreach($this->customer_invoice as $invoice){?>
+										<option value="<?php echo $invoice['id']?>"><?php echo $invoice['name']?></option>
+										<?php }}?>
 									</select>
 								</div>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							
 							<label class="control-label col-md-2">Customer Information
 							</label>
 							<div class="col-md-4">
 								<input type="text" class="form-control" name="customer_info" id="customer_info" readonly />
+								<input type="hidden" id="cus_id" name="cus_id" />
 							</div>
 							
 							<label class="control-label col-md-2"><?php echo $tr->translate("លេខបង្កាន់ដៃ");?><span class="required">
 								 </span>
 							</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="receipt" id="receipt" readonly />
+								<input type="text" class="form-control" name="receipt" id="receipt" readonly value="<?php echo $this->receipt;?>" />
 							</div>
 						</div>
 						
@@ -72,140 +78,93 @@
 								<span class="required">*</span>
 							</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="cheque" id="cheque" readonly />
+								<input type="text" class="form-control" name="cheque" id="cheque" readonly placeholder="លេខសែក"​/>
 							</div>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="bank_name" id="bank_name" readonly />
+								<input type="text" class="form-control" name="bank_name" id="bank_name" readonly placeholder="ឈ្មោះធនាគារ"/>
 							</div>
-							
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("សម្គាល់");?><span class="required">
-								 </span>
+							<label class="control-label col-md-2">
+								<?php echo $tr->translate("សម្គាល់");?>
 							</label>
 							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $form->getElement("remark");?>
-								</div>
+								<textarea name="other_note" id="other_note" class="form-control" rows="3"></textarea>
 							</div>
 							
 							<label class="control-label col-md-2"><?php echo $tr->translate("កាលបរិច្ឆេទ");?><span class="required">
 							*</span>
 							</label>
 							<div class="col-md-4">
-								<div class="input-icon right"><i class="fa fa-calendar"></i>
-								<?php echo $form->getElement("date_in");?>
+								<div class="input-icon right">
+									<i class="fa fa-calendar"></i>
+									<input class="form-control date-picker" name="date_in" id="date_in" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 								</div>
 							</div>
 						</div>
 						
 						<div class="portlet-body">
 							<table class="table table-striped table-bordered table-hover" id="table_order" style="font-size:12px;">
-								<tr height="33px">
-									<th><?php echo $tr->translate("DEL");?></th>
-									<th><?php echo $tr->translate("NUM");?></th>
-									<th style="white-space:nowrap;"><?php echo $tr->translate("ថ្ងៃ/ខែ/ឆ្នាំ");?></th>
-									<th><?php echo $tr->translate("វិក័យបត្រ");?></th>
-									<th><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></th>
-									<th><?php echo $tr->translate("បញ្ចុះតម្លៃ");?></th>
-									<th><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></th>
-									<th><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></th>
-							</tr>
-						 </table>
-						 <input type="hidden" id="identity" name="identity" />
-					</div>
+								<tr height="33px" align="center" style="font-weight: bold;">
+									<td><?php echo $tr->translate("NUM");?></td>
+									<td style="white-space:nowrap;"><?php echo $tr->translate("ថ្ងៃបង់");?></td>
+									<td><?php echo $tr->translate("លេខបង្កាន់ដៃ");?></td>
+									<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>
+									<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>
+									<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>
+								</tr>
+							</table>
+						 	<input type="hidden" id="identity" name="identity" />
+						</div>
+						
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php //echo $tr->translate("PAYMENT_METHOD");?><span class="required">
+							<label class="control-label col-md-7"><span class="required">
 								 </span>
 							</label>
 							<label class="control-label col-md-2">
-									<?php echo $tr->translate("EXCHANGE_RATE");?>
+								<?php echo $tr->translate("ជំពាក់សរុប​ :");?>Total
 							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("exchange_rate");?>
-								</div>
-							</div>
-								<label class="control-label col-md-2"><?php echo $tr->translate("ជំពាក់សរុប​ :");?> Total<span class="required">
-							* </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-								<?php echo $form->getElement("all_total");?>
-								</div>
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="all_total" id="all_total" readonly />
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right"></div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("ប្រាក់បានបង់សរុប");?> (Paid)
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("paid_dollar");?>
-								</div>
-							</div>	
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("paid_riel");?>
-								</div>
-							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><span class="required">
-								 </span>
+							<label class="control-label col-md-7">
 							</label>
-							<div class="col-md-4">
-								<div class="input-icon right"></div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("ប្រាក់បានបង់សរុប");?> (Paid)
+							<label class="control-label col-md-2">
+								<?php echo $tr->translate("ប្រាក់បានបង់");?> (Paid)
 							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $form->getElement("paid");?>
-								</div>
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="paid" id="paid" onkeyup="doRemain();" />
 							</div>	
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php //echo $tr->translate("ពន្ធ");?><span class="required">
-							</span>
+							<label class="control-label col-md-7">
 							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-								<?php //echo $form->getElement("total_tax");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2">ប្រាក់នៅសល់ (Balance)​ :<span class="required">
-							* </span>
+							
+							<label class="control-label col-md-2">
+								ប្រាក់នៅសល់ (Balance)​ :<span class="required">*</span>
+							
 							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-								<?php echo $form->getElement("balance");?>
-								</div>
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="balance" id="balance" readonly />
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-md-3"></div>
+							<div class="col-md-4"></div>
 							<div class="col-md-2">
-								<a href="<?php echo $this->baseUrl();?>/sales/payment/"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+								<a href="<?php echo $this->baseUrl();?>/mong/customerpayment/"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
 							</div>
 							<div class="col-md-2">
 								<div class="input-icon right">
 									<button type="submit" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+							<div class="col-md-4">
 							</div>
-							<div class="col-md-3"></div>
 						</div>
-						
-					</div>
 				</form>
 			</div>
 		</div>
@@ -213,148 +172,141 @@
 </div>
 <!-- end new product -->
 <script>
-function paidtotal(type){//1=dollar,2=riel
-	paid_dollar = $("#paid_dollar").val();
-	paid_riel = $("#paid_riel").val();
-	dollar_fromriel = parseFloat(paid_riel/$("#exchange_rate").val());
-	all_paid =  parseFloat(paid_dollar) + parseFloat(dollar_fromriel);
-	all_paid = (all_paid).toFixed(2);
-	$("#paid").val(all_paid);
-	doRemain();
-}
-function checkpayment(){
-	payment_id = $("#payment_id").val();
-	if(payment_id==2){
-		$( "#bank_name" ).attr( "readOnly", false );
-		$( "#cheque" ).attr( "readOnly", false );
-	}else{
-		$("#bank_name").val("");
-		$("#cheque").val("");
-		$( "#bank_name" ).attr( "readOnly", true );
-		$( "#cheque" ).attr( "readOnly", true );}
-}
-function checkControll(){
-	$("#table_order").html("");
-	$('#balance').val(0);$('#all_total').val(0);$('#paid').val(0);
-	payment_method = $("#payment_method").val();
-	if(payment_method==1){
-		$( "#invoice_id" ).attr( "readOnly", true );
-		$( "#customer_id" ).attr( "readOnly", false );
-	}else{
-		$( "#customer_id" ).attr( "readOnly", true );
-		$( "#invoice_id" ).attr( "readOnly", false );
-    }
-}
-<?php $urlgetinvoice =  $this->url(array('module'=>'sales','controller'=>'payment','action'=>'getinvoice')); ?>
-function getInvoice(type){
-	if(type==1){
-		post_id=$("#customer_id").val();
-		$( "#invoice_id" ).attr( "readonly", true );
-		$( "#customer_id" ).attr( "readOnly", false );
-	}else{
-		post_id=$("#invoice_id").val();
-		$( "#customer_id" ).attr( "readonly", true );
-		$( "#invoice_id" ).attr( "readOnly", false );
+	function paidtotal(type){//1=dollar,2=riel
+		paid_dollar = $("#paid_dollar").val();
+		paid_riel = $("#paid_riel").val();
+		dollar_fromriel = parseFloat(paid_riel/$("#exchange_rate").val());
+		all_paid =  parseFloat(paid_dollar) + parseFloat(dollar_fromriel);
+		all_paid = (all_paid).toFixed(2);
+		$("#paid").val(all_paid);
+		doRemain();
 	}
-	$.ajax({
-			url:"<?php echo $urlgetinvoice;?>",
-			type:"post",
-			data:{'post_id':post_id,'type_id':type},
-			success: function(data){	
-				$("#table_order").html("");
-				template='<tr height="33px">';
-					template+='<th><?php echo $tr->translate("DEL");?></th>';
-					template+='<th><?php echo $tr->translate("NUM");?></th>';
-					template+='<th style="white-space:nowrap;"><?php echo $tr->translate("ថ្ងៃ/ខែ/ឆ្នាំ");?></th>';
-					template+='<th><?php echo $tr->translate("វិក័យបត្រ");?></th>';
-					template+='<th><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></th>';
-					template+='<th><?php echo $tr->translate("បញ្ចុះតម្លៃ");?></th>';
-					template+='<th><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></th>';
-					template+='<th><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></th>';
-				template+='</tr>';
-				
-				$('#identity').val("");
-				data = $.parseJSON(data);
-				
-				for(i=0;i<data.length;i++){
-					if(i==0){
-						$("#customer_id").val(data[i].customer_id);
-						$("#customer_id").select2();
-					}
-					index=i+1;
-					template+='<tr style="height:30px;">';
-			            template+='<td ><img onClick="deleteRecord('+index+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
-						template+='<td >'+index+'</td>';
-						template+='<td >'+data[i].date_sold+'</td>';
-						template+='<td >'+data[i].sale_no+'<input type="hidden" value='+data[i].id+' id="invoice_no'+index+'" name="invoice_no'+index+'"/></td>';
-						template+='<td >'+data[i].net_total+'<input type="hidden" value='+data[i].net_total+' id="subtotal'+index+'" name="subtotal'+index+'"/></td>';
-						template+='<td >'+data[i].discount_value+'<input type="hidden" value='+data[i].discount_value+' id="discount'+index+'" name="discount'+index+'"/></td>';
-						if(data[i].paid==null){
-							data[i].paid=0;}
-						template+='<td >'+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
-						template+='<td >'+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';
-				    template+="</tr>";
+	
+	function checkpayment(){
+		payment_id = $("#payment_id").val();
+		if(payment_id==2){
+			$( "#bank_name" ).attr( "readOnly", false );
+			$( "#cheque" ).attr( "readOnly", false );
+		}else{
+			$("#bank_name").val("");
+			$("#cheque").val("");
+			$( "#bank_name" ).attr( "readOnly", true );
+			$( "#cheque" ).attr( "readOnly", true );}
+	}
+	
+	
+	<?php $urlreceipt =  $this->url(array('module'=>'mong','controller'=>'customerpayment','action'=>'get-receipt')); ?>
+	function getReceipt(){
+		cus_id=$("#cus_id").val();
+		mong_id = $('#customer_id').val();
+		if(cus_id>0 && mong_id>0){
+			//alert(cus_id+"-"+mong_id);
+			$.ajax({
+				url:"<?php echo $urlreceipt;?>",
+				type:"post",
+				data:{'mong_id':mong_id,'cus_id':cus_id,'type_id':2},
+				success: function(data){	
+					$("#table_order").html("");
+					template='<tr height="33px" align="center" style="font-weight: bold;">';
+						template+='<td><?php echo $tr->translate("NUM");?></td>';
+						template+='<td style="white-space:nowrap;"><?php echo $tr->translate("ថ្ងៃបង់");?></td>';
+						template+='<td><?php echo $tr->translate("លេខបង្កាន់ដៃ");?></td>';
+						template+='<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>';
+						template+='<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>';
+						template+='<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>';
+					template+='</tr>';
 					
-					if($('#identity').val()!="") {
-						var identity = $('#identity').val();
-						$('#identity').val(identity+','+index);
-					} else {$('#identity').val(index);}
+					$('#identity').val("");
+					data = $.parseJSON(data);
+					
+					for(i=0;i<data.length;i++){
+						/*if(i==0){
+							$("#customer_id").val(data[i].customer_id);
+							$("#customer_id").select2();
+						}*/
+						index=i+1;
+						template+='<tr style="height:30px;" align="center">';
+							template+='<td >'+index+'</td>';
+							template+='<td >'+data[i].receipt_date+'</td>';
+							template+='<td >'+data[i].receipt_no+'<input type="hidden" value='+data[i].id+' id="invoice_no'+index+'" name="invoice_no'+index+'"/></td>';
+							template+='<td >'+data[i].begining_balance+'<input type="hidden" value='+data[i].net_total+' id="subtotal'+index+'" name="subtotal'+index+'"/></td>';
+							if(data[i].paid==null){data[i].paid=0;}
+							template+='<td >'+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
+							template+='<td >'+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';
+						template+="</tr>";
+						
+						if($('#identity').val()!="") {
+							var identity = $('#identity').val();
+							$('#identity').val(identity+','+index);
+						} else {$('#identity').val(index);}
+					}
+					$('#table_order').append(template);
+					
+					//if(data.length>0){netTotal();}else{$('#balance').val(0);$('#all_total').val(0);$('#paid').val(0); alert("No invoice to make payment");}
+				},
+				error:function(e){
+					alert("error"+e);
 				}
-				$('#table_order').append(template);
-				if(data.length>0){netTotal();}else{$('#balance').val(0);$('#all_total').val(0);$('#paid').val(0); alert("No invoice to make payment");}
-			},
-			error:function(e){
-				alert("error"+e);
-			}
-		});	
-}
+			});	
+		}
+	}
 
-function deleteRecord(index) {
-	var identity = $('#identity').val();
-	var arrays = identity.split(',');
-	for(var i=0;i<arrays.length;i++) {
-		if(arrays[i] == index) arrays.splice(i,1);
+	function deleteRecord(index) {
+		var identity = $('#identity').val();
+		var arrays = identity.split(',');
+		for(var i=0;i<arrays.length;i++) {
+			if(arrays[i] == index) arrays.splice(i,1);
+		}
+		var strings = arrays.join(',');
+		$('#identity').val(strings);
+		$("#row_order_"+index).remove();
+		netTotal();
 	}
-	var strings = arrays.join(',');
-	$('#identity').val(strings);
-	$("#row_order_"+index).remove();
-	netTotal();
-}
-function netTotal() {//use
-	var subtotal=0;
-	var paid = 0;
-	discount=0;
-	var rowId = $('#identity').val();
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		//subtotal += Number($('#subtotal'+rowIDArray[n]).val());
-		//paid +=Number($('#paid_amount'+rowIDArray[n]).val());
-		//discount +=Number($('#discount'+rowIDArray[n]).val());
-		subtotal += Number($('#balance_after'+rowIDArray[n]).val());
-		
+	function doRemain() {
+		var all_total = Number($('#all_total').val());
+		var paid = Number($('#paid').val());
+		if(paid > all_total){
+			var paid = $('#paid').val(all_total);
+			 $('#balance').val(0);
+	   }else{
+		   remain = all_total-paid;
+		   $('#balance').val(remain.toFixed(2));
+		}	
 	}
-	//var alltotal = Number(subtotal - discount).toFixed(2);
-	$('#all_total').val(subtotal);
-	//$('#paid').val(paid.toFixed(2));
-	$('#paid').val(0);
-	doRemain();
-}
-function doRemain() {
-	var all_total = Number($('#all_total').val());
-	var paid = Number($('#paid').val());
-	if(paid > all_total){
-		var paid = $('#paid').val(all_total);
-		 $('#balance').val(0);
-   }else{
-	   remain = all_total-paid;
-	   $('#balance').val(remain.toFixed(2));
-	}	
-}
-function getCustomerInfo(){
-	v_id = $("#v_name").val();
-	if(v_id==-1){
-		$('#dialogvendor').modal('show');
+
+	<?php $url =  $this->url(array('module'=>'mong','controller'=>'customerpayment','action'=>'get-customer-info')); ?>
+	function getCustomerInfo(type){
+		if(type==1){
+			var id = $('#customer_id').val();
+			$('#invoice_id').val(id).select2();
+		}else{
+			var id = $('#invoice_id').val();
+			$('#customer_id').val(id).select2();
+		}
+		if(id>0){
+			$.ajax({
+				url: "<?php echo $url;?>",
+				type: "post",
+				data: {id:id},
+				success: function(data){
+					rs = $.parseJSON(data);
+					if(data){
+						$('#cus_id').val(rs.customer_id);
+						customer_info = "Code : "+rs.cu_code+", "+"Phone : "+rs.phone+", Address : "+rs.address;
+						$('#customer_info').val(customer_info);
+						$('#all_total').val(rs.balance_after);
+						$('#paid').val(rs.balance_after);
+						doRemain();
+						
+						getReceipt();
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
+
 	}
-}
 
 </script>	

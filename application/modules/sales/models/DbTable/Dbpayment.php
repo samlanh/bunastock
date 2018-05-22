@@ -4,18 +4,33 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 {
 	//use for add purchase order 29-13
 	protected $_name="tb_receipt";
+	
+	function getUserId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->user_id;
+	}
+	
 	function getAllReciept($search){
 			$db= $this->getAdapter();
-			$sql=" SELECT r.id,
-			(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND name!='' LIMIT 1) AS branch_name,
-			r.`receipt_no`,
-			(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
-			r.`date_input`,
-			(SELECT sale_no FROM `tb_sales_order` WHERE id=r.invoice_id) AS invoice_no,
-			 r.`total`,r.paid_before,r.`paid`,r.`balance`,
-			'បោះពុម្ភ','លុប',r.remark,
-			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
-			FROM `tb_receipt` AS r where type=1";
+			$sql=" SELECT 
+						r.id,
+						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND name!='' LIMIT 1) AS branch_name,
+						r.`receipt_no`,
+						(SELECT sale_no FROM `tb_sales_order` WHERE id=r.invoice_id) AS invoice_no,
+						(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
+						r.`date_input`,
+						r.`total`,
+						r.`paid`,
+						r.`balance`,
+						'បោះពុម្ភ',
+						'លុប',
+						r.remark,
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
+					FROM 
+						`tb_receipt` AS r 
+					where 
+						type=1
+			";
 			
 			$from_date =(empty($search['start_date']))? '1': " r.`receipt_date` >= '".$search['start_date']." 00:00:00'";
 			$to_date = (empty($search['end_date']))? '1': " r.`receipt_date` <= '".$search['end_date']." 23:59:59'";
@@ -47,90 +62,55 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
+			$receipt = $db_global->getReceiptNumber(1);
 			
-			$ids=explode(',',$data['identity']);
-			$branch_id = '';
-			
-			foreach ($ids as $key => $row){
-				$branch_id = $this->getBranchByInvoice($data['invoice_no'.$row]);
-				break;
-			}
-			$data['receipt'] = $db_global->getReceiptNumber(1);
-			
-			$info_purchase_order=array(
-					"branch_id"   	=> 	1,//$branch_id['branch_id'],
-					"customer_id"   => 	$data["customer_id"],
-					"payment_type"  => 	$data["payment_method"],//payment by customer/invoice
-					"payment_id"    => 	$data["payment_name"],	//payment by cash/paypal/cheque
-					"receipt_no"    => 	$data['receipt'],
-					"receipt_date"  =>  date("Y-m-d",strtotime($data['date_in'])),
-					"date_input"    =>  date("Y-m-d"),
-					"total"         => 	$data['all_total'],
-					"paid"          => 	$data['paid'],
-					"paid_dollar"   => 	$data['paid_dollar'],
-					"paid_riel"     => 	$data['paid_riel'],
-					"balance"       => 	$data['balance'],
-					"remark"        => 	$data['remark'],
-					"user_id"       => 	$GetUserId,
-					'status'        =>1,
-					"bank_name"     => 	$data['bank_name'],
-					"cheque_number" => 	$data['cheque'],
-					"exchange_rate" => 	$data['exchange_rate'],
+			$array=array(
+					'branch_id'			=> 1,
+					'invoice_id'		=> $data['invoice_id'],
+					'customer_id'		=> $data['cus_id'],
+					'payment_id'		=> $data['payment_id'],
+					'receipt_no'		=> $receipt,
+					'receipt_date'		=> date("Y-m-d",strtotime($data['date_in'])),
+						
+					'begining_balance'	=> $data['all_total'],
+					'total'				=> $data['all_total'],
+					'paid'				=> $data['paid'],
+					'balance'			=> $data['balance'],
+					'remark'			=> $data['other_note'],
+						
+					'cheque_number'		=> $data['cheque'],
+					'bank_name'			=> $data['bank_name'],
+						
+					'type'				=> 1,// 1=sale payment
+						
+					'status'			=> 1,
+					'date_input'		=> date("Y-m-d"),
+					'user_id'			=> $this->getUserId(),
 			);
 			$this->_name="tb_receipt";
-			$reciept_id = $this->insert($info_purchase_order); 
-			unset($info_purchase_order);
+			$this->insert($array); 
 			
-			$count = count($ids);
-			$paid = $data['paid'];
-			$compelted = 0;
-			foreach ($ids as $key => $i)
-			{
-				
-				$paid = $paid -($data['balance_after'.$i]);
-				$recipt_paid = 0;
-				if ($paid>=0){
-					$paided = $data['balance_after'.$i];
-					$balance=0;
-					$compelted=1;
-				}else{
-					$paided = abs($paid);
-					$balance= $data['balance_after'.$i]-abs($paid);
-					$compelted=0;
-				}
-				
-				$data_item= array(
-						'receipt_id'=> $reciept_id,
-						'invoice_id'=> $data['invoice_no'.$i],
-						'total'     => $data['balance_after'.$i],
-						'paid'	    => $paided,
-						'balance'	=> $balance,
-						'is_completed'=> $compelted,
-						'status'      => 1,
-						'date_input'  => date("Y-m-d"),
-				);
-				$this->_name='tb_receipt_detail';
-				$this->insert($data_item);
-				
-				$rsinvoice = $this->getSaleById($data['invoice_no'.$i]);
-				if(!empty($rsinvoice)){
-					$data_invoice = array(
-						'balance'=>$rsinvoice['balance']-$paided,
-					);
-					$this->_name='tb_sales_order';
-					$where = 'id = '.$rsinvoice['id'];
-					$this->update($data_invoice, $where);
-				}
-			 }
+			$sql="select * from tb_sales_order where id = ".$data['invoice_id'];
+			$row_sale = $db->fetchRow($sql);
+			//print_r($row_sale);exit();
+			
+			if(!empty($row_sale)){
+				$balance_after = $row_sale['balance_after'] - $data['paid'];
+				$paid = $row_sale['paid'] + $data['paid'];
+			}
+			$arr = array(
+					'balance_after'	=> $balance_after,
+					'paid'			=> $paid,
+			);
+			$where = " id = ".$row_sale['id'];
+			$this->_name="tb_sales_order";
+			$this->update($arr, $where);
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
-			$err =$e->getMessage();
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();
 		}
 	}
 	public function updatePayment($data){
@@ -282,24 +262,38 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$sql="SELECT * FROM `tb_sales_order` AS i WHERE i.`id` = $sale_id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
+	
 	function getRecieptById($id){
 		$db = $this->getAdapter();
-		$sql=" SELECT r.*,
-			(SELECT c.cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
-			(SELECT c.phone FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS contact_phone,
-			(SELECT c.address FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS address,
-			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
-		FROM tb_receipt as r WHERE r.id = $id LIMIT 1 ";
+		$sql="SELECT 
+					r.*,
+					(select invoice_no from tb_mong where tb_mong.id = r.invoice_id) as invoice,
+					c.cust_name AS customer_name,
+					c.phone contact_phone,
+					c.address AS address,
+					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name
+				FROM 
+					tb_receipt as r,
+					tb_customer as c
+				WHERE 
+					c.id = r.customer_id
+					and r.id = $id 
+				LIMIT 1 
+			";
 		return $db->fetchRow($sql);
 	}
+	
 	function getRecieptDetail($reciept_id){
 		$db= $this->getAdapter();
-		$sql="SELECT d.`id`,d.`receipt_id`,d.`invoice_id`,
-		(SELECT s.sale_no FROM `tb_sales_order` AS s WHERE s.id=d.invoice_id) AS invoice_name,
-		(SELECT i.invoice_no FROM `tb_invoice` AS i  WHERE i.id = d.`invoice_id` ) AS invoice_no,
-		d.`total`,d.`paid`,d.`balance`,d.`discount`,d.`date_input`
-		FROM `tb_receipt_detail` AS d WHERE d.`receipt_id` =".$reciept_id;
-		return $db->fetchAll($sql);
+		$sql="SELECT 
+					*
+				FROM 
+					tb_receipt AS d 
+				WHERE 
+					d.id = $reciept_id
+				limit 1	
+			";
+		return $db->fetchRow($sql);
 	}
 	function getRecieptDetailforPrint($reciept_id){
 		$db= $this->getAdapter();
@@ -330,34 +324,55 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
+			
+			$rs = $this->getRecieptDetail($id);
+			if(!empty($rs)){
+				$rssale = $this->getSaleById($rs['invoice_id']);
+				if(!empty($rssale)){
+					$data= array(
+						'balance_after'=>$rssale['balance_after']+$rs['paid'],
+						'paid'	=>$rssale['paid']-$rs['paid'],
+					);
+					$this->_name="tb_sales_order";
+					$where = " id = ".$rs['invoice_id'];
+					$this->update($data, $where);
+				}
+			}
 			
 			$this->_name="tb_receipt";
 			$where = "id =  ".$id;
 			$this->delete($where);
 			
-			$rs = $this->getRecieptDetail($id);
-			if(!empty($rs)){
-				foreach($rs as $r){
-					$rssale = $this->getSaleById($r['invoice_id']);
-					if(!empty($rssale)){
-						$data= array(
-								'balance'=>$rssale['balance']+$rs['paid'],
-								);
-						$this->_name="tb_sales_order";
-						$where = " id = ".$r['invoice_id'];
-						$this->update($data, $where);
-					}
-				}
-			}
 			$db->commit();
 		}Catch(Exception $e){
 			$db->rollBack();
 		}	
-			
 	}
+	
+	function getSaleCustomerName(){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,(select cust_name from tb_customer where tb_customer.id = customer_id) as name FROM tb_sales_order WHERE balance_after>0 and status=1 ";
+		return $db->fetchAll($sql);
+	}
+	
+	function getSaleInvoice(){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,sale_no as name FROM tb_sales_order WHERE balance_after>0 and status=1 ";
+		return $db->fetchAll($sql);
+	}
+	
+	
+	function getCustomerInfo($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM tb_sales_order as s,tb_customer as c where c.id = s.customer_id and s.id=$id";
+		return $db->fetchRow($sql);
+	}
+	
+	function getReceipt($mong_id,$cus_id,$type){
+		$db = $this->getAdapter();
+		$sql = "SELECT *,DATE_FORMAT(receipt_date, '%d-%M-%Y') AS receipt_date FROM tb_receipt WHERE invoice_id=$mong_id and customer_id=$cus_id and type=$type";
+		return $db->fetchAll($sql);
+	}
+	
 	
 }
