@@ -35,7 +35,7 @@ class Donors_IndexController extends Zend_Controller_Action
 				'module'=>'donors','controller'=>'index','action'=>'edit',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('donor_name'=>$link,'donor_female'=>$link,'tel'=>$link,'address'=>$link,'receipt_no'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('donor_name'=>$link,'donor_female'=>$link,'tel'=>$link,'address'=>$link,'receipt_no'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);

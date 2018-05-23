@@ -20,7 +20,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,
 					date_jenh,
 					note,notes,
-					create_date,'សប្បុរសជនជំនួយ',
+					create_date,'សប្បុរសជន',
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=d.status LIMIT 1) status
 		 		FROM 

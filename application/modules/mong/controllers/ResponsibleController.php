@@ -20,7 +20,7 @@ class Mong_ResponsibleController extends Zend_Controller_Action
 		$columns=array("NAME_RESPONIBLE","GENDER","CONTACT_NUMBER","NOTE","STATUS");
 		$link=array('module'=>'mong','controller'=>'responsible','action'=>'edit',);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('name'=>$link,'tel'=>$link,'description'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('name'=>$link,'tel'=>$link,'description'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);

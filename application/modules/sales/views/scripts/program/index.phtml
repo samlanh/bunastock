@@ -42,9 +42,8 @@
 						</div>				
 				</form> 
 				<div class="contain_form" style="clear: both;">
-						<?php //echo $this->list; ?>
-						
-					<table class="collape tablesorter" id="table" width="100%">
+						<?php //echo $this->list; ?>						
+					<table class="collape tablesorter" id="datatable-responsive" width="100%">
 						<thead>
 							<tr>
 								<th rowspan="2" class="tdheader">ល.រ</th>
@@ -84,7 +83,7 @@
 						
 						<tbody>
 							<?php $i=0;if(!empty($this->rs)){foreach ($this->rs as $rs){ $i++; ?>
-							<tr class="normal"> 
+							<tr oncontextmenu="setrowdata(<?php echo $i;?>);return false;" class="context-menu-one normal"> 
 								<td class="items-no"><?php echo $i;?></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name'];?></a></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name_chinese'];?></a></td>
@@ -160,7 +159,39 @@
 		</div>
 	</div>
 </div>
-
+<script>
+var row=0;
+var url="";
+$(function(){
+	$.contextMenu({
+		selector: '.context-menu-one', 
+		callback: function(key, options) {		
+			var m = "clicked: " + key;
+			if(key=="edit"){
+				url='<?php echo $this->baseUrl()."/sales/program/edit/id/";?>';
+			}else if(key=="add"){
+				url='<?php echo $this->baseUrl()."/sales/program/add/id/";?>';
+			}else if(key=="travel"){
+				url='<?php echo $this->baseUrl()."/sales/program/travel/id/";?>';
+			}
+			
+			gotoAction();
+		},
+		items: {
+			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
+			"add": {name: "បន្ថែម", icon: "add", accesskey: "e"},
+			"travel": {name: "ពេលធ្វើដំណើរ", icon:  "fa-car", accesskey: "e"},
+		}
+	});
+});
+function setrowdata(index){
+	  row = index;
+	}
+var recordid ='';
+function gotoAction(){
+	 window.open(url+row, '_blank');
+}
+</script>
 
 
 

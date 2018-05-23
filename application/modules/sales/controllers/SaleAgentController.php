@@ -34,7 +34,7 @@ public function init()
     	);
     	$urlEdit = BASE_URL . "/sales/saleagent/edit";
     	$glClass = new Application_Model_GlobalClass();
-    	$this->view->list=$list->getCheckList(0, $columns, $rows, array('branch_name'=>$link,'name'=>$link,'phone'=>$link));
+    	$this->view->list=$list->getCheckList(10, $columns, $rows, array('branch_name'=>$link,'name'=>$link,'phone'=>$link));
     	
     	$formFilter = new Sales_Form_FrmSearchStaff();
     	$this->view->formFilter = $formFilter;

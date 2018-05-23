@@ -30,7 +30,7 @@ class Sales_CustomerController extends Zend_Controller_Action
 		$link=array(
 				'module'=>'sales','controller'=>'customer','action'=>'edit',
 		);
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('branch_name'=>$link,'cust_name'=>$link,'customer_type'=>$link,'level'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('branch_name'=>$link,'cust_name'=>$link,'customer_type'=>$link,'level'=>$link));
 		
         $formFilter = new Sales_Form_FrmSearch();
 		$this->view->formFilter = $formFilter;

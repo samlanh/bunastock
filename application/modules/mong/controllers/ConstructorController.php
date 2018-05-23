@@ -24,7 +24,7 @@ class Mong_ConstructorController extends Zend_Controller_Action
 				'module'=>'mong','controller'=>'constructor','action'=>'edit',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('name'=>$link,'sex'=>$link,'phone'=>$link,'constructor_type'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('name'=>$link,'sex'=>$link,'phone'=>$link,'constructor_type'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
