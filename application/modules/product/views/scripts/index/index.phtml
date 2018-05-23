@@ -6,11 +6,6 @@
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
 	
-	$edit_sale = $tr->translate("EDIT");
-	$payment_history = $tr->translate("REPORT_LOAN_PAYMENT");
-	
-	$urlEdit = $this->baseUrl()."/loan/index/editsale/id/";
-	$urlPayment = $this->baseUrl()."/loan/ilpayment/add/id/";
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -61,6 +56,7 @@
 		</div>
 	</div>
 </div>
+
 <script>
 var row=0;
 var url="";
@@ -70,25 +66,20 @@ $(function(){
 		callback: function(key, options) {		
 			var m = "clicked: " + key;
 			if(key=="edit"){
-				url='<?php echo $urlEdit;?>';
-				
+				url='<?php echo $this->baseUrl()."/loan/index/editsale/id/";?>';
 			}else if(key=="payment"){
-				url='<?php echo $urlPayment;?>';
+				url='<?php echo $this->baseUrl()."/loan/index/editsale/id/";?>';
 			}
 			
 			gotoAction();
 		},
 		items: {
-			"edit": {name: "<?php echo $edit_sale;?>", icon: "edit", accesskey: "e"},
-			"payhistory": {name: "<?php echo $payment_history;?>", icon: "fa-dollar", accesskey: "h"},
-			"newschedule": {name: "<?php echo $tr->translate("NEW_SCHEDULE");?>", icon: "fa-calendar"},
+			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
+			"edittra": {name: "បន្ថែម", icon: "edit", accesskey: "e"},
+			"payhistory": {name: "កម្មវិធីបុណ្យ", icon: "fa-id-card-o", accesskey: "h"},
 		}
 	});
 });
-function setrowdata(index){
-	row = index;
-}
-
 var recordid ='';
 function gotoAction(){
 	 window.open(url+row, '_blank');

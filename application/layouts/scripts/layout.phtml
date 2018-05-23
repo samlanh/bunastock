@@ -51,6 +51,14 @@
 <script src="<?php echo $this->baseUrl()."/contextMenu/"?>jquery.ui.position.min.js" type="text/javascript"></script>
 <link href="<?php echo $this->baseUrl()."/datatable/"?>datatables.min.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo $this->baseUrl()."/datatable/"?>datatables.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function() {
+        $('#datatable-responsive').DataTable( {
+       	 "dom": '<"top"i>rt<"bottom"flp><"clear">',
+        	searching: false,
+        } );
+    } );
+    </script>
  <!-- end copy -->  
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl()?>/assets/global/plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css"/>
@@ -229,21 +237,37 @@ $(document).ready(function() {
 				});
 			}
 
-	
-    </script>
-<!-- END PAGE LEVEL SCRIPTS -->
-
-<!-- END JAVASCRIPTS -->
-<!-- END JAVASCRIPTS -->
-<!-- BEGIN GOOGLE RECAPTCHA 
-<script type="text/javascript">
-        var RecaptchaOptions = {
-           theme : 'custom',
-           custom_theme_widget: 'recaptcha_widget'
-        };
+ jQuery(function () {
+		'use strict';
+		
+		jQuery(".ptss__toggle-btn").click(function () {	
+			jQuery('.js-ptss-frame').toggleClass('is-opened');
+		});
+		
+		jQuery('.ptss__layout-wrapper > div').click(function(){
+			
+			jQuery(this).closest('.ptss__setting-control').find('.ptss__layout-wrapper').removeClass('is-selected');
+			
+			jQuery(this).parent().addClass('is-selected');
+			
+			if( jQuery(this).hasClass('ptss__layout-box--wide') ) {
+				
+				jQuery('body').removeClass('boxed');
+				jQuery('#ptss__boxed-bg').hide();
+				
+				jQuery('body').removeClass('bg1').removeClass('bg2').removeClass('bg3').removeClass('bg4');
+				
+				jQuery('#ptss__boxed-backgrounds span').removeClass('is-selected');
+				
+			} else {
+				
+				jQuery('body').addClass('boxed');
+				jQuery('#ptss__boxed-bg').show();
+				
+			}
+			
+		});
+	})	
 </script>
-<script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LcrK9cSAAAAALEcjG9gTRPbeA0yAVsKd8sBpFpR"></script>
--->
 </body>
-<!-- END BODY -->
 </html>
