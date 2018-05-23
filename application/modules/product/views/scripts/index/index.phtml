@@ -5,6 +5,12 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
+	
+	$edit_sale = $tr->translate("EDIT");
+	$payment_history = $tr->translate("REPORT_LOAN_PAYMENT");
+	
+	$urlEdit = $this->baseUrl()."/loan/index/editsale/id/";
+	$urlPayment = $this->baseUrl()."/loan/ilpayment/add/id/";
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -55,22 +61,39 @@
 		</div>
 	</div>
 </div>
+<script>
+var row=0;
+var url="";
+$(function(){
+	$.contextMenu({
+		selector: '.context-menu-one', 
+		callback: function(key, options) {		
+			var m = "clicked: " + key;
+			if(key=="edit"){
+				url='<?php echo $urlEdit;?>';
+				
+			}else if(key=="payment"){
+				url='<?php echo $urlPayment;?>';
+			}
+			
+			gotoAction();
+		},
+		items: {
+			"edit": {name: "<?php echo $edit_sale;?>", icon: "edit", accesskey: "e"},
+			"payhistory": {name: "<?php echo $payment_history;?>", icon: "fa-dollar", accesskey: "h"},
+			"newschedule": {name: "<?php echo $tr->translate("NEW_SCHEDULE");?>", icon: "fa-calendar"},
+		}
+	});
+});
+function setrowdata(index){
+	row = index;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var recordid ='';
+function gotoAction(){
+	 window.open(url+row, '_blank');
+}
+</script>
 
 
 
