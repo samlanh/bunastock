@@ -57,33 +57,6 @@
 	</div>
 </div>
 
-<script>
-var row=0;
-var url="";
-$(function(){
-	$.contextMenu({
-		selector: '.context-menu-one', 
-		callback: function(key, options) {		
-			var m = "clicked: " + key;
-			if(key=="edit"){
-				url='<?php echo $this->baseUrl()."/product/index/edit/id/";?>';
-			}else if(key=="payment"){
-				url='<?php echo $this->baseUrl()."/product/index/add/id/";?>';
-			}
-			
-			gotoAction();
-		},
-		items: {
-			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
-			"add": {name: "បន្ថែម", icon: "add", accesskey: "e"},
-		}
-	});
-});
-var recordid ='';
-function gotoAction(){
-	 window.open(url+row, '_blank');
-}
-</script>
 
 
 

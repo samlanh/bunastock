@@ -57,6 +57,7 @@
 	$url_user_type = array($this->url(array('module'=>'rsvacl','controller'=>'usertype','action'=>'index'),null, true), "MENU_RSVACL_USER_TYPE_LIST");
 	
 	//module report$url_report_summary
+	$url_report_other = array($this->url(array('module'=>'report','controller'=>'other','action'=>'index'),null, true), "MENU_REPORT_OTHER");
 	$url_report_user = array($this->url(array('module'=>'report','controller'=>'user','action'=>'index'),null, true), "MENU_REPORT_USER_INDEX");
 	$url_report_list = array($this->url(array('module'=>'report','controller'=>'index','action'=>'index'),null, true), "MENU_REPORT_INDEX_INDEX");
 	$url_report_product = array($this->url(array('module'=>'report','controller'=>'product','action'=>'index'),null, true), "MENU_REPORT_PRODUCT");
@@ -309,6 +310,11 @@
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
+            		<li>
+            			<a href="<?php echo $url_report_other[0];?>">
+	            			<i class="icon-arrow-right"></i><?php echo $tr->translate( $url_report_other[1]);?>
+	            		</a>
+            		</li>
             		<li>
             			<a href="<?php echo $url_report_product[0];?>">
 	            			<i class="icon-arrow-right"></i><?php echo $tr->translate( $url_report_product[1]);?>

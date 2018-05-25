@@ -31,6 +31,7 @@ class report_indexController extends Zend_Controller_Action
     		);
     	}
     	$this->view->rssearch = $data;
+    	
     	$query = new report_Model_DbQuery();
     	$this->view->repurchase =  $query->getAllPurchaseReport($data);
     	$frm = new Application_Form_FrmReport();

@@ -26,9 +26,11 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=2 LIMIT 1),
 		(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 ) AS user_name
 		FROM `tb_purchase_order`  ";
+		
 		$from_date =(empty($search['start_date']))? '1': " date_order >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " date_order <= '".$search['end_date']." 23:59:59'";
 		$where = " WHERE status=1 and ".$from_date." AND ".$to_date;
+		
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));

@@ -169,8 +169,6 @@ $(function(){
 			var m = "clicked: " + key;
 			if(key=="edit"){
 				url='<?php echo $this->baseUrl()."/sales/program/edit/id/";?>';
-			}else if(key=="add"){
-				url='<?php echo $this->baseUrl()."/sales/program/add/id/";?>';
 			}else if(key=="travel"){
 				url='<?php echo $this->baseUrl()."/sales/program/travel/id/";?>';
 			}
@@ -179,7 +177,6 @@ $(function(){
 		},
 		items: {
 			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
-			"add": {name: "បន្ថែម", icon: "add", accesskey: "e"},
 			"travel": {name: "ពេលធ្វើដំណើរ", icon:  "fa-car", accesskey: "e"},
 		}
 	});

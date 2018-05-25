@@ -52,8 +52,6 @@ $(function(){
 			var m = "clicked: " + key;
 			if(key=="edit"){
 				url='<?php echo $this->baseUrl()."/mong/index/edit/id/";?>';
-			}else if(key=="add"){
-				url='<?php echo $this->baseUrl()."/mong/index/add/id/";?>';
 			}else if(key=="invoice"){
 				url='<?php echo $this->baseUrl()."/mong/index/invoice/id/";?>';
 			}else if(key=="goodtime"){
@@ -66,7 +64,6 @@ $(function(){
 		},
 		items: {
 			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
-			"add": {name: "បន្ថែម", icon: "add", accesskey: "e"},
 			"invoice": {name: "វិក្កយបត្រ", icon: "fa-newspaper-o", accesskey: "e"},
 			"goodtime": {name: "សែនបើកឆាក", icon: "fa-clock-o", accesskey: "e"},
 			"timemol": {name: "សែនឆ្លងម៉ុង", icon: "fa-clock-o", accesskey: "e"},
