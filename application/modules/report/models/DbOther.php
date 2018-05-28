@@ -124,7 +124,7 @@ function getAllDonors($search){
 				paid,
 				balance_after,
 					
-				'វិក្កយបត្រ',
+				'វិក័យបត្រ',
 				'សែនបើកឆាក',
 				'សែនឆ្លងម៉ុង',
 				other_note,

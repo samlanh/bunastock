@@ -57,8 +57,7 @@
 		#header {
 		  display: table-header-group;
 		  page-break-inside:avoid; page-break-after:auto;
-		}
-		
+		}		
 	</style>
 		<table style="font-family: 'Khmer OS Content'; width:100%;">
 			<tbody>
@@ -94,71 +93,55 @@
 		    	<td class="table2excel" id="exportExcel">
 		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">
 		                 <thead>
-		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
+		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 23px; font-size:11px; padding:1px 0px; white-space: nowrap; ">
 			                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
-								<td>&nbsp;<?php echo $tr->translate("BODY_NAME");?></td>
-								<!--<td>&nbsp;<?php //echo $tr->translate("PURCHASE_ORDER");?></td> -->
-								<td>&nbsp;<?php echo $tr->translate("GENDER");?></td>
-								<td>&nbsp;<?php echo $tr->translate("YEAR_AGE");?></td>
-								<td><?php echo $tr->translate("DATE_SPONSOR");?></td>
-								<td width="10%">&nbsp;<?php echo $tr->translate("ADDRESS");?></td>
-								<td>&nbsp;<?php echo $tr->translate("NAME_SPONSOR");?></td>
-								<td>&nbsp;<?php echo $tr->translate("DATE_MJOS");?></td>
-								<td>&nbsp;<?php echo $tr->translate("NOTE_CHINESS");?></td>
-								<td>&nbsp;<?php echo $tr->translate("CREATION_DATE");?></td>
-								<!-- <td>&nbsp;<?php //echo $tr->translate("PAYMENT_METHOD");?></td>
-								
-								<td>&nbsp;<?php //echo $tr->translate("STATUS");?></td> -->
-						        <td>&nbsp;<?php echo $tr->translate("BY_USER");?></td>
-							<!-- <td style="white-space: nowrap;">&nbsp;<?php //echo $tr->translate("PRINT");?></td> -->
-		               	 </tr>
+								<td>&nbsp;សាខា</td>
+								<td>&nbsp;លេខកូដទំនិញ</td>
+								<td>&nbsp;ទំនិញ</td>
+								<td>&nbsp;ប្រភេទទំនិញ</td>
+								<td width="10%">&nbsp;សេវាកម្ម</td>
+								<td>&nbsp;ខ្នាត</td>
+								<td>&nbsp;ចំនួន</td>
+								<td>&nbsp;តម្លៃលក់</td>
+								<td>&nbsp;ថ្លៃដើម</td>
+						        <td>&nbsp;ប្រើប្រាស់</td>					
+		               	 	</tr>
 		                <thead>
 		                <?php $num=1;
-		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
-		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
-		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
-		               
+		                $d_balance = 0;
+		                $db_bal = 0;
 		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>     
-						<tr class='row-format hover' style="border:1px solid #000; ">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["branch"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
-						   <!--<td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php //echo $rs["order_number"];?></a></td> -->
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["cat"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["is_service"];?></td>
-						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">&nbsp;<?php echo $rs["measure"];?></a></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["master_price"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["price"];?></td>
-						   
-					
-						   <!-- <td>&nbsp;<?php //echo $rs["payment_method"];?></td>
-						   <td>&nbsp;<?php //echo $rs["purchase_status"];?></td> -->
+						<tr class='row-format hover' style="border:1px solid #000; font-size:11px; ">
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["branch"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["item_code"];?></td>
+						  
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["item_name"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["cat"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["is_service"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["measure"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["qty"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["master_price"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["price"];?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-						   <!-- <td>&nbsp;<a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>"><?php echo $tr->translate("PRINT");?></a></td> -->
+					
 						</tr>
-						   <?php 
-						   $d_netotal = $d_netotal+$rs["qty"];
-						   $d_paid = $d_paid+$rs["master_price"];
+						   <?php
 						   $d_balance = $d_balance+$rs["price"];
+						   $db_bal = $db_bal+$rs["master_price"];
                    		 }?>
+                   		 <tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
+							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="9"></td>
+							<td style="border: 1px solid #000;white-space: nowrap;">ថ្លៃដើម / Original Price</td>
+							<td style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>
+						</tr>
+						<tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
+							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="9"></td>
+							<td style="border: 1px solid #000;white-space: nowrap;">តម្លៃលក់ / Selling Price</td>
+							<td style="border: 1px solid #000;"><?php echo  number_format($db_bal,2);?></td>
+						</tr>
 		                </tbody>
 		           </table>
-		            <br>
-		           	<table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
-		                <tbody><tr height="30px;" bgcolor="#ccc" class="style" align="center" style="floafont-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
-		                    <td><strong><?php echo $tr->translate("PURCHASE_AMOUNT");?></strong></td>
-		                    <td><strong><?php echo $tr->translate("PAID");?></strong></td>
-		                    <td><strong><?php echo $tr->translate("BALANCE");?></strong></td>
-		                </tr>
-		                 <tr class="style" style=" line-height: 24px; font-size:11px;">
-		                    <td>&nbsp;<?php echo number_format($d_netotal,2);?>&nbsp;</td>
-		                    <td>&nbsp;<?php echo number_format($d_paid,2);?>&nbsp;</td>
-		                    <td>&nbsp;<?php echo number_format($d_balance,2);?>&nbsp;</td>
-		                 </tr>
-		               </tbody>
-		             </table>
 		              <br>
 		              <table align="center" width="100%">
 						   <tbody>

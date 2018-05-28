@@ -94,79 +94,56 @@
 		    </tr>
 		    <tr>
 		    	<td class="table2excel" id="exportExcel">
-		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">
+		            <table  border="1" style="border-collapse:collapse; border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 		                 <thead>
-		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
-			                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
-								<td><?php echo $tr->translate("NAME_MALE");?></td>
-								<td>&nbsp;<?php echo $tr->translate("NAME_FEMLAE");?></td>
-								<!--<td>&nbsp;<?php //echo $tr->translate("PURCHASE_ORDER");?></td> -->
-								<td>&nbsp;<?php echo $tr->translate("PHONE_NUMBER");?></td>
-								<td width="10%">&nbsp;<?php echo $tr->translate("ADDRESS");?></td>
-								<td><?php echo $tr->translate("NEED");?></td>
-								<td>&nbsp;<?php echo $tr->translate("LOGES_USE");?></td>
-								<td>&nbsp;<?php echo $tr->translate("NONTE_OTHER");?></td>
-								<td>&nbsp;<?php echo $tr->translate("RECEIPT_NUMBER");?></td>
-								<td>&nbsp;<?php echo $tr->translate("PAYMENT_DATE");?></td>
-								<td>&nbsp;<?php echo $tr->translate("WHILE");?></td>
-								<td>&nbsp;<?php echo $tr->translate("LIST_PRICE");?></td>
-								<td>&nbsp;<?php echo $tr->translate("PRICE_TOTAL");?></td>
-								<!-- <td>&nbsp;<?php //echo $tr->translate("PAYMENT_METHOD");?></td>
-								
-								<td>&nbsp;<?php //echo $tr->translate("STATUS");?></td> -->
-						        <td>&nbsp;<?php echo $tr->translate("BY_USER");?></td>
-							<!-- <td style="white-space: nowrap;">&nbsp;<?php //echo $tr->translate("PRINT");?></td> -->
+		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 22px; font-size:11px; padding:1px 0px; white-space: nowrap; ">
+			                    <th>&nbsp;<?php echo $tr->translate("NUM");?></th>
+								<th width="12%"><?php echo $tr->translate("NAME_MALE");?></th>
+								<th width="12%">&nbsp;<?php echo $tr->translate("NAME_FEMLAE");?></th>
+								<th width="11%">&nbsp;<?php echo $tr->translate("PHONE_NUMBER");?></th>
+								<th width="50%">&nbsp;<?php echo $tr->translate("ADDRESS");?></th>
+								<th>&nbsp;<?php echo $tr->translate("NEED");?></th>
+								<th>&nbsp;<?php echo $tr->translate("LOGES_USE");?></th>
+								<th>&nbsp;<?php echo $tr->translate("NONTE_OTHER");?></th>
+								<th>&nbsp;<?php echo $tr->translate("RECEIPT_NUMBER");?></th>
+								<th>&nbsp;<?php echo $tr->translate("PAYMENT_DATE");?></th>
+								<th>&nbsp;<?php echo $tr->translate("WHILE");?></th>
+								<th>&nbsp;<?php echo $tr->translate("LIST_PRICE");?></th>
+								<th>&nbsp;<?php echo $tr->translate("PRICE_TOTAL");?></th>								
+						        <th>&nbsp;<?php echo $tr->translate("BY_USER");?></th>
 		               	 </tr>
 		                <thead>
 		                <?php $num=1; 
-		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
 		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
-		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
-		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>
-		                
+		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>		                
 						<tr class='row-format hover' style="border:1px solid #000; ">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+0?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["donor_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["donor_female"];?></td>
-						   <!--<td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php //echo $rs["order_number"];?></a></td> -->
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["tel"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["address"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["required_using"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["invalid_date"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["note"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["receipt_no"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["paid_date"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["unit_price"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["total_amount"];?></td>
-					
-						   <!-- <td>&nbsp;<?php //echo $rs["payment_method"];?></td>
-						   <td>&nbsp;<?php //echo $rs["purchase_status"];?></td> -->
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+0?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["donor_name"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["donor_female"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["tel"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["address"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["required_using"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["invalid_date"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["note"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["receipt_no"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["paid_date"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["qty"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["unit_price"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["total_amount"];?></td>		
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
 						   <!-- <td>&nbsp;<a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>"><?php echo $tr->translate("PRINT");?></a></td> -->
 						</tr>
 						   <?php 
-							$d_netotal = $d_netotal+$rs["qty"];
-							$d_paid = $d_paid+$rs["paid_date"];
 							$d_balance = $d_balance+$rs["unit_price"];
                     }?>
+                    	<tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
+							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="12"></td>
+							<td style="border: 1px solid #000;white-space: nowrap;">សរុបរួម/Grand Total</td>
+							<td style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>
+						</tr>
 		                </tbody>
 		           </table>
 		            <br>
-		             <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
-		                <tbody><tr height="30px;" bgcolor="#ccc" class="style" align="center" style="floafont-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
-		                    <td><strong><?php echo $tr->translate("PURCHASE_AMOUNT");?></strong></td>
-		                    <td><strong><?php echo $tr->translate("PAID");?></strong></td>
-		                    <td><strong><?php echo $tr->translate("BALANCE");?></strong></td>
-		                </tr>
-		                 <tr class="style" style=" line-height: 24px; font-size:11px;">
-		                    <td>&nbsp;<?php echo number_format($d_netotal,2);?>&nbsp;</td>
-		                    <td>&nbsp;<?php echo number_format($d_paid,2);?>&nbsp;</td>
-		                    <td>&nbsp;<?php echo number_format($d_balance,2);?>&nbsp;</td>
-		                 </tr>
-		               </tbody>
-		             </table>
-		              <br>
 		              <table align="center" width="100%">
 						   <tbody>
 						   	<tr style="font-size: 14px;">
