@@ -12,7 +12,7 @@ Class Purchase_Form_Frmexpense extends Zend_Form {
 		$title = new Zend_Form_Element_Select('title');
 		$title->setAttribs(array(
 				'class'=>' form-control select2me',
-				'onchange'=>'showexpense();'
+				'onchange'=>'showexpense();addExpense();'
 				));
 		$title->setMultiOptions($optexpense);
 		

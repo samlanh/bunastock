@@ -23,7 +23,6 @@ class Purchase_ExpenseController extends Zend_Controller_Action
     			$formdata = array(
     					"adv_search"=>'',
     					"branch_id"=>-1,
-    					'title'=>-1,
     					"status"=>-1,
     					'start_date'=> date('Y-m-d'),
     					'end_date'=>date('Y-m-d'),
@@ -34,11 +33,14 @@ class Purchase_ExpenseController extends Zend_Controller_Action
     		$glClass = new Application_Model_GlobalClass();
     		//$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
     		$list = new Application_Form_Frmlist();
-    		$collumns = array("BRANCH_NAME","INVOICE_NO","EXPENSE_TITLE","CURRENCY_TYPE","TOTAL_EXPENSE","NOTE","DATE","BY_USER","STATUS");
+    		$collumns = array("BRANCH_NAME","ពណ៌នាចំនាយ","លេខបង្កាន់ដៃ","TOTAL_EXPENSE","NOTE","DATE","BY_USER","STATUS","បោះពុម្ភ");
     		$link=array(
     				'module'=>'purchase','controller'=>'expense','action'=>'edit',
     		);
-    		$this->view->list=$list->getCheckList(0, $collumns,$rs_rows,array('branch_name'=>$link,'title'=>$link,'invoice'=>$link,'total_amount'=>$link));
+    		$link1=array(
+    				'module'=>'report','controller'=>'index','action'=>'rpt-expense-detail',
+    		);
+    		$this->view->list=$list->getCheckList(0, $collumns,$rs_rows,array('branch_name'=>$link,'expense_title'=>$link,'receipt'=>$link,'note'=>$link,'total_amount'=>$link,'បង្កាន់ដៃ'=>$link1));
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
     		echo $e->getMessage();
@@ -65,10 +67,11 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-    	$pructis=new Purchase_Form_Frmexpense();
-    	$frm = $pructis->FrmAddExpense();
-    	Application_Model_Decorator::removeAllDecorator($frm);
-    	$this->view->frm_expense=$frm;
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->expense = $optexpense = $db->getAllExpense();
+		$this->view->receipt = $db->getExpenseReceiptNumber(1);
+		
     }
  
     public function editAction()
@@ -76,10 +79,9 @@ class Purchase_ExpenseController extends Zend_Controller_Action
     	$id = $this->getRequest()->getParam('id');
     	if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();	
-			$data['id'] = $id;
 			$db = new Purchase_Model_DbTable_DbExpense();				
 			try {
-				$db->updateExpense($data);				
+				$db->updateExpense($data,$id);				
 				Application_Form_FrmMessage::Sucessfull('ការកែប្រែ​​ជោគ​ជ័យ', self::REDIRECT_URL);		
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -91,11 +93,10 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 		$row  = $db->getexpensebyid($id);
 		$this->view->row = $row;
 		
-    	$pructis=new Purchase_Form_Frmexpense();
-    	$frm = $pructis->FrmAddExpense($row);
-    	Application_Model_Decorator::removeAllDecorator($frm);
-    	$this->view->frm_expense=$frm;
-    	
+		$this->view->row_detail = $db->getexpenseDetailbyid($id);
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->expense = $optexpense = $db->getAllExpense();
     }
 
 }

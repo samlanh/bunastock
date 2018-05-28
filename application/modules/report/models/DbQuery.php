@@ -998,45 +998,6 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		//echo $customer_id."<br />".$sale_id;
 		return $db->fetchAll($sql);
 	}
-	function getAllExpense($search){
-		$db=$this->getAdapter();
-		$sql = "SELECT e.*,
-		(SELECT tb_expensetitle.title_en FROM `tb_expensetitle` WHERE tb_expensetitle.id=e.title LIMIT 1) as title_en,
-		(SELECT tb_expensetitle.title FROM `tb_expensetitle` WHERE tb_expensetitle.id=e.title LIMIT 1) as title,
-		(SELECT name FROM `tb_sublocation` WHERE id=e.branch_id LIMIT 1) AS branch_name,
-		(SELECT description FROM tb_currency WHERE tb_currency.id=e.curr_type) AS curr_name,
-		(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id = e.user_id)  AS user_name
-		FROM tb_income_expense as e  WHERE e.status=1  ";
-		$where= ' ';
-		$order=" ORDER BY e.for_date DESC  ";
-		 
-		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".$search['end_date']." 23:59:59'";
-		$where .= "  AND ".$from_date." AND ".$to_date;
-		 
-		if(empty($search)){
-			return $db->fetchAll($sql.$order);
-		}
-		if(!empty($search['user'])){
-			$where.=" AND e.user_id = ".$search['user'] ;
-		}
-		if($search['branch_id']>-1){
-			$where.= " AND branch_id = ".$search['branch_id'];
-		}
-		if($search['title']>0){
-			$where.= " AND title = ".$search['title'];
-		}
-		 
-		if(!empty($search['text_search'])){
-			$s_where = array();
-			$s_search = addslashes(trim($search['text_search']));
-			$s_where[] = " e.title LIKE '%{$s_search}%'";
-			$s_where[] = " e.desc LIKE '%{$s_search}%'";
-			$s_where[] = " e.invoice LIKE '%{$s_search}%'";
-			$where .=' AND ( '.implode(' OR ',$s_where).')';
-		}
-		return $db->fetchAll($sql.$where.$order);
-	}
 	function getAllExpensePurchaseNoSum($search){
 		$db=$this->getAdapter();
 		$sql = "  SELECT vp.id,
@@ -1050,7 +1011,7 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 					(SELECT tb_expensetitle.title_en FROM `tb_expensetitle` WHERE tb_expensetitle.id=vp.expense_id LIMIT 1) AS title_en,
 					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id=vp.`user_id`) AS `user`,
 					 vp.paid AS total_paid 
- FROM `tb_vendor_payment` AS vp WHERE vp.status=1 ";
+				FROM `tb_vendor_payment` AS vp WHERE vp.status=1 ";
 		$where= ' ';
 		$order=" GROUP BY vp.branch_id ,vp.expense_id  ";
 			
@@ -1085,11 +1046,11 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 	function getAllExpensePurchase($search){
 		$db=$this->getAdapter();
 		$sql = " SELECT vp.id,
-(SELECT NAME FROM `tb_sublocation` WHERE tb_sublocation.id = vp.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
-(SELECT tb_expensetitle.title FROM `tb_expensetitle` WHERE tb_expensetitle.id=vp.expense_id LIMIT 1) AS title_kh,
-(SELECT tb_expensetitle.title_en FROM `tb_expensetitle` WHERE tb_expensetitle.id=vp.expense_id LIMIT 1) AS title_en,
-SUM(vp.paid) AS total_paid
- FROM `tb_vendor_payment` AS vp WHERE vp.status=1 ";
+					(SELECT NAME FROM `tb_sublocation` WHERE tb_sublocation.id = vp.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
+					(SELECT tb_expensetitle.title FROM `tb_expensetitle` WHERE tb_expensetitle.id=vp.expense_id LIMIT 1) AS title_kh,
+					(SELECT tb_expensetitle.title_en FROM `tb_expensetitle` WHERE tb_expensetitle.id=vp.expense_id LIMIT 1) AS title_en,
+					SUM(vp.paid) AS total_paid
+				FROM `tb_vendor_payment` AS vp WHERE vp.status=1 ";
 		$where= ' ';
 		$order=" GROUP BY vp.branch_id ,vp.expense_id  ";
 			
@@ -1119,46 +1080,6 @@ SUM(vp.paid) AS total_paid
 // 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
 // 		echo $sql.$where.$order;exit();
-		return $db->fetchAll($sql.$where.$order);
-	}
-	function getAllExpenseType($search){
-		$db=$this->getAdapter();
-		$sql = "SELECT e.id,e.branch_id,e.title,e.desc,SUM(e.total_amount) as total_amount,e.curr_type,
-		(SELECT tb_expensetitle.title FROM `tb_expensetitle` WHERE tb_expensetitle.id=e.title LIMIT 1) as title,
-		(SELECT tb_expensetitle.title_en FROM `tb_expensetitle` WHERE tb_expensetitle.id=e.title LIMIT 1) as title_en,
-		
-		(SELECT name FROM `tb_sublocation` WHERE id=e.branch_id LIMIT 1) AS branch_name,
-		(SELECT description FROM tb_currency WHERE tb_currency.id=e.curr_type) AS curr_name,
-		(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id = e.user_id)  AS user_name
-		FROM tb_income_expense as e  WHERE e.status=1  ";
-		$where= ' ';
-		$order=" GROUP BY e.branch_id, e.curr_type, e.title ORDER BY e.for_date DESC ";
-			
-		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".$search['end_date']." 23:59:59'";
-		$where .= "  AND ".$from_date." AND ".$to_date;
-			
-		if(empty($search)){
-			return $db->fetchAll($sql.$order);
-		}
-		if(!empty($search['user'])){
-			$where.=" AND e.user_id = ".$search['user'] ;
-		}
-		if($search['branch_id']>-1){
-			$where.= " AND branch_id = ".$search['branch_id'];
-		}
-		if($search['title']>-0){
-			$where.= " AND title = ".$search['title'];
-		}
-			
-		if(!empty($search['text_search'])){
-			$s_where = array();
-			$s_search = addslashes(trim($search['text_search']));
-			$s_where[] = " e.title LIKE '%{$s_search}%'";
-			$s_where[] = " e.desc LIKE '%{$s_search}%'";
-			$s_where[] = " e.invoice LIKE '%{$s_search}%'";
-			$where .=' AND ( '.implode(' OR ',$s_where).')';
-		}
 		return $db->fetchAll($sql.$where.$order);
 	}
 	public function getVendorBalance($search){//1
@@ -1237,7 +1158,7 @@ SUM(vp.paid) AS total_paid
 		return $db->fetchAll($sql.$where.$order);
 	}
 	public function getchequeWithdrawal($search){//1
-			$db= $this->getAdapter();
+		$db= $this->getAdapter();
 		$sql=" SELECT r.id,
 		(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 		(SELECT v.v_name FROM `tb_vendor` AS v WHERE v.vendor_id=r.vendor_id LIMIT 1 ) AS vendor_name,

@@ -25,124 +25,135 @@ $frm = $this->frm_expense;
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" action="" class="form-horizontal" autocomplete="off" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("INVOICE_NO")?><span class="required">
+							
+							<label class="control-label col-md-2"><?php echo $tr->translate("ពណ៌នាចំនាយ")?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $frm->getElement('invoice');?>
+									<input type="text" class="form-control" name="expense_title" id="expense_title"  value="<?php echo $this->row['expense_title']?>" readonly />
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("EXPENSE_TITLE")?><span class="required">
+							
+							<label class="control-label col-md-2"><?php echo $tr->translate("លេខបង្កាន់ដៃ")?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $frm->getElement('title');?>
-									<?php echo $frm->getElement('id');?>
+									<input type="text" class="form-control" style="color:red;" name="receipt" id="receipt" readonly value="<?php echo $this->row['receipt']?>" />
 								</div>
 							</div>
+							
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("CURRENCY_TYPE")?><span class="required">
-							* </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-								<?php echo $frm->getElement('currency_type'); ?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("EXCHANGE_RATE")?>($-B)</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $frm->getElement('dollar');?>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $frm->getElement('exchangetobath');?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("EXPENSE_AMOUNT")?><span class="required">
-							* </span>
-							</label>
-								<div class="col-md-2">
-									<div class="input-icon right">
-									<?php echo $frm->getElement('received_dollar'); ?>
-									</div>
-								</div>
-								<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $frm->getElement('received_bath'); ?>
-								</div>
-							</div>
 							<label class="control-label col-md-2"><?php echo $tr->translate("TOTAL_EXPENSE")?>
 							</label>
 							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $frm->getElement('total_amount');?>
-								</div>
+								<input type="text" class="form-control" name="total_amount" id="total_amount" value="<?php echo $this->row['total_amount']?>" readonly  />
 							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("BRANCH_NAME");?><span class="required">
-								 </span>
+							
+							<label class="control-label col-md-2">
+								<?php echo $tr->translate("DATE")?>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<?php echo $frm->getElement("branch_id");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("DATE")?><span class="required">
-							* </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa fa-calendar"></i><?php echo $frm->getElement('Date');?></div>
-							</div>
-						</div>
-						<div class="form-group" >
-						    <label class="control-label col-md-2"><?php echo $tr->translate("NOTE")?><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $frm->getElement('Description');?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("STATUS")?><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $frm->getElement('Stutas');?>
+									<i class="fa fa-calendar"></i>
+									<input class="form-control " name="for_date" id="for_date" value="<?php echo $this->row['for_date']?>" readonly data-date-format="dd-mm-yyyy" />
 								</div>
 							</div>
 							
 						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2"><?php echo $tr->translate("STATUS")?>
+							</label>
+							<div class="col-md-4">
+								<select class="form-control select2me" name="status" id="status" >
+									<option value="1" <?php if($this->row['status']==1){echo "selected='selected'";}?>>ប្រើប្រាស់</option>
+									<option value="0" <?php if($this->row['status']==0){echo "selected='selected'";}?>>មិនប្រើប្រាស់</option>
+								</select>
+							</div>
+							
+							<label class="control-label col-md-2"><?php echo $tr->translate("NOTE")?><span class="required">
+								 </span>
+							</label>
+							<div class="col-md-4">
+								<textarea name="note" id="note" style="height: 35px;"  readonly class="form-control"><?php echo $this->row['note']?></textarea>
+							</div>
+						</div>
 						
+						
+						<div class="form-group" >
+							<label class="control-label col-md-2">
+							</label>
+							<label class="control-label col-md-2">
+								<?php echo $tr->translate("EXPENSE_TITLE")?>
+							</label>
+							<div class="col-md-6">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<?php //echo $frm->getElement('title');?>
+									
+									<select class="form-control select2me" id="title" name="title" disabled="true" onchange="showexpense();addRowExpense();" >
+										<option value="0">ជ្រើសរើសមុខទំនិញ/សេវាកម្ម</option>
+										<option value="-1">Add New Expense Title</option>
+										<?php if(!empty($this->expense)){foreach ($this->expense as $rs){?>
+										<option value="<?php echo $rs['id']?>"><?php echo $rs['title'];?></option>
+										<?php }}?>
+									</select>
+									
+								</div>
+							</div>
+							<label class="control-label col-md-2">
+							</label>
+						</div>
+						
+						
+						<div class="form-group" style="">
+							<div class="col-md-1 control-label">
+							</div>
+							<div class="col-md-10 control-label">
+								<table id="table_row" border="1" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
+									<thead>
+										<tr id="head-title" class="table table-bordered" align="right" style="background:#ccc">
+											<th class="center">#</th>
+											<th class="center">ប្រភេទចំនាយ</th>
+											<th class="center">តម្លៃ</th>
+											<th class="center">ផ្សេងៗ</th>
+											<th class="center">លុប</th>
+										</tr>
+									</thead>
+									
+									<input type="hidden" name="identity" id="identity" />
+									
+									<tbody id="lbl_expense">
+									</tbody>
+								</table>
+							</div>
+							<div class="col-md-1 control-label">
+							</div>
+						</div>
 						
 						<div class="form-group">
-						    <div class="col-md-4">
+							<div class="col-md-12">
+								&nbsp;
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+							</div>
+						    <div class="col-md-2">
 								<a href="<?php echo $this->baseUrl();?>/purchase/expense/"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-2">
 								<div class="input-icon right">
-									<button type="submit" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("កែប្រែទិន្នន័យ")?></button>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 							</div>
-							
 						</div>
 					</div>
 				</form>
@@ -151,54 +162,84 @@ $frm = $this->frm_expense;
 	</div>
 </div>
 <script>
-$('#frm').submit(function() {
-	expense_type=$("#title").val();
-	if(expense_type=='' || expense_type==-1 || expense_type==0){
-		alert("Please select expense type");
-		$('#title').select2('open');
-		return false;	
-	}
+$( document ).ready(function() {
+	initialize();
 });
-function CalculateReceived(){
-	received_dollar = $("#received_dollar").val();
-	if(isNaN(received_dollar) || received_dollar==''){received_dollar=0;}
-	received_bath= $("#received_bath").val();
-	if(isNaN(received_bath)  || received_bath==''){received_bath=0;}
-	exchagne_rate = $("#exchangetobath").val();
-	if(isNaN(exchagne_rate) || exchagne_rate==''){exchagne_rate=0;}
-	if(exchagne_rate==0){
-		$("#total_amount").val(received_dollar);
-	}else{
-		total_amount = parseFloat((received_bath/exchagne_rate))+parseFloat(received_dollar);
-		$("#total_amount").val(total_amount.toFixed(2));
-	}
-}
+
 function showexpense(){
 	title = $("#title").val();
-	
 	if(title==-1){
-	$('#productpopup').modal('show');
+		$('#productpopup').modal('show');
 	}
-	
 }
 
 <?php $url_add_new =  $this->url(array('module'=>'purchase','controller'=>'expensetitle','action'=>'addexpensetitle')); ?>
 function addExpense(){
-		title_id = $("#expense_title").val();
-		$.ajax({
-	        url: "<?php echo $url_add_new;?>",
-	        type: "post",
-	        data: $('#frmtitle').serialize(),
-	        success: function(data){
-		      data = $.parseJSON(data);
-		      $('#title').append($("<option></option>").attr("value",data['id']).attr("selected",true).text($("#expense_title").val()));                       
-			  $("#title").select2();
-		      $('#productpopup').modal('hide');
-			 
-	        },
-	        error:function(){
-	           
-	        }
-	    });	
+	title_id = $("#expense_title").val();
+	$.ajax({
+        url: "<?php echo $url_add_new;?>",
+        type: "post",
+        data: $('#frmtitle').serialize(),
+        success: function(data){
+	      data = $.parseJSON(data);
+	      $('#title').append($("<option></option>").attr("value",data['id']).attr("selected",true).text($("#expense_title").val()));                       
+		  $("#title").select2();
+	      $('#productpopup').modal('hide');
+		 
+        },
+        error:function(){
+           
+        }
+    });	
 }
+
+index=0;
+function addRowExpense(){
+	var title = $("#title");
+	var txt_title = $("option:selected",title).text();
+	var title_id = $("#title").val();
+	if(title_id>0){
+		index++;
+		template='<tr align="center" id="row_title_'+index+'">';
+		template+='<td>'+index+'</td>';
+		template+='<td>'+txt_title+'<input type="hidden" id="title_'+index+'" name="title_'+index+'" value="'+title_id+'" </td>';
+		template+='<td><input style="text-align:center;" type="text" id="price_'+index+'" name="price_'+index+'" onkeyup="netTotal();" value="" class="form-control "></td>';
+		template+='<td><input style="text-align:center;" type="text" id="note_'+index+'" name="note_'+index+'"  value="" class="form-control"></td>';
+		template+='<td><button type="button" onClick="deleteRecord('+index+')" name="delete" class="btn default red">លុប</button></td>';
+		template+='</tr>';
+		$('#lbl_expense').append(template);
+		if($('#identity').val()!="") {
+			var identity = $('#identity').val();
+			$('#identity').val(identity+','+index);
+		} else {$('#identity').val(index);}
+	}
+}
+
+function initialize(){
+	<?php if($this->row_detail){foreach ($this->row_detail as $rs){?>
+		index++;
+		
+		var txt_title = "<?php echo $rs['expense_title']?>";
+		var title_id = <?php echo $rs['expense_type_id']?>;
+		
+		template='<tr align="center" id="row_title_'+index+'">';
+		template+='<td>'+index+'</td>';
+		template+='<td>'+txt_title+'<input type="hidden" id="title_'+index+'" name="title_'+index+'" value="'+title_id+'" </td>';
+		template+='<td><input style="text-align:center;" type="text" readonly id="price_'+index+'" name="price_'+index+'" onkeyup="netTotal();" value="" class="form-control "></td>';
+		template+='<td><input style="text-align:center;" type="text" readonly id="note_'+index+'" name="note_'+index+'"  value="" class="form-control"></td>';
+		template+='<td><button type="button" onClick="" name="delete" class="btn default red">លុប</button></td>';
+		template+='</tr>';
+		$('#lbl_expense').append(template);
+		if($('#identity').val()!="") {
+			var identity = $('#identity').val();
+			$('#identity').val(identity+','+index);
+		} else {$('#identity').val(index);}
+
+		$('#title_'+index).val('<?php echo $rs['expense_type_id']?>');
+		$('#price_'+index).val('<?php echo $rs['price']?>');
+		$('#note_'+index).val('<?php echo $rs['note']?>');
+		
+	<?php }}?>
+}
+
 </script>

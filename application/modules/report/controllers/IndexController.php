@@ -873,20 +873,29 @@ class report_indexController extends Zend_Controller_Action
     					'end_date'=>date('Y-m-d'),
     			);
     		}
-    		$db = new report_Model_DbQuery();
+    		$db = new report_Model_DbExpense();
     		$this->view->expense = $db->getAllExpense($search);
-			$this->view->expense_po = $db->getAllExpensePurchaseNoSum($search);
     		$this->view->search = $search;
     
     	}catch(Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		echo $e->getMessage();
     	}
+    	
 		$formFilter = new Application_Form_Frmsearch();
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
     }
-	public function rptTypeexpenseAction(){
+    
+    public function rptExpenseDetailAction(){
+    	$id = $this->getRequest()->getParam('id');
+    	$db = new report_Model_DbExpense();
+    	$this->view->expense = $db->getAllExpenseById($id);
+    	$this->view->expense_detail = $db->getAllExpenseDetailById($id);
+    }
+    
+    
+	public function rptExpenseByTypeAction(){
     	try{
     		if($this->getRequest()->isPost()){
     			$search=$this->getRequest()->getPost();
@@ -903,14 +912,13 @@ class report_indexController extends Zend_Controller_Action
     					'end_date'=>date('Y-m-d'),
     			);
     		}
-    		$db = new report_Model_DbQuery();
-    		$this->view->expense = $db->getAllExpenseType($search);
-			$this->view->expense_po = $db->getAllExpensePurchase($search);
+    		$db = new report_Model_DbExpense();
+    		$this->view->expense_type = $db->getAllExpenseType($search);
+    		
     		$this->view->search = $search;
-    
     	}catch(Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		echo $e->getMessage();
     	}
     	$formFilter = new Application_Form_Frmsearch();
     	$this->view->formFilter = $formFilter;

@@ -61,7 +61,10 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$arr=array(
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
+				'dead_age'			=> $data['dead_age'],
+				
 // 				'dead_khmer_year'	=> $data['dead_khmer_year'],
+
 				'date_jom'			=> date("Y-m-d",strtotime($data['date_jom'])),
 				'dead_address'		=> $data['dead_address'],
 				
@@ -92,7 +95,10 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$arr=array(
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
-// 				'dead_khmer_year'	=> $data['dead_khmer_year'],
+				'dead_age'			=> $data['dead_age'],
+
+				//'dead_khmer_year'	=> $data['dead_khmer_year'],
+
 				'date_jom'			=> date("Y-m-d",strtotime($data['date_jom'])),
 				'dead_address'		=> $data['dead_address'],
 				
