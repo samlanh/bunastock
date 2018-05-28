@@ -15,6 +15,15 @@ class Application_Form_Frmsearch extends Zend_Form
 		$nameElement->setValue($nameValue);
 		$this->addElement($nameElement);
 		
+		$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+		$nameValue = $request->getParam('adv_search');
+		$nameElement = new Zend_Form_Element_Text('adv_search');
+		$nameElement->setAttribs(array(
+				'class'=>'form-control'
+		));
+		$nameElement->setValue($nameValue);
+		$this->addElement($nameElement);
+		
 		$rs=$db->getGlobalDb('SELECT vendor_id, v_name FROM tb_vendor WHERE v_name!="" AND status=1 ');
 		$options=array($tr->translate('SELECT_VENDOR'));
 		$vendorValue = $request->getParam('suppliyer_id');
