@@ -827,5 +827,20 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		return $pre.$new_acc_no;
 	}
 	
+	public function getExpenseReceiptNumber($branch_id = 1){
+		$db = $this->getAdapter();
+		$sql=" SELECT COUNT(id) FROM tb_expense WHERE branch_id=".$branch_id." LIMIT 1 ";
+		$acc_no = $db->fetchOne($sql);
+	
+		$new_acc_no= (int)$acc_no+1;
+		$acc_no= strlen((int)$acc_no+1);
+	
+		$pre = "E";
+	
+		for($i = $acc_no;$i<5;$i++){
+			$pre.='0';
+		}
+		return $pre.$new_acc_no;
+	}
 }
 ?>
