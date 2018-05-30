@@ -76,15 +76,7 @@ $brach_name =  $this->branch;
 		                </tr> 
 		                <tr>
 		                	<td colspan="3" valign="top">
-		                		<table width="100%" cellpadding="0" cellspacing="0">
-		                			<tbody><tr>
-		                				<td style="font-size: 11px;">
-		                				    <span style="white-space: nowrap;"><?php echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php echo $tr->translate("TEL_COMPANY");?> 
-		                				</td>
-		                				<td width="65%"></td>
-		                			</tr>
-				                </tbody></table>
+		                		&nbsp;
 				              </td>
 				           </tr>   
 		            </tbody></table>
@@ -97,15 +89,15 @@ $brach_name =  $this->branch;
 			                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
 								<td><?php echo $tr->translate("BRANCH_NAME");?></td>
-								<td>&nbsp;<?php echo $tr->translate("CUSTOMER_NAME");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("SALE_ORDER");?></td>
+								<td>&nbsp;<?php echo $tr->translate("CUSTOMER_NAME");?></td>
+								<td>&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
 								<td><?php echo $tr->translate("SALE_DATE");?></td>
-								<td>&nbsp;<?php echo $tr->translate("AMOUNT");?></td>
-								<td>&nbsp;<?php echo $tr->translate("DISCOUNT");?></td>
 								<td>&nbsp;<?php echo $tr->translate("GRAND_TOTAL");?></td>
 								<td width="12%">&nbsp;<?php echo $tr->translate("PAID");?></td>
 								<td>&nbsp;<?php echo $tr->translate("BALANCE");?></td>
 								<td>&nbsp;<?php echo $tr->translate("BY_USER");?></td>
+								<td>&nbsp;<?php echo $tr->translate("ប្រវត្តិ");?></td>
 			                </tr>
 		                </thead>
 		                <tbody>
@@ -118,38 +110,32 @@ $brach_name =  $this->branch;
 		                if(!empty($this->repurchase))foreach ($this->repurchase AS $index => $rs){?>
 						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/salesdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["branch_name"];?></a></td>
-						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/salesdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["customer_name"];?></a></td>
-						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/salesdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["sale_no"];?></a></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_sold"]));?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["net_total"],2);?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["discount_value"],2);?></td>
+						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">&nbsp;<?php echo $rs["branch_name"];?></a></td>
+						   <td align="center" style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">&nbsp;<?php echo $rs["sale_no"];?></a></td>
+						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">&nbsp;<?php echo $rs["customer_name"];?></a></td>
+						   <td>&nbsp;<?php echo $rs["phone"];?></td>
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_sold"]));?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["all_total"],2);?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["paid"],2);?></td>
 						   <td>&nbsp;<?php echo number_format($rs["balance"],2);?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
+						   <td align="center"><a style="text-decoration: none;color:#000;" href="<?php echo $this->baseUrl()."/report/index/rpt-sales-payment/id/".$rs["id"];?>" target="_blank">បង់ប្រាក់</a></td>
 						</tr>
 						   <?php 
-								$d_netotal = $d_netotal+$rs["net_total"];
 								$d_paid = $d_paid+$rs["paid"];
 								$all_total = $all_total+$rs["all_total"];
 								$d_balance = $d_balance+$rs["balance"];
-								$discount=$discount +$rs["discount_value"];
                     }?>
 		                </tbody>
 		           </table>
 		            <br>
 		             <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 		                <tbody><tr height="30px;" bgcolor="#ccc" class="style" align="center" style="floafont-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
-		                    <td><strong><?php echo $tr->translate("AMOUNT");?></strong></td>
-		                    <td>&nbsp;<?php echo $tr->translate("DISCOUNT");?></td>
 		                    <td>&nbsp;<?php echo $tr->translate("GRAND_TOTAL");?></td>
 		                    <td><strong><?php echo $tr->translate("PAID");?></strong></td>
 		                    <td><strong><?php echo $tr->translate("BALANCE");?></strong></td>
 		                </tr>
-		                 <tr class="style" style=" line-height: 24px; font-size:12px;">
-		                    <td>&nbsp;<?php echo number_format($d_netotal,2);?>&nbsp;</td>
-		                    <td>&nbsp;<?php echo number_format($discount,2);?>&nbsp;</td>
+		                 <tr align="center" class="style" style=" line-height: 24px; font-size:12px;">
 							<td>&nbsp;<?php echo number_format($all_total,2);?>&nbsp;</td>
 		                    <td>&nbsp;<?php echo number_format($d_paid,2);?>&nbsp;</td>
 		                    <td>&nbsp;<?php echo number_format($d_balance,2);?>&nbsp;</td>

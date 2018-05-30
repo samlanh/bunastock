@@ -48,7 +48,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		);
 
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows,array('សែនឆ្លងម៉ុង'=>$link_timemol,'invoice_no'=>$link,'invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'វិក្កយបត្រ'=>$link_invoice,'សែនបើកឆាក'=>$link_time));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('សែនឆ្លងម៉ុង'=>$link_timemol,'invoice_no'=>$link,'invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'វិក័យបត្រ'=>$link_invoice,'សែនបើកឆាក'=>$link_time));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);

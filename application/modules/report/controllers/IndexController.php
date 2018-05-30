@@ -90,11 +90,18 @@ class report_indexController extends Zend_Controller_Action
     		);
     	}
     	$this->view->rssearch = $data;
-    	$query = new report_Model_DbQuery();
+    	
+    	$query = new report_Model_DbSale();
     	$this->view->repurchase =  $query->getAllSaleOrderReport($data);
+    	
 		$formFilter = new Sales_Form_FrmSearch();
     	$this->view->form_purchase = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    public function rptSalesPaymentAction(){
+    	$id = $this->getRequest()->getParam('id');
+    	$query = new report_Model_DbSale();
+    	$this->view->sale_payment =  $query->getSalePaymentById($id);
     }
     public function  rptSalebycustomerAction()//purchase report
     {
@@ -1256,4 +1263,16 @@ class report_indexController extends Zend_Controller_Action
     	$this->view->form_purchase = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
+	
+	function rptMongPaymentAction(){
+		$id = $this->getRequest()->getParam('id');
+		$query = new report_Model_DbMongPayment();
+		$this->view->rsreceipt = $query->getMongPaymentById($id);
+		 
+		$formFilter = new Sales_Form_FrmSearch();
+		$this->view->form_purchase = $formFilter;
+		Application_Model_Decorator::removeAllDecorator($formFilter);
+	}
+	
+	
 }

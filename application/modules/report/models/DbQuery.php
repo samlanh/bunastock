@@ -1353,7 +1353,7 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		$sql = " SELECT c.id,
 		(SELECT name FROM `tb_sublocation` WHERE id=c.branch_id) AS branch_name,
 		(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=c.customer_id LIMIT 1 ) AS customer_name,
-		c.customer_id,c.payment_type,c.payment_id,c.receipt_no,c.receipt_date,c.total,c.paid,c.balance,c.remark,
+		c.customer_id,c.payment_id,c.receipt_no,c.receipt_date,c.total,c.paid,c.balance,c.remark,
 		(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = c.`user_id` LIMIT 1) AS user_name
 		 FROM `tb_receipt` as c
 		WHERE 1 ";
