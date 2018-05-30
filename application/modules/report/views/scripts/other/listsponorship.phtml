@@ -10,7 +10,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i>ការប្រគល់ការ របស់សប្បុរសជនជូនដល់សព
+					<i class="fa fa-globe"></i>ការប្រគល់ របស់សប្បុរសជនជូនដល់សព
 				</div>
 				<div class="btn-group pull-right">
 					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -56,13 +56,13 @@
 			<tbody>
 			<tr>
 		    	<td align="center">
-		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
-		            	<tbody><tr>
+		        	<table width="100%" style="font-family: 'Khmer OS Battambang'; " cellpadding="0" cellpadding="0">
+		            	<tbody><tr><br>
 		                	<td width="20%" valign="top"></td>
 		                	<td width="60%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_PURCHASE");?></li>
+		                			<li style="text-align:center; font-size:20px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+		                			<li style="text-align:center; font-size:20px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_PURCHASE");?></li>
 		                		</ul>
 		                	</td>
 		                    <td width="40%"></td>
@@ -82,48 +82,46 @@
 		        </td>
 		    </tr>
 		    <tr>
-		    	<td class="table2excel" id="exportExcel">
-		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">
+		    	<td class="table2excel" id="exportExcel"> 		    	
+		            <tr style="line-height: 27px; color: #000080; font-family:'Khmer OS Muol Light'; font-size:20px; padding:1px 0px;">
+		           		<td><u>ឈ្មោះសប្បុរសជនៈ* <?php echo ('សុខ គុង');?></u></td>
+		           	</tr>
+		           <tr><td>&nbsp;</td></tr>
+		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">		               
 		                 <thead>
-		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
-			                    <th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NUM");?></th>
-								<th style="border:1px solid #000;">&nbsp;ឈ្មោះប្ដី</th>
-								<th style="border:1px solid #000;">&nbsp;ឈ្មោះប្រពន្ធ</th>
-								<th style="border:1px solid #000;">&nbsp;អាសយដ្ឋាន</th>
-								<th style="border:1px solid #000;">&nbsp; សម្គាល់ផ្សេង	</th>
-								<th style="border:1px solid #000;">&nbsp;លេខបង្កាន់ដៃ</th>
-								<th style="border:1px solid #000;">&nbsp; ថ្ងៃបង់ប្រាក់</th>
-								<th style="border:1px solid #000;">&nbsp;ចំនួនម្ឈូស	</th>
-								<th style="border:1px solid #000;">&nbsp;តម្លៃរាយ</th>
-								<th style="border:1px solid #000;">&nbsp;តម្លៃសរុប</th>
-		               	 </tr>
+		                 	<tr bgcolor="#b0bdfd" style="font-weight:bold; text-align:center; line-height: 25px; font-size:12px; padding:1px 0px;">
+			                    <th style="border:1px solid #000;text-align:center;">&nbsp;<?php echo $tr->translate("NUM");?></th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;ឈ្មោះសព</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;ភេទ</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;អាយុ</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;ថ្ងៃស្លាប់</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;អាស័យដ្ឋាន</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;ថ្ងៃជំនួយ</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;ប្រើប្រាស់</th>
+		               	 	</tr>
 		                <thead>
 		                <?php $num=1;
 		                $d_balance = 0;
 		                if(!empty($rows))foreach ($rows AS $index => $rs){?>	                
-						<tr class='row-format hover' style="border:1px solid #000; ">
+						<tr class='row-format hover' style="border:1px solid #000; text-align:center;">
 						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["donor_name"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["donor_name"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["donor_female"];?></td>						  
 						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["date_jom"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["dead_address"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["date_jenh"];?></td>
-						    <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["notes"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["note"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["create_date"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["dead_address"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["dead_address"];?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
 						</tr>
 						   <?php }?>
-						   <tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
-							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="8"></td>
+						   	<tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
+							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="6"></td>
 							<td style="border: 1px solid #000;white-space: nowrap;">សរុបរួម/Grand Total</td>
 							<td style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>
-						</tr>
+							</tr>
 		                </tbody>
 		           </table>
 		            <br>
-		           
-		              <br>
 		              <table align="center" width="100%">
 						   <tbody>
 						   	<tr style="font-size: 14px;">

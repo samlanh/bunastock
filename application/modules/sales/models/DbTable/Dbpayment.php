@@ -128,7 +128,7 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			foreach ($ids as $row){
 				$branch_id = $this->getBranchByInvoice($data['invoice_no'.$row]);
 				$data_invoice = array(
-						'discount_after'	  => 	$branch_id['discount'],
+						'discount_after'  => 	$branch_id['discount'],
 						'paid_after'	  => 	$branch_id['paid_amount'],
 						'balance_after'	  => 	$branch_id['balance'],
 						'is_fullpaid'	  => 	0,
@@ -169,77 +169,7 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			foreach ($ids as $key => $i)
 			{
 				$invoice = $this->getBranchByInvoice($data['invoice_no'.$i]);
-				//print_r($invoice);exit();
-// 				$paid = $paid -$invoice['paid_amount'];
-// 				$recipt_paid = 0;
-// 				if ($paid>=0){
-// 					$paided = 0;
-// 					$recipt_paid = $invoice['paid_amount'];
-// 					$balance= $invoice['balance'];
-// 				}else{
-// 					$paided = ($invoice['paid_amount']- abs($paid));
-// 					$recipt_paid = ($invoice['paid_amount']- abs($paid));
-// 					$balance= $invoice['balance']+abs($paid);
-// 					$paid  = 0;
-// 				}
-// 				$data_item= array(
-// 						'receipt_id'=> $id,
-// 						'invoice_id'	  => 	$data['invoice_no'.$i],
-// 						'total'=>$invoice['sub_total'],
-// 						'discount'  => 	$invoice['discount'],
-// 						'paid'	  => 	$recipt_paid,
-// 						'balance'		  => 	$balance,
-// 						'is_completed'   =>    1,
-// 						'status'  => 1,
-// 						'date_input'	  => date("Y-m-d"),
-// 				);
-// 				$this->_name='tb_receipt_detail';
-// 				$this->insert($data_item);
-				
-// 				$data_invoice = array(
-// 						'discount_after'	  => 	0,
-// 						'paid_after'	  => 	$paided,
-// 						'balance_after'	  => 	$balance,
-// 						'is_fullpaid'	  => 	1,
-// 				);
-// 				$this->_name='tb_invoice';
-// 				$where = 'id = '.$data['invoice_no'.$i];
-// 				$this->update($data_invoice, $where);
-				
-// 				if ($key== ($count-1)){
-// 					if ($paid>0){
-// 						$idss= explode(',',$data['identity']);
-// 						foreach ($idss as $k)
-// 						{
-// 							$paid = $paid - $invoice['balance'];
-// 							if ($paid>=0){
-// 								$paided = 0;
-// 								$recipt_paid =$invoice['balance']+$invoice['paid_amount'];
-// 							}else{
-// 								$paided = abs($paid);
-// 								$recipt_paid = $invoice['paid_amount']+($invoice['balance'] - $paided);
-// 								$paid=0;
-// 							}
-// 							$data_item= array(
-// 									'paid'	  => 	$recipt_paid,
-// 									'balance'		  => 	$paided,
-// 									'is_completed'   =>    1,
-// 									'status'  => 1,
-// 							);
-// 							$this->_name='tb_receipt_detail';
-// 							$wheres = 'invoice_id = '.$data['invoice_no'.$k];
-// 							$this->update($data_item, $wheres);
-				
-// 							$data_invoice = array(
-// 									'balance_after'	  => 	$paided,
-// 									'is_fullpaid'	  => 	1,
-// 							);
-// 							$this->_name='tb_invoice';
-// 							$where = 'id = '.$data['invoice_no'.$k];
-// 							$this->update($data_invoice, $where);
-// 						}
-// 					}
-// 				}
+			
 
 			}
 				

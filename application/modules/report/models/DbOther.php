@@ -240,10 +240,7 @@ function getAllworker($search){
 					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=dead_sex) AS dead_sex,
 					dead_age,date_jom,
 					dead_address,
-					(SELECT donor_name FROM tb_donors WHERE tb_donors.id = donor_id) AS donor_name,
-					date_jenh,
-					note,notes,
-					create_date,'សប្បុរសជន',
+					create_date,
 					(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=d.status LIMIT 1) STATUS
 		 		FROM 

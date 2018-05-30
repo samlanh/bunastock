@@ -15,15 +15,15 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
     		$data = array(
     			'ad_search'	=>	'',
 //     			'branch'	=>	'',
-//     			'brand'		=>	'',
+     			'status'	=>	-1,
     		);
     	}
 		$rows = $db->getAllPartnerService($data);
-		$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME","PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY");
+		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","សេវាកម្មផ្តល់អោយ","តម្លៃជួល","ពណ៍នា");
 		$link=array('module'=>'sales','controller'=>'partnerservice','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('partner_name'=>$link,'tl'=>$link,'description'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('partner_name'=>$link,'description'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
@@ -45,7 +45,7 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
 			}			
-		$this->view->rsservice = $db->getAllService();
+//		$this->view->rsservice = $db->getAllService();
 	}
 	function editAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';

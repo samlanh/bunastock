@@ -9,6 +9,47 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
+    public function getAllPartnerService($search){
+    	$db = $this->getAdapter();
+    	$sql=" SELECT
+//     	id,
+//     	dead_name,
+//     	(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
+//     	dead_age,date_jom,
+//     	dead_address,
+//     	(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,
+//     	date_jenh,
+//     	note,notes,
+//     	create_date,
+//     	(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
+//     	(SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=d.status LIMIT 1) status
+//     	FROM
+//     	tb_donor_donate as d
+//     	WHERE
+//     	dead_name!=''
+//     	and donor_id>0
+    	";
+    	$where = ''; 	
+    	if(!empty($search['ad_search'])){
+    		$s_where = array();
+    		$s_search = trim(addslashes($search['ad_search']));
+    		$s_where[] = " dead_name LIKE '%{$s_search}%'";
+    		$s_where[] = " (select donor_name from tb_donors where tb_donors.id = donor_id) LIKE '%{$s_search}%'";
+    		$s_where[] = " (select name_kh from tb_view where type=19 and key_code=dead_sex) LIKE '%{$s_search}%'";
+    		$s_where[] = " dead_address LIKE '%{$s_search}%'";
+    		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	
+    	if($search['status']>-1){
+    		$where .= " AND status = ".$search['status'];
+    	}
+    	if($search['branch']>0){
+    		$where .= " AND branch_id = ".$search['branch'];
+    	}
+    	$order=" ORDER BY id DESC ";
+   // 	echo $sql.$where.$order;
+    	return $db->fetchAll($sql.$where.$order);
+    }
     public function addService($post){
     	$_arr=array(
     			'partner_name' 		 => $post['partner_name'],
@@ -42,26 +83,6 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
 		//echo $where; exit();
 		$this->update($where);
     }
-// 	public function getProvinceById($id){
-// 		$db = $this->getAdapter();
-// 		$sql = "SELECT * FROM ln_province WHERE province_id = ".$id;
-// 		$sql.=" LIMIT 1";
-// 		$row=$db->fetchRow($sql);
-// 		return $row;
-// 	}
-//     public function updateProvince($_data,$id){
-//     	$_arr=array(
-//     			'code' 			   => $_data['code'],
-//     			'province_en_name' => $_data['en_province'],
-//     			'province_kh_name' => $_data['kh_province'],
-//     			'displayby'	       => $_data['display'],
-//     			'modify_date'      => Zend_Date::now(),
-//     			'status'           => $_data['status'],
-//     			'user_id'	       => $this->getUserId()
-//     	);
-//     	$where=$this->getAdapter()->quoteInto("province_id=?", $id);
-//     	$this->update($_arr, $where);
-//     }
  
    
 }
