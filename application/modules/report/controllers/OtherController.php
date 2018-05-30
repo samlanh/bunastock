@@ -59,25 +59,6 @@ class report_OtherController extends Zend_Controller_Action
     	$this->view->form_sponsorship = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     }
-    public function rptsalemongAction()
-    {
-    	$db = new report_Model_DbOther();
-    	if($this->getRequest()->isPost()){
-    		$data = $this->getRequest()->getPost();
-    	}else{
-    		$data = array(
-    				'ad_search'	=>	'',
-    				'branch'	=>	'',
-    				'status'	=>	-1,
-    		);
-    	}
-    	// 		$this->view->search = $db->getBranch($data["branch"]);
-    	$this->view->other = $db->getAllsaleMong($data);
-    	$formFilter = new Product_Form_FrmProduct();
-    	$this->view->formFilter = $formFilter->productFilter();
-    	$this->view->form_salemong = $formFilter;
-    	Application_Model_Decorator::removeAllDecorator($formFilter);
-    }
     
     public function rptpaymentlistAction()
     {

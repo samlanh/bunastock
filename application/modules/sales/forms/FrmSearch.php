@@ -39,7 +39,7 @@ public function init()
 		$startDateElement = new Zend_Form_Element_Text('start_date');
 		$startDateElement->setValue($startDateValue);
 		$startDateElement->setAttribs(array(
-				'class'=>'form-control form-control-inline date-picker',
+				'class'=>'form-control form-control-inline date-picker input-icon right',
 				'placeholder'=>'Start Date',
 				'data-date-format'=>"dd-mm-yyyy"
 		));
