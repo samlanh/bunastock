@@ -10,39 +10,39 @@
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("RPT_PURCHASE");?>
 				</div>
-					<div class="btn-group pull-right">
-						 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-						   Actions <i class="fa fa-angle-down"></i>
-						 </button>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a href="#" onclick="doPrint();">
-									<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
-								</a>
-							</li>
-							<li>
-								<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-							</li>							
-						</ul>
-					</div>
+				<div class="btn-group pull-right">
+					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+					   Actions <i class="fa fa-angle-down"></i>
+					 </button>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="#" onclick="doPrint();">
+								<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
+							</a>
+						</li>
+						<li>
+							<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+						</li>							
+					</ul>
 				</div>
+			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
-					<?php $formFilter = $this->form_purchase; ?>
-						<div class="form-group" style="padding-top: 6px;">
-						<label class="control-label col-md-3"><?php echo $formFilter->getElement('ad_search');?></label>
-						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch');?></label>
-						<label class="control-label col-md-3"><?php echo $formFilter->getElement('status');?></label>
-					</div>
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
+					<?php $formFilter = $this->form_salemong; ?>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('status');?></label>
+					
 					<div class="form-group" style="padding-top: 6px;">
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
 					</div>
 					<div style="clear:both;"></div>	
 				</form> 
+			</div>	
 	<div style=" min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm">
 	<div id="divPrint" style="width: 100%;">
 	<style>
@@ -117,7 +117,7 @@
 		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
 		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
 		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
-		                if(!empty($this->product))foreach ($this->product AS $index => $rs){?>
+		                if(!empty($this->repurchase))foreach ($this->repurchase AS $index => $rs){?>
 		                
 						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000; <?php if($rs["balance_after"]<=0){echo"background:#d5daff;";}?>">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
@@ -174,7 +174,6 @@
 		</table>
 		</div>
 	  </div>		
-	</div>
 	 </div>
    </div>
 </div>

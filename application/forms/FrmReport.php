@@ -116,14 +116,15 @@ class Application_Form_FrmReport extends Zend_Form
      	$item = new report_Model_DbQuery();
     	$sql="SELECT p.id, p.item_name,p.item_code FROM tb_product AS p WHERE p.item_name!='' ";
 			$sql.=" ORDER BY p.item_name " ;
-		$rs=$db->getGlobalDb($sql);
+		$rs=$db->fetchAll($sql);
 		if($rs){
     	$options=array(''=>$tr->translate('CHOOSE_PRODUCT'));
     	foreach($rs as $read) $options[$read['id']]=$read['item_code']." ".$read['item_name'];
 		}else{
 			$options=array(''=>'No Items Results');
 		}
-    	$pro_id=new Zend_Form_Element_Select('item');
+    	
+		$pro_id=new Zend_Form_Element_Select('item');
     	$pro_id->setMultiOptions($options);
     	$proValue = $request->getParam('item');
     	$pro_id->setAttribs(array(

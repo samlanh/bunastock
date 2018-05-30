@@ -18,7 +18,7 @@ public function init()
 		$rs=$db->getGlobalDb('SELECT id,cust_name,`phone` FROM tb_customer WHERE cust_name!="" AND status=1 ');
 		$options=array($tr->translate('Choose Customer'));
 		$vendorValue = $request->getParam('customer_id');
-		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['cust_name']."-".$read['phone'];
+		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['cust_name'];
 		$vendor_element=new Zend_Form_Element_Select('customer_id');
 		$vendor_element->setMultiOptions($options);
 		$vendor_element->setAttribs(array(

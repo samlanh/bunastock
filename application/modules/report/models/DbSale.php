@@ -79,6 +79,8 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 					AND s.status=1 
 					and r.type=1
 					AND s.id = $id 
+				order by
+					id ASC	
 					
 			";
 		return $db->fetchAll($sql);
