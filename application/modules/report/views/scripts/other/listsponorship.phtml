@@ -1,6 +1,8 @@
 <?php 
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-	$formFilter = $this->form_sponsorship;
+	$formFilter = $this->form_listsponorship;
+	$rows=$this->other;
+//	print_r($this->row);exit();
 ?>
 <title><?php echo $tr->translate("RPT_PURCHASE");?></title>
 <div class="row">
@@ -8,7 +10,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i>ការប្រគល់ការ ឧបត្ថម
+					<i class="fa fa-globe"></i>ការប្រគល់ការ របស់សប្បុរសជនជូនដល់សព
 				</div>
 				<div class="btn-group pull-right">
 					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -28,17 +30,7 @@
 				</div>
             <div class="portlet-body form frmfilter">
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
-					<?php $formFilter = $this->form_sponsorship; ?>
-					<div class="form-group" style="padding-top: -6px;">
-						<label class="control-label col-md-4"><?php echo $formFilter->getElement('ad_search');?></label>
-					</div>
-					<div class="form-group" style="padding-top: -6px;">
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
-						<label class="control-label col-md-2">
-							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
-						</label>
-					</div>
+					<?php $formFilter = $this->form_listsponorship; ?>
 					<div style="clear:both;"></div>	
 				</form> 
 	<div style=" min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm">
@@ -71,10 +63,9 @@
 		                		<ul>
 		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_PURCHASE");?></li>
-		                			<li style="text-align:center; font-size:14px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់  <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>
 		                		</ul>
 		                	</td>
-		                    <td width="20%"></td>
+		                    <td width="40%"></td>
 		                </tr> 
 		                <tr>
 		                	<td colspan="3" valign="top">
@@ -95,51 +86,39 @@
 		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">
 		                 <thead>
 		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
-			                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
-								<td>&nbsp;<?php echo $tr->translate("BODY_NAME");?></td>
-								<!--<td>&nbsp;<?php //echo $tr->translate("PURCHASE_ORDER");?></td> -->
-								<td>&nbsp;<?php echo $tr->translate("GENDER");?></td>
-								<td>&nbsp;<?php echo $tr->translate("YEAR_AGE");?></td>
-								<td><?php echo $tr->translate("DATE_SPONSOR");?></td>
-								<td width="10%">&nbsp;<?php echo $tr->translate("ADDRESS");?></td>
-								<td>&nbsp;<?php echo $tr->translate("NAME_SPONSOR");?></td>
-								<td>&nbsp;<?php echo $tr->translate("DATE_MJOS");?></td>
-								<td>&nbsp;សម្គាល់(ភាសាខ្មែរ)</td>
-								<td>&nbsp;<?php echo $tr->translate("NOTE_CHINESS");?></td>
-								<td>&nbsp;<?php echo $tr->translate("CREATION_DATE");?></td>
-								<!-- <td>&nbsp;<?php //echo $tr->translate("PAYMENT_METHOD");?></td>
-								
-								<td>&nbsp;<?php //echo $tr->translate("STATUS");?></td> -->
-						        <td>&nbsp;<?php echo $tr->translate("BY_USER");?></td>
-							<!-- <td style="white-space: nowrap;">&nbsp;<?php //echo $tr->translate("PRINT");?></td> -->
+			                    <th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NUM");?></th>
+								<th style="border:1px solid #000;">&nbsp;ឈ្មោះប្ដី</th>
+								<th style="border:1px solid #000;">&nbsp;ឈ្មោះប្រពន្ធ</th>
+								<th style="border:1px solid #000;">&nbsp;អាសយដ្ឋាន</th>
+								<th style="border:1px solid #000;">&nbsp; សម្គាល់ផ្សេង	</th>
+								<th style="border:1px solid #000;">&nbsp;លេខបង្កាន់ដៃ</th>
+								<th style="border:1px solid #000;">&nbsp; ថ្ងៃបង់ប្រាក់</th>
+								<th style="border:1px solid #000;">&nbsp;ចំនួនម្ឈូស	</th>
+								<th style="border:1px solid #000;">&nbsp;តម្លៃរាយ</th>
+								<th style="border:1px solid #000;">&nbsp;តម្លៃសរុប</th>
 		               	 </tr>
 		                <thead>
-		                <?php $num=1; 
-		               
-		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>
-		                
+		                <?php $num=1;
+		                $d_balance = 0;
+		                if(!empty($rows))foreach ($rows AS $index => $rs){?>	                
 						<tr class='row-format hover' style="border:1px solid #000; ">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["donor_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_sex"];?></td>
-						   <!--<td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php //echo $rs["order_number"];?></a></td> -->
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_age"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["date_jom"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_address"];?></td>
-						   <td style="white-space: nowrap;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["date_jenh"];?></td>
-						     <td style="white-space: nowrap;">&nbsp;<?php echo $rs["notes"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["note"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["create_date"];?></td>
-					
-						   <!-- <td>&nbsp;<?php //echo $rs["payment_method"];?></td>
-						   <td>&nbsp;<?php //echo $rs["purchase_status"];?></td> -->
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["donor_name"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["donor_female"];?></td>						  
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["date_jom"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["dead_address"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["date_jenh"];?></td>
+						    <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["notes"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["note"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php //echo $rs["create_date"];?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-						   <!-- <td>&nbsp;<a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>"><?php echo $tr->translate("PRINT");?></a></td> -->
 						</tr>
-						   <?php 
-							
-                    }?>
+						   <?php }?>
+						   <tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
+							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="8"></td>
+							<td style="border: 1px solid #000;white-space: nowrap;">សរុបរួម/Grand Total</td>
+							<td style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>
+						</tr>
 		                </tbody>
 		           </table>
 		            <br>

@@ -103,7 +103,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'comission'				=> $data['comission'],
 				'other_note'			=> $data['other_note'],
 				'sub_total'				=> $data['sub_total'],
-				'paid_before'			=> $data['paid_before'],
+//				'paid_before'			=> $data['paid_before'],
 				'paid'					=> $data['paid'],
 				'balance'				=> $data['balance'],
 				'balance_after'			=> $data['balance'],

@@ -196,6 +196,63 @@ function getAllDonors($search){
 //		echo $sql.$where.$location.$group_by; exit();
 		return $db->fetchAll($sql.$where.$location.$group_by);
 	}
+function getAllworker($search){
+		$db = $this->getAdapter();	
+		$sql=" SELECT 
+					id,
+					name,
+					(select name_kh from tb_view where type=19 and key_code=sex LIMIT 1) as sex,
+					phone,
+					email,
+					address,
+					(select name_kh from tb_view where type=20 and key_code=constructor_type LIMIT 1) as constructor_type,
+					note,
+					create_date,
+					(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
+					(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status
+		 		FROM 
+					tb_constructor
+				WHERE 
+					name!=''
+			";			
+		$where = "  ";
+		if(!empty($search['ad_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['ad_search']));
+			$s_where[] = " name LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if($search['status']>-1){
+			$where .= " AND status = ".$search['status'];
+		}
+		$order=" ORDER BY id DESC ";
+// 		echo $sql.$where.$order;
+		return $db->fetchAll($sql.$where.$order);
+	}
+	function getAlllistSponorship($id){
+		$db = $this->getAdapter();
+		$sql=" SELECT 
+					id,
+					dead_name,
+					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=dead_sex) AS dead_sex,
+					dead_age,date_jom,
+					dead_address,
+					(SELECT donor_name FROM tb_donors WHERE tb_donors.id = donor_id) AS donor_name,
+					date_jenh,
+					note,notes,
+					create_date,'សប្បុរសជន',
+					(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
+					(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=d.status LIMIT 1) STATUS
+		 		FROM 
+					tb_donor_donate AS d
+				WHERE 
+					dead_name!='' 
+					AND donor_id>0
+									
+					AND  d.`donor_id`= $id
+					";	 
+		return $db->fetchAll($sql);
+	}
 // 	function getQtyProductByProIdLoca($id,$loc_id){
 // 		$db = $this->getAdapter();
 // 		$sql = "SELECT pl.`qty` FROM `tb_prolocation` AS pl  WHERE pl.`pro_id`=$id AND pl.`location_id`=$loc_id";

@@ -96,30 +96,30 @@
 		    	<td class="table2excel" id="exportExcel">
 		            <table  border="1" style="border-collapse:collapse; border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 		                 <thead>
-		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 22px; font-size:11px; padding:1px 0px; white-space: nowrap; ">
-			                    <th>&nbsp;<?php echo $tr->translate("NUM");?></th>
-								<th width="12%"><?php echo $tr->translate("NAME_MALE");?></th>
-								<th width="12%">&nbsp;<?php echo $tr->translate("NAME_FEMLAE");?></th>
-								<th width="11%">&nbsp;<?php echo $tr->translate("PHONE_NUMBER");?></th>
-								<th width="50%">&nbsp;<?php echo $tr->translate("ADDRESS");?></th>
-								<th>&nbsp;<?php echo $tr->translate("NEED");?></th>
-								<th>&nbsp;<?php echo $tr->translate("LOGES_USE");?></th>
-								<th>&nbsp;<?php echo $tr->translate("NONTE_OTHER");?></th>
-								<th>&nbsp;<?php echo $tr->translate("RECEIPT_NUMBER");?></th>
-								<th>&nbsp;<?php echo $tr->translate("PAYMENT_DATE");?></th>
-								<th>&nbsp;<?php echo $tr->translate("WHILE");?></th>
-								<th>&nbsp;<?php echo $tr->translate("LIST_PRICE");?></th>
+		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 22px; border:1px solid #000; font-size:11px; padding:1px 0px; white-space: nowrap; ">
+			                    <th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NUM");?></th>
+								<th width="12%" style="border:1px solid #000;"><?php echo $tr->translate("NAME_MALE");?></th>
+								<th width="12%" style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NAME_FEMLAE");?></th>
+								<th width="11%" style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("PHONE_NUMBER");?></th>
+								<th width="50%" style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("ADDRESS");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NEED");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("LOGES_USE");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NONTE_OTHER");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("RECEIPT_NUMBER");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("PAYMENT_DATE");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("WHILE");?></th>
+								<th style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("LIST_PRICE");?></th>
 								<th>&nbsp;<?php echo $tr->translate("PRICE_TOTAL");?></th>								
 						        <th>&nbsp;<?php echo $tr->translate("BY_USER");?></th>
-		               	 </tr>
-		                <thead>
+		               		 </tr>
+		                </thead>
 		                <?php $num=1; 
 		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
 		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>		                
 						<tr class='row-format hover' style="border:1px solid #000; ">
-						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+0?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["donor_name"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["donor_female"];?></td>
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
+						   <td style="border:1px solid #000;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
+						   <td style="border:1px solid #000;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_female"];?></a></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["tel"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["address"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["required_using"];?></td>

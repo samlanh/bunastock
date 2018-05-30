@@ -98,6 +98,49 @@ class report_OtherController extends Zend_Controller_Action
     	$this->view->form_paymentlist = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     }
+    public function rptworkerAction()
+    {
+    	$db = new report_Model_DbOther();
+    	if($this->getRequest()->isPost()){
+    		$search = $this->getRequest()->getPost();
+    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+    	}else{
+    		$search = array(
+    				'ad_search'	=>	'',
+    				'status'	=>	-1,
+    		);
+    	}
+    	// 		$this->view->search = $db->getBranch($data["branch"]);
+    	$this->view->search = $search;
+    	$this->view->other = $db->getAllworker($search);
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	$this->view->form_worker = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    public function listsponorshipAction()
+    {
+    	$id=$this->getRequest()->getParam('id');
+    	$db = new report_Model_DbOther();
+//     	if($this->getRequest()->isPost()){
+//     		$search = $this->getRequest()->getPost();
+//     		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+//     		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+//     	}else{
+//     		$search = array(
+//     				'ad_search'	=>	'',
+//     				'status'	=>	-1,
+//     		);
+//     	}
+//     	// 		$this->view->search = $db->getBranch($data["branch"]);
+//     	$this->view->search = $search;
+    	$this->view->other = $db->getAlllistSponorship($id);
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	$this->view->form_listsponorship = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
 	
     
     
