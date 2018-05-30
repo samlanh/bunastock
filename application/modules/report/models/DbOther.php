@@ -109,33 +109,36 @@ function getAllDonors($search){
 	function getAllsaleMong($search){
 		$db = $this->getAdapter();	
 		$sql=" SELECT
-				id,
-				invoice_no,
-				(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
-					
-				(select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) as dead_id,
-				(select name_kh from tb_view where type=20 and key_code=m.construct_type LIMIT 1) as construct_type,
-				mong_code,
-					
-				(SELECT name FROM `tb_person_in_charge` AS p WHERE p.id=m.person_in_charge LIMIT 1 ) as person_in_charge,
-				(SELECT name FROM `tb_constructor` AS c WHERE c.id=m.constructor LIMIT 1 ) as constructor,
-				sale_date,
-				sub_total,
-				paid,
-				balance_after,
-					
-				'វិក័យបត្រ',
-				'សែនបើកឆាក',
-				'សែនឆ្លងម៉ុង',
-				other_note,
-				(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
-				(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status
+					id,
+					invoice_no,
+					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
+						
+					(select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) as dead_id,
+					(select name_kh from tb_view where type=20 and key_code=m.construct_type LIMIT 1) as construct_type,
+					mong_code,
+						
+					(SELECT name FROM `tb_person_in_charge` AS p WHERE p.id=m.person_in_charge LIMIT 1 ) as person_in_charge,
+					(SELECT name FROM `tb_constructor` AS c WHERE c.id=m.constructor LIMIT 1 ) as constructor,
+					sale_date,
+					sub_total,
+					paid,
+					balance_after,
+						
+					'វិក័យបត្រ',
+					'សែនបើកឆាក',
+					'សែនឆ្លងម៉ុង',
+					other_note,
+					(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
+					(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status
 				FROM
-				tb_mong as m
+					tb_mong as m
 				WHERE
-				1
+					1
 				";
 		$where= '';
+		$from_date =(empty($search['start_date']))? '1': " m.sale_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".$search['end_date']." 23:59:59'";
+		$where .= " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['ad_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['ad_search']));

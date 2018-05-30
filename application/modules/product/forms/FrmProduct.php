@@ -303,6 +303,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$start_date->setAttribs(array(
 				'class'=>'form-control date-picker ',
 				'data-date-format'=>"dd-mm-yyyy",
+				'placeHolder'=>'start date',
 		));
 		$_date = $request->getParam("start_date");
 		

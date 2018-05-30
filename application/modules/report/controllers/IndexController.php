@@ -144,13 +144,18 @@ class report_indexController extends Zend_Controller_Action
     	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']	= date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     				'ad_search'	=>	'',
     				'branch'	=>	'',
+    				'start_date'=>	date("Y-m-d"),
+    				'end_date'	=>	date("Y-m-d"),
     				'status'	=>	-1,
     		);
     	}
+    	$this->view->rssearch = $data;
     	$this->view->other = $db->getAllsaleMong($data);
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
