@@ -3,7 +3,6 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 {
 	public function init()
     {
-        /* Initialize action controller here */
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     }
     public function indexAction()
@@ -19,7 +18,7 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllPartnerService($data);
-		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","សេវាកម្មផ្តល់អោយ","តម្លៃជួល","ពណ៍នា");
+		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","សេវាកម្មផ្តល់អោយ","តម្លៃជួល","ពណ៍នា","ប្រើប្រាស់");
 		$link=array('module'=>'sales','controller'=>'partnerservice','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
@@ -45,7 +44,7 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
 			}			
-//		$this->view->rsservice = $db->getAllService();
+		$this->view->rsservice = $db->getAllService();
 	}
 	function editAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
@@ -64,8 +63,8 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 				  	Application_Form_FrmMessage::messageError("UPDATE_ERROR",$err = $e->getMessage());
 				  }
 			}			
-	 		$row = $db->getServiceById($id);
-	 		$this->view->service = $row;
+//	 		$row = $db->getServiceById($id);
+	// 		$this->view->service = $row;
 	 		//print_r($row); exit();
 	 		$this->view->rsservice = $db->getAllService();				 
 	}	

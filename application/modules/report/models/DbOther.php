@@ -92,14 +92,6 @@ function getAllDonors($search){
  			$s_where[] = " dead_address LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		
-		if($search['status']>0){
-			$where .= " AND status = ".$search['status'];
-		}
-		if($search['branch']>0){
-			$where .= " AND branch_id = ".$search['branch'];
-		}
-
 		$order=" ORDER BY id DESC ";
 		
  	//	echo $sql.$where.$order;
@@ -160,7 +152,6 @@ function getAllDonors($search){
 	function getAllpaymentList($data){
 		$db = $this->getAdapter();
 		$db_globle = new Application_Model_DbTable_DbGlobal();
-//		$user_id = $this->getUserId();
 		$sql ="SELECT
 				p.`id`,
 				(SELECT b.name FROM `tb_sublocation` AS b WHERE b.id=pl.`location_id` LIMIT 1) AS branch,
@@ -242,7 +233,7 @@ function getAllworker($search){
 					dead_address,
 					create_date,
 					(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
-					(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=d.status LIMIT 1) STATUS
+ 					(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=d.status LIMIT 1) STATUS
 		 		FROM 
 					tb_donor_donate AS d
 				WHERE 
@@ -253,58 +244,5 @@ function getAllworker($search){
 					";	 
 		return $db->fetchAll($sql);
 	}
-// 	function getQtyProductByProIdLoca($id,$loc_id){
-// 		$db = $this->getAdapter();
-// 		$sql = "SELECT pl.`qty` FROM `tb_prolocation` AS pl  WHERE pl.`pro_id`=$id AND pl.`location_id`=$loc_id";
-// 		return $db->fetchOne($sql);
-// 	}
-// 	function getAllLOcation(){
-// 		$db = $this->getAdapter();
-// 		$sql = "SELECT s.`prefix`,s.`id`  FROM `tb_sublocation` AS s WHERE s.`status`=1";
-// 		return $db->fetchAll($sql);
-// 	}
 	
-// 	function getAllAdjustStock($data){
-// 		$db = $this->getAdapter();
-// 		$db_globle = new Application_Model_DbTable_DbGlobal();
-// 		$sql ="SELECT 
-// 				  m.* ,
-// 				  p.`item_name`,
-// 				  p.`barcode`,
-// 				  p.`item_code`,
-// 				  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id` = p.`brand_id`) AS brand ,
-// 				  (SELECT b.`name` FROM `tb_category` AS b WHERE b.`id` = p.`cate_id`) AS cat ,
-// 				  (SELECT v.`name_en` FROM `tb_view` AS v WHERE v.id = p.`color_id` AND v.`type`=4) AS color,
-// 				  (SELECT v.`name_en` FROM `tb_view` AS v WHERE v.id = p.`color_id` AND v.`type`=2) AS model,
-// 				  (SELECT v.`name_en` FROM `tb_view` AS v WHERE v.id = p.`color_id` AND v.`type`=3) AS size,
-// 				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
-// 				  (SELECT s.`name` FROM `tb_sublocation` AS s WHERE s.id=m.`location_id` LIMIT 1) AS location,
-// 				  (SELECT u.`fullname` FROM `tb_acl_user` AS u WHERE u.`user_id`=m.`user_mod` LIMIT 1) AS `username`,
-// 				   m.`date`
-// 				FROM
-// 				  `tb_move_history` AS m ,
-// 				  `tb_product` AS p
-// 				WHERE m.`pro_id`=p.`id`";
-// 		$where = '';
-// 		if($data["ad_search"]!=""){
-// 			$s_where=array();
-// 			$s_search = addslashes(trim($data['ad_search']));
-// 			$s_where[]= " p.item_name LIKE '%{$s_search}%'";
-// 			$s_where[]=" p.barcode LIKE '%{$s_search}%'";
-// 			$s_where[]= " p.item_code LIKE '%{$s_search}%'";
-// 			$s_where[]= " p.serial_number LIKE '%{$s_search}%'";
-// 			//$s_where[]= " cate LIKE '%{$s_search}%'";
-// 			$where.=' AND ('.implode(' OR ', $s_where).')';
-// 		}
-// 		if($data["pro_id"]!=""){
-// 			$where.=' AND m.pro_id='.$data["pro_id"];
-// 		}
-// 		$location = $db_globle->getAccessPermission('m.`location_id`');
-// 		//echo $location;
-// 		return $db->fetchAll($sql.$where.$location);
-			
-// 	}
-	
-}
-
-?>
+}?>

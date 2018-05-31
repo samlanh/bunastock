@@ -68,12 +68,12 @@
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
 		            	<tbody><tr>
-		                	<td width="20%" valign="top"></td>
-		                	<td width="60%" valign="top">
+		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bonastock/trunk/public/images/logosbona.jpg"></td>
+		                	<td width="70%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_PURCHASE");?></li>
-		                			<li style="text-align:center; font-size:14px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>
+		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_PRIVATE");?></li>
+		                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'">របាយកាណ៍ឧបត្ថមរបស់សប្បុរសជន</li>
+		                			<li style="text-align:center; font-size:13px;"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 		                		</ul>
 		                	</td>
 		                    <td width="20%"></td>
@@ -118,8 +118,8 @@
 		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>		                
 						<tr class='row-format hover' style="border:1px solid #000; text-align:center;">
 						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
-						   <td style="border:1px solid #000;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
-						   <td style="border:1px solid #000;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_female"];?></a></td>
+						   <td style="border:1px solid #000;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
+						   <td style="border:1px solid #000;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_female"];?></a></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["tel"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["address"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["required_using"];?></td>
@@ -136,7 +136,7 @@
 						   <?php 
 							$d_balance = $d_balance+$rs["unit_price"];
                     }?>
-                    	<tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
+                    	<tr style="font-size:12px; height: 40px;border: 1px solid #000;" align="center" >
 							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="12"></td>
 							<td style="border: 1px solid #000;white-space: nowrap;">សរុបរួម/Grand Total</td>
 							<td style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>

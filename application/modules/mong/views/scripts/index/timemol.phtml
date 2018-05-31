@@ -4,90 +4,107 @@
 	$controller=$request->getControllerName();
 	$row = $this->row;
 ?>
-<body>
-	<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:24cm;margin: 0 auto;min-height: 25cm;padding: 0.5cm;">
-			 <style>
-		    	.wrapper{
-		    		width: 100%;
-		    		margin: 0px;
-		    		padding: 0px;
-		    	}
-		    	.contain{
-		    		width: 1024px;
-		    		margin: 0 auto;
-		    	}
-				table {
-		    		border-collapse: collapse;
-		    		width: 100%;
-				}
-				th, td {
-		    		padding: 4px;
-				}
-				.border-td td{
-					border:solid 1px #ddd;
-				}
-				.img-logo img{
-					width: 130px;
-				}
-				.ul-li li{
-					
-				}
-				p{line-height: 25px;text-align: justify;}
-				.center-no-next{text-align: center;}
-				.back-color,.back-footer{background-color: #eee;}
-				.back-color td{padding: 20px;}
-				.text-left td{text-align: right;}
-				.img-size img{height: 15px;}
-				tr.line td{ border-bottom: 2px solid #000; }
-		    </style>
-			<table cellpadding="0" cellspacing="0" width="100%">
-				<tr class="no-boder">
-					<td>
-					<table width="100%" >
-						<tr>
-							<td width="20%" align="center">
-								<img style="max-height:100px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
-								<span style="font-family: Freestyle Script;font-size: 20px;"></span>
-								
-							</td>
-							<td width="60%">
-								<table   style="text-align:center;border:solid 1px #FFF;">
-									<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;color:red;">
-										<td>វេលាល្អ</td>
-										<td><img style="width: 25%;height: 25px;" src="<?php echo $this->baseUrl().'/images/kbach1.png'?>"></td>
-									</tr>
-					
-								</table>
-							</td>
-							<td width="20%" >&nbsp;</td>
-						</tr>
-					</table>
-					</td>
-				</tr>
-			  	<tr>
-			  		<td>
-		  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
-		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:60px;font-weight: bold; list-style:none; color:#800080;">
-		  					<td>
-		  						<li>សែនឆ្លងម៉ុង</li>
-		  					</td>
-		  				</tr>
-		  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:50px;font-weight: bold; list-style:none; color:#009900;">
-		  					<td>
-		  						<li>ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
-		  						<li align="center">​Tell: 012 455 660</li>
-		  					</td>
-		  				</tr>
-		  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:55px;font-weight: bold; list-style:none; color:#B22222;">
-		  					<td>
-		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
-		  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>
-		  					</td>
-		  				</tr>
-		  			</table>
-			</table>
+<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:24cm;margin: 0 auto; min-height: 30cm;padding: 0.5cm;">
+<div id="Printtimemol" >
+		<style>
+	    	.wrapper{
+	    		width: 100%;
+	    		margin: 0px;
+	    		padding: 0px;
+	    	}
+	    	.contain{
+	    		width: 1024px;
+	    		margin: 0 auto;
+	    	}
+			table {
+	    		border-collapse: collapse;
+	    		width: 100%;
+			}
+			th, td {
+	    		padding: 4px;
+			}
+			.border-td td{
+				border:solid 1px #ddd;
+			}
+			.img-logo img{
+				width: 130px;
+			}
+			.ul-li li{
+				
+			}
+			p{line-height: 25px;text-align: justify;}
+			.center-no-next{text-align: center;}
+			.back-color,.back-footer{background-color: #eee;}
+			.back-color td{padding: 20px;}
+			.text-left td{text-align: right;}
+			.img-size img{height: 15px;}
+			tr.line td{ border-bottom: 2px solid #000; }
+	    </style>
+		<table cellpadding="0" cellspacing="0" width="100%">
+			<tr class="no-boder">
+				<td>
+				<table width="100%" >
+					<tr>
+						<td width="20%" align="center">
+							<img style="width: 115%;height: 185px;" alt="<?php ?>" src="/bonastock/trunk/public/images/logosbona.jpg"><br>
+							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
+							
+						</td>
+						<td width="60%">
+							<table   style="text-align:center;border:solid 1px #FFF;">
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;color:red;">
+									<td>វេលាល្អ</td>
+								</tr>	
+							</table>
+						</td>
+						<td width="20%" >&nbsp;</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		  	<tr>
+		  		<td>
+	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:60px;font-weight: bold; list-style:none; color:#800080;">
+	  					<td>
+	  						<li>សែនឆ្លងម៉ុង</li>
+	  					</td>
+	  				</tr>
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:50px;font-weight: bold; list-style:none; color:#009900;">
+	  					<td>
+	  						<li>ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
+	  						<li align="center">​Tell: 012 455 660</li>
+	  					</td>
+	  				</tr>
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:55px;font-weight: bold; list-style:none; color:#B22222;">
+	  					<td>
+	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
+	  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>
+	  					</td>
+	  				</tr>
+	  			</table>
+		</table>
+	</div>
+<div style="padding-left:14%; margin: 0 auto;"> 
+    	<lable class="col-md-3" style=""></lable>
+    	<div class="col-md-2">
+			<a href="<?php echo $this->baseUrl();?>/mong/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
 		</div>
-	</body>
-</html>
+    	<lable class="col-md-2" style="">
+             <button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i> បោះពុម្ភ </button>
+		</lable>
+		<lable class="col-md-3" style=""></lable>
+	</div>
+</div>
+<script>
+function printinvoice(){
+	var printContents = document.getElementById('Printtimemol').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+	document.getElementById("office_timemol").submit();
+}
+</script>
 
 

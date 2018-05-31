@@ -8,7 +8,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i>ការប្រគល់ការ ឧបត្ថម
+					<i class="fa fa-globe"></i>របាយការណ៍ប្រគល់ការ ឧបត្ថម
 				</div>
 				<div class="btn-group pull-right">
 					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -66,12 +66,12 @@
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
 		            	<tbody><tr>
-		                	<td width="20%" valign="top"></td>
+		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bonastock/trunk/public/images/logosbona.jpg"></td>
 		                	<td width="60%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_PURCHASE");?></li>
-		                			<li style="text-align:center; font-size:14px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់  <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>
+		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_PRIVATE");?></li>
+		                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'">របាយការណ៍ប្រគល់ការ ឧបត្ថម</li>
+		                			<li style="text-align:center; font-size:16px;"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់  <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 		                		</ul>
 		                	</td>
 		                    <td width="20%"></td>
@@ -122,13 +122,12 @@
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["donor_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_sex"];?></td>
-						   <!--<td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php //echo $rs["order_number"];?></a></td> -->
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_age"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["date_jom"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_address"];?></td>
-						   <td style="white-space: nowrap;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
+						   <td style="white-space: nowrap;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["date_jenh"];?></td>
-						     <td style="white-space: nowrap;">&nbsp;<?php echo $rs["notes"];?></td>
+						    <td style="white-space: nowrap;">&nbsp;<?php echo $rs["notes"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["note"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["create_date"];?></td>
 					

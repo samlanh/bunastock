@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class Sales_Model_DbTable_DbDeliverys extends Zend_Db_Table_Abstract
 {
