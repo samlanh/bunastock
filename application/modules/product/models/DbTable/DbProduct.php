@@ -365,11 +365,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   	return $db->fetchAll($sql);
   }
   
-  function getProductPrcie($id){
-  	$db = $this->getAdapter();
-  	$sql ="SELECT p.`id`,p.`pro_id`,p.`price`,p.`cost_price`,pt.`name`,p.`remark`,p.`type_id` FROM `tb_product_price` AS p,`tb_price_type` AS pt WHERE p.`type_id`=pt.`id` AND p.`pro_id`=$id";
-  	return $db->fetchAll($sql);
-  }
   // Insert and  Update section
     public function add($data){
     	$db = $this->getAdapter();
