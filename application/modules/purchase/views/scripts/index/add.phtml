@@ -18,7 +18,13 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id='frm' autocomplete="off" class="form-horizontal" novalidate="novalidate" action="<?php echo $url_submit; ?>" enctype="multipart/form-data" method="post">
+				<form id='frm' autocomplete="off" class="form-horizontal" novalidate="novalidate" action="<?php echo $url_submit; ?>" enctype="multipart/form-data" method="post" autocomplete="off">
+					<script>
+						$('#frm').submit(function() {
+						    $("#btnsavenew").attr("disabled", true);
+						    $("#save_close").attr("disabled", true);
+						  });
+					</script>	
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("VENDOR_NAME");?> <span class="required">
@@ -250,7 +256,7 @@
 								</div>
 							</div>
 							<div class="col-md-2">
-								<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+								<button type="submit" id="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 							</div>
 							<div class="col-md-3"></div>
 						</div>
@@ -435,7 +441,7 @@ $('#frm').submit(function() {
 						</div>
 					<div class="form-group">
 						<label  class="col-md-12 col-md-offset-4 col-md-8">
-							<button type="button" name="btnsavenew" Onclick="addProduct();" class="btn bt-bg btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+							<button type="button" id="btnsavenew" Onclick="addProduct();" class="btn bt-bg btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
 						</label>
 					</div>
 				</div>
@@ -496,7 +502,7 @@ $('#frm').submit(function() {
                                                <div class="form-group">
                                                 	<label class="control-label col-md-4"></label>
                                                 	<label class="control-label col-md-4">
-                                                		<button type="button" onclick="addNewVendor();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+                                                		<button type="button" onclick="addNewVendor();" id="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
 													</label>
 													<label class="control-label col-md-4"></label>
                                                </div>
@@ -509,7 +515,7 @@ $('#frm').submit(function() {
           </div>
         </div>
     </div>
- </div>	
+ </div>
 <script>
 function getSuppliyer(){
 	v_id = $("#v_name").val();

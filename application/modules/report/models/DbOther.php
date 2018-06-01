@@ -244,5 +244,11 @@ function getAllworker($search){
 					";	 
 		return $db->fetchAll($sql);
 	}
+	function getAllDonorship($id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT id,donor_name, donor_female, tel, address FROM tb_donors WHERE status=1 and id=$id";
+    //	echo $sql;exit();
+    	return $db->fetchRow($sql);
+    }
 	
 }?>

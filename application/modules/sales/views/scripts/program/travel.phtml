@@ -4,126 +4,140 @@
 	$controller=$request->getControllerName();
 	$row = $this->row;
 ?>
-<html lang="en">
-<head>
-
-</head>
-<body>
-	<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:27cm;margin: 0 auto;min-height: 32cm;padding: 0.5cm;">
-			 <style>
-		    	.wrapper{
-		    		width: 100%;
-		    		margin: 0px;
-		    		padding: 0px;
-		    	}
-		    	.contain{
-		    		width: 1024px;
-		    		margin: 0 auto;
-		    	}
-				table {
-		    		border-collapse: collapse;
-		    		width: 100%;
-				}
-				th, td {
-		    		padding: 4px;
-				}
-				.border-td td{
-					border:solid 1px #ddd;
-				}
-				.img-logo img{
-					width: 130px;
-				}
-				.ul-li li{
-					
-				}
-				p{line-height: 25px;text-align: justify;}
-				.center-no-next{text-align: center;}
-				.back-color,.back-footer{background-color: #eee;}
-				.back-color td{padding: 20px;}
-				.text-left td{text-align: right;}
-				.img-size img{height: 15px;}
-				tr.line td{ border-bottom: 2px solid #000; }
-		    </style>
-			<table cellpadding="0" cellspacing="0" width="100%">
-				<tr class="no-boder">
-					<td>
-					<table width="100%" >
-						<tr>
-							<td width="20%" align="center">
-								<img style="max-height:100px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
-								<span style="font-family: Freestyle Script;font-size: 20px;"></span>
-								
-							</td>
-							<td width="60%">
-								<table   style="text-align:center;border:solid 1px #FFF;">
-									<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:75px;font-weight: bold;">
-										<td><img style="width: 25%;height: 25px;" src="<?php echo $this->baseUrl().'/images/kbach1.png'?>"></td>
-										<td>ចៅ ប៊ុនណា</td>
-									</tr>
-					
-								</table>
-							</td>
-							<td width="20%" >&nbsp;</td>
-						</tr>
-					</table>
-					</td>
-				</tr>
-			  	<tr>
-			  		<td>
-		  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">	
-			  			
-			  					<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
-		  					<td>
-		  						លើកសពចូលម្ឈូស
-		  					</td>
-		  				</tr>
-		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
-		  					<td>
-		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
-		  							វេលាម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?></li>
-		  						<li>ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?></li>
-		  					</td>
-		  				</tr>
-		  			</table>
-			  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
-		  					<td>
-		  						ហែរសពចេញ
-		  					</td>
-		  				</tr>
-		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
-		  					<td>
-		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
-		  							វេលាម៉ោងៈ  <?php echo $this->row['hae_sop_time']?></li>
-		  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?></li>
-		  				</td>
-		  			</tr>
-		  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
-		  					<td>
-		  						បញ្ចុះ/បូជា
-		  					</td>
-		  				</tr>
-		  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
-		  					<td>
-		  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
-		  							វេលាម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?></li>
-		  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?></li>
-		  				</td>
-		  			</tr>
-		  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
-		  					<td>
-		  						កូនចៅកាន់ទុក្ខមិនឆុងទេ!
-		  					</td>
-		  				</tr>
-		  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 75px; font-size:31px;font-weight: bold; list-style:none;">
-		  					<td>
-		  						<li>អាស័យដ្ខាន ផ្ទះលេខ 73 ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ 100 </li>
-		  						<li>(មុខក្រសួងប៉ុស្តឺប្រៃសណីយ៏វត្តភ្នំ)</li>
-		  						<li>ទូរស័ព្ទៈ 012/015/ 73 73 03; 012 31 73 73</li>
-		  					</td>
-		  				</tr>					  	
+<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 35cm;padding: 0.5cm;">
+<div id="Printdonate">
+		<style>
+	    	.wrapper{
+	    		width: 100%;
+	    		margin: 0px;
+	    		padding: 0px;
+	    	}
+	    	.contain{
+	    		width: 1024px;
+	    		margin: 0 auto;
+	    	}
+			table {
+	    		border-collapse: collapse;
+	    		width: 100%;
+			}
+			th, td {
+	    		padding: 4px;
+			}
+			.border-td td{
+				border:solid 1px #ddd;
+			}
+			.img-logo img{
+				width: 130px;
+			}
+			.ul-li li{
+				
+			}
+			p{line-height: 25px;text-align: justify;}
+			.center-no-next{text-align: center;}
+			.back-color,.back-footer{background-color: #eee;}
+			.back-color td{padding: 20px;}
+			.text-left td{text-align: right;}
+			.img-size img{height: 15px;}
+			tr.line td{ border-bottom: 2px solid #000; }
+	    </style>
+		<table cellpadding="0" cellspacing="0" width="100%">
+			<tr class="no-boder">
+				<td>
+				<table width="100%" >
+					<tr>
+						<td width="20%" align="center">
+							<img style="max-height:200px; width: 92%; " src="/bonastock/trunk/public/images/logosbona.jpg"><br>
+							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
+							
+						</td>
+						<td width="60%">
+							<table   style="text-align:center;border:solid 1px #FFF;">
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:75px;font-weight: bold;">
+									<td>ចៅ ប៊ុនណា</td>
+								</tr>
+				
+							</table>
+						</td>
+						<td width="20%" >&nbsp;</td>
+					</tr>
 				</table>
-			</div>
-		</body>
-</html>
+				</td>
+			</tr>
+		  	<tr>
+		  		<td>
+	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">	
+		  			
+		  					<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
+	  					<td>
+	  						លើកសពចូលម្ឈូស
+	  					</td>
+	  				</tr>
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
+	  					<td>
+	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
+	  							វេលាម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?></li>
+	  						<li>ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?></li>
+	  					</td>
+	  				</tr>
+	  			</table>
+		  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
+	  					<td>
+	  						ហែរសពចេញ
+	  					</td>
+	  				</tr>
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
+	  					<td>
+	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
+	  							វេលាម៉ោងៈ  <?php echo $this->row['hae_sop_time']?></li>
+	  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?></li>
+	  				</td>
+	  			</tr>
+	  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
+	  					<td>
+	  						បញ្ចុះ/បូជា
+	  					</td>
+	  				</tr>
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; list-style:none;">
+	  					<td>
+	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
+	  							វេលាម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?></li>
+	  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?></li>
+	  				</td>
+	  			</tr>
+	  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:55px;font-weight: bold;">
+	  					<td>
+	  						កូនចៅកាន់ទុក្ខមិនឆុងទេ!
+	  					</td>
+	  				</tr>
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 75px; font-size:31px;font-weight: bold; list-style:none;">
+	  					<td>
+	  						<li>អាស័យដ្ឋាន ផ្ទះលេខ 73 ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ 100 </li>
+	  						<li>(មុខក្រសួង ប៉ុស្តិ៍ប្រៃសណីយ៍ វត្តភ្នំ)</li>
+	  						<li>ទូរស័ព្ទៈ 012/015/ 73 73 03 - 012 31 73 73</li>
+	  					</td>
+	  				</tr>					  	
+			</table>
+	</div>
+<div style="padding-left:14%; margin: 0 auto;"> 
+<lable class="col-md-3" style=""></lable>
+<div class="col-md-2">
+<a href="<?php echo $this->baseUrl();?>/mong/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
+</div>
+<lable class="col-md-2" style="">
+<button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i> បោះពុម្ភ </button>
+</lable>
+<lable class="col-md-3" style=""></lable>
+</div>
+</div>
+<script>
+function printinvoice(){
+	var printContents = document.getElementById('Printdonate').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+	document.getElementById("office_donate").submit();
+}
+</script>
 
 

@@ -49,21 +49,16 @@
 			<div style="border: 1px dotted #000;background: #fff; margin: 0 auto;min-height: 27cm;">
 				<div id="divPrint"  >
 					<table class="table2excel" style="background:#fff; margin: 0 auto; width: 100%; padding: 0px 2px 1cm 2px;font-family: 'Hanuman';">
-						<tr style="font-size: 13px;">
-							<td colspan="3" align="center">
-								<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><?php echo $tr->translate("COMPANY_CUSTOMER");?></strong><br />
-								<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><?php echo $tr->translate("RPT_EXPENSE");?></strong><br />
-								<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">For Date <?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));?></strong>
-							</td>
-						</tr>
 						<tr>
-							<td width="20%" align="left">
-							</td>
-							<td align="center">
-								<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"></strong>
-							</td>
-							<td align="right" width="20%">&nbsp;</td>
-						</tr>
+		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bonastock/trunk/public/images/logosbona.jpg"></td>		                	
+		                		<td  align="center">
+		                			<strong style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></strong><br>
+		                			<strong style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("SALES_REPORT");?></strong><br>
+		                			<strong style="text-align:center; font-size:16px;"><?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));?></strong>
+		                		</td>
+		                    <td width="20%"></td>
+		                </tr> 
+							
 						<?php 
 							$total_income_kh=0;
 							$total_income_dollar=0;
@@ -75,7 +70,7 @@
 						<tr>
 							<td colspan="3">
 								<table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
-			            			<tr style="font-size:14px; height: 20px;border: 1px solid #000;white-space: nowrap;background-color: #ccc;line-height:30px;font-weight: bold;" align="center" >
+			            			<tr style="font-size:14px; height: 20px;border: 1px solid #000;white-space: nowrap;background-color: #b0bdfd;line-height:30px;font-weight: bold;" align="center" >
 										<td style="border: 1px solid #000;"><?php echo $tr->translate('NUM')?></td>
 										<td style="border: 1px solid #000;"><?php echo $tr->translate('BRANCH_NAME')?></td>
 										<td style="border: 1px solid #000;"><?php echo $tr->translate('ពណ៌នាចំនាយ')?></td>

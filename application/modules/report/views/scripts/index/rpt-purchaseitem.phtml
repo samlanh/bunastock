@@ -31,8 +31,8 @@ $frm_sales_report = $this->form_salemong;
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $frm_sales_report->getElement("ad_search");?></label>
 						<label class="control-label col-md-2"><?php echo $frm_sales_report->getElement("branch");?></label>
-						<label class="control-label col-md-2"><?php echo $frm_sales_report->getElement('start_date');?></label>
-						<label class="control-label col-md-2"><?php echo $frm_sales_report->getElement("end_date");?></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $frm_sales_report->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $frm_sales_report->getElement("end_date");?></div></label>
 						<label class="control-label col-md-2">
 							<input type="submit" value="<?php echo $tr->translate("SEARCH")?>"  class="ui-button ui-widget ui-state-default ui-corner-all ui-state-hover" name="btn_search" name="btn_search" />
 						</label>
@@ -57,11 +57,11 @@ $frm_sales_report = $this->form_salemong;
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
 		            	<tbody><tr>
-		                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="55px"></td>
-		                	<td width="60%" valign="top">
+		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bonastock/trunk/public/images/logosbona.jpg"></td>
+		                	<td width="70%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_PURCHASE_DETAIL");?></li>
+		                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+		                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("RPT_PURCHASE_DETAIL");?></li>
 		                			<li style="text-align:center; font-size:13px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>
 		                		</ul>
 		                	</td>

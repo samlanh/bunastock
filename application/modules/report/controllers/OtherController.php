@@ -100,11 +100,15 @@ class report_OtherController extends Zend_Controller_Action
     {
     	$id=$this->getRequest()->getParam('id');
     	$db = new report_Model_DbOther();
+    	$this->view->donor = $db->getAllDonorship($id);
     	$this->view->other = $db->getAlllistSponorship($id);
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	$this->view->form_listsponorship = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
+    	
+//     	$donorship = $db->getDonorship();
+//     	$this->view->row = $donorship;
     }
     	
 }

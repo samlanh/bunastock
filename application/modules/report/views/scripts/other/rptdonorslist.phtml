@@ -71,7 +71,7 @@
 		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bonastock/trunk/public/images/logosbona.jpg"></td>
 		                	<td width="70%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_PRIVATE");?></li>
+		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 		                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'">របាយកាណ៍ឧបត្ថមរបស់សប្បុរសជន</li>
 		                			<li style="text-align:center; font-size:13px;"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 		                		</ul>
@@ -135,7 +135,7 @@
 						</tr>
 						   <?php 
 							$d_balance = $d_balance+$rs["unit_price"];
-                    }?>
+                   		 }?>
                     	<tr style="font-size:12px; height: 40px;border: 1px solid #000;" align="center" >
 							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="12"></td>
 							<td style="border: 1px solid #000;white-space: nowrap;">សរុបរួម/Grand Total</td>
