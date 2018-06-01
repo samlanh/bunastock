@@ -45,15 +45,15 @@
 						<?php //echo $this->list; ?>						
 					<table class="collape tablesorter" id="datatable-responsive" width="100%">
 						<thead>
-							<tr>
+							<tr style="white-space:nowrap;">
 								<th rowspan="2" class="tdheader">ល.រ</th>
 								<th colspan="6" class="tdheader">ព័ត៌មានលម្អិតរបស់សព</th>
 								<th colspan="5" class="tdheader">ព័ត៌មានលម្អិតរបស់ដៃគូសព</th>
 								<th colspan="4" class="tdheader">ព័ត៌មានទីតាំង</th>
 								<th rowspan="2" class="tdheader" width="6%">ថ្ងៃបង្កើត</th>
-								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>								
+								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>		
 							</tr>
-							<tr>
+							<tr style="white-space:nowrap;">
 								<th class="tdheader" width="7%">ឈ្មោះ</th>
 								<th class="tdheader" width="7%">ឈ្មោះ(ចិន)</th>
 								<th class="tdheader">ភេទ</th>
@@ -76,11 +76,12 @@
 						<?php 
 							$link=$this->baseUrl()."/sales/program/edit/id/";
 							$link1=$this->baseUrl()."/sales/program/travel/id/";
+							$link2=$this->baseUrl()."/sales/program/copy/id/";
 							//echo $link;
 						?>					
 						<tbody>
 							<?php $i=0;if(!empty($this->rs)){foreach ($this->rs as $rs){ $i++; ?>
-							<tr oncontextmenu="setrowdata(<?php echo $rs['id'];?>);return false;" class="context-menu-one normal"> 
+							<tr oncontextmenu="setrowdata(<?php echo $rs['id'];?>);return false;" class="context-menu-one normal" style="white-space:nowrap;"> 
 								<td class="items-no"><?php echo $i;?></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name'];?></a></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name_chinese'];?></a></td>
@@ -165,6 +166,8 @@ $(function(){
 				url='<?php echo $this->baseUrl()."/sales/program/edit/id/";?>';
 			}else if(key=="travel"){
 				url='<?php echo $this->baseUrl()."/sales/program/travel/id/";?>';
+			}else if(key=="copy"){
+				url='<?php echo $this->baseUrl()."/sales/program/copy/id/";?>';
 			}
 			
 			gotoAction();
@@ -172,6 +175,7 @@ $(function(){
 		items: {
 			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
 			"travel": {name: "វេលាកម្មវិធី", icon:  "fa-car", accesskey: "e"},
+			"copy": {name: "copy", icon:  "fa-car", accesskey: "e"},
 		}
 	});
 });

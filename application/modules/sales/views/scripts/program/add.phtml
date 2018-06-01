@@ -83,23 +83,35 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ស្លាប់នៅថ្ងៃទី
-										</label>
-										<div class="col-md-8">
-											<div class="input-icon right">
-												<i class="fa fa-calendar"></i>
-												<input type="text" class="validate[required] form-control" name="date_time_dead" id="date_time_dead" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
-											</div>
-										</div>
-									</div>
-									<div class="form-group" style="">
-										<label class="col-md-4 control-label">
 											ទីកន្លែងកំណើត
 										</label>
 										<div class="col-md-8">
 											<input type="text" class="form-control" name="dead_pob" id="dead_pob" />
 										</div>
 									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ស្លាប់-រស់
+										</label>
+										<div class="col-md-8">
+											<select class="form-control select2me" name="dead_status" id="dead_status" >
+												<option value="0">ស្លាប់</option>
+												<option value="1">រស់</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ស្លាប់នៅថ្ងៃទី
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control" name="date_time_dead" id="date_time_dead" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
+											</div>
+										</div>
+									</div>
+									
 								</div>
 								
 								
@@ -166,6 +178,14 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
+											ទីកន្លែងកំណើត
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="partner_pob" id="partner_pob" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
 											ស្លាប់-រស់
 										</label>
 										<div class="col-md-8">
@@ -175,12 +195,14 @@
 											</select>
 										</div>
 									</div>
+									
+									
+									
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ទីកន្លែងកំណើត
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control" name="partner_pob" id="partner_pob" />
+											<button type="button" name="save_close" class="btn blue btn-block btn-lg" onclick="exchangeInfo();" ><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;ប្តូរទិន្នន័យ</button>
 										</div>
 									</div>
 								</div>
@@ -574,6 +596,48 @@
 		$('#identity_girl').val(strings);
 		$("#row_khmer_year_girl_"+index_girl).remove();
 	}
+
+	function exchangeInfo(){
+		dead_name = $("#dead_name").val();
+		dead_name_chinese = $("#dead_name_chinese").val();
+		dead_sex = $("#dead_sex").val();
+		dead_khmer_year = $("#dead_khmer_year").val();
+		dead_age = $("#dead_age").val();
+		dead_dob = $("#dead_dob").val();
+		dead_status = $("#dead_status").val();
+		dead_pob = $("#dead_pob").val();
+		
+		partner_name = $("#partner_name").val();
+		partner_name_chinese = $("#partner_name_chinese").val();
+		partner_sex = $("#partner_sex").val();
+		partner_khmer_year = $("#partner_khmer_year").val();
+		partner_age = $("#partner_age").val();
+		partner_dob = $("#partner_dob").val();
+		partner_status = $("#partner_status").val();
+		partner_pob = $("#partner_pob").val();
+		
+		
+		$("#dead_name").val(partner_name);
+		$("#dead_name_chinese").val(partner_name_chinese);
+		$("#dead_sex").val(partner_sex).select2();
+		$("#dead_khmer_year").val(partner_khmer_year).select2();
+		$("#dead_age").val(partner_age);
+		$("#dead_dob").val(partner_dob);
+		$("#dead_status").val(partner_status).select2();
+		$("#dead_pob").val(partner_pob);
+		
+		$("#partner_name").val(dead_name);
+		$("#partner_name_chinese").val(dead_name_chinese);
+		$("#partner_sex").val(dead_sex).select2();
+		$("#partner_khmer_year").val(dead_khmer_year).select2();
+		$("#partner_age").val(dead_age);
+		$("#partner_dob").val(dead_dob);
+		$("#partner_status").val(dead_status).select2();
+		$("#partner_pob").val(dead_pob);
+		
+	}
+
+
 	
 </script>
 

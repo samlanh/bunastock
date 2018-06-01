@@ -93,6 +93,32 @@ class Sales_ProgramController extends Zend_Controller_Action
 		$this->view->khmer_year = $khmer_year;
 		
 	}
+	
+	public function copyAction()
+	{
+		$id = $this->getRequest()->getParam("id");
+		$db = new Sales_Model_DbTable_DbProgram();
+		if($this->getRequest()->isPost()){
+			try{
+				$data = $this->getRequest()->getPost();
+				$db->addProgram($data);
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/sales/program/index');
+			}catch (Exception $e){
+				Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			}
+		}
+	
+		$this->view->row = $db->getProgramById($id);
+	
+		$this->view->khmer_year_boy = $db->getAllKhmerYearBoyById($id);
+		$this->view->khmer_year_girl = $db->getAllKhmerYearGirlById($id);
+	
+		$db=new Sales_Model_DbTable_DbProgram();
+		$khmer_year = $db->getAllKhmerYear();
+		$this->view->khmer_year = $khmer_year;
+	
+	}
+	
 	function travelAction(){
 		$id = $this->getRequest()->getParam("id");
 		$db = new Sales_Model_DbTable_DbProgram();

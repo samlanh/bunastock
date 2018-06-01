@@ -98,6 +98,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'dead_khmer_year'	    => $data['dead_khmer_year'],
 	    			'dead_age'      		=> $data['dead_age'],
 	    			'dead_dob'           	=> date("Y-m-d",strtotime($data['dead_dob'])),
+	    			'dead_status'	    	=> $data['dead_status'],
 	    			'date_time_dead'	    => date("Y-m-d H:i:s",strtotime($data['date_time_dead'])),
 	    			'dead_pob'           	=> $data['dead_pob'],
 	    			
@@ -186,6 +187,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'dead_khmer_year'	    => $data['dead_khmer_year'],
 	    			'dead_age'      		=> $data['dead_age'],
 	    			'dead_dob'           	=> date("Y-m-d",strtotime($data['dead_dob'])),
+	    			'dead_status'	    	=> $data['dead_status'],
 	    			'date_time_dead'	    => date("Y-m-d H:i:s",strtotime($data['date_time_dead'])),
 	    			'dead_pob'           	=> $data['dead_pob'],
 	    			
