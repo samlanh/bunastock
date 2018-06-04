@@ -64,6 +64,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					'other_note'=> $data['other_note'],
 					"date"          => date("Y-m-d"),
 // 					'agreement_id'  => $data['agreement_no'],
+			
+					'partner_service_total'  	=> $data['total_partner_service'],
+					'partner_service_balance'  	=> $data['total_partner_service'],
 			);
 			$this->_name="tb_sales_order";
 			$sale_id = $this->insert($info_purchase_order);
@@ -93,31 +96,66 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				$this->insert($info_purchase_order);
 			}
 	
-			$ids=explode(',',$data['identity']);
-			foreach ($ids as $i)
-			{
-				$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);//check if service not need update stock
-				if(!empty($rs)){
-					$this->_name='tb_prolocation';
-					$arr = array(
-							'qty'=>$rs['qty']-$data['qty_sold'.$i]
-							);
-					$where=" id =".$rs['id'];
-					$this->update($arr, $where);
+			
+			$arra=array(
+					"sale_order_id"  => $sale_id,
+					"date_payment"  => date("Y-m-d",strtotime($data['sale_date'])),
+					"total_payment" => $data['total_partner_service'],
+					"paid"          => 0,
+					"balance"       => $data['total_partner_service'],
+					"user_id"       => $this->getUserId(),
+					"status"        => 1,
+					"bank_name"     => 	'',
+					"cheque_number" => 	'',
+			);
+			$this->_name="tb_partnerservice_payment";
+			$this->insert($arra);
+			
+			
+			if(!empty($data['identity'])){
+				$ids=explode(',',$data['identity']);
+				foreach ($ids as $i)
+				{
+					$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);//check if service not need update stock
+					if(!empty($rs)){
+						$this->_name='tb_prolocation';
+						$arr = array(
+								'qty'=>$rs['qty']-$data['qty_sold'.$i]
+								);
+						$where=" id =".$rs['id'];
+						$this->update($arr, $where);
+					}
+					$data_item= array(
+							'saleorder_id'=> $sale_id,
+							'pro_id'	  => $data['product_id'.$i],
+							'qty_unit'	  => $data['qty_'.$i],
+							'qty_detail'  => $data['qtydetail_'.$i],
+							'qty_order'	  => $data['qty_sold'.$i],
+							'price'		  => $data['price_'.$i],
+	 						'cost_price'  => $data['cost_price'.$i],
+							'sub_total'	  => $data['sub_total'.$i],
+					);
+					$this->_name='tb_salesorder_item';
+					$this->insert($data_item);
 				}
-				$data_item= array(
-						'saleorder_id'=> $sale_id,
-						'pro_id'	  => $data['product_id'.$i],
-						'qty_unit'	  => $data['qty_'.$i],
-						'qty_detail'  => $data['qtydetail_'.$i],
-						'qty_order'	  => $data['qty_sold'.$i],
-						'price'		  => $data['price_'.$i],
- 						'cost_price'  => $data['cost_price'.$i],
-						'sub_total'	  => $data['sub_total'.$i],
-				);
-				$this->_name='tb_salesorder_item';
-				$this->insert($data_item);
 			}
+			
+			if(!empty($data['identity_partner'])){
+				$ids=explode(',',$data['identity_partner']);
+				foreach ($ids as $i)
+				{
+					$array= array(
+							'saleorder_id'	=> $sale_id,
+							'service_id'	=> $data['service_id_'.$i],
+							'partner_id'	=> $data['partner_'.$i],
+							'price'  		=> $data['price_service_'.$i],
+							'note'	  		=> $data['note_'.$i],
+					);
+					$this->_name='tb_sales_partner_service';
+					$this->insert($array);
+				}
+			}
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -345,4 +383,23 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$sql=" SELECT  receipt_id,invoice_id FROM tb_receipt_detail WHERE invoice_id = $sale_id LIMIT 1 ";
 		return $this->getAdapter()->fetchRow($sql);				
 	}
+	
+	function getAllPartnerService(){
+		$db = $this->getAdapter();
+		$sql=" SELECT  id,partner_name as name FROM tb_partnerservice WHERE 1 ";
+		return $db->fetchAll($sql);
+	}
+	
+	function getServicePartnerPrice($partner_id , $service_id){
+		$db = $this->getAdapter();
+		$sql=" SELECT service_fee FROM tb_partnerservice WHERE id=$partner_id and service_cate=$service_id ";
+		return $db->fetchOne($sql);
+	}
+	
+	function getType($product_id){
+		$db = $this->getAdapter();
+		$sql=" SELECT is_service FROM tb_product WHERE id=$product_id ";
+		return $db->fetchOne($sql);
+	}
+	
 }

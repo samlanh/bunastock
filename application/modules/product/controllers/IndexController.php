@@ -37,8 +37,7 @@ public function init()
     	}
 // 		if($level==1 or $level==2){
 			$rows = $db->getAllProductForAdmin($data);
-			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","OPTION_TYPE","MEASURE","QTY","SOLD_PRICE","COST_PRICE","USER","STATUS");
+			$columns=array("សាខា","លេខកូតទំនិញ","ទំនិញ","ប្រភេទ","ខ្នាត","ចំនួន","តម្លៃលក់","ថ្លៃដើម","អ្នកប្រើប្រាស់","ស្ថានការ");
 // 		}else{
 // 			$rows = $db->getAllProduct($data);
 // 			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",

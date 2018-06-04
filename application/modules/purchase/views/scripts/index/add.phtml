@@ -27,7 +27,7 @@
 					</script>	
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("VENDOR_NAME");?> <span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?> <span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
@@ -36,7 +36,7 @@
 									<?php echo $form->getElement("v_name");?>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("LOCATION_NAME");?><span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("សាខា");?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
@@ -47,7 +47,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("ORDER_DATE");?><span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("លេខបញ្ជាទិញ");?><span class="required">
+							* </span>
+							</label>
+							<div class="col-md-4">
+								<input type="text" name="purchase_num" id="purchase_num" readonly value="<?php echo $this->puchase_num;?>" style="color:red;" class="form-control" />
+							</div>
+							
+							
+							<label class="control-label col-md-2"><?php echo $tr->translate("ថ្ងៃបញ្ជាទិញ");?><span class="required">
 							* </span>
 							</label>
 							<div class="col-md-4">
@@ -55,33 +63,18 @@
 								<i class="fa fa-calendar"></i><?php echo $form->getElement("order_date");?>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php  echo $tr->translate("DATE_IN");?><span class="required">
+						</div>
+
+						<div class="form-group" >
+							<label class="control-label col-md-2"><?php echo $tr->translate("សម្គាល់");?><span class="required">
 								 </span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<i class="fa fa-calendar"></i>
-									<?php echo $form->getElement("date_in");?>
+									<?php echo $form->getElement("remark");?>
 								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("PO_NUM");?><span class="required">
-							* </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $form->getElement("txt_order"); ?></div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("INVOICE_NO");?><span class="required">
-							</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $form->getElement("invoice_no"); ?></div>
-							</div>
-						</div>
-						<div class="form-group" >
+							
 							<div style="opacity:0;pointer-events: none;">
 							<label class="control-label col-md-2"><?php echo $tr->translate("STATUS");?><span class="required">
 								 </span>
@@ -92,14 +85,7 @@
 								</div>
 							</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("REMARK");?><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<?php echo $form->getElement("remark");?>
-								</div>
-							</div>
+							
 						</div>
 						<div class="form-group">
 						<div class="col-md-12">
@@ -141,110 +127,75 @@
 									<th><?php echo $tr->translate("UNIT_PRICE_CAP");?></th>
 									<th style="white-space:nowrap;"><?php echo $tr->translate("DISCOUNT");?></th>
 									<th><?php echo $tr->translate("SUB_TOTAL_CAP");?></th>
-							</tr>
-						 </table>
-						 <input type="hidden" id="identity" name="identity" />
-					</div>
+								</tr>
+							 </table>
+							 <input type="hidden" id="identity" name="identity" />
+						</div>
+						
+						
 						<div class="form-group">
-						   <label class="control-label col-md-2"><?php //echo $tr->translate("PAYMENT_METHOD");?><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php //echo $form->getElement("payment_name");?>
-								</div>
-							</div>
-							<div class="col-md-1">
+							<div class="col-md-8">
 								<div class="input-icon right">
 									<?php //echo $form->getElement("payment_number");?>
 								</div>
 							</div>
-							<label class="control-label col-md-1"><?php echo $tr->translate("តម្លៃសរុប​ :");?><span class="required">
-							* </span>
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $form->getElement("totalAmoun");?>
+							
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label col-md-4">
+										<?php echo $tr->translate("តម្លៃសរុប​ :");?>
+									</label>
+									<div class="col-md-8">
+										<div class="input-icon right">
+										<?php echo $form->getElement("totalAmoun");?>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4"><?php echo $tr->translate("បញ្ចុះតម្លៃ : ");?>
+									</label>
+									<div class="col-md-8">
+										<div class="input-icon right">
+											<?php echo $form->getElement("dis_value");?>
+											<input type="hidden" name="global_disc" id="global_disc"/>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-4">ប្រាក់ត្រូវបង់ : 
+									</label>
+									<div class="col-md-8">
+										<div class="input-icon right">
+										<?php echo $form->getElement("all_total");?>
+										<?php echo $form->getElement("all_totalpayment");?>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-4">
+										<?php echo $tr->translate("ប្រាក់បានបង់ : ");?> </span>
+									</label>
+									<div class="col-md-8">
+										<?php echo $form->getElement("paid");?>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-4">
+										<?php echo $tr->translate("ជំពាក់ : ");?>
+									</label>
+									<div class="col-md-8">
+										<div class="input-icon right">
+										<?php echo $form->getElement("remain");?>
+										</div>
+									</div>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("បញ្ចុះតម្លៃ");?>
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("dis_value");?>
-								    <input type="hidden" name="global_disc" id="global_disc"/>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php //echo $tr->translate("ថ្ងៃត្រូវចេញសែក");?>
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php //echo $form->getElement("date_issuecheque");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2">កម្រៃ/កម្រៃរ៉ាប់រង​​
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $form->getElement("commission");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"​ >ថ្លៃដឹកជញ្ជួន/ផ្សេងៗ​ 
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $form->getElement("commission_ensur");?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							 <label class="control-label col-md-2"><?php //echo $tr->translate("CURRENCY_TYPE");?><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-3">
-								<div class="input-icon right">
-									<?php //echo $form->getElement("currency");?>
-								</div>
-							</div>
-							<label class="control-label col-md-1" style="text-align: center;white-space: nowrap;">ឈ្មោះធនាគារ </label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $form->getElement("bank_name");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2">សរុបទាំងអស់​
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $form->getElement("all_total");?>
-								<?php echo $form->getElement("all_totalpayment");?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-						<label class="control-label col-md-2">
-						</label>
-						<div class="col-md-3">
-						</div>
-							<label class="control-label col-md-1"><?php echo $tr->translate("ប្រាក់បានបង់");?><span class="required">
-								 </span>
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("paid");?>
-								</div>
-							</div>
-								<label class="control-label col-md-2"><?php echo $tr->translate("ជំពាក់");?><span class="required">
-							* </span>
-							</label>
-							<div class="col-md-2">
-								<div class="input-icon right">
-								<?php echo $form->getElement("remain");?>
-								</div>
-							</div>
-						</div>
+							
+						</div>		
+							
 						<div class="form-group">
 						    <div class="col-md-3"></div>
 						    <div class="col-md-2">
@@ -711,13 +662,9 @@ function calculateDiscount(){//use
 		doRemain();
 }
 function sumincludeTransfer(){
-	commission = $("#commission").val();
-if(commission==''){commission=0;};
-	commission_ensur = $("#commission_ensur").val();
-	if(commission_ensur==''){commission_ensur=0;}
 	all_total = $("#all_total").val();
 	if(all_total==''){all_total=0;}
-	total=parseFloat(commission)+parseFloat(commission_ensur)+parseFloat(all_total);
+	total=parseFloat(all_total);
 	$('#paid').val(0);
 	$("#all_totalpayment").val(total);
 	$('#remain').val(total);

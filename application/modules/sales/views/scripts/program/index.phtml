@@ -41,15 +41,15 @@
 							</label>
 						</div>				
 				</form> 
-				<div class="contain_form" style="clear: both;">
+				<div class="contain_form" style="clear: both;width: 500px;">
 						<?php //echo $this->list; ?>						
-					<table class="collape tablesorter" id="datatable-responsive" width="100%">
+					<table class="display nowrap dataTable dtr-inline collapsed" id="datatable-responsive" width="100%">
 						<thead>
 							<tr style="white-space:nowrap;">
 								<th rowspan="2" class="tdheader">ល.រ</th>
 								<th colspan="6" class="tdheader">ព័ត៌មានលម្អិតរបស់សព</th>
 								<th colspan="5" class="tdheader">ព័ត៌មានលម្អិតរបស់ដៃគូសព</th>
-								<th colspan="4" class="tdheader">ព័ត៌មានទីតាំង</th>
+								<th colspan="2" class="tdheader">ព័ត៌មានទីតាំង</th>
 								<th rowspan="2" class="tdheader" width="6%">ថ្ងៃបង្កើត</th>
 								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>		
 							</tr>
@@ -68,9 +68,7 @@
 								<th class="tdheader">អាយុ</th>
 								
 								<th class="tdheader">ទីតាំងបុណ្យ</th>
-								<th class="tdheader">ប្រភេទរំលាយសព</th>
 								<th class="tdheader">ទីតាំងបញ្ចុះ/បូជា</th>
-								<th class="tdheader">សម្គាល់</th>
 							</tr>
 						</thead>						
 						<?php 
@@ -81,7 +79,7 @@
 						?>					
 						<tbody>
 							<?php $i=0;if(!empty($this->rs)){foreach ($this->rs as $rs){ $i++; ?>
-							<tr oncontextmenu="setrowdata(<?php echo $rs['id'];?>);return false;" class="context-menu-one normal" style="white-space:nowrap;"> 
+							<tr oncontextmenu="setrowdata(<?php echo $rs['id'];?>);return false;" class="context-menu-one normal" style="white-space:nowrap;height:40px;"> 
 								<td class="items-no"><?php echo $i;?></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name'];?></a></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name_chinese'];?></a></td>
@@ -95,9 +93,7 @@
 								<td class="items" align="center"><?php echo $rs['partner_khmer_year'];?></td>
 								<td class="items" align="center"><?php echo $rs['partner_age'];?></td>								
 								<td class="items" ><?php echo $rs['place_of_program'];?></td>
-								<td class="items" align="center"><?php echo $rs['type_romleay_sop'];?></td>
 								<td class="items" ><?php echo $rs['place_pjos_sop'];?></td>
-								<td class="items" ><?php echo $rs['note'];?></td>						
 								<td class="items" align="center"><?php echo date("d-m-Y",strtotime($rs['create_date']));?></td>
 								<td class="items" align="center"><?php echo $rs['user_id'];?></td>
 							</tr>
@@ -114,7 +110,8 @@
 							$("#table").tablesorter();
 							$("#table").tablesorter().tablesorterPager({container: $("#pagination_table"),size:15});
 							$("#pagedisplay").focus(function(){ this.blur(); 
-		                   });
+							
+		                    });
 						});
 					</script>
 					<div id="pagination_table" class="pager" >

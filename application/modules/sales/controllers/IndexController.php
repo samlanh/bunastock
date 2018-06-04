@@ -20,10 +20,10 @@ class Sales_IndexController extends Zend_Controller_Action
 		}
 		else{
 			$search =array(
-					'text_search'=>'',
+					'ad_search'=>'',
 					'start_date'=>date("Y-m-d"),
 					'end_date'=>date("Y-m-d"),
-					'branch_id'=>-1,
+					'branch'=>-1,
 					'customer_id'=>-1,
 					);
 		}
@@ -43,8 +43,8 @@ class Sales_IndexController extends Zend_Controller_Action
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុបវិក្កយបត្រ'=>$delete,'វិក្កយបត្រ'=>$invoice,'contact_name'=>$link,'branch_name'=>$link,'customer_name'=>$link,
 				'sale_no'=>$link));
 		
-		$formFilter = new Sales_Form_FrmSearch();
-		$this->view->formFilter = $formFilter;
+	    $formFilter = new Product_Form_FrmProduct();
+	    $this->view->formFilter = $formFilter->productFilter();
 	    Application_Model_Decorator::removeAllDecorator($formFilter);
 	}	
 	function addAction(){

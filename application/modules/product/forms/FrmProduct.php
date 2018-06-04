@@ -144,7 +144,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		));
 		
 		$status = new Zend_Form_Element_Select("status");
-		$opt = array('1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
+		$opt = array('1'=>$tr->translate("ប្រើប្រាស់"),'0'=>$tr->translate("មិនប្រើប្រាស់"));
 		$status->setAttribs(array(
 				'class'=>'form-control select2me',
 				'required'=>'required',
@@ -211,6 +211,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		));
 		$branch->setMultiOptions($opt);
 		$branch->setValue($request->getParam("branch"));
+		
 		
 		$status = new Zend_Form_Element_Select("status");
 		$opt = array('-1'=>$tr->translate("All"),'1'=>$tr->translate("Active"),'0'=>$tr->translate("Deactive"));
@@ -324,6 +325,20 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$end_date->setValue($_date);
 		
+		$db=new Application_Model_DbTable_DbGlobal();
+		$rs=$db->getGlobalDb('SELECT id,cust_name,`phone` FROM tb_customer WHERE cust_name!="" AND status=1 ');
+		$options=array($tr->translate('Choose Customer'));
+		$vendorValue = $request->getParam('customer_id');
+		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['cust_name'];
+		$vendor_element=new Zend_Form_Element_Select('customer_id');
+		$vendor_element->setMultiOptions($options);
+		$vendor_element->setAttribs(array(
+				'id'=>'customer_id',
+				'class'=>'form-control select2me',
+				'data-date-format'=>"dd-mm-yyyy"
+		));
+		$vendor_element->setValue($vendorValue);
+		$this->addElement($vendor_element);
 		
 		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$category,$color,$size,$status));
 		return $this;

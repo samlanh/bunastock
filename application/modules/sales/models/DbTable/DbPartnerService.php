@@ -60,7 +60,7 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     }
     function getAllService(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND STATUS=1 AND is_service=0 AND is_package=0 ORDER BY item_name ASC";
+    	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND status=1 AND is_service=1 AND is_package=0 ORDER BY item_name ASC";
     	return $db->fetchAll($sql);
     }
     public function updateservice($post){

@@ -28,8 +28,7 @@ class Purchase_indexController extends Zend_Controller_Action
 		$db = new Purchase_Model_DbTable_DbPurchaseOrder();
 		$rows = $db->getAllPurchaseOrder($search);
 		$list = new Application_Form_Frmlist();
-		$columns=array("BRANCH_NAME","VENDOR_NAME","PURCHASE_ORDER","ORDER_DATE","DATE_IN",
-				 "INVOICE_NO","TOTAL_AMOUNT","PAID","BALANCE","ORDER_STATUS","STATUS","BY_USER");
+		$columns=array("BRANCH_NAME","VENDOR_NAME","PURCHASE_ORDER","ORDER_DATE","TOTAL_AMOUNT","PAID","BALANCE","ORDER_STATUS","STATUS","BY_USER");
 		$link=array(
 				'module'=>'purchase','controller'=>'index','action'=>'edit',
 		);
@@ -40,7 +39,7 @@ class Purchase_indexController extends Zend_Controller_Action
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
 	public function addAction(){
-		$db = new Application_Model_DbTable_DbGlobal();
+		
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			try {
@@ -54,8 +53,7 @@ class Purchase_indexController extends Zend_Controller_Action
 				}
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+				echo $e->getMessage();exit();
 			}
 		}
 		///link left not yet get from DbpurchaseOrder 	
@@ -79,10 +77,8 @@ class Purchase_indexController extends Zend_Controller_Action
 		Application_Model_Decorator::removeAllDecorator($formStockAdd);
 		$this->view->form_vendor = $formStockAdd;
 		
-		//for add location
-// 		$formAdd = $formpopup->popuLocation(null);
-// 		Application_Model_Decorator::removeAllDecorator($formAdd);
-// 		$this->view->form_branch = $formAdd;	
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->puchase_num = $db->getPurchaseNumber(1);
 	}
 	public function editAction(){
 		$db = new Application_Model_DbTable_DbGlobal();

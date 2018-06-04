@@ -170,7 +170,6 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  (SELECT b.name FROM `tb_sublocation` AS b WHERE b.id=pl.`location_id` LIMIT 1) AS branch,
 			  p.`item_code`,
 			  p.`item_name` ,
-			  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
 			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=16  AND p.`is_service`=v.`key_code` LIMIT 1) AS is_service,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
 			  SUM(pl.`qty`) AS qty,

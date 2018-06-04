@@ -21,40 +21,45 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		}
 		else{
 			$search =array(
-					'text_search'=>'',
+					'ad_search'=>'',
 					'start_date'=>date("Y-m-d"),
 					'end_date'=>date("Y-m-d"),
-					'branch_id'=>-1,
-					'customer_id'=>-1,
+					'branch'=>-1,
+					'purchase_id'=>-1,
 					);
 		}
 		$db = new Purchase_Model_DbTable_Dbpayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","CUSTOMER_NAME","EXPENSE_DATE",
-				"TOTAL","PAID","BALANCE","PAYMENT_TYPE","CHEQUE_NUMBER","BANK_NAME","WITHDRAWER","CHEQ_ISSUE","CHEQ_WIDRAW","PAYMENT_METHOD","BY_USER");
+		$columns=array("សាខា","អតិថិជន","លេខបញ្ជាទិញ","ថ្ងៃចំណាយ","ចំណាយជា","តម្លៃសរុប","ប្រាក់បានបង់","នៅខ្វះ","អ្នកប្រើប្រាស់");
 		$link=array(
 				'module'=>'purchase','controller'=>'payment','action'=>'edit',
 		);
 // 		$link1=array(
 // 				'module'=>'sales','controller'=>'index','action'=>'viewapp',
 // 		);
+
+		$this->view->search = $search;
 		
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
-		$formFilter = new Sales_Form_FrmSearch();
-		$this->view->formFilter = $formFilter;
+		$formFilter = new Product_Form_FrmProduct();
+		$this->view->formFilter = $formFilter->productFilter();
 	    Application_Model_Decorator::removeAllDecorator($formFilter);
+	    
+	    $db = new Purchase_Model_DbTable_Dbpayment();
+	    $this->view->purchase = $db->getAllPurchase();
+	    
 	}	
 	function addAction(){
-		$db = new Application_Model_DbTable_DbGlobal();
+		
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			try {
 				$dbq = new Purchase_Model_DbTable_Dbpayment();
-				if(!empty($data['identity'])){
-					$dbq->addReceiptPayment($data);
+				if($data['all_total']>0){
+					$dbq->addPurchasePayment($data);
 				}
 				Application_Form_FrmMessage::message("INSERT_SUCESS");
 				if(!empty($data['btnsavenew'])){
@@ -73,9 +78,9 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		Application_Model_Decorator::removeAllDecorator($form_pay);
 		$this->view->form_sale = $form_pay;
 		 
-		// item option in select
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
+		$db = new Purchase_Model_DbTable_Dbpayment();
+		$this->view->all_vendor = $db->getAllVendor();
+		$this->view->purchase_num = $db->getAllPurchaseNo();
 		
 	}
 	function editAction(){
@@ -124,8 +129,8 @@ class Purchase_PaymentController extends Zend_Controller_Action
 	public function getinvoiceAction(){
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$rs = $db->getAllInvoicePaymentPurchase($post['post_id'], $post['type_id']);
+			$db = new Purchase_Model_DbTable_Dbpayment();
+			$rs = $db->getAllInvoicePaymentPurchase($post['post_id']);
 			echo Zend_Json::encode($rs);
 			exit();
 		}

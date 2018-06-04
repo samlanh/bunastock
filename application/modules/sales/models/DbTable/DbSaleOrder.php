@@ -27,8 +27,8 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 				$s_where[] = " s.all_total LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
-			if($search['branch_id']>0){
-				$where .= " AND s.branch_id = ".$search['branch_id'];
+			if($search['branch']>0){
+				$where .= " AND s.branch_id = ".$search['branch'];
 			}
 			if($search['customer_id']>0){
 				$where .= " AND s.customer_id =".$search['customer_id'];

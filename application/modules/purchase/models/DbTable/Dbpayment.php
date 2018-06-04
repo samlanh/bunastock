@@ -5,188 +5,98 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 	//use for add purchase order 29-13
 	protected $_name="tb_receipt";
 	
-	function getPurchaseExist($id){
-		$db = $this->getAdapter();
-		$sql = "SELECT 
-				  p.`net_totalafter`,
-				  p.`balance_after`,
-				  p.`paid` ,
-				  p.`paid_after`
-				FROM
-				  `tb_purchase_order` AS p 
-				WHERE p.id =$id ";
-		
-		return $db->fetchRow($sql);
+	function getUserId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->user_id;
 	}
-	function getVendorPaymentById($id){
-		$db = $this->getAdapter();
-		$sql = "SELECT 
-				  v.`id`,
-					v.`branch_id`,
-				  v.`payment_type`,
-				  v.`payment_id`,
-				  v.`receipt_no`,
-				  v.`cheque_number`,
-				  v.`che_issuedate`,
-				  v.`che_withdrawaldate`,
-				  v.`expense_date`,
-				  v.`bank_name`,
-				  v.`vendor_id`,
-				  v.`withdraw_name`,
-				  v.`remark`,
-				  v.`total`,
-				  v.`paid`,
-				  v.`balance`,
-				  v.`subtotal_after`,
-				  v.`paid_after`,
-				  v.`balance_after`,
-				  vd.`invoice_id`,
-  (SELECT p.`order_number` FROM `tb_purchase_order` AS p WHERE p.id=vd.`invoice_id` LIMIT 1) AS invoice_no,
-  (SELECT p.`net_total` FROM `tb_purchase_order` AS p WHERE p.id=vd.`invoice_id` LIMIT 1) AS net_total,
-  (SELECT p.`paid` FROM `tb_purchase_order` AS p WHERE p.id=vd.`invoice_id` LIMIT 1) AS paided,
-  (SELECT p.`balance_after` FROM `tb_purchase_order` AS p WHERE p.id=vd.`invoice_id` LIMIT 1) AS balance_after,
-				  vd.`receipt_id`,
-				  vd.`total`,
-				  vd.`paid`,
-				  vd.`balance`,
-				  vd.`discount`,
-				  vd.`date_input` 
-				FROM
-				  `tb_vendor_payment` AS v,
-				  `tb_vendorpayment_detail` AS vd 
-				WHERE v.id = vd.`receipt_id` AND v.id=$id";
-		
-		return $db->fetchAll($sql);
-	}
+	
 	function getAllReciept($search){
 			$db= $this->getAdapter();
-			$sql=" SELECT r.id,
-			(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
-			(SELECT v.v_name FROM `tb_vendor` AS v WHERE v.vendor_id=r.vendor_id LIMIT 1 ) AS customer_name,
-			r.`date_input`,
-			r.`total`,r.`paid`,r.`balance`,
-			(SELECT payment_name FROM `tb_paymentmethod` WHERE payment_typeId=r.`payment_id`) AS payment_name,
-			cheque_number,bank_name,withdraw_name,che_issuedate,che_withdrawaldate,
-			(SELECT name_en FROM `tb_view` WHERE TYPE=10 AND key_code=r.`payment_type` LIMIT 1 ) payment_by,
-			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
-			FROM `tb_vendor_payment` AS r ";
+			$sql=" SELECT 
+						r.id,
+						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
+						(select v_name from tb_vendor where tb_vendor.vendor_id = p.vendor_id) as vendor_name,
+						p.order_number,
+						r.`expense_date`,
+						r.payment_type,
+						r.`total`,
+						r.`paid`,
+						r.`balance`,
+						
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
+					FROM 
+						`tb_vendor_payment` AS r,
+						tb_purchase_order as p
+					where 
+						p.id = r.purchase_id		 
+				";
 			
 			$from_date =(empty($search['start_date']))? '1': " r.`expense_date` >= '".$search['start_date']." 00:00:00'";
 			$to_date = (empty($search['end_date']))? '1': " r.`expense_date` <= '".$search['end_date']." 23:59:59'";
-			$where = " WHERE ".$from_date." AND ".$to_date;
+			$where = " and ".$from_date." AND ".$to_date;
 			if(!empty($search['text_search'])){
 				$s_where = array();
 				$s_search = trim(addslashes($search['text_search']));
-				$s_where[] = " r.`receipt_no` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`total` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`paid` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`balance` LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
-			if($search['branch_id']>0){
-				$where .= " AND r.`branch_id` = ".$search['branch_id'];
+			if($search['branch']>0){
+				$where .= " AND r.`branch_id` = ".$search['branch'];
 			}
-			if($search['customer_id']>0){
-				$where .= " AND r.vendor_id =".$search['customer_id'];
+			if($search['purchase_id']>0){
+				$where .= " AND r.purchase_id =".$search['purchase_id'];
 			}
 			$dbg = new Application_Model_DbTable_DbGlobal();
 			$where.=$dbg->getAccessPermission();
 			$order=" ORDER BY id DESC ";
 			return $db->fetchAll($sql.$where.$order);
 	}
-	public function addReceiptPayment($data)
+	public function addPurchasePayment($data)
 	{
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
-			
-			$ids=explode(',',$data['identity']);
-			$branch_id = '';
-			
-			foreach ($ids as $row){
-				
-				$branch_id = $this->getBranchByInvoice($data['invoice_no'.$row]);
-				break;
-			}
-			//$data['receipt'] = $db_global->getReceiptNumber($branch_id['branch_id']);
-			
-			$info_purchase_order=array(
-					"branch_id"   	=> 	$branch_id['branch_id'],
-					"vendor_id"   => 	$data["customer_id"],
-					"payment_type"  => 	$data["payment_method"],//payment by customer/invoice
-					"payment_id"    => 	$data["payment_name"],	//payment by cash/paypal/cheque
-					"receipt_no"    => 	'',//$data['receipt'],
-					"date_input"  =>  date("Y-m-d"),
-					"che_issuedate"  =>  date("Y-m-d",strtotime($data['cheque_issuedate'])),
-					"che_withdrawaldate"  =>  date("Y-m-d",strtotime($data['cheque_withdrawdate'])),
+			$array=array(
+					"branch_id"   	=> 	1,
+					"purchase_id" 	=> 	$data['purchase_id'],
+					"payment_type"  => 	$data["payment_type"],//payment by cash/cheque/Credit/Bank Transtransfer
+					"bank_name" 	=> 	$data['bank_name'],
+					"cheque_number" => 	$data['cheque'],
 					"expense_date"  =>  date("Y-m-d",strtotime($data['expense_date'])),
+					"remark"        => 	$data['remark'],
+					
 					"total"         => 	$data['all_total'],
 					"paid"          => 	$data['paid'],
 					"balance"       => 	$data['balance'],
-					"remark"        => 	$data['remark'],
-					"user_id"       => 	$GetUserId,
-					'status'        =>1,
-					"bank_name" => 	$data['bank_name'],
-					"cheque_number" => 	$data['cheque'],
-					"withdraw_name" => 	$data['holder_name'],
-				 // "paid_dollar"   => 	$data['paid_dollar'],
-// 				    "paid_riel"     => 	$data['paid_riel'],
-				
+					
+					"user_id"       => 	$this->getUserId(),
+					'status'        =>  1,
+					'create_date'	=>  date("Y-m-d H:i:s"),
+					
 			);
 			$this->_name="tb_vendor_payment";
-			$reciept_id = $this->insert($info_purchase_order); 
+			$reciept_id = $this->insert($array); 
 			
-			unset($info_purchase_order);
-// 			$ids=explode(',',$data['identity']);
-			$count = count($ids);
-			$paid = $data['paid'];
-			$compelted = 0;
-			foreach ($ids as $key => $i)
-			{
-				$paid = $paid -($data['balance_after'.$i]);
-				$recipt_paid = 0;
-				if ($paid>=0){
-					$paided = $data['balance_after'.$i];
-					$balance=0;
-					$compelted=1;
-				}else{
-					$paided = $data['paid'];
-					$balance= $data['balance_after'.$i]-$data['paid'];
-					$compelted=0;
-				}
-				$data_item= array(
-						'receipt_id'=> $reciept_id,
-						'invoice_id'=> 	$data['invoice_no'.$i],
-						'total'=>$data['balance_after'.$i],
-// 						'discount'  => 	$data['discount'.$i],
-						'paid'	  => 	$paided,
-						'balance'		  => 	$balance,
-						'is_completed'   =>    $compelted,
-						'status'  => 1,
-						'date_input'	  => date("Y-m-d"),
-				);
-				$this->_name='tb_vendorpayment_detail';
-				$this->insert($data_item);
-				
-				$rsinvoice = $this->getBranchByInvoice($data['invoice_no'.$row]);
-				if(!empty($rsinvoice)){
-					$data_invoice = array(
-								'paid'=>$rsinvoice['paid']+$paided,
-								'discount_after'  => 	0,
-								'paid_after'	  => 	$paided,
-								'balance_after'	  => 	$balance,
-								'net_totalafter' =>    $balance,
-								'is_completed'	  => 	$compelted,
-								);
-					$this->_name='tb_purchase_order';
-					$where = 'id = '.$data['invoice_no'.$i];
-					$this->update($data_invoice, $where);
-				}
-			 }
+			if($data['balance']>0){
+				$compelted = 0;
+			}else{
+				$compelted = 1;
+			}
+			
+			$rspurchase = $this->getPurchaseInfo($data['purchase_id']);
+			if(!empty($rspurchase)){
+				$arr = array(
+							'paid'				=>	$rspurchase['paid']+$data['paid'],
+							'balance'			=>	$rspurchase['balance']-$data['paid'],
+							'is_completed'	  	=> 	$compelted,
+							);
+				$this->_name='tb_purchase_order';
+				$where = 'id = '.$data['purchase_id'];
+				$this->update($arr, $where);
+			}
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -212,7 +122,7 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			$compelted = 0;
 			foreach ($ids as $row){
 				
-				$branch_id = $this->getBranchByInvoice($data['invoice_no'.$row]);
+				$branch_id = $this->getPurchaseInfo($data['invoice_no'.$row]);
 				break;
 			}
 			
@@ -306,7 +216,7 @@ $db->getProfiler()->setEnabled(false);
 Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
 $db->getProfiler()->setEnabled(false);
 				
-				$rsinvoice = $this->getBranchByInvoice($data['invoice_no'.$i]);
+				$rsinvoice = $this->getPurchaseInfo($data['invoice_no'.$i]);
 				if(!empty($rsinvoice)){
 					$data_invoice = array(
 								'paid'=>$rsinvoice['paid']+$paided,
@@ -374,7 +284,7 @@ $db->getProfiler()->setEnabled(false);
 			Application_Model_DbTable_DbUserLog::writeMessageError($err);
 		}
 	}
-	function getBranchByInvoice($invoice_id){
+	function getPurchaseInfo($invoice_id){
 		$db =$this->getAdapter();
 		$sql="SELECT * FROM `tb_purchase_order` AS p WHERE p.`id` = $invoice_id LIMIT 1";
 		return $db->fetchRow($sql);
@@ -402,4 +312,49 @@ $db->getProfiler()->setEnabled(false);
 		$sql=" SELECT * FROM `tb_quoatation_termcondition` WHERE quoation_id=$id AND term_type=2 ";
 		return $db->fetchAll($sql);
 	} 
+	
+	function getAllVendor(){
+		$db = $this->getAdapter();
+		$sql=" SELECT id,(select v_name from tb_vendor where tb_vendor.vendor_id = p.vendor_id) as name FROM tb_purchase_order as p WHERE status=1 and p.balance>0 ";
+		return $db->fetchAll($sql);
+	}
+	function getAllPurchaseNo(){ // for form add
+		$db = $this->getAdapter();
+		$sql=" SELECT id,order_number as name FROM tb_purchase_order WHERE status=1 and balance>0 ";
+		return $db->fetchAll($sql);
+	}
+	
+	function getAllPurchase(){ // for search index
+		$db = $this->getAdapter();
+		$sql=" SELECT 
+					id,
+					order_number as name,
+					(select v_name from tb_vendor where tb_vendor.vendor_id = p.vendor_id) as vendor 
+				FROM 
+					tb_purchase_order as p
+				WHERE 
+					status=1 
+			";
+		return $db->fetchAll($sql);
+	}
+	
+	function getAllInvoicePaymentPurchase($purchase_id){
+		$db= $this->getAdapter();
+		$sql="select 
+					vp.*,
+					p.order_number,
+					DATE_FORMAT(vp.expense_date, '%d-%m-%Y') AS expense_date,
+					(select v_name from tb_vendor as v where v.vendor_id = p.vendor_id) as vendor,
+					p.balance as total_payment
+				from 	
+		 			tb_vendor_payment as vp,
+		 			tb_purchase_order as p
+		 		where 
+		 			p.id = vp.purchase_id
+		 			and vp.purchase_id = $purchase_id	
+		";
+		 
+		return  $db->fetchAll($sql);
+	}
+	
 }

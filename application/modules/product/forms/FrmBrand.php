@@ -13,7 +13,7 @@ class Product_Form_FrmBrand extends Zend_Form
 		$name = new Zend_Form_Element_Text('brand_name');
 		$name->setAttribs(array(
 				'class'=>'form-control',
-				'required'=>'required'
+				'required'=>'true'
 		));
 		 
 		$parent = new Zend_Form_Element_Select("parent");

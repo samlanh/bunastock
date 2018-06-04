@@ -37,6 +37,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$formpopup = $formpopup->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
 		$this->view->form_customer = $formpopup;
+		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getSalesNumber(1);
 		
@@ -64,6 +65,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
+		$this->view->partner = $db->getAllPartnerService();
 	
 		$formpopup = new Sales_Form_FrmCustomer(null);
 		$formpopup = $formpopup->Formcustomer(null);
@@ -71,7 +73,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getSalesNumber(1);
+		$this->view->invoice = $db->getInvoiceNumber(1);
 		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 	
@@ -164,6 +166,26 @@ class Sales_PossaleController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_Dbpos();
 			$rs =$db->getProductById($post['product_id'],$post['branch_id']);
 			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
+	
+	function getServicePartnerPriceAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$fee =$db->getServicePartnerPrice($post['partner_id'],$post['service_id']);
+			print_r(Zend_Json::encode($fee));
+			exit();
+		}
+	}
+	
+	function getTypeAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$type =$db->getType($post['product_id']);
+			print_r(Zend_Json::encode($type));
 			exit();
 		}
 	}
