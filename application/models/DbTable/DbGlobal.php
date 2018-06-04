@@ -698,7 +698,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     }
 	function getAllInvoicePO($completed=null,$opt=null){
    	$db= $this->getAdapter();
-   	$sql=" SELECT id,invoice_no,(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id = p.vendor_id) AS vendor_name FROM `tb_purchase_order` AS p WHERE  p.status=1 and p.balance>0 ";
+   	$sql=" SELECT id,(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id = p.vendor_id) AS vendor_name FROM `tb_purchase_order` AS p WHERE  p.status=1 and p.balance>0 ";
    	if($completed!=null){
    		$sql.="  AND p.is_completed=0 ";
    	}
@@ -708,27 +708,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    		return $row;
    	}else{
    		$options=array(-1=>"Select Invoice");
-   		if(!empty($row)) foreach($row as $read) $options[$read['id']]=$read['invoice_no']."-".$read['vendor_name'];
+   		if(!empty($row)) foreach($row as $read) $options[$read['id']]=$read['vendor_name'];
    		return $options;
    	}
    }
-   function getAllInvoicePaymentPurchase($post_id,$type){
-   	$db= $this->getAdapter();
-   	if($type==1){//by customer
-   		$sql=" SELECT p.*,
-   			(SELECT SUM(paid) FROM `tb_vendorpayment_detail` WHERE tb_vendorpayment_detail.invoice_id=p.id) as paid
-   			FROM tb_purchase_order AS p 
-   			WHERE p.vendor_id= $post_id AND status=1  ";
-	   			$sql.=" AND p.is_completed=0 AND p.balance_after>0 ";
-	   			$sql.=" ORDER BY p.id DESC ";
-   	}else{//by invoice
-   		$sql=" SELECT p.*, 
-   				(SELECT SUM(paid) FROM `tb_vendorpayment_detail` WHERE tb_vendorpayment_detail.invoice_id=p.id) as paid
-   				FROM tb_purchase_order AS p WHERE p.id= $post_id AND p.status=1  ";
-   				$sql.=" AND p.is_completed=0 AND p.balance_after>0 LIMIT 1 ";
-   	}
-   	return  $db->fetchAll($sql);
-   }
+   
    function getAgreementNo($branch_id=1){
    		$db = $this->getAdapter();
    		$sql="SELECT id FROM tb_agreement ORDER BY id DESC";
@@ -831,12 +815,22 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql=" SELECT COUNT(id) FROM tb_expense WHERE branch_id=".$branch_id." LIMIT 1 ";
 		$acc_no = $db->fetchOne($sql);
-	
 		$new_acc_no= (int)$acc_no+1;
 		$acc_no= strlen((int)$acc_no+1);
-	
 		$pre = "E";
+		for($i = $acc_no;$i<5;$i++){
+			$pre.='0';
+		}
+		return $pre.$new_acc_no;
+	}
 	
+	public function getPurchaseNumber($branch_id = 1){
+		$db = $this->getAdapter();
+		$sql=" SELECT COUNT(id) FROM tb_purchase_order WHERE branch_id=".$branch_id." LIMIT 1 ";
+		$acc_no = $db->fetchOne($sql);
+		$new_acc_no= (int)$acc_no+1;
+		$acc_no= strlen((int)$acc_no+1);
+		$pre = "P";
 		for($i = $acc_no;$i<5;$i++){
 			$pre.='0';
 		}
