@@ -184,7 +184,7 @@
 				<li  class="<?php if($module=='sales'){echo $class_active;}?>">
 					<a href="javascript:;">
 					<i class="icon-screen-desktop"></i>
-					<span class="title"><?php echo $tr->translate("SALES"); ?></span>
+					<span class="title"><?php echo $tr->translate("ការលក់"); ?></span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
@@ -224,8 +224,8 @@
 		            		</a>
 	            		</li>
 	            		<li>
-	            			<a href="<?php echo $url_termcondiction[0]; ?>">
-		            			<i class="icon-arrow-right"></i>បង់ប្រាក់សេវាកម្ម
+	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'partnerservicepayment','action'=>'index'),null, true); ?>">
+		            			<i class="icon-arrow-right"></i>បង់ប្រាក់ថ្លៃជួលសេវាកម្ម
 		            		</a>
 	            		</li>
 					</ul>
