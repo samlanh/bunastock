@@ -59,15 +59,14 @@ class report_indexController extends Zend_Controller_Action
     				'txt_search'=>'',
     				'start_date'=>date("Y-m-d"),
     				'end_date'=>date("Y-m-d"),
-    				'item'=>0,
-    				'category_id'=>0,
-    				'brand_id'=>0,
-    				'branch_id'=>0,
+    				'product_id'=>'',
+    				'branch'=>0,
     		);
     	}
     	$this->view->rssearch=$search;
     	$query = new report_Model_DbPurchase();
     	$this->view->product_rs =  $query->getPruchaseProductDetail($search);
+    	$this->view->product =  $query->getAllProduct();
     	
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
@@ -80,6 +79,25 @@ class report_indexController extends Zend_Controller_Action
 //     	Application_Model_Decorator::removeAllDecorator($form_search);
 //     	$this->view->form_search = $form_search;
     }
+    
+    function rptPurchasePaymentAction(){
+    	$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+    	if(empty($id)){
+    		$this->_redirect("/report/index/rpt-purchase");
+    	}
+    	$query = new report_Model_DbPurchase();
+    	$this->view->purchase_payment = $query->getPruchasePaymentById($id);
+    }
+    
+    function rptPartnerServicePaymentAction(){
+    	$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+    	if(empty($id)){
+    		$this->_redirect("/report/index/rpt-vandorbalance");
+    	}
+    	$query = new report_Model_DbPurchase();
+    	$this->view->partner_service_payment = $query->getPartnerServicePaymentById($id);
+    }
+    
     public function rptSalesAction()//purchase report
     {
     	if($this->getRequest()->isPost()){
@@ -979,7 +997,8 @@ class report_indexController extends Zend_Controller_Action
     	}
     	$this->view->rssearch = $data;
     	$query = new report_Model_DbQuery();
-    	$this->view->repurchase =  $query->getVendorBalance($data);
+    	$this->view->purchase_balance =  $query->getVendorBalance($data);
+    	$this->view->partner_service_balance =  $query->getPartnerServiceBalance($data);
     	$frm = new Application_Form_FrmReport();
     
     	$form_search=$frm->FrmReportPurchase($data);
@@ -1336,7 +1355,40 @@ class report_indexController extends Zend_Controller_Action
 		$formFilter = new Sales_Form_FrmSearch();
 		$this->view->form_sale = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
-		
 	}
+	
+	public function rptPaidToSupplyerAction()
+	{
+		$db = new report_Model_DbPaidToSupplyer();
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
+			$data['end_date']	= date("Y-m-d",strtotime($data['end_date']));
+		}else{
+			$data = array(
+					'ad_search'	=>	'',
+					'branch'	=>	'',
+					'paid_type'	=>	0,
+					'start_date'=>	date("Y-m-d"),
+					'end_date'	=>	date("Y-m-d"),
+			);
+		}
+		$this->view->rssearch = $data;
+		
+		if($data['paid_type']==0){
+			$this->view->purchase_payment = $db->getPurchasePayment($data);
+			$this->view->partner_service_payment = $db->getPartnerServicePayment($data);
+		}else if($data['paid_type']==1){
+			$this->view->purchase_payment = $db->getPurchasePayment($data);
+		}else{
+			$this->view->partner_service_payment = $db->getPartnerServicePayment($data);
+		}
+		
+		$formFilter = new Product_Form_FrmProduct();
+		$this->view->formFilter = $formFilter->productFilter();
+		$this->view->form_salemong = $formFilter;
+		Application_Model_Decorator::removeAllDecorator($formFilter);
+	}
+	
 	
 }

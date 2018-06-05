@@ -1,13 +1,13 @@
 <?php 
 $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
-<title>Purchase Report</title>
+<title>តារាងបញ្ជាទិញ</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("PURCHASE_REPORT");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("តារាងបញ្ជាទិញ");?>
 				</div>
 						<div class="btn-group pull-right">
 							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -52,7 +52,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 		                	<td width="20%" valign="top"></td>
 		                	<td width="60%" valign="top">
 		                		<ul>
-		                			<li style="text-align:center; font-size:13px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជាទិញ</li>
+		                			<li style="text-align:center; font-size:13px; font-family:'Khmer MEF2'">តារាងបញ្ជាទិញ</li>
 		                		</ul>
 		                	</td>
 		                    <td width="20%"></td>
@@ -77,9 +77,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 		                					<ul class='pur_info'>
 			                					<li style="text-align: left;"><strong>សាខា​ / Location: </strong><?php echo $this->product[0]['branch_name'];?></li>
 			                					<li style="text-align: left;"><strong>លេខបញ្ជាទិញ / Purchase Number : </strong><?php echo $this->product[0]['order_number'];?></li>
-			                					<li style="text-align: left;"><strong>លេខវិក័យបត្រ / Invoice No. : </strong><?php echo $this->product[0]['order_number'];?></li>
 			                					<li style="text-align: left;"><strong>ថ្ងៃបញ្ជាទិញ / Order Date : </strong><?php echo date("d/m/Y",strtotime($this->product[0]['date_order']));?></li>
-			                					<li style="text-align: left;"><strong>ថ្ងៃទំនិញចូល / Date In : </strong><?php echo date("d/m/Y",strtotime($this->product[0]['date_in']));?></li>
 		                						<li style="text-align: left;"><strong>ស្ថានការណ៏ / Purcase Status : </strong><?php echo $this->product[0]['purchase_status'];?></li>
 		                					</ul>
 		                				</td>
@@ -94,101 +92,65 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 		    <tr>
 		    	<td class="table2excel" id="exportExcel"><br />
 		            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
-		                 <tbody><tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
-		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
-							<td><?php echo $tr->translate("Products/Particulars Description");?></td>
-							<td>&nbsp;<?php echo $tr->translate("ITEM_CODE");?></td>
-							<td>&nbsp;<?php echo $tr->translate("QTY");?></td>
-							<td width="10%">&nbsp;<?php echo $tr->translate("UNIT_PRICE_CAP");?></td>
-							<td><?php echo $tr->translate("TOTAL");?></td>
-		                </tr>
-		                <?php $num=1; 
-		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
-		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
-		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
-		                if(!empty($this->product))foreach ($this->product AS $index => $rs){?>
-		                 <?php 
-						   $sing="";
-						   if($rs['qty_unit']>0 AND $rs['qty_detail']>0){
-						   	$sing=" + ";
-						   }
-						   $unitqty = floatval($rs['qty_unit']);
-						   $qty_detail = floatval($rs['qty_detail']);
-						   if($rs['qty_unit']>0){$unitqty=number_format($unitqty,0)." ".$rs["measue_name"];}else{$unitqty="";}
-						   if($rs['qty_detail']>0){
-						   	$qty_detail=number_format($qty_detail,0)." ".$rs["unit_label"];}else{$qty_detail="";}
-						 ?>
-						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
-						   <td style="white-space: nowrap; text-align:center;">&nbsp;<?php echo $unitqty.$sing.$qty_detail; //$rs["qty_order"];?></td>
-						   <td style="white-space: nowrap; min-width: 120px;">&nbsp;<?php echo $rs["curr_name"]."&nbsp;";echo number_format($rs["price"],2);?></td>
-						   <td style="white-space: nowrap; min-width: 120px;">&nbsp;<?php echo $rs["curr_name"]."&nbsp;".number_format($rs["sub_total"],2);?></td>
-						</tr>
-						   <?php 
-                    }?>
-                    <tr>
-						<td colspan="3" rowspan="5" style="border:1px solid #fff;border-top:1px solid #000;border-right:1px solid #000; font-size: 12px !important;">
-							<table width="97%" style="margin: 5px;padding:5px; border:1px dotted #000; white-space: nowrap;">
-								<tr>
-									<td width="50%" align="left" style="text-align: left;padding:10px;">
-									<style>
-									.lblvalue{padding:2px; width: 185px; height: 28px; border: 1px solid #000; display: block;}
-									</style>
-										<table style="width: 100%">
-											<tr>
-												<td style="white-space: nowrap;"><span>បង់ប្រាក់ជា </span></td>
-												<td><span class="lblvalue"><?php echo $this->product[0]['payment_method'];?></span></td>
-											</tr>
-											<tr>
-												<td>លេខសែក</td>
-												<td><span class="lblvalue"><?php echo $this->product[0]['payment_number'];?></span></td>
-											</tr>
-											<tr>
-												<td>ថ្ងៃត្រូវចេញសែក</td>
-												<td><span class="lblvalue"><?php echo empty($this->product[0]['date_issuecheque'])?"":date("d-m-Y",strtotime($this->product[0]['date_issuecheque']));?></span></td>
-											</tr>
-										</table>
-									</td>
-									<td width="50%" valign="top" style="padding:10px;">
-										<table style="width: 100%; white-space: nowrap;" >
-											<tr>
-												<td style="white-space: nowrap;"><span>កម្រៃ​ </span></td>
-												<td><span class="lblvalue"><?php echo $this->product[0]['commission'];?></span></td>
-											</tr>
-											<tr>
-												<td>កម្រៃរ៉ាប់រង</td>
-												<td><span class="lblvalue"><?php echo $this->product[0]['commission_ensur'];?></span></td>
-											</tr>
-											<tr>
-												<td>ឈ្មោះធនាគារ</td>
-												<td><span class="lblvalue"><?php echo $this->product[0]['bank_name'];?></span></td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</td>
-						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Total</td>
-						<td >&nbsp;&nbsp;<?php echo number_format($this->product[0]['net_total'],2);?></td>
-					</tr>
-					<tr>
-						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Discount</td>
-						<td >&nbsp;&nbsp;<?php echo number_format($this->product[0]['discount_real'],2);?></td>
-					</tr>
-					<tr>
-						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Tax</td>
-						<td >&nbsp;&nbsp;<?php echo number_format($this->product[0]['tax'],2);?></td>
-					</tr>
-					<tr>
-						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Deposit</td>
-						<td >&nbsp;&nbsp;<?php echo number_format($this->product[0]['paid'],2);?></td>
-					</tr>
-					<tr>
-						<td colspan="2" style="background:#ccc;border-left:1px solid #000;">&nbsp;&nbsp;Balance </td>
-						<td style="background:#ccc;">&nbsp;&nbsp;<?php echo number_format($this->product[0]['balance'],2);//$this->product[0]['balance']-$this->product[0]['paid'];?></td>
-					</tr>
+		                 <tbody>
+			                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+			                    <td width="5%">&nbsp;<?php echo $tr->translate("NUM");?></td>
+								<td width="25%"><?php echo $tr->translate("ផលិតផល");?></td>
+								<td width="15%">&nbsp;<?php echo $tr->translate("លេខកូតទំនិញ");?></td>
+								<td width="15%">&nbsp;<?php echo $tr->translate("ចំនួន");?></td>
+								<td width="15%">&nbsp;<?php echo $tr->translate("តម្លៃ");?></td>
+								<td width="10%">&nbsp;<?php echo $tr->translate("បញ្ចុះតម្លៃ");?></td>
+								<td width="15%"><?php echo $tr->translate("តម្លៃសរុប");?></td>
+			                </tr>
+			                <?php $num=1; 
+			                if(!empty($this->product)){foreach ($this->product AS $index => $rs){?>
+			                 <?php 
+							   $sing="";
+							   if($rs['qty_unit']>0 AND $rs['qty_detail']>0){
+							   	$sing=" + ";
+							   }
+							   $unitqty = floatval($rs['qty_unit']);
+							   $qty_detail = floatval($rs['qty_detail']);
+							   if($rs['qty_unit']>0){$unitqty=number_format($unitqty,0)." ".$rs["measue_name"];}else{$unitqty="";}
+							   if($rs['qty_detail']>0){
+							   	$qty_detail=number_format($qty_detail,0)." ".$rs["unit_label"];}else{$qty_detail="";}
+							 ?>
+							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
+							   <td style="white-space: nowrap; text-align:center;">&nbsp;<?php echo $unitqty.$sing.$qty_detail; //$rs["qty_order"];?></td>
+							   <td style="white-space: nowrap; min-width: 120px;">&nbsp;<?php echo "$ ".number_format($rs["price"],2);?></td>
+							   <td style="white-space: nowrap; min-width: 120px;">&nbsp;<?php echo $rs["disc_value"];?></td>
+							   <td style="white-space: nowrap; min-width: 120px;">&nbsp;<?php echo "$ ".number_format($rs["sub_total"],2);?></td>
+							</tr>
+							  
+	                    	 <?php 	}}?>
+		                    <tr style="font-size: 14px;font-weight: bold;">
+		                    	<td colspan="4" ></td>
+								<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Total</td>
+								<td >&nbsp;&nbsp;<?php echo "$ ".number_format($this->product[0]['net_total'],2);?></td>
+							</tr>
+							<tr style="font-size: 14px;font-weight: bold;">
+								<td colspan="4" ></td>
+								<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Discount</td>
+								<td >&nbsp;&nbsp;<?php echo $this->product[0]['discount_value'];?></td>
+							</tr>
+							<tr style="font-size: 14px;font-weight: bold;">
+								<td colspan="4" ></td>
+								<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Total Payment</td>
+								<td >&nbsp;&nbsp;<?php echo "$ ".number_format($this->product[0]['total_payment'],2);?></td>
+							</tr>
+							<tr style="font-size: 14px;font-weight: bold;">
+								<td colspan="4" ></td>
+								<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;Deposit</td>
+								<td >&nbsp;&nbsp;<?php echo "$ ".number_format($this->product[0]['paid'],2);?></td>
+							</tr>
+							<tr style="font-size: 14px;font-weight: bold;">
+								<td colspan="4" ></td>
+								<td colspan="2" style="background:#ccc;border-left:1px solid #000;">&nbsp;&nbsp;Balance </td>
+								<td style="background:#ccc;">&nbsp;&nbsp;<?php echo "$ ".number_format($this->product[0]['balance'],2);//$this->product[0]['balance']-$this->product[0]['paid'];?></td>
+							</tr>
 		                </tbody>
 		           </table>
 		              <br>

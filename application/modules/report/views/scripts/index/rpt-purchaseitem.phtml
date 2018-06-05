@@ -31,6 +31,14 @@ $frm_sales_report = $this->form_salemong;
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $frm_sales_report->getElement("ad_search");?></label>
 						<label class="control-label col-md-2"><?php echo $frm_sales_report->getElement("branch");?></label>
+						<label class="control-label col-md-2">
+							<select name="product_id" id="product_id" class="form-control select2me" >
+								<option value="">ជ្រើសរើសទំនិញ</option>
+								<?php if(!empty($this->product)){foreach ($this->product as $rs){?>
+								<option value="<?php echo $rs['id']?>"><?php echo $rs['item_name']."-".$rs['item_code']?></option>
+								<?php }}?>
+							</select>
+						</label>
 						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $frm_sales_report->getElement('start_date');?></div></label>
 						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $frm_sales_report->getElement("end_date");?></div></label>
 						<label class="control-label col-md-2">
@@ -83,10 +91,6 @@ $frm_sales_report = $this->form_salemong;
 							<td>&nbsp;<?php echo $tr->translate("VENDOR_NAME");?></td>
 							<td>&nbsp;<?php echo $tr->translate("PURCHASE_ORDER");?></td>
 							<td width="10%">&nbsp;<?php echo $tr->translate("ORDER_DATE");?></td>
-							<td><?php echo $tr->translate("DATE_IN");?></td>
-							<td><?php echo $tr->translate("CURRNECY_TYPE");?></td>
-							<td><?php echo $tr->translate("CATE_NAME");?></td>
-							<td>&nbsp;<?php echo $tr->translate("BRAND_NAME");?></td>
 							<td><?php echo $tr->translate("ITEM_NAME");?></td>
 							<td>&nbsp;<?php echo $tr->translate("ITEM_CODE");?></td>
 							<td>&nbsp;<?php echo $tr->translate("QTY");?></td>
@@ -104,15 +108,11 @@ $frm_sales_report = $this->form_salemong;
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["vendor_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["order_number"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_order"]));?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_in"]));?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["curr_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["cate_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["brand_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["qty_order"],2);?></td>
-						   <td>&nbsp;<?php echo $rs["curr_name"]."&nbsp;";echo number_format($rs["price"],2);?></td>
-						   <td>&nbsp;<?php echo $rs["curr_name"]."&nbsp;".number_format($rs["sub_total"],2);?></td>
+						   <td>&nbsp;<?php echo number_format($rs["price"],2);?></td>
+						   <td>&nbsp;<?php echo number_format($rs["sub_total"],2);?></td>
 						   <td>&nbsp;<?php echo $rs["purchase_status"];?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
 						</tr>

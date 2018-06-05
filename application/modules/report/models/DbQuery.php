@@ -1082,19 +1082,25 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 // 		echo $sql.$where.$order;exit();
 		return $db->fetchAll($sql.$where.$order);
 	}
+	
 	public function getVendorBalance($search){//1
 		$db= $this->getAdapter();
-		$sql=" SELECT id,
-		(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
-		(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=tb_purchase_order.vendor_id LIMIT 1 ) AS vendor_name,
-		order_number,date_order,date_in,invoice_no,
-		net_total,
-		(SELECT SUM(paid) FROM `tb_vendorpayment_detail` WHERE tb_vendorpayment_detail.invoice_id=tb_purchase_order.id) as paid,
-		 balance,balance_after,
-		(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=2 LIMIT 1),
-		(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 ) AS user_name
-		FROM
-			`tb_purchase_order` WHERE balance_after>0 AND status=1 ";
+		$sql=" SELECT 
+					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
+					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=tb_purchase_order.vendor_id LIMIT 1 ) AS vendor_name,
+					order_number,
+					date_order,
+					total_payment,
+					paid,
+					balance,
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 ) AS user_name
+				FROM
+					`tb_purchase_order` 
+				WHERE 
+					balance>0 
+					AND status=1 
+			";
 		
 		$from_date =(empty($search['start_date']))? '1': " date_order >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " date_order <= '".$search['end_date']." 23:59:59'";
@@ -1117,8 +1123,49 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
-		$order=" ORDER BY date_order DESC ";
-		echo $sql.$where.$order;
+		$order=" ORDER BY id ASC ";
+		//echo $sql.$where.$order;
+		return $db->fetchAll($sql.$where.$order);
+	}
+	
+	
+	public function getPartnerServiceBalance($search){//1
+		$db= $this->getAdapter();
+		$sql=" SELECT
+					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
+					sale_no,
+					date_sold,
+					partner_service_total,
+					partner_service_paid,
+					partner_service_balance,
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = s.user_id LIMIT 1 ) AS user_name
+				FROM
+					tb_sales_order as s
+				WHERE
+					partner_service_balance>0
+					AND status=1
+			";
+	
+		$from_date =(empty($search['start_date']))? '1': " date_sold >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " date_sold <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = " sale_no LIKE '%{$s_search}%'";
+			$s_where[] = " partner_service_total LIKE '%{$s_search}%'";
+			$s_where[] = " partner_service_paid LIKE '%{$s_search}%'";
+			$s_where[] = " partner_service_balance LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if($search['branch_id']>0){
+			$where .= " AND branch_id =".$search['branch_id'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY s.id ASC ";
+		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	

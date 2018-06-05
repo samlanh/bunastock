@@ -12,17 +12,12 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
 					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=tb_purchase_order.vendor_id LIMIT 1 ) AS vendor_name,
 					order_number,
-					invoice_no,
 					date_order,
-					date_in,
-					currency_id,
-					net_total,
+					total_payment,
 					paid,
 					balance,
-					balance_after,
-					(SELECT payment_name FROM `tb_paymentmethod` WHERE payment_typeId=payment_method LIMIT 1 ) as payment_method,
 					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=1 LIMIT 1 ) As purchase_status,
-					(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=2 LIMIT 1),
+					(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=5 LIMIT 1),
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 ) AS user_name
 				FROM 
 					`tb_purchase_order`  
@@ -60,34 +55,37 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";
-		echo $sql.$where.$order;
+		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	function getProductPruchaseById($id){//2
 		$db = $this->getAdapter();
 		$sql=" SELECT
 					(SELECT name FROM `tb_sublocation` WHERE id=p.branch_id) AS branch_name,
-					p.order_number,p.date_order,p.date_in,p.remark,
-					p.commission,p.commission_ensur,p.bank_name,p.date_issuecheque,
+					p.order_number,p.date_order,p.remark,
 					(SELECT item_name FROM `tb_product` WHERE id= po.pro_id LIMIT 1) AS item_name,
 					(SELECT item_code FROM `tb_product` WHERE id=po.pro_id LIMIT 1 ) AS item_code,
 						
 					(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=(SELECT measure_id FROM `tb_product` WHERE id= po.pro_id LIMIT 1)) as measue_name,
 					(SELECT qty_perunit FROM `tb_product` WHERE id= po.pro_id LIMIT 1) AS qty_perunit,
 					(SELECT unit_label FROM `tb_product` WHERE id=po.pro_id LIMIT 1 ) AS unit_label,
-					(SELECT payment_name FROM `tb_paymentmethod` WHERE payment_typeId=p.payment_method) as payment_method,
-					p.payment_number,
 				
-					(SELECT symbal FROM `tb_currency` WHERE id=p.currency_id limit 1) As curr_name,
 					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS vendor_name,
 					(SELECT v_phone FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS v_phone,
 					(SELECT contact_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS contact_name,
 					(SELECT add_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS add_name,
 					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=1 LIMIT 1) As purchase_status,
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = p.user_mod LIMIT 1 ) AS user_name,
-					po.qty_order,po.qty_unit,po.qty_detail,po.price,po.sub_total,p.net_total,
-						
-					p.paid,p.discount_real,p.tax,
+					po.qty_order,
+					po.qty_unit,
+					po.qty_detail,
+					po.price,
+					po.disc_value,
+					po.sub_total,
+					p.net_total,
+					p.discount_value,
+					p.total_payment,
+					p.paid,
 					p.balance
 				FROM 
 					`tb_purchase_order` AS p,
@@ -107,16 +105,26 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					it.item_code,
 					(SELECT name FROM `tb_category` WHERE id=it.cate_id LIMIT 1) AS cate_name,
 					(SELECT name FROM `tb_brand` WHERE id=it.brand_id LIMIT 1) AS brand_name,
-					(SELECT symbal FROM `tb_currency` WHERE id=p.currency_id limit 1) As curr_name,
 					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS vendor_name,
 					(SELECT v_phone FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS v_phone,
 					(SELECT add_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS add_name,
 					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=1 LIMIT 1) As purchase_status,
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = p.user_mod LIMIT 1 ) AS user_name,
-					po.qty_order,po.price,po.sub_total,p.currency_id,p.net_total,
-					p.id,p.order_number,p.date_order,p.date_in,p.remark,
-					p.paid,p.discount_real,p.tax,
-					p.balance
+					
+					po.qty_order,
+					po.price,
+					po.disc_value,
+					po.sub_total,
+					
+					p.net_total,
+					p.discount_value,
+					p.total_payment,
+					p.paid,
+					p.balance,
+					p.order_number,
+					p.date_order,
+					p.remark
+					
 				FROM 
 					tb_purchase_order AS p,
 					tb_purchase_order_item AS po,
@@ -139,22 +147,16 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 			$s_where[] = " it.item_code LIKE '%{$s_search}%'";
 			$s_where[] = " it.barcode LIKE '%{$s_search}%'";
 			$s_where[] = " p.order_number LIKE '%{$s_search}%'";
-			$s_where[] = " p.net_total LIKE '%{$s_search}%'";
+			$s_where[] = " p.total_payment LIKE '%{$s_search}%'";
 			$s_where[] = " p.paid LIKE '%{$s_search}%'";
 			$s_where[] = " p.balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['item']>0){
-			$where .= " AND it.id =".$search['item'];
+		if($search['product_id']>0){
+			$where .= " AND it.id =".$search['product_id'];
 		}
-		if($search['category_id']>0){
-			$where .= " AND it.cate_id =".$search['category_id'];
-		}
-		if($search['brand_id']>0){
-			$where .= " AND it.brand_id =".$search['brand_id'];
-		}
-		if($search['branch_id']>0){
-			$where .= " AND p.branch_id =".$search['branch_id'];
+		if($search['branch']>0){
+			$where .= " AND p.branch_id =".$search['branch'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
@@ -162,7 +164,62 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
-
+	function getPruchasePaymentById($id){
+		$db = $this->getAdapter();
+		$sql=" SELECT
+					(SELECT name FROM `tb_sublocation` WHERE id=p.branch_id) AS branch_name,
+					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS vendor_name,
+					p.order_number,
+					
+					v.remark,
+				
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = v.user_id LIMIT 1 ) AS user_name,
+					v.expense_date,
+					v.payment_type,
+					v.total,
+					v.paid,
+					v.balance
+				FROM
+					`tb_purchase_order` AS p,
+					`tb_vendor_payment` AS v
+				WHERE
+					p.id=v.purchase_id
+					AND p.status=1
+					AND v.purchase_id = $id
+			";
+		return $db->fetchAll($sql);
+	}
+	
+	function getPartnerServicePaymentById($id){
+		$db = $this->getAdapter();
+		$sql=" SELECT
+					(SELECT name FROM `tb_sublocation` WHERE id=s.branch_id) AS branch_name,
+					s.sale_no,
+					pp.date_payment,
+					pp.payment_type,
+					pp.note,
+					pp.total_payment,
+					pp.paid,
+					pp.balance,
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = pp.user_id LIMIT 1 ) AS user_name
+				FROM
+					`tb_sales_order` AS s,
+					`tb_partnerservice_payment` AS pp
+				WHERE
+					s.id=pp.sale_order_id
+					AND s.status=1
+					AND pp.sale_order_id = $id
+			";
+		return $db->fetchAll($sql);
+	}
+	
+	
+	function getAllProduct(){
+		$db = $this->getAdapter();
+		$sql="select id,item_name,item_code from tb_product where status=1 and is_service=0";
+		return $db->fetchAll($sql);
+	}
+	
 }
 
 ?>
