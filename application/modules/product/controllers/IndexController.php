@@ -62,12 +62,8 @@ public function init()
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->add($post);
-					if(isset($post["save_close"]))
-					{
 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index');
-					}else{
 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }

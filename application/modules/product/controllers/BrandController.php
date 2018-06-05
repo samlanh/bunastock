@@ -37,9 +37,7 @@ public function init()
 			$data = $this->getRequest()->getPost();
 			$db = new Product_Model_DbTable_DbBrand();
 			$db->add($data);
-			if($data['saveclose']){
 				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/brand/index');
-			}
 		}
 		$formFilter = new Product_Form_FrmBrand();
 		$formAdd = $formFilter->Brand();

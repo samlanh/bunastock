@@ -22,7 +22,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					note,notes,
 					create_date,
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
-					(SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=d.status LIMIT 1) status
+					(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=STATUS LIMIT 1) STATUS
 		 		FROM 
 					tb_donor_donate as d
 				WHERE 

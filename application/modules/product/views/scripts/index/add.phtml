@@ -54,12 +54,10 @@ input.btn_borwse_image {
 	<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_submit;?>" enctype="multipart/form-data" autocomplete="off">				
 		
 		<script>
-			// $('#frm').submit(function() {
-				// alert(1);
-				// $("#btnsavenew").attr("disabled", true);
-				// $("#save_close").attr("disabled", true);
-				// return false;
-			// });
+			 $('#frm').submit(function() {
+				 $("#btnsavenew").attr("disabled", true);
+				 $("#save_close").attr("disabled", true);
+			});
 			
 		</script>
 		
@@ -301,7 +299,7 @@ input.btn_borwse_image {
 										<label  class="col-md-5 ">
 										</label>
 										<label  class="col-md-2 ">
-											<button type="button" name="btnsavenew" onclick="addNewBrand();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+											<button type="button" id="btnsavenew" onclick="addNewBrand();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
 										</label>
 										<label  class="col-md-5 ">
 										</label>
@@ -365,7 +363,7 @@ input.btn_borwse_image {
 							<label  class="col-md-5 ">
 							</label>
 							<label  class="col-md-2 ">
-								<button type="button" name="btnsavenew" onclick="addNewCategory();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+								<button type="button" id="btnsavenew" onclick="addNewCategory();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
 							</label>
 							<label  class="col-md-5 ">
 							</label>
@@ -429,7 +427,7 @@ input.btn_borwse_image {
 						<label  class="col-md-5 ">
 						</label>
 						<label  class="col-md-2 ">
-							<button type="button" name="btnsavenew" onclick="addNewMeasure();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+							<button type="button" id="btnsavenew" onclick="addNewMeasure();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
 						</label>
 						<label  class="col-md-5 ">
 						</label>
@@ -492,7 +490,7 @@ input.btn_borwse_image {
 						<label  class="col-md-5 ">
 						</label>
 						<label  class="col-md-2 ">
-							<button type="button" id="savecolor"name="btnsavenew" onclick="addNewColor();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+							<button type="button" id="savecolor" id="btnsavenew" onclick="addNewColor();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
 						</label>
 						<label  class="col-md-5 ">
 						</label>

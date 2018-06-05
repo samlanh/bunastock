@@ -76,6 +76,25 @@ class report_OtherController extends Zend_Controller_Action
     	$this->view->form_paymentlist = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     }
+    public function partnerserviceAction()
+    {
+    	$db = new report_Model_DbOther();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    	}else{
+    		$data = array(
+    				'ad_search'	=>	'',
+    				'branch'	=>	'',
+    				'status'	=>	-1,
+    		);
+    	}
+    	//$this->view->rssearch = $data;
+    	$this->view->other = $db->getAllPartnerService($data);
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	$this->view->partnerservice = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
     public function rptworkerAction()
     {
     	$db = new report_Model_DbOther();

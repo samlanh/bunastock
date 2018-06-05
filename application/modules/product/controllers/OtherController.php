@@ -43,15 +43,10 @@ public function init()
     		
     		$db = new Product_Model_DbTable_DbOther();
     		try {
-    			$db->add($data);
-    			if(isset($data['save_new'])){
-    				
-    				Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
-    			}
-    			if(isset($data['save_close'])){
+    			$db->add($data);		
     				Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
     				Application_Form_FrmMessage::redirectUrl('/other/loantype');
-    			}
+
     		} catch (Exception $e) {
     			Application_Form_FrmMessage::message("INSERT_FAIL");
     			$err = $e->getMessage();

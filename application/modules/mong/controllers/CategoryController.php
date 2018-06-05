@@ -32,12 +32,8 @@ class Mong_CategoryController extends Zend_Controller_Action
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addCategory($post);
-					if(isset($post["save_close"]))
-					{
 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/category/index');
-					}else{
 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }

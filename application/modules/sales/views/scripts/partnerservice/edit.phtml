@@ -2,8 +2,8 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
-	$result=$this->service;
-//	print_r($this->service);
+	$result=$this->result;
+//	print_r($this->result);exit();
 ?>						 
 <title>ដៃគូសេវាកម្មខាងក្រៅ</title>
 <body>
@@ -25,13 +25,13 @@
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6" style="text-align: left !important;border:1px solid #ccc;">
-										<h4 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្មខាងក្រៅ</h4>
+										<h2 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្មខាងក្រៅ</h2>
 									<div class="form-group" >
 										<label class="col-md-4 control-label">
 											<strong>ឈ្មោះដៃគូ*</strong>
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="partner_name" name="partner_name"  value="<?php echo $result['partner_name']?>" class="validate[required] form-control" />
+											<input type="text" id="partner_name" name="partner_name"  value="<?php echo $this->row['partner_name']?>" class="validate[required] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -40,8 +40,8 @@
 										</label>
 										<div class="col-md-8">
 											<select name="gender" id="gender" class="form-control">
-										    <option value="1" <?php if($result['gender']==1) echo"selected";?> label="Active">ប្រុស</option>
-										    <option value="2" <?php if($result['gender']==2) echo"selected";?> label="Deactive">ស្រី</option>
+										    <option value="1" <?php if($this->row['gender']==1) echo"selected";?> label="Active">ប្រុស</option>
+										    <option value="2" <?php if($this->row['gender']==2) echo"selected";?> label="Deactive">ស្រី</option>
 										</select>	
 										</div>
 									</div>
@@ -50,7 +50,7 @@
 											លេខទូរស័ព្ទ
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="tel" name="tel" value="<?php echo $result['tel']?>" class="form-control" />
+											<input type="text" id="tel" name="tel" value="<?php echo$this->row['tel']?>" class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -58,7 +58,7 @@
 											អាស័យដ្ឋាន
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="addresss" name="addresss"  value="<?php echo $result['addresss']?>" class="form-control" />
+											<input type="text" id="addresss" name="addresss"  value="<?php echo $this->row['addresss']?>" class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -68,7 +68,7 @@
 										<div class="col-md-8">
 											<select  name="service_cate" id="service_cate"  class="form-control select2me" value="1">
 												<?php if(!empty($this->rsservice)){foreach ($this->rsservice as $rs){?>
-													<option <?php if($rs["id"]==$result['service_cate']){echo"selected";}?>  value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
+													<option <?php if($rs["id"]==$this->row['service_cate']){echo"selected";}?>  value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
 												<?php }}?>
 											</select>
 										</div>
@@ -78,7 +78,7 @@
 											តម្លៃជួល
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="service_fee" name="service_fee" value="<?php echo $result['service_fee']?>" class="validate[required,custom[number]] form-control" />
+											<input type="text" id="service_fee" name="service_fee" value="<?php echo $this->row['service_fee']?>" class="validate[required,custom[number]] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -86,7 +86,7 @@
 											ពណ៍នា
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="description" name="description" value="<?php echo $result['description']?>" class="form-control" />
+											<input type="text" id="description" name="description" value="<?php echo $this->row['description']?>" class="form-control" />
 										</div>
 									</div>
 								</div>

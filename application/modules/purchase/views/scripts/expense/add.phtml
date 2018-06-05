@@ -26,6 +26,11 @@ $frm = $this->frm_expense;
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" autocomplete="off" enctype="multipart/form-data" method="post">
+					<script>
+					$('#frm').submit(function() {
+				        $("#btnsavenew").attr("disabled", true);
+				      });
+					</script>
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("ពណ៌នាចំនាយ")?><span class="required">
@@ -140,7 +145,7 @@ $frm = $this->frm_expense;
 							</div>
 							<div class="col-md-2">
 								<div class="input-icon right">
-									<button type="submit" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit"  id="btnsavenew"class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								</div>
 							</div>
 							<div class="col-md-4">

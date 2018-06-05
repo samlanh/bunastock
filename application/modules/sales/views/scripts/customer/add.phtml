@@ -19,7 +19,12 @@
 		</div>
 		<div class="portlet-body form">
 			<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-			
+					<script>
+					$('#frm').submit(function() {
+				        $("#saveclose").attr("disabled", true);
+				        $("#btnsavenew").attr("disabled", true);
+				      });
+					</script>
 				<div class="form-body">
 					<div class="row">
 							<div class="col-md-3"></div>
@@ -113,11 +118,11 @@
 									</div>
 									<div class="col-md-2">
 										<div class="input-icon right">
-											<button type="submit" name="saveclose" value="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+											<button type="submit" id="saveclose" id="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 										</div>
 									</div>
 									<div class="col-md-2">
-										<button type="submit" name="btnsavenew"  name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+										<button type="submit" id="btnsavenew"  id="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 									</div>
 									<div class="col-md-3"></div>
 								</div>

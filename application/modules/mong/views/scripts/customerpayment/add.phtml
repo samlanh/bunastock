@@ -14,7 +14,12 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+					<script>
+					$('#frm').submit(function() {
+				        $("#save_close").attr("disabled", true);
+				      });
+					</script>
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
 							<label class="control-label col-md-2"> <?php echo $tr->translate("អតិថិជន");?><span class="required">
@@ -159,7 +164,7 @@
 							</div>
 							<div class="col-md-2">
 								<div class="input-icon right">
-									<button type="submit" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" id="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								</div>
 							</div>
 							<div class="col-md-4">

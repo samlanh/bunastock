@@ -17,7 +17,13 @@
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<form class="form-horizontal" method="post" action="<?php echo $url_new;?>" >
+			<form class="form-horizontal" method="post" action="<?php echo $url_new;?>" autocomplete="off">
+				<script>
+					$('#frm').submit(function() {
+				        $("#btnsavenew").attr("disabled", true);
+				        $("#save_close").attr("disabled", true);
+				      });
+				</script>
 				<div class="form-body ">
 					<div style="margin: 0 auto;" >
 							

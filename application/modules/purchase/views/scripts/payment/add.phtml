@@ -17,6 +17,12 @@
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
 				<form id="frm" autocomplete="off" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+					<script>
+					$('#frm').submit(function() {
+				        $("#btnsavenew").attr("disabled", true);
+				        $("#saveclose").attr("disabled", true);
+				      });
+					</script>
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("លេខបញ្ជាទិញ");?><span class="required">
@@ -167,11 +173,11 @@
 							</div>
 							<div class="col-md-2">
 								<div class="input-icon right">
-									<button type="submit" name="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" id="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								</div>
 							</div>
 							<div class="col-md-2">
-								<button type="submit" value="btnsavenew" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+								<button type="submit" value="btnsavenew" id="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 							</div>
 							<div class="col-md-3">
 							</div>

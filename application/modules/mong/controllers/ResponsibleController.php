@@ -32,12 +32,8 @@ class Mong_ResponsibleController extends Zend_Controller_Action
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addResposible($post);
-					if(isset($post["save_close"]))
-					{
 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/responsible/index');
-					}else{
 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }

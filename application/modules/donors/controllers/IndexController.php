@@ -47,13 +47,10 @@ class Donors_IndexController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addDonor($data);
-				if(isset($data["save_close"]))
-				{
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/donors/index/index');
-				}else{
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
-			  }catch (Exception $e){
+			  catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			  }
 		}

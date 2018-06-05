@@ -36,13 +36,8 @@ class Mong_ConstructorController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){ 
 			try{
 				$data = $this->getRequest()->getPost();
-				$db->addConstructor($data);
-				if(isset($data["save_close"]))
-				{
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/constructor/index');
-				}else{
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-				}
+				$db->addConstructor($data);			
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/constructor/index');			
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			  }

@@ -57,11 +57,8 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 			$db = new Purchase_Model_DbTable_DbExpense();				
 			try {
 				$db->addexpense($data);
-				if(!empty($data['btnsavenew'])){
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/purchase/expense");
-				}else{
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-				}				
+					Application_Form_FrmMessage::message("INSERT_SUCCESS");			
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

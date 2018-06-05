@@ -20,7 +20,8 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
 		    	(SELECT u.item_name FROM `tb_product` AS u WHERE id =`service_cate`) AS service_cate,
 		    	service_fee,
 		    	description,
-		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name 
+		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
+		    	(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code= STATUS LIMIT 1) STATUS 
 		    	FROM
 		    	tb_partnerservice 
 		    	WHERE 
@@ -63,7 +64,8 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND status=1 AND is_service=1 AND is_package=0 ORDER BY item_name ASC";
     	return $db->fetchAll($sql);
     }
-    public function updateservice($post){
+    public function updateservice($post, $id){
+    //	print_r($post);exit();
     	$_arr=array(
     			'partner_name' 		 => $post['partner_name'],
     			'gender'			 => $post['gender'],
@@ -74,8 +76,12 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     			'description'	     => $post['description'],
     	);
     	$where="id=".$post['id'];
-		//echo $where; exit();
-		$this->update($where);
+		$this->update($_arr, $where);
+    }
+    public function getServiceById($id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT * FROM tb_partnerservice WHERE id = $id LIMIT 1";
+    	return $db->fetchRow($sql);
     }
  
    

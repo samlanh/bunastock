@@ -5,9 +5,10 @@
 ?>						 
 <title>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</title>
 <body>
-	<form class="form-horizontal" id="frm" method="post" action="" >				
+	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
 		<script>
 		$('#frm').submit(function() {
+			$("#save_close").attr("disabled", true);
 			identity = $("#identity").val();
 		    if(identity==''){
 		        alert("សូមជ្រើសរើស ផលិតផល/សេវាកម្ម! ");
@@ -158,7 +159,7 @@
 								</div>
 								<div class="col-md-3">
 									<div class="input-icon right">
-										<button type="submit" name="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-save"></i> រក្សាទុក</button>
+										<button type="submit" id="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-save"></i> រក្សាទុក</button>
 									</div>
 								</div>
 								<div class="col-md-3"></div>

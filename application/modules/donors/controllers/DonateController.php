@@ -50,12 +50,8 @@ class Donors_DonateController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addDonate($data);
-				if(isset($data["save_close"]))
-				{
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/donors/donate/index');
-				}else{
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-				}
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			  }

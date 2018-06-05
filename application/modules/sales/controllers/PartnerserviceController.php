@@ -18,7 +18,7 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllPartnerService($data);
-		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","សេវាកម្មផ្តល់អោយ","តម្លៃជួល","ពណ៍នា","ប្រើប្រាស់");
+		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","សេវាកម្មផ្តល់អោយ","តម្លៃជួល","ពណ៍នា","ប្រើប្រាស់","ស្ថានការ");
 		$link=array('module'=>'sales','controller'=>'partnerservice','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
@@ -34,12 +34,8 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addService($post);
-					if(isset($post["save_close"]))
-					{
 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/sales/partnerservice/index');
-					}else{
 						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
@@ -47,12 +43,13 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 		$this->view->rsservice = $db->getAllService();
 	}
 	function editAction(){
-		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$id = $this->getRequest()->getParam("id");
 		$db = new Sales_Model_DbTable_DbPartnerService();
-			if($this->getRequest()->isPost()){ 
+			if($this->getRequest()->isPost()){
+		//		$data["id"] = $id;
 				try{
 					$post = $this->getRequest()->getPost();
-					$db->addService($post);
+					$db->updateservice($post,$id);
 					if(isset($post["save_close"]))
 					{
 						Application_Form_FrmMessage::Sucessfull("UPDATE_SUCCESS", '/sales/partnerservice/index');
@@ -62,10 +59,8 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("UPDATE_ERROR",$err = $e->getMessage());
 				  }
-			}			
-//	 		$row = $db->getServiceById($id);
-	// 		$this->view->service = $row;
-	 		//print_r($row); exit();
-	 		$this->view->rsservice = $db->getAllService();				 
+			}	
+			$this->view->row = $db->getServiceById($id);	 		
+	 		$this->view->rsservice = $db->getAllService();		 
 	}	
 }

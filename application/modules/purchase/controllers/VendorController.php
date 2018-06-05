@@ -47,13 +47,8 @@ class Purchase_vendorController extends Zend_Controller_Action
 			try{
 				$vendor = new Purchase_Model_DbTable_DbVendor();
 				$vendor->addVendor($post);
-				
-				if(!empty($post['saveclose']))
-				{
 					Application_Form_FrmMessage::Sucessfull('INSERT_SUCCESS', self::REDIRECT_URL . '/vendor/index');
-				}else{
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();

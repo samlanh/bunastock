@@ -29,9 +29,7 @@ public function init()
 			$data = $this->getRequest()->getPost();
 			$db = new Product_Model_DbTable_DbMeasure();
 			$db->add($data);
-			if($data['save_close']){
 				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/measure/index');
-			}
 		}
 		$formFilter = new Measure_Form_FrmMeasure();
 		$formAdd = $formFilter->measure();
