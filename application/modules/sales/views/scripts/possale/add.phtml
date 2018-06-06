@@ -100,7 +100,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 														<strong>ជ្រើសរើសសព</strong>
 													</label>
 													<div class="col-md-8">
-														<select class="form-control select2me" id="programe_id" name="programe_id">
+														<select class="form-control select2me" id="program_id" name="program_id">
 															<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
 															<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
 																<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].'-';echo !empty($rs['dead_dob'])?date("d-m-Y",strtotime($rs['dead_dob'])):"";?></option>
@@ -155,7 +155,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 														<strong>អ្នកណែនាំ</strong>
 													</label>
 													<div class="col-md-8">
-														<select class="form-control select2me" id="programe_id" name="programe_id">
+														<select class="form-control select2me" id="saleagent_id" name="saleagent_id">
 															<option value="0">ជ្រើសរើស</option>
 															<?php if(!empty($this->saleagent)){foreach($this->saleagent as $rs){?>
 																<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
@@ -1018,8 +1018,8 @@ function getProductinfo(index,product_id){
 	   handleAs:"json", 
 	   load: function(data) {
 			dijit.byId("current_qty"+index).attr('value',data.qty);
-			dijit.byId("price_"+index).attr('value',data.price);
-			dijit.byId("cost_price"+index).attr('value',data.cost_price);
+			dijit.byId("price_"+index).attr('value',data.selling_price);
+			dijit.byId("cost_price"+index).attr('value',data.price);
 			dijit.byId("measur_name"+index).attr('value',data.measue_name);
 			dijit.byId("unit_label"+index).attr('value',data.unit_label);
 

@@ -45,7 +45,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
-					'program_id'	=> $data['programe_id'],
+					'program_id'	=> $data['program_id'],
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $invoice,
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
@@ -58,12 +58,13 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					'receiver_name' => $data['receiver_name'],
 					"user_id"       => $this->getUserId(),
 					
-					'comission' => $data['comission'],
+					"saleagent_id"  => $data["saleagent_id"],
+					
+					'comission' 	=> $data['comission'],
 					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
-					'payment_note' => $data['note'],
-					'other_note'=> $data['other_note'],
+					'payment_note' 	=> $data['note'],
+					'other_note'	=> $data['other_note'],
 					"date"          => date("Y-m-d"),
-// 					'agreement_id'  => $data['agreement_no'],
 			
 					'partner_service_total'  	=> $data['total_partner_service'],
 					'partner_service_balance'  	=> $data['total_partner_service'],

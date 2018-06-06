@@ -8,11 +8,15 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 			$sql=" SELECT s.id,
 			(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 			(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
-			(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS contact_name,	
-			(SELECT (dead_name) FROM `tb_program` WHERE id=s.program_id LIMIT 1) as program_name,
-			(SELECT name FROM `tb_sale_agent` WHERE id=s.saleagent_id LIMIT 1) AS saleagent,
-			s.sale_no,s.date_sold,
+			(SELECT phone FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS phone,	
+			
+			(SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) as program_name,
+			
+			s.sale_no,
+			s.date_sold,
 			s.all_total,
+			s.paid,
+			s.balance_after,
 			'វិក្កយបត្រ','លុបវិក្កយបត្រ',
 			(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
 			FROM `tb_sales_order` AS s ";
@@ -81,12 +85,12 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 				$data_item= array(
 						'saleorder_id'=> $sale_id,
 						'pro_id'	  => 	$data['item_id_'.$i],
-						'qty_unit'=>$data['qty_unit_'.$i],
+						'qty_unit'	  =>$data['qty_unit_'.$i],
 						'qty_detail'  => 	$data['qty_per_unit_'.$i],
 						'qty_order'	  => 	$data['qty'.$i],
 						'price'		  => 	$data['price'.$i]+$data['extra_price'.$i],
 						'old_price'   =>    $data['oldprice_'.$i],
-						'cost_price'   =>    $data['cost_price_'.$i],
+						'cost_price'  =>    $data['cost_price_'.$i],
 						'extra_price' =>    $data['extra_price'.$i],
 						'disc_value'  =>    str_replace("%",'',$data['dis_value'.$i]),//check it
 						'disc_type'	  =>    $data['discount_type'.$i],//check it
