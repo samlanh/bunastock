@@ -37,7 +37,7 @@ public function init()
     	}
 // 		if($level==1 or $level==2){
 			$rows = $db->getAllProductForAdmin($data);
-			$columns=array("សាខា","លេខកូតទំនិញ","ទំនិញ","ប្រភេទ","ខ្នាត","ចំនួន","តម្លៃលក់","ថ្លៃដើម","អ្នកប្រើប្រាស់","ស្ថានការ");
+			$columns=array("សាខា","លេខកូតទំនិញ","ទំនិញ","ប្រភេទ","ប្រភេទទំនិញ","ខ្នាត","ចំនួន","តម្លៃលក់","ថ្លៃដើម","អ្នកប្រើប្រាស់","ស្ថានការ");
 // 		}else{
 // 			$rows = $db->getAllProduct($data);
 // 			$columns=array("BRANCH_NAME","ITEM_CODE","ITEM_NAME",
@@ -62,8 +62,8 @@ public function init()
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->add($post);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index');
-						Application_Form_FrmMessage::message("INSERT_SUCCESS");
+						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/index');
+						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
@@ -107,7 +107,7 @@ public function init()
 					$db->edit($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/index');
+						Application_Form_FrmMessage::Sucessfull("កែប្រែជោគជ័យ", '/product/index');
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());

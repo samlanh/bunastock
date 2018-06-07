@@ -15,8 +15,8 @@ class Product_Form_FrmProduct extends Zend_Form
 		$name = new Zend_Form_Element_Text("name");
 		$name->setAttribs(array(
 				'class'=>"validate[required] form-control"
-			));
-		
+			));	
+			
 		$pro_code = new Zend_Form_Element_Text("pro_code");
 		$pro_code->setAttribs(array(
 				'class'=>'form-control',
@@ -101,9 +101,8 @@ class Product_Form_FrmProduct extends Zend_Form
 		 
 		$qty_per_unit = new Zend_Form_Element_Text("qty_unit");
 		$qty_per_unit->setAttribs(array(
-				'class'=>'form-control',
-				'required'=>'required',
-				'onKeyup'=>'doTotalQty()'
+				'class'=>"validate[required,custom[number]] form-control"
+			
 		));
 		$qty_per_unit->setValue(1);
 		 
@@ -123,7 +122,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		 
 		$label = new Zend_Form_Element_Text("label");
 		$label->setAttribs(array(
-				'class'=>'form-control',
+				'class'=>"validate[required,custom[number]] form-control"
 		));
 		 
 		$description = new Zend_Form_Element_Text("description");

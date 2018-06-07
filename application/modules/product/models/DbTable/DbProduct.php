@@ -124,7 +124,8 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			FROM
 			  `tb_product` AS p ,
 			  `tb_prolocation` AS pl
-			WHERE p.`id`=pl.`pro_id` ";
+			WHERE p.`id`=pl.`pro_id`
+  			 ";
   	$where = '';
   	if($data["ad_search"]!=""){
 		$string = str_replace(' ','',$data['ad_search']);
@@ -171,12 +172,13 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  p.`item_code`,
 			  p.`item_name` ,
 			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=16  AND p.`is_service`=v.`key_code` LIMIT 1) AS is_service,
+			  (SELECT v.name FROM `tb_category` AS  v WHERE v.id= p.`cate_id` LIMIT 1) AS category,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
 			  SUM(pl.`qty`) AS qty,
 			  p.selling_price AS master_price,
 			  p.price,
 			  (SELECT `fullname` FROM `tb_acl_user` WHERE `user_id`=p.`user_id` LIMIT 1) AS user_name,
-  			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status
+  			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS STATUS
 			FROM
 			  `tb_product` AS p ,
 			  `tb_prolocation` AS pl

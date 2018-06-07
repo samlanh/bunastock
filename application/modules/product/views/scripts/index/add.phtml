@@ -51,8 +51,7 @@ input.btn_borwse_image {
 }
 </style>
 <body>
-	<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_submit;?>" enctype="multipart/form-data" autocomplete="off">				
-		
+	<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_submit;?>" enctype="multipart/form-data" autocomplete="off">						
 		<script>
 			 $('#frm').submit(function() {
 				 $("#btnsavenew").attr("disabled", true);
@@ -272,7 +271,12 @@ input.btn_borwse_image {
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form id="frmbrand" name="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+							<form id="frmbrand" id="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+									<script>
+										 $('#frmbrand').submit(function() {
+											 $("#btnsavenew").attr("disabled", true);
+										});							
+									</script>
 									<div class="form-body">
 										<div class="form-group">
 											<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
@@ -335,8 +339,13 @@ input.btn_borwse_image {
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form id="frmCat" name="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-					<div class="form-body">
+				<form id="frmCat" id="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+					<script>
+						 $('#frmCat').submit(function() {
+							 $("#btnsavenew").attr("disabled", true);
+						});							
+					</script>
+						<div class="form-body">
 						<div class="form-group">
 							<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
 							<div class="col-md-4">
@@ -399,7 +408,12 @@ input.btn_borwse_image {
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form id="frmMesure" name="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+				<form id="frmMesure" id="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+				<script>
+						 $('#frmMesure').submit(function() {
+							 $("#btnsavenew").attr("disabled", true);
+						});							
+				</script>
 				<div class="form-body">
 					<div class="form-group">
 								<label class="col-md-4 control-label"><?php echo $tr->translate("MESUER_NAME");?></label>
@@ -462,7 +476,12 @@ input.btn_borwse_image {
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form id="frmOther" name="frmOther" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+				<form id="frmOther" id="frmOther" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+				<script>
+						 $('#frmOther').submit(function() {
+							 $("#btnsavenew").attr("disabled", true);
+						});							
+				</script>
 				<div class="form-body">
 					<div class="form-group">
 									<label class="col-md-4 control-label"><?php echo $tr->translate("TITLE");?></label>
@@ -580,8 +599,8 @@ $( document ).ready(function() {
 			template='<tr id="row_location_'+index+'">';
 			template+='<td>'+index+'</td>';
 			template+='<td>'+txt_br+'<input type="hidden" id="branch_id_'+index+'" name="branch_id_'+index+'" value="'+branch_id+'" </td>';
-			template+='<td><input type="text" id="current_qty_'+index+'" onKeyup="totalQty('+index+')" name="current_qty_'+index+'" value="0" class="form-control"></td>'; 
-			template+='<td><input type="text" id="other_qty_'+index+'" onKeyup="totalQty('+index+')" name="other_qty_'+index+'" value="0" class="form-control"></td>'; 
+			template+='<td><input type="text" id="current_qty_'+index+'" onKeyup="totalQty('+index+')" name="current_qty_'+index+'" value="0"></td>'; 
+			template+='<td><input type="text" id="other_qty_'+index+'" onKeyup="totalQty('+index+')" name="other_qty_'+index+'" value="0" "></td>'; 
 			template+='<td><input type="text" id="total_qty_'+index+'" name="total_qty_'+index+'" value="0" class="form-control"></td>'; 
 			template+='<td><input type="text" id="qty_warning_'+index+'" name="qty_warnning_'+index+'" value="0" class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteRecord('+index+',1)" name="save_close" class="btn default"><?php echo $tr->translate("DELETE");?></button></td>';

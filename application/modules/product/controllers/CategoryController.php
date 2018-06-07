@@ -29,9 +29,7 @@ public function init()
 			$data = $this->getRequest()->getPost();
 			$db = new Product_Model_DbTable_DbCategory();
 			$db->add($data);
-			if($data['saveclose']){
-				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/category/index');
-			}
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/category/index');
 		}
 		$formFilter = new Product_Form_FrmCategory();
 		$formAdd = $formFilter->cat();

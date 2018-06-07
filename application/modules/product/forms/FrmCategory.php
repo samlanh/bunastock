@@ -12,8 +12,7 @@ class Product_Form_FrmCategory extends Zend_Form
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$name = new Zend_Form_Element_Text('cat_name');
 		$name->setAttribs(array(
-				'class'=>'form-control',
-				'required'=>'required'
+				'class'=>"validate[required] form-control"
 		));
 		 
 		$parent = new Zend_Form_Element_Select("parent");
@@ -65,7 +64,7 @@ class Product_Form_FrmCategory extends Zend_Form
 		$parent->setAttribs(array(
 				'class'=>'form-control',
 		));
-		$opt = array(''=>$tr->translate("SEELECT_CATEGORY"));
+		$opt = array(''=>$tr->translate("ជ្រើសរើសប្រភេទ"));
 		$row_cate = $db->getAllCategory();
 		if(!empty($row_cate)){
 			foreach ($row_cate as $rs){
@@ -78,7 +77,7 @@ class Product_Form_FrmCategory extends Zend_Form
 				'class'=>'form-control',
 				'required'=>'required'
 		));
-		$opt = array('1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
+		$opt = array('1'=>$tr->translate("ប្រើប្រាស់"),'0'=>$tr->translate("មិនប្រើប្រាស់"));
 		$status->setMultiOptions($opt);
 		
 		$this->addElements(array($parent,$name,$status));

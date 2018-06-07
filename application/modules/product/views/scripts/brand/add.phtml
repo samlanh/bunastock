@@ -5,19 +5,19 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->frmAdd;
 ?>
-<title><?php echo $tr->translate("ADD_BRAND");?></title>
+<title><?php echo $tr->translate("ADD BRAND");?></title>
 <div class="col-md-12">
 	<div class="portlet box blue">
 		<div class="portlet-title">
 			<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD_BRAND");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD BRAND");?>
 			</div>
 			<div class="tools">
 				<a href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<form class="form-horizontal" method="post" action="<?php echo $url_new;?>" autocomplete="off">
+			<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_new;?>" autocomplete="off">
 				<script>
 					$('#frm').submit(function() {
 				        $("#btnsavenew").attr("disabled", true);
@@ -27,7 +27,7 @@
 				<div class="form-body ">
 					<div style="margin: 0 auto;" >
 							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
+								<label class="col-md-2 control-label"><?php echo $tr->translate("ប្រភេទ");?></label>
 								<div class="col-md-4">
 									<?php echo $formFilter->getElement('parent');?>
 								</div>

@@ -49,7 +49,13 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract
 	
 	public function getAllCategory(){
 		$db = $this->getAdapter();
-		$sql = "SELECT c.id,c.`name`,c.`parent_id`,c.`remark`,c.`status` FROM `tb_category` AS c WHERE c.`status` =1";
+		$sql = "SELECT c.id,
+						c.`name`,
+						(SELECT v.name FROM `tb_category` AS  v WHERE v.id= c.`parent_id` LIMIT 1) AS category,
+						c.`remark`,
+						c.`status` 
+						FROM `tb_category` AS c 
+						WHERE c.`status` =1";
 		return $db->fetchAll($sql);
 	}
 	

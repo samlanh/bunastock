@@ -12,8 +12,7 @@ class Product_Form_FrmBrand extends Zend_Form
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$name = new Zend_Form_Element_Text('brand_name');
 		$name->setAttribs(array(
-				'class'=>'form-control',
-				'required'=>'true'
+				'class'=>"validate[required] form-control"
 		));
 		 
 		$parent = new Zend_Form_Element_Select("parent");

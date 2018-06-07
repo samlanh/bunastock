@@ -12,7 +12,7 @@ class Product_Form_FrmOther extends Zend_Form
 		$db = new Product_Model_DbTable_DbOther();		
 		$_title = new Zend_Form_Element_Text('adv_search');
 		$_title->setAttribs(array(
-				'class'=>'form-control',
+				'class'=>"validate[required] form-control"
 		));
 		$status_search=  new Zend_Form_Element_Select('status_search');
 		$status_search->setAttribs(array(
@@ -49,7 +49,7 @@ class Product_Form_FrmOther extends Zend_Form
 				'class'=>'form-control',
 				'required'=>'required'));
 		
-		$opt = array(''=>$tr->translate("SELECT_TYPE"),2=>$tr->translate("MODEL"),3=>$tr->translate("SIZE"),4=>$tr->translate("COLOR"),6=>$tr->translate("Customer Type"));
+		$opt = array(''=>$tr->translate("ជ្រើសរើសប្រភេទ"),2=>$tr->translate("MODEL"),3=>$tr->translate("SIZE"),4=>$tr->translate("COLOR"),6=>$tr->translate("Customer Type"));
 		$type = new Zend_Form_Element_Select("type");
 		$type->setAttribs(array(
 				'class'=>'form-control',

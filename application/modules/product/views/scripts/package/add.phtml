@@ -7,8 +7,7 @@
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
 		<script>
-		$('#frm').submit(function() {
-			$("#save_close").attr("disabled", true);
+		$('#frm').submit(function() {			
 			identity = $("#identity").val();
 		    if(identity==''){
 		        alert("សូមជ្រើសរើស ផលិតផល/សេវាកម្ម! ");
@@ -20,8 +19,9 @@
 			    return true;
 			} else {
 			   return false;
-			    
+			     
 			}
+			$("#save_close").attr("disabled", true);
 		});
 			
 		</script>

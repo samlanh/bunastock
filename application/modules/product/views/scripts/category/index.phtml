@@ -12,7 +12,7 @@
 	<div class="portlet box blue">
 		<div class="portlet-title">
 			<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("CATEGORY_LIST");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("បញ្ជីប្រភេទទំនិញ");?>
 			</div>
 			<div class="caption" style="float:right">
 					<?php $formList = new Application_Form_Frmlist(); echo $formList->showAddBuntton($url_new);?>
@@ -44,11 +44,11 @@
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 							<thead>
 								<tr>
-									<th><?php echo $tr->translate("NO");?></th>
+									<th><?php echo $tr->translate("ល.");?></th>
 									<th><?php echo $tr->translate("CATEGORY_NAME");?></th>
-									<th><?php echo $tr->translate("PARENT_NAME");?></th>
+									<th><?php echo $tr->translate("ប្រភេទ");?></th>
 									<th><?php echo $tr->translate("STATUS");?></th>
-									<th><?php echo $tr->translate("REMRK");?></th>
+									<th><?php echo $tr->translate("សម្គាល់");?></th>
 									<th><?php echo $tr->translate("ACTION");?></th>
 								</tr>
 							</thead>
@@ -57,7 +57,7 @@
 								<tr class="odd gradeX">
 									<td width="3%"><?php echo $key+1;?></td>
 									<td><?php echo $row["name"]?></td>
-									<td><?php echo $row["parent_id"]?></td>
+									<td><?php echo $row["category"]?></td>
 									<td>
 										<?php if($row["status"] == 1){?>
 										<span class="label label-sm label-success"><?php echo $tr->translate("ACTIVE");?> </span>

@@ -33,7 +33,7 @@ public function init()
     	}
 			$rows = $db->getAllProductForAdmin($data);
 			$columns=array("ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","OPTION_TYPE","SOLD_PRICE","USER","STATUS");
+					"PRODUCT_CATEGORY","ប្រភេទ","SOLD_PRICE","USER","STATUS");
 
 		$link=array(
 				'module'=>'product','controller'=>'package','action'=>'edit',
@@ -52,8 +52,8 @@ public function init()
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addPackage($post);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/package');
-						Application_Form_FrmMessage::message("INSERT_SUCCESS");
+						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/package');
+						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
@@ -76,7 +76,7 @@ public function init()
 					$dbp->editPackage($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/package');
+						Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/product/package');
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
