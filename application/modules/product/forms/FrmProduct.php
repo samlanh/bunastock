@@ -14,8 +14,8 @@ class Product_Form_FrmProduct extends Zend_Form
 		$p_code = $db->getProductCode();
 		$name = new Zend_Form_Element_Text("name");
 		$name->setAttribs(array(
-				'class'=>'form-control',
-				'required'=>'1'));
+				'class'=>"validate[required] form-control"
+			));
 		
 		$pro_code = new Zend_Form_Element_Text("pro_code");
 		$pro_code->setAttribs(array(
@@ -134,13 +134,11 @@ class Product_Form_FrmProduct extends Zend_Form
 		$price = new Zend_Form_Element_Text("price");
 		$price->setAttribs(array(
 				'class'=>'validate[required,custom[number]] form-control',
-				'required'=>'required'
 		));
 		
 		$selling_price = new Zend_Form_Element_Text("selling_price");
 		$selling_price->setAttribs(array(
 				'class'=>'validate[required,custom[number]] form-control',
-				'required'=>'required'
 		));
 		
 		$status = new Zend_Form_Element_Select("status");
