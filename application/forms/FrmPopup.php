@@ -134,9 +134,9 @@ class Application_Form_FrmPopup extends Zend_Form
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
     	$db=new Application_Model_DbTable_DbGlobal();
     	
-    	$nameElement = new Zend_Form_Element_Text('vendor_name');
-		$nameElement->setAttribs(array('required'=>1,'class'=>'validate[required] form-control','placeholder'=>'ឈ្មោះក្រុមហ៊ុន'));
-    	$this->addElement($nameElement);
+    	$vendor_Element = new Zend_Form_Element_Text('vendor_name');
+    	$vendor_Element ->setAttribs(array('placeholder' => 'Enter Vendor Name','class'=>"validate[required,custom[number]] form-control"));
+    	$this->addElement($vendor_Element); 
     	
     	$vendor_phoneElement = new Zend_Form_Element_Text('v_phone');
     	$vendor_phoneElement->setAttribs(array('placeholder'=>'ទូរស័ព្ទក្រុមហ៊ុន',"class"=>"form-control"));
