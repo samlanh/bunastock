@@ -1,6 +1,6 @@
 <?php 
 
-class RsvAcl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
+class Rsvacl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
 {
 	protected  $_name = "tb_acl_user_access";
 	
@@ -141,5 +141,12 @@ class RsvAcl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
     	if(!empty($row)) return true;
     	return false;
     }
+    
+    function getAllModule(){
+    	$db=$this->getAdapter();
+    	$sql="select module from tb_acl_acl  WHERE status=1 group by module ";
+    	return $db->fetchAll($sql);
+    }
+    
 }
 ?>

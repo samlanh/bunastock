@@ -99,43 +99,42 @@ class Rsvacl_Model_DbTable_DbAcl extends Zend_Db_Table_Abstract
 	public function insertAcl($arr)
 	{
 		$data=array(); 
+		$data['label']=$arr['label'];
 		$data['module']=$arr['module'];   
 		$data['controller']=$arr['controller'];   
 		$data['action']=$arr['action'];
+		$data['rank']=$arr['order'];
+		$data['is_menu']=$arr['type'];
      	$data['status']='1';
+     	
     	return $this->insert($data); 
 	}
-	/*
-	 * @Desc: check whether this action already exist
-	 * @param $module
-	 * @param $controller
-	 * @param $action
-	 * @return boolean
-	 * */
-	public function isActionExists($module, $controller, $action) {
-		$db = RsvAcl_Model_DbTable_DbAcl::getAdapter();
-		$sql = 'SELECT * FROM tb_acl_acl WHERE module="'.$module.'" && controller="'.$controller.'" && action="'.$action.'"';
-		echo $sql; exit();
-  		$stm=$db->query($sql);
-  		$row=$stm->fetchAll();
-  		if(!$row) return NULL;
-  		return $row;
-	}
-	//update user
+
 	public function updateAcl($arr,$acl_id)
 	{
 		$data=array(); 	
-		//Sophen add here
-		$data['module']=$arr['module'];
-		$data['controller']=$arr['controller'];
-		$data['action']=$arr['action'];  	
-    	$where=$this->getAdapter()->quoteInto('acl_id=?',$acl_id);
+		$data['label']=$arr['label'];
+		$data['module']=$arr['module'];   
+		$data['controller']=$arr['controller'];   
+		$data['action']=$arr['action'];
+		$data['rank']=$arr['order'];
+		$data['is_menu']=$arr['type'];
+     	$data['status']=$arr['status'];	
+		
+    	$where=" acl_id = $acl_id ";
 		$this->update($data,$where); 
 	}
 	
-	
-	
-	
+	function getAclById($id){
+		$db = $this->getAdapter();
+		$sql="select * from tb_acl_acl where acl_id = $id limit 1";
+		return $db->fetchRow($sql);
+	}
 }
 
 ?>
+
+
+
+
+

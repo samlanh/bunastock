@@ -17,12 +17,7 @@
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
 				<form id="frm" autocomplete="off" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
-					<script>
-					$('#frm').submit(function() {
-				        $("#btnsavenew").attr("disabled", true);
-				        $("#saveclose").attr("disabled", true);
-				      });
-					</script>
+					
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("លេខបញ្ជាទិញ");?><span class="required">
@@ -100,14 +95,14 @@
 						
 						<div class="portlet-body">
 							<table class="table table-striped table-bordered table-hover" id="table_order" style="font-size:12px;">
-								<tr height="33px">
-									<th><?php echo $tr->translate("ល.រ");?></th>
-									<th style="white-space:nowrap;"><?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?></th>
-									<th><?php echo $tr->translate("លេខបញ្ជាទិញ");?></th>
-									<th><?php echo $tr->translate("ថ្ងៃចំណាយ");?></th>
-									<th><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></th>
-									<th><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></th>
-									<th><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></th>
+								<tr height="33px" align="center" style="font-weight:bold;">
+									<td><?php echo $tr->translate("ល.រ");?></td>
+									<td style="white-space:nowrap;"><?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?></td>
+									<td><?php echo $tr->translate("លេខបញ្ជាទិញ");?></td>
+									<td><?php echo $tr->translate("ថ្ងៃចំណាយ");?></td>
+									<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>
+									<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>
+									<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>
 							</tr>
 						 </table>
 						 <input type="hidden" id="identity" name="identity" />
@@ -166,7 +161,7 @@
 						</div>
 						
 						<div class="form-group">
-							<div class="col-md-3">
+							<div class="col-md-4">
 							</div>
 							<div class="col-md-2">
 								<a href="<?php echo $this->baseUrl();?>/purchase/payment/"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
@@ -176,10 +171,7 @@
 									<button type="submit" id="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<button type="submit" value="btnsavenew" id="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-							</div>
-							<div class="col-md-3">
+							<div class="col-md-4">
 							</div>
 						</div>
 						
@@ -207,9 +199,11 @@ $('#frm').submit(function() {
 	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 	if (r == true) {
 	    return true;
+		$("#saveclose").attr("disabled", true);
 	} else {
 	   return false;	    
 	}
+	
 });
 function paidtotal(type){//1=dollar,2=riel
 	doRemain();
@@ -246,14 +240,14 @@ function getInvoice(type){
 			data:{'post_id':post_id},
 			success: function(data){	
 				$("#table_order").html("");
-				template='<tr height="33px">';
-					template+='<th><?php echo $tr->translate("ល.រ");?></th>';
-					template+='<th><?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?></th>';
-					template+='<th><?php echo $tr->translate("លេខបញ្ជាទិញ");?></th>';
-					template+='<th><?php echo $tr->translate("ថ្ងៃចំណាយ");?></th>';
-					template+='<th><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></th>';
-					template+='<th><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></th>';
-					template+='<th><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></th>';
+				template='<tr height="33px" align="center" style="font-weight:bold;">';
+					template+='<td><?php echo $tr->translate("ល.រ");?></td>';
+					template+='<td><?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?></td>';
+					template+='<td><?php echo $tr->translate("លេខបញ្ជាទិញ");?></td>';
+					template+='<td><?php echo $tr->translate("ថ្ងៃចំណាយ");?></td>';
+					template+='<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>';
+					template+='<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>';
+					template+='<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>';
 				template+='</tr>';
 				
 				$('#identity').val("");
@@ -263,10 +257,10 @@ function getInvoice(type){
 					
 					index=i+1;
 					template+='<tr style="height:30px;" id="row_order_'+index+'">';
-						template+='<td >'+index+'</td>';
+						template+='<td align="center">'+index+'</td>';
 						template+='<td >'+data[i].vendor+'</td>';
-						template+='<td >'+data[i].order_number+'</td>';
-						template+='<td >'+data[i].expense_date+'</td>';
+						template+='<td align="center">'+data[i].order_number+'</td>';
+						template+='<td align="center">'+data[i].expense_date+'</td>';
 						template+='<td >'+data[i].total+'<input type="hidden" value='+data[i].total+' id="subtotal'+index+'" name="subtotal'+index+'"/></td>';
 						template+='<td >'+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
 						template+='<td >'+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';

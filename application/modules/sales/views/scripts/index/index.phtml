@@ -12,6 +12,9 @@
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("តារាងការលក់");?>
 				</div>
+				<div class="tools">
+					<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"possale",'action'=>'add'),null,true); ?>"><button type="button" name="calcel" class="btn blue"><i class="fa fa-plus"></i>បន្ថែមថ្មី</button></a></label>
+				</div>
 			</div>
 			<div class="portlet-body form">
 				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">

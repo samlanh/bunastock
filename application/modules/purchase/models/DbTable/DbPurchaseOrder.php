@@ -110,7 +110,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			$info_purchase_order=array(
 					"branch_id"   	=> $data["LocationId"],
 					"purchase_id"   => $purchase_id,
-					"payment_type"  => 1, //payment by cash/paypal/cheque
+					"payment_type"  => "Cash", //payment by cash/paypal/cheque
 					"expense_date"  => date("Y-m-d",strtotime($data["order_date"])),
 					
 					"total"         => $data['all_totalpayment'],

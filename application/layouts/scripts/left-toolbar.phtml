@@ -154,6 +154,11 @@
 		            		</a>
 	            		</li> 
 	            		<li>
+	            			<a href="<?php echo $url_purchasepayment[0]; ?>">
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("បង់ប្រាក់ថ្លៃទិញទំនិញ");?>
+		            		</a>
+	            		</li> 
+	            		<li>
 	            			<a href="<?php echo $url_vendor[0]; ?>">
 		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_vendor[1])?>
 		            		</a>
@@ -168,12 +173,8 @@
 		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("Expense List");?>
 		            		</a>
 	            		</li> 
+						
 						<li>
-	            			<a href="<?php echo $url_purchasepayment[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("PURCHASE_PAYMENT");?>
-		            		</a>
-	            		</li> 
-							<li>
 	            			<a href="<?php echo $this->url(array('module'=>'purchase','controller'=>'expensetitle','action'=>'index'),null, true); ?>">
 		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("EXPENSE_TITLE");?>
 		            		</a>

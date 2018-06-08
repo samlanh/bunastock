@@ -1,33 +1,32 @@
-<?php 
-	$cancel_url=$this->url(array(
-		'module'=>'rsvacl',
-		'controller'=>'acl',
-		'action'=>'index',
-	));
-	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-?>
+<title>Edit ACL</title>
 
-<title>Add ACL</title>
 <style>
 	fieldset.fifthy {	
 		border-right: 0px;
-		width: 50%;	
+		width: 50%;
 	}
 	table.user td{
 		vertical-align: top;
-		padding-left: 5px;	   
 	}
 	.left{
 		text-align: left !important;
 	}
-</style>      
- 
+</style> .
+
+<?php 
+	$cancel_url=$this->url(array(
+			'module'=>'rsvacl',
+			'controller'=>'acl',
+			'action'=>'index',
+		));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i>Add ACL
+					<i class="icon-home"></i><?php echo $tr->translate("ADD_USER")?>
 				</div>
 				<div class="tools" >
 					<a href="<?php echo $cancel_url;?>" class="btn btn-sm pull-right" style="color:white;">
@@ -50,7 +49,7 @@
 										Label
 									</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="label" id="label"  placeholder="Label"​/>
+										<input type="text" class="form-control" name="label" id="label"  placeholder="Label"​ value="<?php echo $this->row['label']?>"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -58,7 +57,7 @@
 										Module
 									</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="module" id="module"  placeholder="Module"​/>
+										<input type="text" class="form-control" name="module" id="module"  placeholder="Module"​ value="<?php echo $this->row['module']?>"/>
 									</div>
 								</div>	
 								<div class="form-group">
@@ -66,7 +65,7 @@
 										Controller
 									</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="controller" id="controller"  placeholder="Controller"​/>
+										<input type="text" class="form-control" name="controller" id="controller"  placeholder="Controller"​ value="<?php echo $this->row['controller']?>"/>
 									</div>
 								</div>	
 								<div class="form-group">	
@@ -74,7 +73,7 @@
 										Action
 									</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="action" id="action"  placeholder="Action"​/>
+										<input type="text" class="form-control" name="action" id="action"  placeholder="Action"​ value="<?php echo $this->row['action']?>"/>
 									</div>
 								</div>
 								
@@ -83,7 +82,7 @@
 										Order
 									</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="order" id="order"  placeholder="Order"​/>
+										<input type="text" class="form-control" name="order" id="order"  placeholder="Order" value="<?php echo $this->row['rank']?>"​/>
 									</div>
 								</div>
 								
@@ -93,8 +92,8 @@
 									</label>
 									<div class="col-md-9">
 										<select name="type" id="type" class="form-control select2me" >
-										    <option value="1">Menu</option>
-											<option value="0">Not Menu</option>
+										    <option value="1" <?php if($this->row['is_menu']==1){echo "selected='selected'";}?>>Menu</option>
+											<option value="0" <?php if($this->row['is_menu']==0){echo "selected='selected'";}?>>Not Menu</option>
 										</select>
 									</div>
 								</div>
@@ -105,8 +104,8 @@
 									</label>
 									<div class="col-md-9">
 										<select name="status" name="status" class="form-control select2me">
-										    <option value="1">Active</option>
-											<option value="0">Deactive</option>
+										    <option value="1" <?php if($this->row['status']==1){echo "selected='selected'";}?>>Active</option>
+											<option value="0" <?php if($this->row['status']==0){echo "selected='selected'";}?>>Deactive</option>
 										</select>
 									</div>
 								</div>

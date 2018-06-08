@@ -26,11 +26,7 @@ $frm = $this->frm_expense;
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" autocomplete="off" enctype="multipart/form-data" method="post">
-					<script>
-					$('#frm').submit(function() {
-				        $("#btnsavenew").attr("disabled", true);
-				      });
-					</script>
+					
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("ពណ៌នាចំនាយ")?><span class="required">
@@ -38,7 +34,7 @@ $frm = $this->frm_expense;
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<input type="text" class="form-control" name="expense_title" id="expense_title"   />
+									<input type="text" class="form-control validate[required]" name="expense_title" id="expense_title"   />
 								</div>
 							</div>
 							
@@ -70,9 +66,6 @@ $frm = $this->frm_expense;
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label col-md-6">
-							</label>
-							
 							<label class="control-label col-md-2"><?php echo $tr->translate("NOTE")?><span class="required">
 								 </span>
 							</label>
@@ -206,6 +199,30 @@ $frm = $this->frm_expense;
 
 <script>
 
+$('#frm').submit(function() {
+	expense_title = $("#expense_title").val();
+	if(expense_title==""){
+		alert("Please input title");
+		$('#expense_title').focus();
+		return false;
+	}
+
+	identity =$("#identity").val();
+	if(identity==''){
+		alert("Please add expense row");
+		$('#title').select2('open');
+		return false;
+	}
+	
+	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+	if (r == true) {
+		$("#save_close").attr("disabled", true);
+		return true;
+	} else {
+	   return false;	    
+	}
+});
+
 function showexpense(){
 	title = $("#title").val();
 	if(title==-1){
@@ -244,7 +261,7 @@ function addRowExpense(){
 		template='<tr align="center" id="row_title_'+index+'">';
 		template+='<td>'+index+'</td>';
 		template+='<td>'+txt_title+'<input type="hidden" id="title_'+index+'" name="title_'+index+'" value="'+title_id+'" </td>';
-		template+='<td><input style="text-align:center;" type="text" id="price_'+index+'" name="price_'+index+'" onkeyup="netTotal();" value="" class="form-control "></td>';
+		template+='<td><input style="text-align:center;" type="text" id="price_'+index+'" name="price_'+index+'" onkeyup="netTotal();" value="0" class="form-control "></td>';
 		template+='<td><input style="text-align:center;" type="text" id="note_'+index+'" name="note_'+index+'"  value="" class="form-control"></td>';
 		template+='<td><button type="button" onClick="deleteRecord('+index+')" name="delete" class="btn default red">លុប</button></td>';
 		template+='</tr>';

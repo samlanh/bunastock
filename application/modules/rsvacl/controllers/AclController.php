@@ -13,7 +13,7 @@ class Rsvacl_AclController extends Zend_Controller_Action
     	//$this->_helper->layout()->disableLayout();
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
         $getAcl = new Rsvacl_Model_DbTable_DbAcl();
-        $aclQuery = "SELECT `acl_id`,`module`,`controller`,`action`,`status` FROM tb_acl_acl";
+        $aclQuery = "SELECT `acl_id`,label,`module`,`controller`,`action`,`status` FROM tb_acl_acl";
         $rows = $getAcl->getAclInfo($aclQuery);
         if($rows){        	
         	$imgnone='<img src="'.BASE_URL.'/images/icon/none.png"/>';
@@ -29,9 +29,9 @@ class Rsvacl_AclController extends Zend_Controller_Action
         	}
         	
         	$list=new Application_Form_Frmlist();
-        	$columns=array($tr->translate('MODULE'),$tr->translate('CONTROLLER'),$tr->translate('ACTION'), $tr->translate('STATUS'));
+        	$columns=array($tr->translate('Label'),$tr->translate('Module'),$tr->translate('Controller'),$tr->translate('Action'), $tr->translate('Status'));
         	
-        	$link = array("rsvAcl","acl","view-acl");
+        	$link = array("rsvacl","acl","edit");
         	$links = array('module'=>$link,'controller'=>$link,"action"=>$link);
         	
         	$this->view->form=$list->getCheckList('radio', $columns, $rows, $links );
@@ -51,48 +51,33 @@ class Rsvacl_AclController extends Zend_Controller_Action
     	
     }
 	public function addAction()
+	{
+		if($this->getRequest()->isPost())
 		{
-			$form = new Rsvacl_Form_FrmAcl();
-			$this->view->form=$form;
-			
-			if($this->getRequest()->isPost())
-			{
-				$db=new Rsvacl_Model_DbTable_DbAcl();
-				$post=$this->getRequest()->getPost();
-				$id=$db->insertAcl($post);
-				$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-// 				Application_Form_FrmMessage::message($tr->translate('ROW_AFFECTED'));
-// 				Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');
-			}
-		}
-    public function editAclAction()
-    {	
-    	$acl_id=$this->getRequest()->getParam('id');
-    	if(!$acl_id)$acl_id=0;  
-   		$form = new RsvAcl_Form_FrmAcl();
-    	$db = new RsvAcl_Model_DbTable_DbAcl();
-        $rs = $db->getUserInfo('SELECT * FROM tb_acl_acl where acl_id='.$acl_id);
-		Application_Model_Decorator::setForm($form, $rs);
-    	$this->view->form = $form;
-    	$this->view->acl_id = $acl_id;
-    	if($this->getRequest()->isPost())
-		{
+			$db=new Rsvacl_Model_DbTable_DbAcl();
 			$post=$this->getRequest()->getPost();
-			if($rs[0]['action']==$post['action']){
-					$db->updateAcl($post,$rs[0]['acl_id']);
-					$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-					Application_Form_FrmMessage::message($tr->translate('ROW_AFFECTED'));
-					Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');
-			}else{
-				if(!$db->isActionExist($post['action'])){
-					$db->updateAcl($post,$rs[0]['acl_id']);
-					$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-					Application_Form_FrmMessage::message($tr->translate('ROW_AFFECTED'));
-					Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');
-				}else {
-					Application_Form_FrmMessage::message('Action had existed already');
-				}
-			}
+			$id=$db->insertAcl($post);
+// 			$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+// 			Application_Form_FrmMessage::message($tr->translate('ROW_AFFECTED'));
+// 			Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');
 		}
+	}
+    public function editAction()
+    {	
+    	$acl_id = $this->getRequest()->getParam('id');
+    	if($this->getRequest()->isPost())
+    	{
+    		
+    		$db=new Rsvacl_Model_DbTable_DbAcl();
+    		$post=$this->getRequest()->getPost();
+    		$id=$db->updateAcl($post,$acl_id);
+    		// 			$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+    		// 			Application_Form_FrmMessage::message($tr->translate('ROW_AFFECTED'));
+    		// 			Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');
+    	}
+    	
+    	$db=new Rsvacl_Model_DbTable_DbAcl();
+    	$this->view->row = $db->getAclById($acl_id);
+    	
     }
 }

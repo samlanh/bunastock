@@ -6,29 +6,33 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 	function getAllSaleOrder($search){
 			$db= $this->getAdapter();
 			$sql=" SELECT s.id,
-			(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
-			(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
-			(SELECT phone FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS phone,	
-			
-			(SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) as program_name,
-			
-			s.sale_no,
-			s.date_sold,
-			s.all_total,
-			s.paid,
-			s.balance_after,
-			'វិក្កយបត្រ','លុបវិក្កយបត្រ',
-			(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
-			FROM `tb_sales_order` AS s ";
+						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
+						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
+						(SELECT phone FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS phone,	
+						
+						(SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) as program_name,
+						
+						s.sale_no,
+						s.date_sold,
+						s.all_total,
+						s.paid,
+						s.balance_after,
+						'វិក្កយបត្រ','លុបវិក្កយបត្រ',
+						(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
+					FROM 
+						`tb_sales_order` AS s 
+				";
 			
 			$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
 			$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
 			$where = " WHERE ".$from_date." AND ".$to_date;
-			if(!empty($search['text_search'])){
+			if(!empty($search['ad_search'])){
 				$s_where = array();
-				$s_search = trim(addslashes($search['text_search']));
+				$s_search = trim(addslashes($search['ad_search']));
 				$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
 				$s_where[] = " s.all_total LIKE '%{$s_search}%'";
+				$s_where[] = " (SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) LIKE '%{$s_search}%'";
+				$s_where[] = " (SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['branch']>0){

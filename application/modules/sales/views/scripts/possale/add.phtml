@@ -42,7 +42,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 					<i class="fa fa-gift"></i><strong>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</strong>
 				</div>
 				<div class="tools">
-					<label><a href="<?php //echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+					<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"index",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
 				</div>
 			</div>
 			<div class="portlet-body">
@@ -156,7 +156,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													</label>
 													<div class="col-md-8">
 														<select class="form-control select2me" id="saleagent_id" name="saleagent_id">
-															<option value="0">ជ្រើសរើស</option>
+															<option value="0">ជ្រើសរើសអ្នកណែនាំ</option>
 															<?php if(!empty($this->saleagent)){foreach($this->saleagent as $rs){?>
 																<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
 															<?php }}?>
@@ -714,6 +714,7 @@ require(["dojo/ready"], function(ready){
 			searchAttr: "name",
 			queryExpr: "*${0}*",
 			autoComplete: false,
+			placeHolder: "ជ្រើសរើសមុខទំនិញ រឺ សេវាកម្ម ",
 			class: 'fullside',
 			onChange: function() {
 				getType();
