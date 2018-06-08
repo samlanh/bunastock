@@ -4,23 +4,23 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 ?>
-<title><?php echo $tr->translate("VENDOR_LIST");?></title>
+<title><?php echo $tr->translate("តារាងអ្នកផ្គត់ផ្គង់");?></title>
 <meta charset="utf-8" />
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("VENDOR_LIST");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("តារាងអ្នកផ្គត់ផ្គង់");?>
 				</div>
 				<div class="caption pull-right">
 				<a href="<?php echo $url_new;?>" class="btn btn-bg blue  ">
-					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
+					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("បន្ថែមថ្មី");?>
 				</a>
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>

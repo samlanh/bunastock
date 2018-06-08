@@ -134,33 +134,44 @@ class Application_Form_FrmPopup extends Zend_Form
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
     	$db=new Application_Model_DbTable_DbGlobal();
     	
-    	$vendor_Element = new Zend_Form_Element_Text('vendor_name');
-    	$vendor_Element ->setAttribs(array('placeholder' => 'Enter Vendor Name','class' => 'form-control validate[required]'));
-    	$this->addElement($vendor_Element); 
+    	$nameElement = new Zend_Form_Element_Text('vendor_name');
+		$nameElement->setAttribs(array('required'=>1,'class'=>'validate[required] form-control','placeholder'=>'ឈ្មោះក្រុមហ៊ុន'));
+    	$this->addElement($nameElement);
     	
-    	$phone_Element = new Zend_Form_Element_Text('com_phone');
-    	$phone_Element ->setAttribs(array('placeholder' => 'Contact Number','class'=>'form-control'));
-    	$this->addElement($phone_Element);
+    	$vendor_phoneElement = new Zend_Form_Element_Text('v_phone');
+    	$vendor_phoneElement->setAttribs(array('placeholder'=>'ទូរស័ព្ទក្រុមហ៊ុន',"class"=>"form-control"));
+    	$this->addElement($vendor_phoneElement);
+    	
+    	$contactElement = new Zend_Form_Element_Text('contact_person');
+    	$contactElement->setAttribs(array('placeholder'=>'អ្នកទំនាក់ទំនង',"class"=>"form-control"));
+    	$this->addElement($contactElement);
 
-    	$contact_Element = new Zend_Form_Element_Text('txt_contact_name');
-    	$contact_Element ->setAttribs(array('placeholder' => 'Contact To','class' => 'form-control validate[required]'));
-    	$this->addElement($contact_Element);
+    	$contact_phone = new Zend_Form_Element_Text('phone_person');
+    	$contact_phone->setAttribs(array('placeholder'=>'លេខអ្នកទំនាក់ទំនង',"class"=>"form-control"));
+    	$this->addElement($contact_phone);
     	
-    	$phone_Element = new Zend_Form_Element_Text('v_phone');
-    	$phone_Element ->setAttribs(array('placeholder' => 'Contact Number','class'=>'form-control'));
-    	$this->addElement($phone_Element);
+    	$emailElement = new Zend_Form_Element_Text('email');
+    	$emailElement->setAttribs(array('class'=>'validate[custom[email]] form-control','placeholder'=>'អ៊ីម៉ែល'));
+    	$this->addElement($emailElement);
     	
-    	$address_Element = new Zend_Form_Element_Textarea('txt_address');
-    	$address_Element ->setAttribs(array('placeholder' => 'Customer Address','rows'=>"3",'class'=>'form-control'));
-    	$this->addElement($address_Element);
-
-    	$email_Element = new Zend_Form_Element_Text('txt_mail');
-    	$email_Element ->setAttribs(array('placeholder' => 'Email Address','class' => 'form-control validate[custom[email]]'));
-    	$this->addElement($email_Element);
+    	$websiteElement = new Zend_Form_Element_Text('website');
+    	$websiteElement->setAttribs(array('placeholder'=>'គេហទំព័រ',"class"=>"form-control"));
+    	$this->addElement($websiteElement);
     	
-    	$vendornote = new Zend_Form_Element_Text('vendor_note');
-    	$vendornote ->setAttribs(array('placeholder' => 'Note','class' => 'form-control'));
-    	$this->addElement($vendornote);
+    	///update 
+    	$remarkElement = new Zend_Form_Element_Textarea('note');
+    	$remarkElement->setAttribs(array('placeholder'=>'សម្គាល់',"class"=>"form-control","rows"=>1));
+    	$this->addElement($remarkElement);
+    	         
+    	$addressElement = new Zend_Form_Element_Textarea('address');
+    	$addressElement->setAttribs(array('placeholder'=>'អាស័យដ្ឋាន',"class"=>"form-control","rows"=>1));
+    	$this->addElement($addressElement);
+    	
+    	$balancelement = new Zend_Form_Element_Text('balance');
+    	$balancelement->setValue("0.00");
+    	$balancelement->setAttribs(array('readonly'=>'readonly',"class"=>"form-control"));
+    	$this->addElement($balancelement); 
+    	
 		return $this;
     }
     public function popupSaleAgent($data=null)

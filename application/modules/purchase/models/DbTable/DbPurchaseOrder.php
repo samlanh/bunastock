@@ -14,9 +14,10 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
 					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=tb_purchase_order.vendor_id LIMIT 1 ) AS vendor_name,
 					order_number,
-					date_order,
+					DATE_FORMAT(date_order, '%d-%m-%Y') AS date_order,
 					total_payment,
-					paid,balance,
+					paid,
+					balance,
 					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=1) As purchase_status,
 					(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=5 LIMIT 1),
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 ) AS user_name
@@ -39,9 +40,6 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 		}
 		if($search['suppliyer_id']>0){
 			$where .= " AND vendor_id = ".$search['suppliyer_id'];
-		}
-		if($search['purchase_status']>0){
-			$where .= " AND purchase_status =".$search['purchase_status'];
 		}
 		if($search['branch_id']>0){
 			$where .= " AND branch_id = ".$search['branch_id'];

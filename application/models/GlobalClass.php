@@ -310,12 +310,24 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 		foreach($row_cate as $cate){
 			$option .= '<optgroup  label="'.htmlspecialchars($cate['name'], ENT_QUOTES).'">';
 			if($result["level"]==1){
-				$sql = "SELECT id,item_name,
-				(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=measure_id LIMIT 1) as measue_name,
-				unit_label,qty_perunit,
-				(SELECT tb_brand.name FROM `tb_brand` WHERE tb_brand.id=brand_id limit 1) As brand_name,
-				barcode AS item_code FROM tb_product WHERE cate_id = ".$cate['id']." 
-						AND item_name!='' AND status=1 ORDER BY item_name ASC";
+				$sql = "SELECT 
+							*,
+							id,
+							item_name,
+							(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=measure_id LIMIT 1) as measue_name,
+							unit_label,
+							qty_perunit,
+							(SELECT tb_brand.name FROM `tb_brand` WHERE tb_brand.id=brand_id limit 1) As brand_name,
+							barcode AS item_code 
+						FROM 
+							tb_product 
+						WHERE 
+							cate_id = ".$cate['id']." 
+							AND item_name!='' 
+							AND status=1 
+						ORDER BY 
+							item_name ASC
+					";
 			}else{
 				$sql = " SELECT p.id,p.item_name,p.barcode AS item_code ,
 				(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=p.measure_id LIMIT 1) as measue_name,
@@ -331,8 +343,15 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 				$rows = $db->fetchAll($sql);
 				if($rows){
 					foreach($rows as $value){
+						
+						if($value['is_service'] == 1){
+							$measure = "";
+						}else{
+							$measure = ' '.htmlspecialchars($value['item_code'].'(1'.$value['measue_name'].'='.$value['qty_perunit'].$value['unit_label'].')', ENT_QUOTES);
+						}
+						
 						$option .= '<option value="'.$value['id'].'" >'.
-							htmlspecialchars($value['item_name']." ".$value['brand_name'], ENT_QUOTES)." ".htmlspecialchars($value['item_code'].'(1'.$value['measue_name'].'='.$value['qty_perunit'].$value['unit_label'].')', ENT_QUOTES)
+							htmlspecialchars($value['item_name']." ".$value['brand_name'], ENT_QUOTES).$measure   
 						.'</option>';
 					}
 				}
