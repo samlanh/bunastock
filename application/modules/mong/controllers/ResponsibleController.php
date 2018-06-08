@@ -17,7 +17,7 @@ class Mong_ResponsibleController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllResponsible($data);
-		$columns=array("NAME_RESPONIBLE","GENDER","CONTACT_NUMBER","NOTE","STATUS");
+		$columns=array("ឈ្មោះអ្នកទទួលខុសត្រូវ","GENDER","CONTACT_NUMBER","NOTE","STATUS");
 		$link=array('module'=>'mong','controller'=>'responsible','action'=>'edit',);
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(10, $columns, $rows,array('name'=>$link,'tel'=>$link,'description'=>$link));
@@ -32,8 +32,8 @@ class Mong_ResponsibleController extends Zend_Controller_Action
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addResposible($post);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/responsible/index');
-						Application_Form_FrmMessage::message("INSERT_SUCCESS");
+						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/responsible/index');
+						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
@@ -50,9 +50,9 @@ class Mong_ResponsibleController extends Zend_Controller_Action
 					$db->updateResponsible($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("UPDATE_SUCCESS", '/mong/responsible/index');
+						Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/responsible/index');
 					}else{
-						Application_Form_FrmMessage::message("UPDATE_SUCCESS");
+						Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("UPDATE_ERROR",$err = $e->getMessage());

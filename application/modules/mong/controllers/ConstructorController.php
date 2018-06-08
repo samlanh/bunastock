@@ -37,9 +37,9 @@ class Mong_ConstructorController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addConstructor($data);			
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/constructor/index');			
+					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/constructor/index');			
 			  }catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនត្រឹមត្រូវ",$err = $e->getMessage());
 			  }
 		}
 	}
@@ -54,10 +54,10 @@ class Mong_ConstructorController extends Zend_Controller_Action
 				$db->editConstructor($data,$id);
 				if(isset($data["save_close"]))
 				{
-					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/mong/constructor/index');
+					Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/constructor/index');
 				}
 			  }catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
 			  }
 		}
 		$this->view->row = $db->getConstructorById($id);

@@ -5,7 +5,6 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
-	
 ?>
 <title>តារាងទំនិញ</title>
 <div class="row">
@@ -57,6 +56,37 @@
 		</div>
 	</div>
 </div>
+<script>
+var row=0;
+var url="";
+$(function(){
+	$.contextMenu({
+		selector: '.context-menu-one', 
+		callback: function(key, options) {		
+			var m = "clicked: " + key;
+			if(key=="edit"){
+				url='<?php echo $this->baseUrl()."/product/index/edit/id/";?>';
+			}else if(key=="copy"){
+				url='<?php echo $this->baseUrl()."/product/index/copy/id/";?>';
+			}
+			
+			gotoAction();
+		},
+		items: {
+			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
+			"copy": {name: "ចម្លង", icon: "fa-newspaper-o", accesskey: "e"},
+		}
+	});
+});
+function setrowdata(index){
+	  row = index;
+	}
+var recordid ='';
+function gotoAction(){
+	 window.open(url+row, '_blank');
+}
+</script>
+
 
 
 

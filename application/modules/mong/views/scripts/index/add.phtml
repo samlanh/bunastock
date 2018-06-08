@@ -119,7 +119,7 @@
 															<strong>អ្នកណែនាំ</strong>
 														</label>
 														<div class="col-md-8">
-															<select class="form-control select2me" id="sale_agent" name="sale_agent">
+															<select class="form-control validate[required] select2me" id="sale_agent" name="sale_agent">
 																<option value="0">ជ្រើសរើស</option>
 																<?php if(!empty($this->saleagent)){foreach($this->saleagent as $rs){?>
 																	<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>

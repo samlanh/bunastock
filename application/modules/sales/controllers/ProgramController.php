@@ -52,8 +52,8 @@ class Sales_ProgramController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addProgram($data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/sales/program/index');
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
+					Application_Form_FrmMessage::Sucessfull("បញ្ជូលដោយជោគជ័យ", '/sales/program/index');
+					Application_Form_FrmMessage::message("បញ្ជូលដោយជោគជ័យ");
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			  	echo $e->getMessage();exit();
@@ -73,7 +73,7 @@ class Sales_ProgramController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->editProgram($data,$id);
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/sales/program/index');
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/program/index');
 			}catch (Exception $e){
 				Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			}
@@ -97,7 +97,7 @@ class Sales_ProgramController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addProgram($data);
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/sales/program/index');
+				Application_Form_FrmMessage::Sucessfull("ចម្លងដោយជោគជ័យ", '/sales/program/index');
 			}catch (Exception $e){
 				Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			}

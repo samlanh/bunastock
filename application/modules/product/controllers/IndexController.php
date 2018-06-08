@@ -46,9 +46,12 @@ public function init()
 		$link=array(
 				'module'=>'product','controller'=>'index','action'=>'edit',
 		);
+		$linkcopy=array(
+				'module'=>'product','controller'=>'index','action'=>'copy',
+		);
 	
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'branch'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'branch'=>$link));
 		
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
@@ -140,6 +143,51 @@ public function init()
 			$frmOther = $fmOther->add();
 			Application_Model_Decorator::removeAllDecorator($frmOther);
 			$this->view->frmOther = $frmOther;
+	}
+	public function copyAction()
+	{
+		$id = $this->getRequest()->getParam("id");
+		$db = new Product_Model_DbTable_DbProduct();
+		if($this->getRequest()->isPost()){
+			try{
+				$post = $this->getRequest()->getPost();
+				$post["id"] = $id;
+				$db->add($post);
+				if(isset($post["save_close"]))
+				{
+					Application_Form_FrmMessage::Sucessfull("កែប្រែជោគជ័យ", '/product/index');
+				}
+			}catch (Exception $e){
+				Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			}
+		}
+		$this->view->rs_location = $db->getProductLocation($id);
+		$rs = $db->getProductById($id);
+		$this->view->rs = $rs;
+		$formProduct = new Product_Form_FrmProduct();
+		$formStockAdd = $formProduct->add($rs);
+		Application_Model_Decorator::removeAllDecorator($formStockAdd);
+		$this->view->form = $formStockAdd;
+	
+		$formBrand = new Product_Form_FrmBrand();
+		$frmBrand = $formBrand->Brand();
+		$this->view->frmBrand = $frmBrand;
+		Application_Model_Decorator::removeAllDecorator($frmBrand);
+			
+		$formCat = new Product_Form_FrmCategory();
+		$frmCat = $formCat->cat();
+		$this->view->frmCat = $frmCat;
+		Application_Model_Decorator::removeAllDecorator($frmCat);
+			
+		$formMeasure = new Product_Form_FrmMeasure();
+		$frmMesure = $formMeasure->measure();
+		$this->view->frmMesure = $frmMesure;
+		Application_Model_Decorator::removeAllDecorator($frmMesure);
+			
+		$fmOther = new Product_Form_FrmOther();
+		$frmOther = $fmOther->add();
+		Application_Model_Decorator::removeAllDecorator($frmOther);
+		$this->view->frmOther = $frmOther;
 	}
 	
 	public function addBrandAction(){

@@ -17,7 +17,7 @@ class Mong_MaterialController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllMaterial($data);
-		$columns=array("METERIAL_TITLE","PRICE_CURRENCY","NOTE","STATUS");
+		$columns=array("ឈ្មោះសម្ភារ","PRICE_CURRENCY","NOTE","STATUS");
 		$link=array('module'=>'mong','controller'=>'material','action'=>'edit',);
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows,array('title'=>$link,'tel'=>$link,'description'=>$link));
@@ -32,12 +32,8 @@ class Mong_MaterialController extends Zend_Controller_Action
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addMaterial($post);
-					if(isset($post["save_close"]))
-					{
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/material/index');
-					}else{
-						Application_Form_FrmMessage::message("INSERT_SUCCESS");
-					}
+						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/material/index');
+						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
@@ -54,9 +50,9 @@ class Mong_MaterialController extends Zend_Controller_Action
 					$db->updateMaterial($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("UPDATE_SUCCESS", '/mong/material/index');
+						Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/material/index');
 					}else{
-						Application_Form_FrmMessage::message("UPDATE_SUCCESS");
+						Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("UPDATE_ERROR",$err = $e->getMessage());

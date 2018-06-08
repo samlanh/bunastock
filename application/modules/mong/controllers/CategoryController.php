@@ -17,7 +17,7 @@ class Mong_CategoryController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllCategory($data);
-		$columns=array("NAME_CATEGORY","NOTE","STATUS");
+		$columns=array("ឈ្មោះប្រភេទម៉ុង","NOTE","STATUS");
 		$link=array('module'=>'mong','controller'=>'category','action'=>'edit',);
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows,array('title'=>$link,'tel'=>$link,'description'=>$link));
@@ -32,8 +32,8 @@ class Mong_CategoryController extends Zend_Controller_Action
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->addCategory($post);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/mong/category/index');
-						Application_Form_FrmMessage::message("INSERT_SUCCESS");
+						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/category/index');
+						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 				  }
@@ -50,9 +50,9 @@ class Mong_CategoryController extends Zend_Controller_Action
 					$db->updateCategory($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull("UPDATE_SUCCESS", '/mong/category/index');
+						Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/category/index');
 					}else{
-						Application_Form_FrmMessage::message("UPDATE_SUCCESS");
+						Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("UPDATE_ERROR",$err = $e->getMessage());
