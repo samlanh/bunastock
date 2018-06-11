@@ -67,8 +67,10 @@
 										</label>
 										<div class="col-md-8">
 											<select  name="service_cate" id="service_cate"  class="form-control select2me" value="1">
-												<?php if(!empty($this->rsservice)){foreach ($this->rsservice as $rs){?>
-													<option <?php if($rs["id"]==$this->row['service_cate']){echo"selected";}?>  value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
+												<?php if(!empty($this->rsservice)){
+													foreach ($this->rsservice as $rs){?>
+													<option <?php if($rs["id"]==$this->row['service_cate']){echo"selected";}?>
+													value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].'-'.$rs["barcode"];?></option>
 												<?php }}?>
 											</select>
 										</div>

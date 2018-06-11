@@ -17,8 +17,6 @@ class report_OtherController extends Zend_Controller_Action
     	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
-    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
@@ -40,13 +38,12 @@ class report_OtherController extends Zend_Controller_Action
     	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
-    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     				'ad_search'	=>	'',
+    				'status'	=>	-1,
     				'start_date'=> date('Y-m-d'),
-    				'end_date'=>date('Y-m-d')
+    				'end_date'=>date('Y-m-d') 				
     		);
     	}
 		$this->view->rssearch = $data;
@@ -100,8 +97,6 @@ class report_OtherController extends Zend_Controller_Action
     	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$search = $this->getRequest()->getPost();
-    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
-    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
     	}else{
     		$search = array(
     				'ad_search'	=>	'',

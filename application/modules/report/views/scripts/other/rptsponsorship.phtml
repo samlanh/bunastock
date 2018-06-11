@@ -30,11 +30,12 @@
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
 					<?php $formFilter = $this->form_sponsorship; ?>
 					<div class="form-group" style="padding-top: -6px;">
-						<label class="control-label col-md-4"><?php echo $formFilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('ad_search');?></label>
 					</div>
 					<div class="form-group" style="padding-top: -6px;">
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('status');?></label>
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
@@ -127,8 +128,8 @@
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["dead_address"];?></td>
 						   <td style="white-space: nowrap;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor_name"];?></a></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["date_jenh"];?></td>
-						    <td style="white-space: nowrap;">&nbsp;<?php echo $rs["notes"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["note"];?></td>
+						    <td style="white-space: nowrap;">&nbsp;<?php echo $rs["note"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["notes"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["create_date"];?></td>
 					
 						   <!-- <td>&nbsp;<?php //echo $rs["payment_method"];?></td>

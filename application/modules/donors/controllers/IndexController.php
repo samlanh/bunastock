@@ -47,11 +47,11 @@ class Donors_IndexController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addDonor($data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/donors/index/index');
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
+					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/donors/index/index');
+					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				}
 			  catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនត្រឹមត្រូវ",$err = $e->getMessage());
 			  }
 		}
 		$_db = new Application_Model_DbTable_DbGlobal();
@@ -69,10 +69,10 @@ class Donors_IndexController extends Zend_Controller_Action
 				$db->editDonor($data,$id);
 				if(isset($data["save_close"]))
 				{
-					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/donors/index/index');
+					Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/donors/index/index');
 				}
 			  }catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
 			  }
 		}
 		$this->view->row = $db->getDonorById($id);

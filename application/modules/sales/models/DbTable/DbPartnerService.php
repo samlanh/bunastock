@@ -17,7 +17,7 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
 		    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
 		    	tel,
 		    	addresss,
-		    	(SELECT u.item_name FROM `tb_product` AS u WHERE id =`service_cate`) AS service_cate,
+		    	(SELECT u.item_name FROM `tb_product` AS u WHERE id = `service_cate`) AS service,
 		    	service_fee,
 		    	description,
 		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
@@ -34,7 +34,9 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     		$s_where[] = " partner_name LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
     	}
-    	
+    	if($search['service']>-1){
+    		$where .= " AND service = ".$search['service'];
+    	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];
     	}
@@ -71,11 +73,11 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     			'gender'			 => $post['gender'],
     			'tel' 				 => $post['tel'],
     			'addresss'	      	 => $post['addresss'],
-    			'"service_cate"'	 => $post['"service_cate"'],
+    			'service_cate'	 	=> $post['service_cate'],
     			'service_fee'	     => $post['service_fee'],
     			'description'	     => $post['description'],
     	);
-    	$where="id=".$post['id'];
+    	$where="id= $id";
 		$this->update($_arr, $where);
     }
     public function getServiceById($id){

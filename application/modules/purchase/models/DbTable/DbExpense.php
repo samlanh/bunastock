@@ -122,7 +122,8 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 		
 		$sql=" SELECT id,
 		(SELECT name FROM `tb_sublocation` WHERE id=branch_id) AS branch_name,
-		invoice,(SELECT tb_expensetitle.title FROM `tb_expensetitle` WHERE tb_expensetitle.id=tb_income_expense.title LIMIT 1) as title,
+		invoice,
+		(SELECT tb_expensetitle.title FROM `tb_expensetitle` WHERE tb_expensetitle.id=tb_income_expense.title LIMIT 1) as title,
 		(SELECT description FROM tb_currency WHERE tb_currency.id = curr_type LIMIT 1) as currency_type,
 		total_amount,`desc`,for_date,(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=status LIMIT 1) FROM tb_expense ";
 		

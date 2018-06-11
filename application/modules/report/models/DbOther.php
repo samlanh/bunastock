@@ -92,6 +92,9 @@ function getAllDonors($search){
  			$s_where[] = " dead_address LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
+		if($search['status']>-1){
+			$where .= " AND status = ".$search['status'];
+		}
 		$order=" ORDER BY id DESC ";
 		
  	//	echo $sql.$where.$order;

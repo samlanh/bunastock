@@ -70,8 +70,8 @@ $brach_name =  $this->branch;
 				                	<td width="70%" valign="top">
 				                		<ul>
 				                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-				                			<li style="text-align:center; font-size:14px; font-family:'Khmer OS Muol Light'">របាយការណ៏ ទិញចូលមិនទាន់ទូទាត់(ជំពាក់)</li>
-				                			<li style="text-align:center; font-size:14px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>
+				                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'">របាយការណ៏ ទិញចូលមិនទាន់ទូទាត់(ជំពាក់)</li>
+				                			<li style="text-align:center; font-size:14px;"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 				                		</ul>
 				                	</td>
 				                    <td width="20%"></td>
@@ -90,7 +90,7 @@ $brach_name =  $this->branch;
 			            </table>
 			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 			                 <tbody>
-			                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+			                 <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
 								<td width="15%"><?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("លេខបញ្ជាទិញ");?></td>
@@ -131,7 +131,7 @@ $brach_name =  $this->branch;
 			            
 			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 0px;" width="100%" cellspacing="0">
 			                 <tbody>
-			                  <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+			                  <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
 								<td width="15%"><?php echo $tr->translate("លេខលក់");?></td>
 								<td width="15%">&nbsp;<?php echo $tr->translate("ថ្ងៃចំណាយ");?></td>

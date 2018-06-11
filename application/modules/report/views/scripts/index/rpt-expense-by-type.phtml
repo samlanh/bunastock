@@ -54,7 +54,7 @@
 		                		<td  align="center">
 		                			<strong style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></strong><br>
 		                			<strong style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("SALES_REPORT");?></strong><br>
-		                			<strong style="text-align:center; font-size:16px;"><?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));?></strong>
+		                			<strong style="text-align:center; font-size:16px;"><?php if(!empty($this->search['start_date'])){?><?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));}?></strong>
 		                		</td>
 		                    <td width="20%"></td>
 		                </tr> 
