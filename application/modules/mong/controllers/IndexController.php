@@ -20,20 +20,18 @@ class Mong_IndexController extends Zend_Controller_Action
     	$db = new Mong_Model_DbTable_DbIndex();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
-    			'ad_search'	=>	'',
-    			'branch'	=>	'',
-    			'brand'		=>	'',
-    			'category'	=>	'',
-    			'model'		=>	'',
-    			'color'		=>	'',
-    			'size'		=>	'',
-    			'status'	=>	1
+    			'ad_search'		=>	'',
+    			'customer_id'	=>	'',
+    			'start_date'	=>date("Y-m-d"),
+				'end_date'		=>date("Y-m-d"),
     		);
     	}
 		$rows = $db->getAllMong($data);
-		$columns=array("វិក័យបត្រ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដ","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","បង្កាន់ដៃបង់","ពេលវេលាល្អ","ពេលវេលាល្អ","សម្គាល់","USER","STATUS");
+		$columns=array("វិក័យបត្រ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដម៉ុង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","បង្កាន់ដៃបង់","ពេលវេលាល្អ","ពេលវេលាល្អ","សម្គាល់","USER","STATUS");
 		$link=array(
 				'module'=>'mong','controller'=>'index','action'=>'edit',
 		);
@@ -183,6 +181,16 @@ class Mong_IndexController extends Zend_Controller_Action
 			$db = new Mong_Model_DbTable_DbIndex();
 			$price = $db->getItemPrice($data['item_id']);
 			print_r(Zend_Json::encode($price));
+			exit();
+		}
+	}
+	
+	function refreshProductAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$product = $db->getAllProductName();
+			print_r(Zend_Json::encode($product));
 			exit();
 		}
 	}

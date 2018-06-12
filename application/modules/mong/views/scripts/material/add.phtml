@@ -6,11 +6,7 @@
 <title>ដៃគូសេវាកម្មខាងក្រៅ</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
-		<script>
-			$('#frm').submit(function() {
-	        $("#save_close").attr("disabled", true);
-	      });
-		</script>
+		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -89,3 +85,21 @@
 	</form>	
 </body>
 </html>
+
+
+<script>
+	$('#frm').submit(function() {
+		material_title = $("#material_title").val();
+		if(material_title==''){
+			$('#material_title').focus();
+			return false;
+		}
+		price = $("#price").val();
+		if(price==''){
+			$('#price').focus();
+			return false;
+		}
+		
+		$("#save_close").attr("disabled", true);
+	});
+</script>

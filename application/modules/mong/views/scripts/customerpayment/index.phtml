@@ -19,19 +19,23 @@
 				</a>
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group">
-						<label class="control-label col-md-2">
+						<label class="control-label col-md-3">
 							<?php echo $formFilter->getElement('ad_search');?>
 						</label>
 						<label class="control-label col-md-2">
-							<?php echo $formFilter->getElement('start_date');?>
+							<?php echo $formFilter->getElement('customer_id');?>
 						</label>
 						<label class="control-label col-md-2">
-							<?php echo $formFilter->getElement('end_date');?>
+							<div class="input-icon right"><i class="fa fa-calendar"></i>
+								<?php echo $formFilter->getElement('start_date');?>
+							</div>		
 						</label>
-						<label class="control-label col-md-3">
-							<?php echo $formFilter->getElement('status');?>
+						<label class="control-label col-md-2">
+							<div class="input-icon right"><i class="fa fa-calendar"></i>
+								<?php echo $formFilter->getElement('end_date');?>
+							</div>	
 						</label>
 						<label class="control-label col-md-3">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>

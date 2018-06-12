@@ -3,13 +3,13 @@
 	$formFilter = $this->form_worker;
 	$search = $this->search;
 ?>
-<title><?php echo $tr->translate("RPT_PURCHASE");?></title>
+<title><?php echo $tr->translate("របាយការណ៍ ជាងសាងសង់");?></title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i>ជាងសាងសង់		
+					<i class="fa fa-globe"></i>របាយការណ៍ ជាងសាងសង់		
 				</div>
 				<div class="btn-group pull-right">
 					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -28,7 +28,7 @@
 					</div>
 				</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<?php $formFilter = $this->form_worker; ?>
 					<div class="form-group" style="padding-top: -6px;">
 						<label class="control-label col-md-4"><?php echo $formFilter->getElement('ad_search');?></label>
@@ -96,9 +96,9 @@
 			                    <td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("NUM");?></td>
 								<td style="border:1px solid #000;">&nbsp;ឈ្មោះអ្នកម៉ៅការ</td>
 								<td style="border:1px solid #000;">&nbsp;ភេទ</td>
-								<td style="border:1px solid #000;">&nbsp;លេខទូរស័ទ្ទ</td>
+								<td style="border:1px solid #000;">&nbsp;លេខទូរស័ព្ទ</td>
 								<td style="border:1px solid #000;">&nbsp;អ៊ីម៉ែល</td>
-								<td width="30%" style="border:1px solid #000;">&nbsp;អាស័យដ្ឋាន</td>
+								<td style="border:1px solid #000;">&nbsp;អាស័យដ្ឋាន</td>
 								<td style="border:1px solid #000;">&nbsp;ប្រភេទជាង</td>
 								<td style="border:1px solid #000;">&nbsp;សម្គាល់</td>
 								<td style="border:1px solid #000;">&nbsp;ថ្ងៃបង្កើត</td>
@@ -112,15 +112,15 @@
 						<tr class='row-format hover' style="border:1px solid #000; font-size:12px; ">
 						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["name"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["sex"];?></td>
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["sex"];?></td>
 						  
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["sex"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["phone"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["email"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["address"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["constructor_type"];?></td>
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["constructor_type"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["note"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["create_date"];?></td>
-						   <td>&nbsp;<?php echo $rs["user_name"];?></td>					
+						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["create_date"]));?></td>
+						   <td align="center" >&nbsp;<?php echo $rs["user_name"];?></td>					
 						</tr>
 						   <?php }?>               
 		                </tbody>

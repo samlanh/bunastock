@@ -40,6 +40,7 @@ function getAllDonors($search){
 			$s_where = array();
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " donor_name LIKE '%{$s_search}%'";
+			$s_where[] = " donor_female LIKE '%{$s_search}%'";
 			$s_where[] = " receipt_no LIKE '%{$s_search}%'";
 			$s_where[] = " tel LIKE '%{$s_search}%'";
 			$s_where[] = " address LIKE '%{$s_search}%'";
@@ -252,6 +253,7 @@ function getAllworker($search){
 			$s_where = array();
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " name LIKE '%{$s_search}%'";
+			$s_where[] = " phone LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['status']>-1){

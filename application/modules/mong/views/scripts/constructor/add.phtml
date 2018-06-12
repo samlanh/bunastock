@@ -6,11 +6,7 @@
 <title>ជាងសាងសង់</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
-		<script>
-		$('#frm').submit(function() {
-	        $("#save_close").attr("disabled", true);
-	      });
-		</script>
+		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -49,7 +45,7 @@
 											លេខទូរស័ព្ទ
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control validate[custom[number]" name="phone" id="phone"/>
+											<input type="text" class="form-control validate[required]" name="phone" id="phone"/>
 										</div>
 									</div>
 									<div class="form-group" >
@@ -112,3 +108,19 @@
 	</form>	
 </body>
 </html>
+
+<script>
+	$('#frm').submit(function() {
+		name=$("#name").val();
+		if(name==""){
+			$('#name').focus();
+			return false;	
+		}
+		phone=$("#phone").val();
+		if(phone==""){
+			$('#phone').focus();
+			return false;	
+		}
+		$("#save_close").attr("disabled", true);
+	});
+</script>

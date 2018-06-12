@@ -43,14 +43,16 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 			$s_where[] = " r.`paid` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`balance` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`remark` LIKE '%{$s_search}%'";
+			$s_where[] = " r.`cheque_number` LIKE '%{$s_search}%'";
+			$s_where[] = " r.`type` LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 // 		if($search['branch_id']>0){
 // 			$where .= " AND r.`branch_id` = ".$search['branch_id'];
 // 		}
-// 		if($search['customer_id']>0){
-// 			$where .= " AND r.customer_id =".$search['customer_id'];
-// 		}
+		if($search['customer_id']>0){
+			$where .= " AND r.customer_id =".$search['customer_id'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";

@@ -132,7 +132,7 @@
 							</div>
 							<div class="col-md-2">
 								<div class="input-icon right">
-									<button type="submit" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" id="save_close" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -145,6 +145,30 @@
 </div>
 <!-- end new product -->
 <script>
+	
+	$('#frm').submit(function() {
+		
+		sale_order_id=$("#sale_order_id").val();
+		if(sale_order_id<=0){
+			alert("Please select invoice !!! ");
+			$('#sale_order_id').select2('open');
+			return false;	
+		}
+		
+		paid=$("#paid").val();
+		if(paid<=0){
+			alert("Please input paid amount !!!");
+			$('#paid').focus();
+			return false;	
+		}
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			$("#save_close").attr("disabled", true);
+			return true;
+		} else {
+		   return false;	    
+		}
+	});
 	
 	function checkpayment(){
 		payment_type = $("#payment_type").val();

@@ -21,12 +21,11 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		}
 		else{
 			$search =array(
-					'text_search'=>'',
-					'start_date'=>date("Y-m-d"),
-					'end_date'=>date("Y-m-d"),
-					'branch_id'=>-1,
-					'customer_id'=>-1,
-					);
+					'ad_search'		=>'',
+					'start_date'	=>date("Y-m-d"),
+					'end_date'		=>date("Y-m-d"),
+					'customer_id'	=>"",
+				);
 		}
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		$rows = $db->getAllReciept($search);

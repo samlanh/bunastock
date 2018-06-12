@@ -15,11 +15,7 @@
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-					<script>
-					$('#frm').submit(function() {
-				        $("#save_close").attr("disabled", true);
-				      });
-					</script>
+					
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
 							<label class="control-label col-md-2"> <?php echo $tr->translate("អតិថិជន");?><span class="required">
@@ -176,7 +172,31 @@
 	</div>
 </div>
 <!-- end new product -->
+
 <script>
+	$('#frm').submit(function() {
+		
+		customer_id=$("#customer_id").val();
+		if(customer_id==-1 || customer_id==0){
+			alert("Please select customer !!!");
+			$('#customer_id').select2('open');
+			return false;	
+		}
+		paid=$("#paid").val();
+		if(paid<=0){
+			alert("Please input paid amount !!!");
+			$('#paid').focus();
+			return false;	
+		}
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			$("#save_close").attr("disabled", true);
+			return true;
+		} else {
+		   return false;	    
+		}
+	});
+	
 	function paidtotal(type){//1=dollar,2=riel
 		paid_dollar = $("#paid_dollar").val();
 		paid_riel = $("#paid_riel").val();

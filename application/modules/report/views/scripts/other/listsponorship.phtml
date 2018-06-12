@@ -99,7 +99,7 @@
 		           	</tr>
 		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">		               
 		                 <thead>
-		                 	<tr bgcolor="#b0bdfd" style="font-weight:bold; text-align:center; line-height: 25px; font-size:12px; padding:1px 0px;">
+		                 	<tr bgcolor="#b0bdfd" style="font-weight:bold; text-align:center; line-height: 25px; font-size:13px; padding:1px 0px;">
 			                    <th style="border:1px solid #000;text-align:center;">&nbsp;<?php echo $tr->translate("NUM");?></th>
 								<th style="border:1px solid #000;text-align:center;">&nbsp;ឈ្មោះសព</th>
 								<th style="border:1px solid #000;text-align:center;">&nbsp;ភេទ</th>
@@ -108,6 +108,7 @@
 								<th style="border:1px solid #000;text-align:center;">&nbsp;អាស័យដ្ឋាន</th>
 								<th style="border:1px solid #000;text-align:center;">&nbsp;ថ្ងៃជំនួយ</th>
 								<th style="border:1px solid #000;text-align:center;">&nbsp;ប្រើប្រាស់</th>
+								<th style="border:1px solid #000;text-align:center;">&nbsp;<?php echo $tr->translate("បោះពុម្ភ");?></th>
 		               	 	</tr>
 		                <thead>
 		                <?php $num=1;
@@ -122,6 +123,7 @@
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["dead_address"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["create_date"];?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
+						   <td style="white-space: nowrap;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">លិខិតជំនួយ</a></td>
 						</tr>
 						   <?php }?>
 						<!--<tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
