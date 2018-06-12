@@ -274,11 +274,23 @@ class Product_Form_FrmProduct extends Zend_Form
 			}
 		}
 		$service->setMultiOptions($opt);
-		$service->setValue($request->getParam("service"));
+		$service->setValue($request->getParam("scale"));
 		
+		$opt = array(''=>$tr->translate("ជ្រើសរើសខ្នាត"));
+		$scale = new Zend_Form_Element_Select("scale");
+		$scale->setAttribs(array(
+				'class'=>'form-control select2me',
+		));
+		$row_scale = $db->getScale();
+		if(!empty($row_scale)){
+			foreach ($row_scale as $rs){
+				$opt[$rs["id"]] = $rs["name"];
+			}
+		}
+		$scale->setMultiOptions($opt);
+		$scale->setValue($request->getParam("scale"));
+
 		
-		
-				
 		$opt = array(''=>$tr->translate("SELECT_COLOR"));
 		$color = new Zend_Form_Element_Select("color");
 		$color->setAttribs(array(
@@ -356,7 +368,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$vendor_element->setValue($vendorValue);
 		$this->addElement($vendor_element);
 		
-		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$service,$category,$color,$size,$status));
+		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$scale,$service,$category,$color,$size,$status));
 		return $this;
 	}
 }

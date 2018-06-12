@@ -62,7 +62,7 @@ class report_OtherController extends Zend_Controller_Action
     	}else{
     		$data = array(
     				'ad_search'	=>	'',
-    				'branch'	=>	'',
+    				'scale'		=>	0,
     				'status'	=>	-1,
     		);
     	}
@@ -81,7 +81,7 @@ class report_OtherController extends Zend_Controller_Action
     	}else{
     		$data = array(
     				'ad_search'	=>	'',
-    				'branch'	=>	'',
+    				'service'	=>	0,
     				'status'	=>	-1,
     		);
     	}

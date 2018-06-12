@@ -32,11 +32,12 @@
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
 					<?php $formFilter = $this->partnerservice; ?>
 						<div class="form-group" style="padding-top: -6px;">
-						<label class="control-label col-md-4"><?php echo $formFilter->getElement('ad_search');?></label>
-						<label class="control-label col-md-4"><?php echo $formFilter->getElement('status');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('service');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('status');?></label>
 					</div>
 					<div class="form-group" style="padding-top: -6px;">
-						<label class="control-label col-md-4">
+						<label class="control-label col-md-3">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
 					</div>

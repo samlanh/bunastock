@@ -125,7 +125,9 @@ function getAllDonors($search){
 			$s_where[] = " partner_name LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		 
+		if($search['service']>0){
+			$where .= " AND service_cate = ".$search['service'];
+		}
 		if($search['status']>-1){
 			$where .= " AND status = ".$search['status'];
 		}
@@ -215,8 +217,8 @@ function getAllDonors($search){
 			$s_where[]=" REPLACE(p.item_code,' ','') LIKE '%{$s_search}%'";
 			$where.=' AND ('.implode(' OR ', $s_where).')';
 		}
-		if($data["branch"]>0){
-			$where.=' AND p.brand_id='.$data["branch"];
+		if($data["scale"]>0){
+			$where.=' AND p.`measure_id`='.$data["scale"];
 		}
 		if($data["status"]>-1){
 			$where.=' AND p.status='.$data["status"];

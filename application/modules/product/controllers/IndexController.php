@@ -29,7 +29,7 @@ public function init()
     			'branch'	=>	'',
     			'brand'		=>	'',
     			'category'	=>	'',
-    			'model'		=>	'',
+    			'scale'		=>	0,
     			'color'		=>	'',
     			'size'		=>	'',
     			'status'	=>	1

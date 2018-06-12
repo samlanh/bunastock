@@ -59,6 +59,11 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND STATUS=1 AND is_service=1";
   	return $db->fetchAll($sql);
   }
+  public function getScale(){
+  	$db = $this->getAdapter();
+  	$sql = "SELECT id,name FROM `tb_measure` AS b WHERE b.`status`=1 AND b.`name`!='' ";
+  	return $db->fetchAll($sql);
+  }
   public function getMeasure(){
   	$db = $this->getAdapter();
   	$sql = "SELECT b.`id`,b.`name` FROM `tb_measure` AS b WHERE b.`status`=1";
@@ -207,8 +212,8 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 	  	if($data["category"]!=""){
 	  		$where.=' AND p.cate_id='.$data["category"];
 	  	}
-	  	if($data["model"]!=""){
-	  		$where.=' AND p.model_id='.$data["model"];
+	  	if($data["scale"]!=""){
+	  		$where.=' AND measure_id='.$data["scale"];
 	  	}
 	  	if($data["color"]!=""){
 	  		$where.=' AND p.color_id='.$data["color"];
