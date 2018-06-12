@@ -260,20 +260,6 @@ class Product_Form_FrmProduct extends Zend_Form
 		$category->setMultiOptions($opt);
 		$category->setValue($request->getParam("category"));
 		
-		$opt = array(''=>$tr->translate("SELECT_SERVICE"));
-		$category = new Zend_Form_Element_Select("service");
-		$category->setAttribs(array(
-				'class'=>'form-control select2me',
-		));
-		$row_cat = $db->getService();
-		if(!empty($row_cat)){
-			foreach ($row_cat as $rs){
-				$opt[$rs["id"]] = $rs["name"];
-			}
-		}
-		$category->setMultiOptions($opt);
-		$category->setValue($request->getParam("service"));
-		
 		$opt = array(''=>$tr->translate("SELECT_COLOR"));
 		$color = new Zend_Form_Element_Select("color");
 		$color->setAttribs(array(
