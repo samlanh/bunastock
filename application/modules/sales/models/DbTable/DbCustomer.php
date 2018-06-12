@@ -48,6 +48,7 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql=" SELECT id,
 			(SELECT name FROM `tb_sublocation` WHERE id=branch_id LIMIT 1) AS branch_name,
+			cu_code,
 			 cust_name,phone,address,
 			( SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=tb_customer.status LIMIT 1) status,
 			( SELECT fullname FROM `tb_acl_user` WHERE tb_acl_user.user_id=tb_customer.user_id LIMIT 1) AS user_name
@@ -60,6 +61,7 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));
 			$s_where[] = " cust_name LIKE '%{$s_search}%'";
+			$s_where[] = " cu_code LIKE '%{$s_search}%'";
 			$s_where[] = " phone LIKE '%{$s_search}%'";
 			$s_where[] = " address LIKE '%{$s_search}%'";
 			$s_where[] = " email LIKE '%{$s_search}%'";
@@ -72,7 +74,7 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 		if($search['customer_id']>0){
 			$where .= " AND id = ".$search['customer_id'];
 		}
-		$order=" ORDER BY date ASC ";
+		$order=" ORDER BY id DESC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
 	public function addCustomer($post)
@@ -114,24 +116,27 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 		$this->_name="tb_customer";
 		$this->update($data,$where);
 	}
+	
+	
 	//for add new customer from sales
 	final function addNewCustomer($post){
 		$session_user=new Zend_Session_Namespace('auth');
 		$userName=$session_user->user_name;
 		$GetUserId= $session_user->user_id;
 		$data=array(
-				'cu_code'		=> $post['cu_code'],
-				'cust_name'		=> $post['txt_name'],
-				'phone'			=> $post['contact_phone'],
-				'email'			=> $post['txt_mail'],
-				'address'		=> $post['txt_address'],
-				'remark'		=> $post['remark'],
-				'user_id'		=> $GetUserId,
-				'date'			=> date("Y-m-d"),
-				'branch_id'		=> $post['branch_id'],
+			'cu_code'		=> $post['cu_code'],
+			'cust_name'		=> $post['txt_name'],
+			'phone'			=> $post['txt_phone'],
+			'email'			=> $post['txt_mail'],
+			'address'		=> $post['txt_address'],
+			'remark'		=> $post['remark'],
+			'user_id'		=> $GetUserId,
+			'date'			=> date("Y-m-d"),
+			'branch_id'		=> $post['branch_id'],
 		);
-		return $this->insert($data);;	
+		return $this->insert($data);
 	}
+	
 	
 	function getCustomerinfo($customer_id){
 // 		$db = $this->getAdapter();

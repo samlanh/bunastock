@@ -19,12 +19,7 @@
 		</div>
 		<div class="portlet-body form">
 			<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-					<script>
-					$('#frm').submit(function() {
-				        $("#saveclose").attr("disabled", true);
-				        $("#btnsavenew").attr("disabled", true);
-				      });
-					</script>
+					
 				<div class="form-body">
 					<div class="row">
 							<div class="col-md-3"></div>
@@ -112,37 +107,49 @@
 						</div>
 						<div class="row">
 							<div class="form-group">
-									<div class="col-md-3"></div>
+									<div class="col-md-4"></div>
 									<div class="col-md-2">
-										<a href="<?php echo $this->baseUrl();?>/sales/customer"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+										<a href="<?php echo $this->baseUrl();?>/sales/customer"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("ត្រលប់ក្រោយ")?></button></a>
 									</div>
 									<div class="col-md-2">
 										<div class="input-icon right">
-											<button type="submit" id="saveclose" id="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+											<button type="submit" id="saveclose" id="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("រក្សាទុក")?></button>
 										</div>
 									</div>
-									<div class="col-md-2">
-										<button type="submit" id="btnsavenew"  id="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-									</div>
-									<div class="col-md-3"></div>
+									<div class="col-md-4"></div>
 								</div>
 						</div>
 				</div>
 			</form>
 		</div>
 	</div>
- <script>
-$(document).ready(function() {
-});
-
-$('#frm').submit(function() {
-});
-</script>
 <script>
-<?php $url_code =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'get-cu-code')); ?>
-function getCustomerCode(){
-	id=$("#branch_id").val();
-	$.ajax({
+	$(document).ready(function() {
+	});
+
+	$('#frm').submit(function() {
+		txt_name=$("#txt_name").val();
+		if(txt_name==''){
+			alert("Please input name !!!");
+			$('#txt_name').focus();
+			return false;	
+		}
+		
+		contact_phone=$("#contact_phone").val();
+		if(contact_phone==''){
+			alert("Please input phone number !!!");
+			$('#contact_phone').focus();
+			return false;	
+		}
+		
+		$("#saveclose").attr("disabled", true);
+	});
+
+	
+	<?php $url_code =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'get-cu-code')); ?>
+	function getCustomerCode(){
+		id=$("#branch_id").val();
+		$.ajax({
 			url:"<?php echo $url_code;?>",
 			type:"post",
 			data:{'id':id},
@@ -154,5 +161,5 @@ function getCustomerCode(){
 				alert(e);
 			}
 		});
-}
+	}
 </script>

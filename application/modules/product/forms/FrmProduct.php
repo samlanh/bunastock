@@ -122,7 +122,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		 
 		$label = new Zend_Form_Element_Text("label");
 		$label->setAttribs(array(
-				'class'=>"validate[required,custom[number]] form-control"
+				'class'=>"form-control"
 		));
 		 
 		$description = new Zend_Form_Element_Text("description");

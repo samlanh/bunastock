@@ -197,7 +197,7 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql="SELECT 
 					r.*,
-					(select invoice_no from tb_mong where tb_mong.id = r.invoice_id) as invoice,
+					(select sale_no from tb_sales_order where tb_sales_order.id = r.invoice_id) as invoice,
 					c.cust_name AS customer_name,
 					c.phone contact_phone,
 					c.address AS address,
@@ -207,6 +207,7 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 					tb_customer as c
 				WHERE 
 					c.id = r.customer_id
+					and r.type=1
 					and r.id = $id 
 				LIMIT 1 
 			";

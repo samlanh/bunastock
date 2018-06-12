@@ -3,14 +3,10 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>						 
-<title>កម្មវិធីបុណ្យ</title>
+<title>បន្ថែមកម្មវិធីបុណ្យ</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" enctype="multipart/form-data" autocomplete="off" >				
-		<script>
-		$('#frm').submit(function() {
-	        $("#save_close").attr("disabled", true);
-	      });
-		</script>
+		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -59,7 +55,7 @@
 											ឆ្នាំ
 										</label>
 										<div class="col-md-8">
-											<select class="validate[required] form-control select2me" name="dead_khmer_year" id="dead_khmer_year" >
+											<select class="form-control select2me" name="dead_khmer_year" id="dead_khmer_year" >
 												<option value="">ជ្រើសរើស</option>
 												<?php if(!empty($this->khmer_year)){foreach ($this->khmer_year as $rs){?>
 												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
@@ -527,6 +523,30 @@
 </html>
 
 <script type="text/javascript">
+
+	$('#frm').submit(function() {
+		dead_name=$("#dead_name").val();
+		if(dead_name==""){
+			alert("Please input name !!! ");
+			$( "#dead_name" ).focus();
+			return false;
+		}
+		dead_khmer_year=$("#dead_khmer_year").val();
+		if(dead_khmer_year==""){
+			alert("Please select khmer year !!! ");
+			$( "#dead_khmer_year" ).select2('open');
+			return false;
+		}
+		
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			$("#save_close").attr("disabled", true);
+			return true;
+		} else {
+		   return false;	    
+		}
+	});
+
 	$(function () {
 		$('#date_time_dead').datetimepicker({
             inline: true,

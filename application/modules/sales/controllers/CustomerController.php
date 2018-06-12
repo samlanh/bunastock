@@ -26,11 +26,11 @@ class Sales_CustomerController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_DbCustomer();
 		$rows = $db->getAllCustomer($search);
 		$list = new Application_Form_Frmlist();
-		$columns=array("BRANCH_NAME","CUSTOMER_NAME","CONTACT_NUMBER","ADDRESS","STATUS","BY_USER");
+		$columns=array("BRANCH_NAME","លេខកូដអតិថិជន","CUSTOMER_NAME","CONTACT_NUMBER","ADDRESS","STATUS","BY_USER");
 		$link=array(
 				'module'=>'sales','controller'=>'customer','action'=>'edit',
 		);
-		$this->view->list=$list->getCheckList(10, $columns, $rows, array('branch_name'=>$link,'cust_name'=>$link,'customer_type'=>$link,'level'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('branch_name'=>$link,'cust_name'=>$link,'cu_code'=>$link,'level'=>$link));
 		
         $formFilter = new Sales_Form_FrmSearch();
 		$this->view->formFilter = $formFilter;
@@ -175,12 +175,12 @@ class Sales_CustomerController extends Zend_Controller_Action
 	public function addCustomerAction(){
 		if($this->getRequest()->isPost()){
 			try {
-			$post=$this->getRequest()->getPost();
-			$add_customer = new Sales_Model_DbTable_DbCustomer();
-			$customer_id = $add_customer->addNewCustomer($post);
-			$result = array('cus_id'=>$customer_id);
-			echo Zend_Json::encode($result);
-			exit();
+				$post=$this->getRequest()->getPost();
+				$add_customer = new Sales_Model_DbTable_DbCustomer();
+				$customer_id = $add_customer->addNewCustomer($post);
+				$result = array('cus_id'=>$customer_id);
+				echo Zend_Json::encode($result);
+				exit();
 			}catch (Exception $e){
 				$result = array('err'=>$e->getMessage());
 				echo Zend_Json::encode($result);

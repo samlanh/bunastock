@@ -32,8 +32,9 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     					note,
     					
     					create_date,
-    					(select fullname from tb_acl_user as u where u.user_id=p.user_id) as user_id
+    					(select fullname from tb_acl_user as u where u.user_id=p.user_id) as user_id,
     					
+    					(select name_kh from tb_view as v where v.type=5 and v.key_code = status) as status
 			    	FROM 
 			    		tb_program as p
 			    	WHERE 
@@ -97,9 +98,9 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'dead_sex' 				=> $data['dead_sex'],
 	    			'dead_khmer_year'	    => $data['dead_khmer_year'],
 	    			'dead_age'      		=> $data['dead_age'],
-	    			'dead_dob'           	=> date("Y-m-d",strtotime($data['dead_dob'])),
+	    			'dead_dob'           	=> empty($data['dead_dob'])?null:date("Y-m-d",strtotime($data['dead_dob'])),
 	    			'dead_status'	    	=> $data['dead_status'],
-	    			'date_time_dead'	    => date("Y-m-d H:i:s",strtotime($data['date_time_dead'])),
+	    			'date_time_dead'	    => empty($data['date_time_dead'])?null:date("Y-m-d H:i:s",strtotime($data['date_time_dead'])),
 	    			'dead_pob'           	=> $data['dead_pob'],
 	    			
 	    			'partner_name' 			=> $data['partner_name'],
@@ -107,7 +108,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'partner_sex' 			=> $data['partner_sex'],
 	    			'partner_khmer_year'	=> $data['partner_khmer_year'],
 	    			'partner_age'      		=> $data['partner_age'],
-	    			'partner_dob'           => date("Y-m-d",strtotime($data['partner_dob'])),
+	    			'partner_dob'           => empty($data['partner_dob'])?null:date("Y-m-d",strtotime($data['partner_dob'])),
 	    			'partner_status'	    => $data['partner_status'],
 	    			'partner_pob'           => $data['partner_pob'],
 	    			
@@ -116,15 +117,15 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
 	    			'note'           		=> $data['note'],
 	    			
-	    			'lerk_sop_date'      	=> date("Y-m-d",strtotime($data['lerk_sop_date'])),
+	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),
 	    			'lerk_sop_time'     	=> $data['lerk_sop_time'],
 	    			'lerk_sop_opposite_year'=> $data['lerk_sop_opposite_year'],
 	    			
-	    			'hae_sop_date'      	=> date("Y-m-d",strtotime($data['hae_sop_date'])),
+	    			'hae_sop_date'      	=> empty($data['hae_sop_date'])?null:date("Y-m-d",strtotime($data['hae_sop_date'])),
 	    			'hae_sop_time'      	=> $data['hae_sop_time'],
 	    			'hae_sop_opposite_year'	=> $data['hae_sop_opposite_year'],
 	    			
-	    			'pjos_sop_date'      	=> date("Y-m-d",strtotime($data['pjos_sop_date'])),
+	    			'pjos_sop_date'      	=> empty($data['pjos_sop_date'])?null:date("Y-m-d",strtotime($data['pjos_sop_date'])),
 	    			'pjos_sop_time'      	=> $data['pjos_sop_time'],
 	    			'pjos_sop_opposite_year'=> $data['pjos_sop_opposite_year'],
 	    			
@@ -186,9 +187,9 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'dead_sex' 				=> $data['dead_sex'],
 	    			'dead_khmer_year'	    => $data['dead_khmer_year'],
 	    			'dead_age'      		=> $data['dead_age'],
-	    			'dead_dob'           	=> date("Y-m-d",strtotime($data['dead_dob'])),
+	    			'dead_dob'           	=> empty($data['dead_dob'])?null:date("Y-m-d",strtotime($data['dead_dob'])),
 	    			'dead_status'	    	=> $data['dead_status'],
-	    			'date_time_dead'	    => date("Y-m-d H:i:s",strtotime($data['date_time_dead'])),
+	    			'date_time_dead'	    => empty($data['date_time_dead'])?null:date("Y-m-d H:i:s",strtotime($data['date_time_dead'])),
 	    			'dead_pob'           	=> $data['dead_pob'],
 	    			
 	    			'partner_name' 			=> $data['partner_name'],
@@ -196,7 +197,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'partner_sex' 			=> $data['partner_sex'],
 	    			'partner_khmer_year'	=> $data['partner_khmer_year'],
 	    			'partner_age'      		=> $data['partner_age'],
-	    			'partner_dob'           => date("Y-m-d",strtotime($data['partner_dob'])),
+	    			'partner_dob'           => empty($data['partner_dob'])?null:date("Y-m-d",strtotime($data['partner_dob'])),
 	    			'partner_status'	    => $data['partner_status'],
 	    			'partner_pob'           => $data['partner_pob'],
 	    			
@@ -205,20 +206,22 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
 	    			'note'           		=> $data['note'],
 	    			
-	    			'lerk_sop_date'      	=> date("Y-m-d",strtotime($data['lerk_sop_date'])),
+	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),
 	    			'lerk_sop_time'     	=> $data['lerk_sop_time'],
 	    			'lerk_sop_opposite_year'=> $data['lerk_sop_opposite_year'],
 	    			
-	    			'hae_sop_date'      	=> date("Y-m-d",strtotime($data['hae_sop_date'])),
+	    			'hae_sop_date'      	=> empty($data['hae_sop_date'])?null:date("Y-m-d",strtotime($data['hae_sop_date'])),
 	    			'hae_sop_time'      	=> $data['hae_sop_time'],
 	    			'hae_sop_opposite_year'	=> $data['hae_sop_opposite_year'],
 	    			
-	    			'pjos_sop_date'      	=> date("Y-m-d",strtotime($data['pjos_sop_date'])),
+	    			'pjos_sop_date'      	=> empty($data['pjos_sop_date'])?null:date("Y-m-d",strtotime($data['pjos_sop_date'])),
 	    			'pjos_sop_time'      	=> $data['pjos_sop_time'],
 	    			'pjos_sop_opposite_year'=> $data['pjos_sop_opposite_year'],
 	    			
-	    			'modify_date'      => date("Y-m-d"),
-	    			'modify_by'	       => $this->getUserId()
+	    			'status'      			=> $data['status'],
+	    			
+	    			'modify_date'      		=> date("Y-m-d"),
+	    			'modify_by'	       		=> $this->getUserId()
 	    	);
 	    	$where = " id=$id ";
 	    	$this->update($_arr, $where);

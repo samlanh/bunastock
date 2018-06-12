@@ -67,8 +67,8 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->partner = $db->getAllPartnerService();
 	
-		$formpopup = new Sales_Form_FrmCustomer(null);
-		$formpopup = $formpopup->Formcustomer(null);
+		$form = new Sales_Form_FrmCustomer(null);
+		$formpopup = $form->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
 		$this->view->form_customer = $formpopup;
 		
@@ -186,6 +186,18 @@ class Sales_PossaleController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_Dbpos();
 			$type =$db->getType($post['product_id']);
 			print_r(Zend_Json::encode($type));
+			exit();
+		}
+	}
+	
+	function refreshProductAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$product = $db->getAllProductName();
+			$service = $db->getAllProductName(1);
+			$result = array('product'=>$product,'service'=>$service);
+			print_r(Zend_Json::encode($result));
 			exit();
 		}
 	}

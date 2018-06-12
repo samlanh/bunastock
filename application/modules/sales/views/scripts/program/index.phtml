@@ -51,7 +51,8 @@
 								<th colspan="5" class="tdheader">ព័ត៌មានលម្អិតរបស់ដៃគូសព</th>
 								<th colspan="2" class="tdheader">ព័ត៌មានទីតាំង</th>
 								<th rowspan="2" class="tdheader" width="6%">ថ្ងៃបង្កើត</th>
-								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>		
+								<th rowspan="2" class="tdheader">អ្នកប្រើប្រាស់</th>	
+								<th rowspan="2" class="tdheader">ស្ថានការ</th>	
 							</tr>
 							<tr style="white-space:nowrap;">
 								<th class="tdheader" width="7%">ឈ្មោះ</th>
@@ -86,7 +87,7 @@
 								<td class="items" align="center" ><?php echo $rs['dead_sex'];?></td>
 								<td class="items" align="center"><?php echo $rs['dead_khmer_year'];?></td>
 								<td class="items" align="center"><?php echo $rs['dead_age'];?></td>
-								<td class="items" align="center"><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo date("d-m-Y H:i",strtotime($rs['date_time_dead']));?></a></td>								
+								<td class="items" align="center"><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php if(!empty($rs['date_time_dead'])){echo date("d-m-Y H:i",strtotime($rs['date_time_dead']));}?></a></td>								
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['partner_name'];?></a></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['partner_name_chinese'];?></a></td>
 								<td class="items" align="center"><?php echo $rs['partner_sex'];?></td>
@@ -96,6 +97,7 @@
 								<td class="items" ><?php echo $rs['place_pjos_sop'];?></td>
 								<td class="items" align="center"><?php echo date("d-m-Y",strtotime($rs['create_date']));?></td>
 								<td class="items" align="center"><?php echo $rs['user_id'];?></td>
+								<td class="items" align="center"><?php echo $rs['status'];?></td>
 							</tr>
 							<?php }}?>
 						</tbody>

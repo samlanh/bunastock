@@ -6,11 +6,7 @@
 <title>ដៃគូសេវាកម្មខាងក្រៅ</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
-		<script>
-		$('#frm').submit(function() {
-	        $("#save_close").attr("disabled", true);
-	      });
-		</script>
+		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -117,3 +113,26 @@
 	</form>	
 </body>
 </html>
+<script>
+	$('#frm').submit(function() {
+		partner_name=$("#partner_name").val();
+		if(partner_name<=0){
+			alert("Please input partner name");
+			$('#partner_name').focus();
+			return false;	
+		}
+		service_fee=$("#service_fee").val();
+		if(service_fee<=0){
+			alert("Please input service fee");
+			$('#service_fee').focus();
+			return false;	
+		}
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			$("#save_close").attr("disabled", true);
+			return true;
+		} else {
+		   return false;	    
+		}
+	});
+</script>
