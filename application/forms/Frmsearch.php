@@ -27,7 +27,8 @@ class Application_Form_Frmsearch extends Zend_Form
 		$rs=$db->getGlobalDb('SELECT vendor_id, v_name FROM tb_vendor WHERE v_name!="" AND status=1 ');
 		$options=array($tr->translate('SELECT_VENDOR'));
 		$vendorValue = $request->getParam('suppliyer_id');
-		if(!empty($rs)) foreach($rs as $read) $options[$read['vendor_id']]=$read['v_name'];
+		if(!empty($rs)) foreach($rs as $read) 
+		$options[$read['vendor_id']]=$read['v_name'];
 		$vendor_element=new Zend_Form_Element_Select('suppliyer_id');
 		$vendor_element->setMultiOptions($options);
 		$vendor_element->setAttribs(array(

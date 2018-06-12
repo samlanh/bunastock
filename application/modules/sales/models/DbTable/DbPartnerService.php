@@ -34,8 +34,8 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     		$s_where[] = " partner_name LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
     	}
-    	if($search['service']>-1){
-    		$where .= " AND service = ".$search['service'];
+    	if($search['service']>0){
+    		$where .= " AND service_cate = ".$search['service'];
     	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];

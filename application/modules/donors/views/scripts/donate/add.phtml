@@ -7,11 +7,6 @@
 <title>ការប្រគល់ការ ឧបត្ថម</title></head>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off" >				
-		<script>
-			$('#frm').submit(function() {
-	        $("#save_close").attr("disabled", true);
-	      });
-		</script>
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -75,7 +70,7 @@
 									<div class="form-group" >
 										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
 										<div class="col-md-8">
-											<select type="text" class="validate[required] form-control select2me" name="donor_id" id="donor_id" >
+											<select type="text" class="form-control select2me" name="donor_id" id="donor_id" >
 												<option value="-1">ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
 												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']." - ".$rs['donor_female']?></option>
@@ -139,3 +134,32 @@
 	</form>	
 </body>
 </html>
+<script>
+	$('#frm').submit(function() {
+		dead_name=$("#dead_name").val();
+		if(dead_name<=0){
+			alert("Please input dead name");
+			$('#dead_name').focus();
+			return false;	
+		}
+		dead_age=$("#dead_age").val();
+		if(dead_age<=0){
+			alert("Please input dead age");
+			$('#dead_age').focus();
+			return false;	
+		}
+		donor_id=$("#donor_id").val();
+		if(donor_id==""){
+			alert("Please input name donor");
+			$('#donor_id').focus();
+			return false;	
+		}
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			$("#save_close").attr("disabled", true);
+			return true;
+		} else {
+		   return false;	    
+		}
+	});
+</script>

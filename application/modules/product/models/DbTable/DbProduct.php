@@ -56,7 +56,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
   }
   public function getService(){
   	$db = $this->getAdapter();
-  	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND STATUS=1 AND is_service=1 AND is_package=0 ORDER BY item_name ASC ";
+  	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND STATUS=1 AND is_service=1";
   	return $db->fetchAll($sql);
   }
   public function getMeasure(){

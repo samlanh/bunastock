@@ -13,7 +13,7 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
-     			'service'	=>	-1,
+     			'service'	=>	0,
      			'status'	=>	-1,
     		);
     	}

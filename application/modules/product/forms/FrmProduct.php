@@ -223,6 +223,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$brand->setAttribs(array(
 				'class'=>'form-control select2me',
 		));
+		
 		$row_brand = $db->getBrand();
 		if(!empty($row_brand)){
 			foreach ($row_brand as $rs){
@@ -250,7 +251,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$category = new Zend_Form_Element_Select("category");
 		$category->setAttribs(array(
 				'class'=>'form-control select2me',
-		));
+		));	
 		$row_cat = $db->getCategory();
 		if(!empty($row_cat)){
 			foreach ($row_cat as $rs){
@@ -260,11 +261,29 @@ class Product_Form_FrmProduct extends Zend_Form
 		$category->setMultiOptions($opt);
 		$category->setValue($request->getParam("category"));
 		
+			
+		$opt = array(''=>$tr->translate("ជ្រើសរើសសេវាកម្ម"));
+		$service = new Zend_Form_Element_Select("service");
+		$service->setAttribs(array(
+				'class'=>'form-control select2me',
+		));
+		$row_cation = $db->getService();
+		if(!empty($row_cation)){
+			foreach ($row_cation as $rs){
+				$opt[$rs["id"]] = $rs["item_name"];
+			}
+		}
+		$service->setMultiOptions($opt);
+		$service->setValue($request->getParam("service"));
+		
+		
+		
+				
 		$opt = array(''=>$tr->translate("SELECT_COLOR"));
 		$color = new Zend_Form_Element_Select("color");
 		$color->setAttribs(array(
 				'class'=>'form-control select2me',
-		));
+		));	
 		$row_color = $db->getColor();
 		if(!empty($row_color)){
 			foreach ($row_color as $rs){
@@ -337,7 +356,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$vendor_element->setValue($vendorValue);
 		$this->addElement($vendor_element);
 		
-		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$category,$color,$size,$status));
+		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$service,$category,$color,$size,$status));
 		return $this;
 	}
 }

@@ -6,11 +6,6 @@
 <title>ការឧបត្ថមរបស់សប្បុរសជន</title>
 <body>
 	<form id="frm" class="form-horizontal" id="product_id" method="post" action="" autocomplete="off" >				
-		<script>
-			$('#frm').submit(function() {
-	        $("#save_close").attr("disabled", true);
-	      });
-		</script>
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -42,7 +37,7 @@
 										</div>
 									</div>
 									<div class="form-group" style="">
-										<label class="col-md-4 control-label">លេខទូរស័ព្ទ</label>
+										<label class="validate[required] col-md-4 control-label">លេខទូរស័ព្ទ</label>
 										<div class="col-md-8">
 											<input type="text" class="form-control " id="tel" name="tel"  />
 										</div>
@@ -121,7 +116,7 @@
 											តម្លៃសរុប ($)
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="validate[required] form-control " name="total_amount" id="total_amount" readonly />
+											<input type="text" class="form-control " name="total_amount" id="total_amount" readonly />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -157,7 +152,47 @@
 	</form>	
 </body>
 </html>
-
+<script>
+	$('#frm').submit(function() {
+		donor_name=$("#donor_name").val();
+		if(donor_name<=0){
+			alert("Please input name husband");
+			$('#donor_name').focus();
+			return false;	
+		}
+		donor_female=$("#donor_female").val();
+		if(donor_female<=0){
+			alert("Please input name wife");
+			$('#donor_female').focus();
+			return false;	
+		}
+		tel=$("#tel").val();
+		if(tel<=0){
+			alert("Please input phone number");
+			$('#tel').focus();
+			return false;	
+		}
+		qty=$("#qty").val();
+		if(qty<=0){
+			alert("Please input qty paper");
+			$('#qty').focus();
+			return false;	
+		}
+		unit_price=$("#unit_price").val();
+		if(unit_price<=0){
+			alert("Please input unit price");
+			$('#unit_price').focus();
+			return false;	
+		}
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			$("#save_close").attr("disabled", true);
+			return true;
+		} else {
+		   return false;	    
+		}
+	});
+</script>
 <script>
 	function calculateTotal(){
 		var qty = $('#qty').val();
@@ -167,10 +202,8 @@
 		unit_price = isNaN(unit_price)?0:unit_price;
 
 		total = qty * unit_price;
-		$('#total_amount').val(total);
-		
-	}
-	
+		$('#total_amount').val(total);		
+	}	
 </script>
 
 
