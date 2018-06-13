@@ -48,7 +48,7 @@ public function init()
     				Application_Form_FrmMessage::redirectUrl('/other/loantype');
 
     		} catch (Exception $e) {
-    			Application_Form_FrmMessage::message("INSERT_FAIL");
+    			Application_Form_FrmMessage::message("បញ្ចូលមិនត្រឹមត្រូវ");
     			$err = $e->getMessage();
     			Application_Model_DbTable_DbUserLog::writeMessageError($err);
     		}
@@ -76,7 +76,7 @@ public function init()
     				//Application_Form_FrmMessage::redirectUrl('/other/loantype');
     			//}
     		} catch (Exception $e) {
-    			Application_Form_FrmMessage::message("INSERT_FAIL");
+    			Application_Form_FrmMessage::message("បញ្ចូលមិនត្រឹមត្រូវ");
     			$err = $e->getMessage();
     			Application_Model_DbTable_DbUserLog::writeMessageError($err);
     		}

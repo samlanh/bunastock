@@ -221,6 +221,9 @@ function getAllDonors($search){
 		if($data["scale"]>0){
 			$where.=' AND p.`measure_id`='.$data["scale"];
 		}
+		if($data["category"]>0){
+			$where.=' AND p.`cate_id`='.$data["category"];
+		}
 		if($data["status"]>-1){
 			$where.=' AND p.status='.$data["status"];
 		}

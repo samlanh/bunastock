@@ -102,22 +102,7 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 				);
 				$this->_name='tb_salesorder_item';
 				$this->insert($data_item);
-				
-				/*$rows=$db_global ->productLocationInventory($data['item_id_'.$i], $locationid);//check stock product location
-				
-				if($rows)
-				{
-						$datatostock   = array(
-								'qty'   		=> 		$rows["qty"]-$data['qty'.$i],
-								'last_mod_date'		=>	date("Y-m-d"),
-								'last_mod_userid'=>$GetUserId
-						);
-						$this->_name="tb_prolocation";
-						$where=" id = ".$rows['id'];
-						$this->update($datatostock, $where);
-					
-				}else{
-				}*/
+			
 			 }
 			 
 			 

@@ -86,8 +86,7 @@ class Mong_Model_DbTable_DbConstructor extends Zend_Db_Table_Abstract
 		$where = " id = $id";
 		$this->update($array, $where);
 	}
-	
-	
+		
 	function getConstructorById($id){
 		$db=$this->getAdapter();
 		$sql="select * from tb_constructor where id = $id";

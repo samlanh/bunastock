@@ -41,7 +41,7 @@ class Application_Form_Frmsearch extends Zend_Form
 		$_stutas ->setAttribs(array(
 				'class'=>' form-control',			
 		));
-		$options= array(-1=>"ទាំងអស់",1=>"ប្រើប្រាស់",0=>"មិនប្រើប្រាស់");
+		$options= array(-1=>"ស្ថានការ",1=>"ប្រើប្រាស់",0=>"មិនប្រើប្រាស់");
 		$_stutas->setMultiOptions($options);
 		$this->addElement($_stutas);
 		

@@ -3,12 +3,10 @@
 	$url_edit = $this->url(array('module'=>'product','controller'=>'category','action'=>'edit',));
 	$url_delete = $this->url(array('module'=>'product','controller'=>'category','action'=>'delete',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$formFilter = $this->formFilter;
-	
+	$formFilter = $this->formFilter;	
 	$rs = $this->resulr;
 ?>
-<title><?php echo $tr->translate("CATEGORY_LIST");?></title>
-
+<title>បញ្ជីប្រភេទទំនិញ</title>
 	<div class="portlet box blue">
 		<div class="portlet-title">
 			<div class="caption">
@@ -24,10 +22,6 @@
 							<div class="form-group">
 								<div class="col-md-3">
 									<?php echo $formFilter->getElement('name');?>
-								</div>
-												
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('parent');?>
 								</div>
 								<label class="col-md-1 control-label"><?php echo $tr->translate("STATUS");?></label>
 								<div class="col-md-3">

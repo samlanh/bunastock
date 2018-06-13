@@ -35,7 +35,7 @@ class Mong_CategoryController extends Zend_Controller_Action
 						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/category/index');
 						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 				  }catch (Exception $e){
-				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+				  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនជោគជ័យ",$err = $e->getMessage());
 				  }
 			}			
 //		$this->view->rsservice = $db->getAllService();
@@ -55,7 +55,7 @@ class Mong_CategoryController extends Zend_Controller_Action
 						Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 					}
 				  }catch (Exception $e){
-				  	Application_Form_FrmMessage::messageError("UPDATE_ERROR",$err = $e->getMessage());
+				  	Application_Form_FrmMessage::messageError("កែប្រែមិនជោគជ័យ",$err = $e->getMessage());
 				  }
 			}			
 	 		$row = $db->getCategoryById($id);

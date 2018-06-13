@@ -54,9 +54,9 @@ class Sales_PossaleController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->addSaleOrder($data);
 				}
-				Application_Form_FrmMessage::message("INSERT_SUCESS");
+				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ",'/sales/index');
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('INSERT_FAIL');
+				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
@@ -96,9 +96,9 @@ class Sales_PossaleController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->editSale($data);
 				}
-				Application_Form_FrmMessage::message("UPDATE_SUCESS");
+				Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('INSERT_FAIL');
+				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}

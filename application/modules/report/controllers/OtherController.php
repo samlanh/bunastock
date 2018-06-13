@@ -63,6 +63,7 @@ class report_OtherController extends Zend_Controller_Action
     		$data = array(
     				'ad_search'	=>	'',
     				'scale'		=>	0,
+    				'category'	=>	0,
     				'status'	=>	-1,
     		);
     	}

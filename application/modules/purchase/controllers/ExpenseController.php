@@ -57,10 +57,10 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 			$db = new Purchase_Model_DbTable_DbExpense();				
 			try {
 				$db->addexpense($data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/purchase/expense");
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");			
+					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ","/purchase/expense");
+					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");			
 			} catch (Exception $e) {
-				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Form_FrmMessage::message("បញ្ចូលមិនត្រឹមត្រូវ");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
@@ -81,7 +81,7 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 				$db->updateExpense($data,$id);				
 				Application_Form_FrmMessage::Sucessfull('ការកែប្រែ​​ជោគ​ជ័យ', self::REDIRECT_URL);		
 			} catch (Exception $e) {
-				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Form_FrmMessage::message("ការកែប្រែមិនត្រឹមត្រូវ");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
