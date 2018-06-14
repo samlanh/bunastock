@@ -29,9 +29,12 @@ public function init()
 				'end_date'		=>	date("Y-m-d"),
     		);
 		}
+		$link=array(
+				'module'=>'product','controller'=>'damagedstock','action'=>'edit',
+		);
    		$rows=$db->getAllDamagedStock($data);
    		$columns=array("ITEM_CODE","PRODUCT_NAME","QTY_BEFORE","QTY_ADJUST","DFFER_QTY","MEASURE","LOCATION_NAME","BY_USER","DATE");
-   		$this->view->list=$list->getCheckList(0, $columns, $rows);
+   		$this->view->list=$list->getCheckList(0, $columns, $rows,array('item_name'=>$link,'item_code'=>$link,'location'=>$link));
    		$frm = new Product_Form_FrmAdjust();
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->formFilter = $frm->filter();

@@ -69,18 +69,20 @@ $formFilter = $this->formFilter;
 								<div class="form-group">
 									<div class="col-md-3">
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<a href="<?php echo $this->baseUrl();?>/product/damagedstock"><button type="button" class="btn blue btn-block btn-lg"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<div class="input-icon right">
 											<button type="submit" name="saveclose" class="btn blue btn-block btn-lg" ><i class="fa fa-close"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 										</div>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 									</div>
-							</div>
+									<div class="col-md-3">
+									</div>
+								</div>
 							</div>
 					</div>
 				</div>
@@ -140,7 +142,7 @@ function addNew(){
 			document.getElementById("lb_cu_qty_"+index).innerHTML = cur_qty;
         },
         error:function(e){
-            alert(e);
+            alert("error : "+e);
             //$("#result").html('There is error while submit');
         }
     });

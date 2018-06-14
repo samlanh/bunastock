@@ -23,7 +23,7 @@ class Product_Form_FrmAdjust extends Zend_Form
 		$row_product = $db->getProductName();
 		if(!empty($row_product)){
 			foreach ($row_product as $rs){
-				$opt[$rs["id"]] = $rs["item_name"]." ".$rs["model"]." ".$rs["size"]." ".$rs["color"];
+				$opt[$rs["id"]] = $rs["item_name"]." ".$rs["color"];
 			}
 		}
 		

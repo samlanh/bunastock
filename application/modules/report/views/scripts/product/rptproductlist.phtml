@@ -11,22 +11,22 @@ $formFilter = $this->formFilter;
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("MENU_REPORT_PRODUCT");?>
 				</div>
-						<div class="btn-group pull-right">
-							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-							   Actions <i class="fa fa-angle-down"></i>
-							 </button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#" onclick="doPrint();">
-											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
-										</a>
-									</li>
-									<li>
-										<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-									</li>
-									
-								</ul>
-					</div>
+				<div class="btn-group pull-right">
+					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+					   Actions <i class="fa fa-angle-down"></i>
+					 </button>
+					 <ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="#" onclick="doPrint();">
+								<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
+							</a>
+						</li>
+						<li>
+							<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+						</li>
+						
+					 </ul>
+				</div>
 			</div>
             <div class="portlet-body form frmfilter">
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
@@ -100,7 +100,7 @@ $formFilter = $this->formFilter;
 		                	<td width="60%" valign="top">
 		                		<ul>
 		                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីចំនួនផលិតផលក្នុងស្តុក</li>
+		                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីផលិតផល</li>
 									<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php if($this->search!=""){echo $this->search;}else{echo "";}?></li>
 		                			<!-- <li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php //echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li> -->
 		                		</ul>
@@ -149,46 +149,46 @@ $formFilter = $this->formFilter;
 						$cost_price=0;
 		                if(!empty($this->product))foreach ($this->product AS $index => $row){
 		                	$i++;
-							$raw_qty = $row["qty"];
-							$array = explode(".",$row["qty"]);
-							$qty = $array[0];
-							$qty_unit = ($raw_qty*$row["qty_perunit"]) - ($row["qty_perunit"]*$array[0]);
-							$l_qty = 0;
-
-							if(abs($raw_qty)>0){
-								if(abs($qty)>0 and abs($qty_unit)>0){
-									$l_qty = $qty."."."".round($qty_unit)." ";
-								}elseif(abs($qty)==0 and abs($qty_unit)>0){
-									$l_qty = round($qty_unit)." ";
-								}elseif(abs($qty)>0 and abs($qty_unit)==0){
-									$l_qty =  $qty." ";
-								}
-							}else{
+		                	if($row['is_service']==0){
+								$raw_qty = $row["qty"];
+								$array = explode(".",$row["qty"]);
+								$qty = $array[0];
+								$qty_unit = ($raw_qty*$row["qty_perunit"]) - ($row["qty_perunit"]*$array[0]);
 								$l_qty = 0;
-							}
-							$cost_price = $cost_price+($l_qty*$row["price"]);
+	
+								if(abs($raw_qty)>0){
+									if(abs($qty)>0 and abs($qty_unit)>0){
+										$l_qty = $qty."."."".round($qty_unit)." ";
+									}elseif(abs($qty)==0 and abs($qty_unit)>0){
+										$l_qty = round($qty_unit)." ";
+									}elseif(abs($qty)>0 and abs($qty_unit)==0){
+										$l_qty =  $qty." ";
+									}
+								}else{
+									$l_qty = 0;
+								}
+								$cost_price = $cost_price+($l_qty*$row["price"]);
+		                	}
 						?>
-							<tr class='row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
+							<tr class='hover row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
 								<td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1; ?></td>
 								<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
 								<td style="">&nbsp;<?php echo $row["item_name"]?></td>
-								<!--<td style="width:5% !important"><?php //echo $row["barcode"]?></td>-->
-								<!--<td style="width:8% !important"><?php //echo $row["serial_number"]?> </td>-->
 								<td style="width:10% !important" class="center"><?php echo $row["cat"];?></td>
 								<td style="width:5% !important" class="center"><?php echo $row["measure"];?></td>
-								<td style="width:8% !important" class="center"><?php echo $l_qty;?></td>
-							
-								<td style="width:8% !important" class="center"><?php echo $row["price"];?></td>
-								<td style="width:8% !important" class="center"><?php echo number_format($row["price"]*$l_qty,2);?></td>
+								<td style="width:8% !important" class="center"><?php if($row['is_service']==0){echo $l_qty;}?></td>
+								<td style="width:8% !important" class="center"><?php echo "$ ".number_format($row["selling_price"],2);?></td>
+								<td style="width:8% !important" class="center"><?php echo "$ ".number_format($row["price"],2);?></td>
+								<td style="width:8% !important" class="center"><?php if($row['is_service']==0){echo "$ ".number_format($row["price"]*$l_qty,2);}?></td>
 								<td style="width:8% !important" class="center">
 									<input style="height: 15px;margin-top: 5px;" type="checkBox" onClick="checked_id(<?php echo $i?>)" name="check_box<?php echo $i?>" id="check_box<?php echo $i?>" />
 									<input type="hidden" name="pro_id<?php echo $i;?>" id="pro_id<?php echo $i;?>" value="<?php echo $row['id'];?>" dojoType="dijit.form.TextBox" />
 								</td>
 							</tr>
 						  <?php }?> 
-						  <tr>
+						  <tr style="line-height: 25px;font-size: 14px;">
 							<td colspan="8" align="right">&nbsp;<strong>ថ្លៃដើមសរុប</strong>&nbsp;</td>
-							<td style="font-weight:bold;">&nbsp;$ <?php echo number_format($cost_price);?></td>
+							<td style="font-weight:bold;">&nbsp;$ <?php echo number_format($cost_price,2);?></td>
 							<td></td>
 						  </tr>
 		                </tbody>
@@ -219,7 +219,7 @@ $formFilter = $this->formFilter;
 		</table>
 		</div>
 		<center><button dojoType="dijit.form.Button" id="printselected" iconClass="dijitEditorIcon dijitEditorIconPrint"
-					type="button" onclick="printSelected();">Print Selected</button></center>
+					type="button" onclick="printSelected();">Print Barcode</button></center>
 	  </div>		
 	</div>
 	 </div>

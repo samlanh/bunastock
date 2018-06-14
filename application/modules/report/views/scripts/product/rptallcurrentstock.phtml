@@ -189,8 +189,8 @@ $db = new report_Model_DbProduct();
 										}
 									?>		
 									<?php }?>
-									<td style="width:5% !important" class="center"><?php echo $row["measure"];?></td>
-									<td style="width:8% !important" class="center"><?php echo $row["price"];?></td>
+									<td style="width:10% !important" class="center"><?php echo $row["measure"];?></td>
+									<td style="width:10% !important" class="center"><?php echo "$ ".number_format($row["selling_price"],2);?></td>
 							</tr>
 						  <?php }?>
 					

@@ -15,28 +15,29 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		$db = $this->getAdapter();
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$sql ="SELECT
-				  p.`id`,
-				  p.`barcode`,
-				  p.`item_code`,
-				  p.`item_name` ,
-	  			  p.`status`,
-	  			  p.`unit_label`,
-				  p.`qty_perunit`,
-				  p.`price`,
-				  p.selling_price,
-				  pl.`location_id`,
-				   (SELECT b.`name` FROM `tb_sublocation` AS b WHERE b.`id`=pl.`location_id` LIMIT 1) AS branch,
-				  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
-				  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
-				  
-				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
-				  SUM(pl.`qty`) AS qty
+					  p.`id`,
+					  p.`barcode`,
+					  p.`item_code`,
+					  p.`item_name` ,
+		  			  p.`status`,
+		  			  p.`unit_label`,
+					  p.`qty_perunit`,
+					  p.`price`,
+					  p.selling_price,
+					  p.is_service,
+					  pl.`location_id`,
+					   (SELECT b.`name` FROM `tb_sublocation` AS b WHERE b.`id`=pl.`location_id` LIMIT 1) AS branch,
+					  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
+					  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
+					  
+					  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
+					  SUM(pl.`qty`) AS qty
 				FROM
-				  `tb_product` AS p ,
-				  `tb_prolocation` AS pl
+					  `tb_product` AS p ,
+					  `tb_prolocation` AS pl
 				WHERE 
-			    p.status=1
-				AND p.`id`=pl.`pro_id` ";
+				    p.status=1
+					AND p.`id`=pl.`pro_id` ";
 		$where = '';
 		if($data["ad_search"]!=""){
 			$s_where=array();
@@ -73,10 +74,9 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 			}else{
 				$where.=' AND pl.qty=0';
 			}
-			
 		}
 		$location = $db_globle->getAccessPermission('pl.`location_id`');
-		$group = " GROUP BY p.`id` ORDER BY p.`item_name`";
+		$group = " GROUP BY p.`id` ORDER BY p.`id`";
 		return $db->fetchAll($sql.$where.$location.$group);
 	}
 	function getAllcurrentstock($data){
@@ -141,7 +141,7 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 				
 		}
 		$location = $db_globle->getAccessPermission('pl.`location_id`');
-		$group = " GROUP BY p.`id` ORDER BY p.`item_name`";
+		$group = " GROUP BY p.`id` ORDER BY p.id";
 		return $db->fetchAll($sql.$where.$location.$group);
 	}
 	

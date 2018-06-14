@@ -115,13 +115,15 @@ class Product_Model_DbTable_DbAdjustStock extends Zend_Db_Table_Abstract
 				  p.`item_code`,
 				  (SELECT b.name FROM `tb_brand` AS b WHERE b.id=p.`brand_id` limit 1) AS brand,
 				  (SELECT c.name FROM `tb_category` AS c WHERE c.id = p.`cate_id` limit 1) AS category,
-				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.key_code=p.`model_id` and type=2 limit 1) AS model,
-				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.key_code=p.`color_id` and type=4 limit 1) AS color,
-				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.key_code=p.`size_id` and type=3 limit 1) AS size
+				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.key_code=p.`color_id` and type=4 limit 1) AS color
 				FROM
 				  `tb_product` AS p,
 				  `tb_prolocation` AS pl 
-				WHERE p.`id` = pl.`pro_id` AND p.status=1 ";
+				WHERE 
+					p.`id` = pl.`pro_id` 
+					AND p.status=1 
+					and p.is_service=0
+		";
 		//$location = $db_globle->getAccessPermission('pl.`location_id`');
 		return $db->fetchAll($sql);
 	}
