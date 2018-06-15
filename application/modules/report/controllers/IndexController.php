@@ -96,6 +96,14 @@ class report_indexController extends Zend_Controller_Action
     	$query = new report_Model_DbPurchase();
     	$this->view->partner_service_payment = $query->getPartnerServicePaymentById($id);
     }
+    function rptConstructorPaymentAction(){
+    	$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+    	if(empty($id)){
+    		$this->_redirect("/report/index/rpt-vandorbalance");
+    	}
+    	$query = new report_Model_DbPurchase();
+    	$this->view->partner_service_payment = $query->getConstructorPaymentById($id);
+    }
     
     public function rptSalesAction()//purchase report
     {
@@ -992,6 +1000,7 @@ class report_indexController extends Zend_Controller_Action
     	$query = new report_Model_DbQuery();
     	$this->view->purchase_balance =  $query->getVendorBalance($data);
     	$this->view->partner_service_balance =  $query->getPartnerServiceBalance($data);
+    	$this->view->constructor_balance =  $query->getConstructorBalance($data);
     	$frm = new Application_Form_FrmReport();
     
     	$form_search=$frm->FrmReportPurchase($data);
@@ -1370,6 +1379,7 @@ class report_indexController extends Zend_Controller_Action
 		if($data['paid_type']==0){
 			$this->view->purchase_payment = $db->getPurchasePayment($data);
 			$this->view->partner_service_payment = $db->getPartnerServicePayment($data);
+			$this->view->constructor_payment = $db->getConstructorPayment($data);
 		}else if($data['paid_type']==1){
 			$this->view->purchase_payment = $db->getPurchasePayment($data);
 		}else{

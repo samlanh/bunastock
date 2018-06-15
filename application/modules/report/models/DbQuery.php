@@ -1169,6 +1169,46 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
+	public function getConstructorBalance($search){//1
+		$db= $this->getAdapter();
+		$sql=" SELECT
+					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
+					invoice_no,
+					sale_date,
+					constructor_price,
+					constructor_paid,
+					constructor_balance,
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = m.user_id LIMIT 1 ) AS user_name
+				FROM
+					tb_mong as m
+				WHERE
+					constructor_balance>0
+					AND status=1
+			";
+	
+		$from_date =(empty($search['start_date']))? '1': " sale_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " sale_date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = " invoice_no LIKE '%{$s_search}%'";
+			$s_where[] = " constructor_price LIKE '%{$s_search}%'";
+			$s_where[] = " constructor_paid LIKE '%{$s_search}%'";
+			$s_where[] = " constructor_balance LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if($search['branch_id']>0){
+			$where .= " AND branch_id =".$search['branch_id'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY m.id ASC ";
+		//echo $sql.$where.$order;
+		return $db->fetchAll($sql.$where.$order);
+	}
+	
 	public function getchequeWithdrawalWaring($search){//1
 			$db= $this->getAdapter();
 		$sql=" SELECT r.id,

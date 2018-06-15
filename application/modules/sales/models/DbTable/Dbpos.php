@@ -172,7 +172,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		try{
 				
 			$sale_id= $data['sale_id'];
-			$rsdetail = $this->getInvoiceDetailById($sale_id);
+			$rsdetail = $this->getSaleDetailById($sale_id);
 			if(!empty($rsdetail)){
 				foreach($rsdetail as $row){
 					$rs = $this->getProductByProductId($row['pro_id'], 1);
@@ -307,29 +307,40 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$db->rollBack();
 		}
 	}
-	function getInvoiceById($id){
+	function getSaleById($id){
 		$sql=" SELECT 
 					s.*,
 					(all_total) AS net_total,
 					(SELECT (cust_name) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
 					(SELECT (phone) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS phone,
 					(SELECT address FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS address,	
-				
-					(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id =s.user_id LIMIT 1) AS user_name
-		FROM tb_sales_order AS s WHERE s.id= ".$id;
+					(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id =s.user_id LIMIT 1) AS user_name,
+					DATE_FORMAT(clear_paymentdate, '%d-%m-%Y') AS clear_paymentdate,
+					DATE_FORMAT(date_sold, '%d-%m-%Y') AS date_sold
+				FROM 
+					tb_sales_order AS s 
+				WHERE 
+					s.id = $id
+				limit 1	
+			";
 		return $this->getAdapter()->fetchRow($sql);
 	}
-	function getInvoiceDetailById($id){
-		$sql=" SELECT si.*,
-			(SELECT item_name FROM `tb_product` WHERE id=si.pro_id) As pro_name
-		FROM tb_salesorder_item as si WHERE si.saleorder_id= ".$id;
+	function getSaleDetailById($id){
+		$sql=" SELECT 
+					si.*,
+					(SELECT item_name FROM `tb_product` WHERE id=si.pro_id) As pro_name
+				FROM 
+					tb_salesorder_item as si 
+				WHERE 
+					si.saleorder_id = $id
+			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
 	function deleteSale($sale_id){
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-		$rsdetail = $this->getInvoiceDetailById($sale_id);
+		$rsdetail = $this->getSaleDetailById($sale_id);
 			if(!empty($rsdetail)){
 				foreach($rsdetail as $row){
 					$rs = $this->getProductByProductId($row['pro_id'], 1);

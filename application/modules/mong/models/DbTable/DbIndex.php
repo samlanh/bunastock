@@ -132,6 +132,9 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'dead_id'				=> $data['dead_id'],
 					
 				'constructor'			=> $data['constructor'],
+				'constructor_price'		=> $data['constructor_price'],
+				'constructor_paid'		=> 0,
+				'constructor_balance'	=> $data['constructor_price'],
 				'total_construct_item'	=> $data['total_construct_item'],
 					
 				'user_id'			=> $this->getUserId(),
@@ -139,7 +142,6 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'create_date'		=> date("Y-m-d H:i:s"),
 			);
 			$mong_id = $this->insert($array);
-			
 			
 			if($data['paid']>0){
 				$arr_receipt = array(

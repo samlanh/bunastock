@@ -35,9 +35,9 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 			$s_where[] = " s.balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-// 		if($search['branch_id']>0){
-// 			$where .= " AND branch_id =".$search['branch_id'];
-// 		}
+		if($search['branch']>0){
+			$where .= " AND p.branch_id =".$search['branch'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		
@@ -85,7 +85,7 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch']>0){
-			$where .= " AND branch_id =".$search['branch'];
+			$where .= " AND s.branch_id =".$search['branch'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
@@ -97,6 +97,57 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		// 		}
 	
 		$order=" ORDER BY pp.id ASC  ";
+			
+		return $db->fetchAll($sql.$where.$order);
+	}
+	
+	function getConstructorPayment($search){
+		$db=$this->getAdapter();
+		$sql = "SELECT
+					(SELECT name FROM `tb_sublocation` WHERE id=m.branch_id) AS branch_name,
+					m.invoice_no,
+					mp.date_payment,
+					mp.payment_type,
+					mp.note,
+					mp.total_payment,
+					mp.paid,
+					mp.balance,
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = mp.user_id LIMIT 1 ) AS user_name
+				FROM
+					`tb_mong` AS m,
+					`tb_mong_constructor_payment` AS mp
+				WHERE
+					m.id=mp.mong_id
+					AND m.status=1
+			";
+		$where= ' ';
+	
+		$from_date =(empty($search['start_date']))? '1': " mp.date_payment >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " mp.date_payment <= '".$search['end_date']." 23:59:59'";
+		$where = " and ".$from_date." AND ".$to_date;
+	
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = " m.invoice_no LIKE '%{$s_search}%'";
+			$s_where[] = " mp.payment_type LIKE '%{$s_search}%'";
+			$s_where[] = " mp.paid LIKE '%{$s_search}%'";
+			$s_where[] = " mp.balance LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if($search['branch']>0){
+			$where .= " AND m.branch_id =".$search['branch'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+	
+		// 		if($search['order']==1){
+		// 			$order=" ORDER BY r.receipt_date ASC , r.id ASC ";
+		// 		}else{
+		// 			$order=" ORDER BY r.invoice_id ASC , r.id ASC ";
+		// 		}
+	
+		$order=" ORDER BY mp.id ASC  ";
 			
 		return $db->fetchAll($sql.$where.$order);
 	}

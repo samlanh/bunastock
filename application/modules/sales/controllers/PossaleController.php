@@ -104,28 +104,27 @@ class Sales_PossaleController extends Zend_Controller_Action
 			}
 		}
 		$db = new Sales_Model_DbTable_Dbpos();
+		
+		$this->view->row = $db->getSaleById($id);
+		$this->view->row_detail = $db->getSaleDetailById($id);
+		
 		$this->view->rsproduct = $db->getAllProductName();
+		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->term_opt = $db->getAllTermCondition();
+		$this->view->partner = $db->getAllPartnerService();
 	
-		$formpopup = new Sales_Form_FrmCustomer(null);
-		$formpopup = $formpopup->Formcustomer(null);
+		$form = new Sales_Form_FrmCustomer(null);
+		$formpopup = $form->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
 		$this->view->form_customer = $formpopup;
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getSalesNumber(1);
-		
-		$query = new Sales_Model_DbTable_Dbpos();
-		$rs = $query->getInvoiceById($id);
-		$this->view->rs = $rs;
-		$this->view->rsdetail =  $query->getInvoiceDetailById($id);
-		if(empty($rs)){
-			$this->_redirect("/sales/index");
-		}
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->rs_agreement = $db->getAllSaleAgreement();
+		$this->view->invoice = $db->getInvoiceNumber(1);
+		$this->view->saleagent = $db->getSaleAgent();
+		$this->view->diepeople = $db->getAllDiePeople();
+	
+		$db = new Sales_Model_DbTable_Dbexchangerate();
+		$this->view->rsrate= $db->getExchangeRate();
 	}
 	public function deleteAction(){
 		$id = $this->getRequest()->getParam("id");

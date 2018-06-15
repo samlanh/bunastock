@@ -10,22 +10,21 @@ $brach_name =  $this->branch;
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("Suppliyer Balance");?>
 				</div>
-						<div class="btn-group pull-right">
-							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-							   Actions <i class="fa fa-angle-down"></i>
-							 </button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#" onclick="doPrint();">
-											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
-										</a>
-									</li>
-									<li>
-										<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-									</li>
-									
-								</ul>
-					</div>
+				<div class="btn-group pull-right">
+					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+					   Actions <i class="fa fa-angle-down"></i>
+					 </button>
+					 <ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="#" onclick="doPrint();">
+								<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
+							</a>
+						</li>
+						<li>
+							<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+						</li>
+					 </ul>
+				</div>
 			</div>
             <div class="portlet-body form frmfilter">
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
@@ -122,7 +121,6 @@ $brach_name =  $this->branch;
 			           
 			           <?php if(!empty($this->partner_service_payment)){?>
 			           <br />
-			           <br />
 			           <table style="border-collapse:collapse;font-size:12px;" width="100%"  cellspacing="0">
 			                <tr>
 			                    <td style="font-size:14px;font-weight: bold;">បង់ប្រាក់ថ្លៃជួលសេវាកម្ម</td>
@@ -133,7 +131,7 @@ $brach_name =  $this->branch;
 			                 <tbody>
 			                  <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
-								<td width="15%"><?php echo $tr->translate("លេខលក់");?></td>
+								<td width="15%"><?php echo $tr->translate("លេខវិក័យបត្រ");?></td>
 								<td width="15%">&nbsp;<?php echo $tr->translate("ថ្ងៃចំណាយ");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("ចំណាយជា");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>
@@ -157,7 +155,43 @@ $brach_name =  $this->branch;
 			                </tbody>
 			           </table>
 			           <?php }?>
-			           <br>
+			           
+			           <?php if(!empty($this->constructor_payment)){?>
+			           <br />
+			           <table style="border-collapse:collapse;font-size:12px;" width="100%"  cellspacing="0">
+			                <tr>
+			                    <td style="font-size:14px;font-weight: bold;">បង់ប្រាក់ថ្លៃជាង</td>
+			                </tr>
+			           </table>
+			            
+			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 0px;" width="100%" cellspacing="0">
+			                 <tbody>
+			                  <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
+								<td width="15%"><?php echo $tr->translate("លេខវិក័យបត្រ");?></td>
+								<td width="15%">&nbsp;<?php echo $tr->translate("ថ្ងៃចំណាយ");?></td>
+								<td width="10%">&nbsp;<?php echo $tr->translate("ចំណាយជា");?></td>
+								<td width="10%">&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>
+								<td width="10%">&nbsp;<?php echo $tr->translate("ប្រាក់បានបង់");?></td>
+								<td width="10%"><?php echo $tr->translate("ប្រាក់នៅខ្វះ");?></td>
+								<td width="15%"><?php echo $tr->translate("សម្គាល់");?></td>
+			                </tr>
+			                <?php $num=1; $partner_service_balance=0;
+			                foreach ($this->constructor_payment AS $index => $rs){?>
+							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["invoice_no"];?></td>
+							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["date_payment"]));?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["payment_type"];?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo "$ ".number_format($rs["total_payment"],2);?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo "$ ".number_format($rs["balance"],2);?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["note"];?></td>
+							</tr>
+							<?php }?>
+			                </tbody>
+			           </table>
+			           <?php }?>
 			           <br>
 			           <br>
 			           <table align="center" width="100%">
