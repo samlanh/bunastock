@@ -525,6 +525,12 @@ $('#frm').submit(function() {
         $('#name').select2('open');
         return false;
     }
+    category = $("#category").val();
+    if(category==''){
+        alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
+        $('#category').select2('open');
+        return false;
+    }
     selling_price = $("#selling_price").val();
     if(selling_price==''){
         alert("សូមបញ្ចូលតម្លៃលក់! ");
@@ -533,16 +539,16 @@ $('#frm').submit(function() {
     }
     branch = $("#branch").val();
     if(branch==''){
-        alert("សូមបញ្ចូលតម្លៃលក់! ");
+        alert("សូមជ្រើសរើសសាខា! ");
         $('#branch').select2('open');
         return false;
     }
-	category = $("#category").val();
-    if(category==''){
-        alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
-        $('#category').select2('open');
+    identity = $("#identity").val();
+    if(identity==''){
+    	alert("សូមបញ្ចូលទំនិញក្នុងស្តុក តាមសាខា! ");
+        $('#identity').select2('open');
         return false;
-    }
+    }	
 	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 	if (r == true) {
 	    return true;
