@@ -47,7 +47,7 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract
 		return $this->insert($arr);
 	}
 	
-	public function getAllCategory(){
+	public function getAllCategory($data){
 		$db = $this->getAdapter();
 		$sql = "SELECT c.id,
 						c.`name`,
@@ -56,7 +56,18 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract
 						c.`status` 
 						FROM `tb_category` AS c 
 						WHERE c.`status` =1";
-		return $db->fetchAll($sql);
+		$where = '';
+		if(!empty($data['ad_search'])){
+		    $s_where=array();
+		    $s_search=addslashes(trim($data['ad_search']));
+		    $s_where[]=" c.`name` LIKE '%{$s_search}%'";
+		    $where.=' AND ('.implode(' OR ', $s_where).')';
+		}
+		if($data["status"]!=1){
+		    $where.=' AND c.`status`='.$data["status"];
+		}
+		$order=" ORDER BY id DESC";
+		return $db->fetchAll($sql,$where,$order);
 	}
 	
 	public function getCategory($id){

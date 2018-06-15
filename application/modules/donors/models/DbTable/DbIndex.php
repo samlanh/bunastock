@@ -24,8 +24,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					paid_date,
 					qty,
 					unit_price,
-					total_amount,
-                    'បោះពុម្ភ', 
+					total_amount, 
 					payment_note,
 					create_date,
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
@@ -118,8 +117,22 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$this->_name="tb_donors";
 		$this->update($arr,$where);
 	}
-	
-	
+	function getRecieptById($id){
+	    $db = $this->getAdapter();
+	    $sql="SELECT 
+					*,
+                    payment_note,
+					create_date,
+					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
+					(SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=d.status LIMIT 1) status
+		 		FROM 
+					tb_donors as d
+				WHERE 
+					id= $id
+					LIMIT 1
+        	    ";
+	    return $db->fetchRow($sql);
+	}
 	function getDonorById($id){
     	$db = $this->getAdapter();
     	$sql = "SELECT * FROM tb_donors where id = $id limit 1";

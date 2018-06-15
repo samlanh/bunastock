@@ -14,12 +14,18 @@ public function init()
     public function indexAction()
     {
 		$db = new Product_Model_DbTable_DbCategory();
-		$formFilter = new Product_Form_FrmCategory();
-		$frmsearch = $formFilter->categoryFilter();
-		$this->view->formFilter = $frmsearch;
-		$list = new Application_Form_Frmlist();
-		$result = $db->getAllCategory();
+		if($this->getRequest()->isPost()){
+		    $data = $this->getRequest()->getPost();
+		}else{
+		    $data = array(
+		        'ad_search'	=>	'',
+		        'status'	=>	1,
+		    );
+		}
+		$result = $db->getAllCategory($data);
 		$this->view->resulr = $result;
+		$formFilter = new Product_Form_FrmProduct();
+		$this->view->formFilter = $formFilter->productFilter();
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
 	public function addAction()
