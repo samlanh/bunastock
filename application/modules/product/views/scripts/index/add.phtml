@@ -52,14 +52,6 @@ input.btn_borwse_image {
 </style>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_submit;?>" enctype="multipart/form-data" autocomplete="off">						
-		<script>
-			 $('#frm').submit(function() {
-				 $("#btnsavenew").attr("disabled", true);
-				 $("#save_close").attr("disabled", true);
-			});
-			
-		</script>
-		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -251,6 +243,7 @@ input.btn_borwse_image {
 				</div>
 			</div>
 	</form>	
+	
 <!--Popup Form Brand-->
 <?php $formBrand = $this->frmBrand; ?>
 <div id="brandpopup" class="modal fade" tabindex="-1" data-width="1200">
@@ -525,24 +518,37 @@ input.btn_borwse_image {
     </div>
  </div>
 <script>
-
-$('#product_id').submit(function() {
+$('#frm').submit(function() {
+	name = $("#name").val();
+    if(name==''){
+        alert("សូមបញ្ចូលឈ្មោះទំនិញ! ");
+        $('#name').select2('open');
+        return false;
+    }
+    selling_price = $("#selling_price").val();
+    if(selling_price==''){
+        alert("សូមបញ្ចូលតម្លៃលក់! ");
+        $('#selling_price').select2('open');
+        return false;
+    }
+    branch = $("#branch").val();
+    if(branch==''){
+        alert("សូមបញ្ចូលតម្លៃលក់! ");
+        $('#branch').select2('open');
+        return false;
+    }
 	category = $("#category").val();
     if(category==''){
         alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
         $('#category').select2('open');
         return false;
     }
-    if(maxSize == 1){
-      	 alert('<?php echo $tr->translate("Image size more than 5Mb can not upload");?>');
-      	 return false;
-      	}
 	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 	if (r == true) {
 	    return true;
+	    $("#btnsavenew").attr("disabled", true);
 	} else {
-	   return false;
-	    
+	   return false;    
 	}
 });
 $( document ).ready(function() {
