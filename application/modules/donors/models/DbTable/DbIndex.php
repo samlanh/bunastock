@@ -25,6 +25,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					qty,
 					unit_price,
 					total_amount,
+                    'បោះពុម្ភ', 
 					payment_note,
 					create_date,
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
