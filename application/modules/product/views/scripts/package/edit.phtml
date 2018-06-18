@@ -4,7 +4,7 @@
 	$controller=$request->getControllerName();
 	$rsitem = $this->rs;
 ?>						 
-<title>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</title>
+<title>កែប្រែកញ្ចប់ទំនិញ</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" >				
 		<script>
@@ -27,7 +27,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</strong>
+					<i class="fa fa-gift"></i><strong>កែប្រែកញ្ចប់ទំនិញ</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -230,6 +230,25 @@ function addProductRow(){
 		var identity = $('#identity').val();
 		$('#identity').val(identity+','+index);
 	} else {$('#identity').val(index);}
+	
+	$('#product_id').val(-1).select2();
+	getProductPrice(index,pro_id);
+}
+var url_getproduct = '<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'getproduct')); ?>';
+function getProductPrice(index,product_id){
+	$.ajax({
+		url: url_getproduct,
+		type: "post",
+		data: {product_id:product_id},	
+		success: function(data){
+			rs = $.parseJSON(data);
+			$('#price_'+index).val(rs);
+		},
+		error:function(err){
+			alert("failed");
+		   
+		}
+	});
 }
 function totalQty(index){
 	qty=$("#qty_"+index).val();

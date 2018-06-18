@@ -3,7 +3,7 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>						 
-<title>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</title>
+<title>បន្ថែមកញ្ចប់ទំនិញ</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
 		<script>
@@ -28,7 +28,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</strong>
+					<i class="fa fa-gift"></i><strong>បន្ថែមកញ្ចប់ទំនិញ</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -183,12 +183,12 @@ function addProductRow(){
 	var txt_br = $("option:selected",branch_text).text();
 	var pro_id = $("#product_id").val();
 	
-	if(pro_id<0){return false;}
+	if(pro_id<=0){return false;}
 	template='<tr id="row_location_'+index+'">';
 	template+='<td>'+index+'</td>';
 	template+='<td>'+txt_br+'<input type="hidden" id="product_id'+index+'" name="product_id'+index+'" value="'+pro_id+'" </td>';
-	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
-	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeyup="totalQty('+index+');" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeyup="totalQty('+index+');" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
 	template+='<td><input readonly="readonly" type="text" id="total_'+index+'" name="total_'+index+'"  class="form-control"></td>'; 
 	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="0" class="form-control"></td>';
 	template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
@@ -199,6 +199,26 @@ function addProductRow(){
 		var identity = $('#identity').val();
 		$('#identity').val(identity+','+index);
 	} else {$('#identity').val(index);}
+	
+	$('#product_id').val(-1).select2();
+	getProductPrice(index,pro_id);
+}
+var url_getproduct = '<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'getproduct')); ?>';
+function getProductPrice(index,product_id){
+	$.ajax({
+		url: url_getproduct,
+		type: "post",
+		data: {product_id:product_id},	
+		success: function(data){
+			rs = $.parseJSON(data);
+			$('#price_'+index).val(rs);
+		},
+		error:function(err){
+			alert("failed");
+		   
+		}
+	});
+
 }
 function totalQty(index){
 	qty=$("#qty_"+index).val();

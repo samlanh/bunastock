@@ -170,4 +170,12 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
+    
+    function getProductById($product_id){
+    	$sql="SELECT selling_price FROM tb_product WHERE id=$product_id limit 1";
+    	return $this->getAdapter()->fetchOne($sql);
+    }
+    
+    
+    
 }
