@@ -3,13 +3,13 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 $brach_name =  $this->branch;
 $formFilter = $this->formFilter;
 ?>
-<title>Product Current Stock Report</title>
+<title>របាយការណ៏ បញ្ជីផលិតផល</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("PRODUCT_REPORT");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("របាយការណ៏ បញ្ជីផលិតផល");?>
 				</div>
 					<div class="btn-group pull-right">
 					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -24,12 +24,11 @@ $formFilter = $this->formFilter;
 						<li>
 							<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
 						</li>
-						
 					</ul>
 				</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-body">
 							<div class="form-group">
 								<label class="control-label col-md-3">
@@ -47,21 +46,10 @@ $formFilter = $this->formFilter;
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('model');?>
-								</label>
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('size');?>
-								</label>
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('color');?>
-								</label>
-								<label class="control-label col-md-3">
 									<?php echo $formFilter->getElement('status_qty');?>
 								</label>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-2  pull-right">
-									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("SEARCH");?></button>
+								<label class="control-label col-md-1">
+									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("ស្វែងរក");?></button>
 								</label>
 							</div>
 							
@@ -91,39 +79,28 @@ $formFilter = $this->formFilter;
 			<tr>
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
-		            	<tbody><tr>
-		                	<td width="20%" valign="top"><img src="/bunastock/trunk/public/images/logosbona.jpg" height="55px" height="55px"></td>
-		                	<td width="60%" valign="top">
-		                		<ul>
-		                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីផលិតផល</li>
-									<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php if($this->search!=""){echo $this->search;}else{echo "All Branch";}?></li>
-		                			<!--<li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>-->
-		                		</ul>
-		                	</td>
-		                    <td width="20%"></td>
-		                </tr> 
-		                <tr>
-		                	<td colspan="3" valign="top">
-		                		<table width="100%" cellpadding="0" cellspacing="0">
-		                			<tbody><tr>
-		                				<td style="font-size: 12px;">
-		                				    <span style="white-space: nowrap;"><?php echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php echo $tr->translate("TEL_COMPANY");?> 
-		                				</td>
-		                				<td width="65%"></td>
-		                			</tr>
-				                </tbody></table>
-				              </td>
-				           </tr>   
-		            </tbody></table>
+		            	<tbody>
+		            		<tr>
+			                	<td width="25%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logosbona.jpg" height="95px" ></td>
+			                	<td width="50%" valign="top">
+			                		<ul>
+			                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+			                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីផលិតផល</li>
+										<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php if($this->search!=""){echo $this->search;}else{echo "All Branch";}?></li>
+			                			<!--<li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>-->
+			                		</ul>
+			                	</td>
+			                    <td width="25%"></td>
+			                </tr> 
+		            	</tbody>
+		            </table>
 		        </td>
 		    </tr>
 		    <tr>
 		    	<td id="exportExcel">
 		            <table class="table2excel" border="1" &#8203;="" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 		                 <thead>
-			                 <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
+			                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 20px; font-size:13px; padding:1px 0px; white-space: nowrap; ">
 			                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
 								<td><?php echo $tr->translate("BRANCH_NAME");?></td>
 								<td><?php echo $tr->translate("ITEM_CODE");?></ts>
@@ -132,8 +109,6 @@ $formFilter = $this->formFilter;
 								<td><?php echo $tr->translate("PRODUCT_CATEGORY");?></td>
 								<td><?php echo $tr->translate("MEASURE");?></td>
 								<td><?php echo $tr->translate("QTY");?></td>
-								<!--<td><?php echo $tr->translate("COST_PRICE");?></td>
-								<td><?php echo $tr->translate("STATUS");?></td>-->
 			                </tr>
 		                </thead>
 		                <tbody>
@@ -161,7 +136,7 @@ $formFilter = $this->formFilter;
 								}
 							}
 						?>
-							<tr class='hover row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
+							<tr class='hover row-format<?php echo $num; ?>' style="font-size: 12px;" id="item_<?php echo $index; ?>">
 								<td align="center" style="width:3% !important">&nbsp;<?php echo $index+1 ?></td>
 								<td style="white-space: nowrap;" class="center"><?php echo $row["branch"]?></td>
 								<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_code"]?>&nbsp;&nbsp;</td>

@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div bgcolor="#b0bdfd" class="form-group" style="padding-top: 6px;">
 						<?php $formFilter = $this->formFilter; ?>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
@@ -50,7 +50,7 @@
 				<div id="divPrint"  >
 					<table style="background:#fff; margin: 0 auto; width: 100%; padding: 0px 10px 1cm 10px;font-family: 'Hanuman';">
 						<tr>
-		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bunastock/trunk/public/images/logosbona.jpg"></td>		                	
+		                	<td align="center" width="16%" valign="top"><img  height="95px" src="<?php echo $this->baseUrl();?>/images/logosbona.jpg"></td>		                	
 		                		<td  align="center">
 		                			<strong style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></strong><br>
 		                			<strong style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("SALES_REPORT");?></strong><br>

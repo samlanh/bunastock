@@ -160,9 +160,6 @@ class Product_Model_DbTable_DbAdjustStock extends Zend_Db_Table_Abstract
 				  (SELECT m.`name` FROM `tb_measure` AS m WHERE m.id=p.`measure_id` LIMIT 1) AS measure,
 				  (SELECT b.name FROM `tb_brand` AS b WHERE b.id=p.`brand_id`) AS brand,
 				  (SELECT c.name FROM `tb_category` AS c WHERE c.id = p.`cate_id`) AS category,
-				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.id=p.`model_id`) AS model,
-				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.id=p.`color_id`) AS color,
-				  (SELECT v.name_kh FROM `tb_view` AS v WHERE v.id=p.`size_id`) AS size,
 				  pl.`qty`,
 				  pl.damaged_qty
 				FROM

@@ -29,7 +29,7 @@ $formFilter = $this->formFilter;
 				</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-body">
 							<div class="form-group">
 								<label class="control-label col-md-3">
@@ -48,24 +48,10 @@ $formFilter = $this->formFilter;
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('model');?>
-								</label>
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('size');?>
-								</label>
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('color');?>
-								</label>
-								<label class="control-label col-md-3">
 									<?php echo $formFilter->getElement('status_qty');?>
 								</label>
-							</div>	
-							<div class="form-group">
-								<label class="control-label col-md-9">
-									<?php //echo $formFilter->getElement('model');?>
-								</label>
-								<label class="control-label col-md-3">
-									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("SEARCH");?></button>
+								<label class="control-label col-md-1">
+									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("ស្វែងរក");?></button>
 								</label>
 							</div>
 							
@@ -95,39 +81,28 @@ $formFilter = $this->formFilter;
 			<tr>
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
-		            	<tbody><tr>
-		                	<td width="20%" valign="top"><img src="/bunastock/trunk/public/images/logosbona.jpg" height="55px"></td>
-		                	<td width="60%" valign="top">
-		                		<ul>
-		                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីផលិតផល</li>
-									<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php if($this->search!=""){echo $this->search;}else{echo "";}?></li>
-		                			<!-- <li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php //echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li> -->
-		                		</ul>
-		                	</td>
-		                    <td width="20%"></td>
-		                </tr> 
-		                <tr>
-		                	<td colspan="3" valign="top">
-		                		<table width="100%" cellpadding="0" cellspacing="0">
-		                			<tbody><tr>
-		                				<td style="font-size: 11px;">
-		                				    <span style="white-space: nowrap;"><?php echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php echo $tr->translate("TEL_COMPANY");?> 
-		                				</td>
-		                				<td width="65%"></td>
-		                			</tr>
-				                </tbody></table>
-				              </td>
-				           </tr>   
-		            </tbody></table>
+		            	<tbody>
+		            		<tr>
+			                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logosbona.jpg" height="95px" ></td>
+			                	<td width="60%" valign="top">
+			                		<ul>
+			                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+			                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីផលិតផល</li>
+										<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php if($this->search!=""){echo $this->search;}else{echo "";}?></li>
+			                			<!-- <li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php //echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li> -->
+			                		</ul>
+			                	</td>
+			                    <td width="20%"></td>
+			                </tr> 
+			            </tbody>
+		            </table>
 		        </td>
 		    </tr>
 		    <tr>
 		    	<td id="exportExcel">
 		            <table class="table2excel" border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 		                <thead>
-		                 <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
+		                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 25px; font-size:13px; padding:1px 0px; white-space: nowrap; ">
 		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
 							<td><?php echo $tr->translate("ITEM_CODE");?></ts>
 							<td><?php echo $tr->translate("ITEM_NAME");?></td>
@@ -170,17 +145,17 @@ $formFilter = $this->formFilter;
 								$cost_price = $cost_price+($l_qty*$row["price"]);
 		                	}
 						?>
-							<tr class='hover row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
+							<tr class='hover row-format<?php echo $num; ?>' style="font-size:12px; " id="item_<?php echo $index; ?>">
 								<td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1; ?></td>
 								<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
 								<td style="">&nbsp;<?php echo $row["item_name"]?></td>
-								<td style="width:10% !important" class="center"><?php echo $row["cat"];?></td>
-								<td style="width:5% !important" class="center"><?php echo $row["measure"];?></td>
-								<td style="width:8% !important" class="center"><?php if($row['is_service']==0){echo $l_qty;}?></td>
-								<td style="width:8% !important" class="center"><?php echo "$ ".number_format($row["selling_price"],2);?></td>
-								<td style="width:8% !important" class="center"><?php echo "$ ".number_format($row["price"],2);?></td>
-								<td style="width:8% !important" class="center"><?php if($row['is_service']==0){echo "$ ".number_format($row["price"]*$l_qty,2);}?></td>
-								<td style="width:8% !important" class="center">
+								<td class="center"><?php echo $row["cat"];?></td>
+								<td class="center"><?php echo $row["measure"];?></td>
+								<td class="center"><?php if($row['is_service']==0){echo $l_qty;}?></td>
+								<td class="center"><?php echo "$ ".number_format($row["selling_price"],2);?></td>
+								<td class="center"><?php echo "$ ".number_format($row["price"],2);?></td>
+								<td class="center"><?php if($row['is_service']==0){echo "$ ".number_format($row["price"]*$l_qty,2);}?></td>
+								<td class="center">
 									<input style="height: 15px;margin-top: 5px;" type="checkBox" onClick="checked_id(<?php echo $i?>)" name="check_box<?php echo $i?>" id="check_box<?php echo $i?>" />
 									<input type="hidden" name="pro_id<?php echo $i;?>" id="pro_id<?php echo $i;?>" value="<?php echo $row['id'];?>" dojoType="dijit.form.TextBox" />
 								</td>

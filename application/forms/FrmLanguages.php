@@ -7,13 +7,12 @@ class Application_Form_FrmLanguages
     {
         /* Form Elements & Other Definitions Here ... */
     }
-    public static function  getCurrentlanguage($lang=1,$layout=false){
-    	// set up translation adapter
+	public static function  getCurrentlanguage($lang=1,$layout=false){	
+		// set up translation adapter
 		$session_lang=new Zend_Session_Namespace('lang');
 		$lang_id=$session_lang->lang_id;
-// 		echo $lang_id;exit();
 		if($lang_id==1){
-			$str="";
+			$str="km";
 		}else{$str="en"; }	
 		$tr = new Zend_Translate('ini', PUBLIC_PATH.'/lang/'.$str,  null, array('scan' => Zend_Translate::LOCALE_FILENAME));
 		// set locale
@@ -23,7 +22,7 @@ class Application_Form_FrmLanguages
 			$tr->setLocale(strtolower($session_language->language));
 		}
 		return $tr;
-    }
+	}	
 	
 // 	public static function  getCurrentlanguage($layout=false){	
 // 		// set up translation adapter

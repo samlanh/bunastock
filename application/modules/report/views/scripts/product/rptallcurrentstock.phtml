@@ -29,7 +29,7 @@ $db = new report_Model_DbProduct();
 					</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-body">
 							<div class="form-group">
 								<label class="control-label col-md-3">
@@ -47,22 +47,10 @@ $db = new report_Model_DbProduct();
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('model');?>
-								</label>
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('size');?>
-								</label>
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('color');?>
-								</label>
-								<label class="control-label col-md-3">
 									<?php echo $formFilter->getElement('status_qty');?>
 								</label>
-								
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-2  pull-right">
-									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("SEARCH");?></button>
+								<label class="control-label col-md-1">
+									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("ស្វែងរក");?></button>
 								</label>
 							</div>
 							
@@ -92,31 +80,20 @@ $db = new report_Model_DbProduct();
 			<tr>
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
-		            	<tbody><tr>
-		                	<td width="20%" valign="top"><img src="/bunastock/trunk/public/images/logosbona.jpg" height="65px" height="65px"></td>
-		                	<td width="60%" valign="top">
-		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:15px; font-family:'Khmer OS Muol Light'">បញ្ជីរាយឈ្មោះទំនិញ-សេវាកម្មលក់</li>
-		                			<!--<li style="text-align:center; font-size:13px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>-->
-		                		</ul>
-		                	</td>
-		                    <td width="20%"></td>
-		                </tr> 
-		                <tr>
-		                	<td colspan="3" valign="top">
-		                		<table width="100%" cellpadding="0" cellspacing="0">
-		                			<tbody><tr>
-		                				<td style="font-size: 12px;">
-		                				    <!--<span style="white-space: nowrap;"><?php echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php echo $tr->translate("TEL_COMPANY");?> -->
-		                				</td>
-		                				<td width="65%"></td>
-		                			</tr>
-				                </tbody></table>
-				              </td>
-				           </tr>   
-		            </tbody></table>
+		            	<tbody>
+		            		<tr>
+			                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logosbona.jpg" height="95px" ></td>
+			                	<td width="60%" valign="top">
+			                		<ul>
+			                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+			                			<li style="text-align:center; font-size:15px; font-family:'Khmer OS Muol Light'">បញ្ជីរាយឈ្មោះទំនិញ-សេវាកម្មលក់</li>
+			                			<!--<li style="text-align:center; font-size:13px;"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>-->
+			                		</ul>
+			                	</td>
+			                    <td width="20%"></td>
+			                </tr> 
+			            </tbody>
+		            </table>
 		        </td>
 		    </tr>
 		    <tr>
@@ -124,15 +101,12 @@ $db = new report_Model_DbProduct();
 		            <table class="table2excel" border="1"  style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">               
 		                 <thead>
 		                 <tr bgcolor="#B0C4DE" class="style" align="center" style="font-weight:bold; line-height: 27px; font-size:13px; padding:1px 0px; white-space: nowrap; ">
-		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
-								<!--<td><?php echo $tr->translate("BRANCH");?></td>
-								<td><?php echo $tr->translate("ITEM_CODE");?></td>-->									
-								<td><?php echo $tr->translate("លេខកូដ");?></td>
-								<td><?php echo $tr->translate("ឈ្មោះទំនិញ/សេវាកម្ម");?></td>
-								<td><?php echo $tr->translate("ប្រភេទ");?></td>
-								<td><?php echo $tr->translate("ឯកតា");?></td>
-								<td><?php echo $tr->translate("តម្លៃលក់");?></td>
-								<!--<td><?php echo $tr->translate("STATUS");?></td>-->
+		                    <td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
+							<td><?php echo $tr->translate("លេខកូដ");?></td>
+							<td><?php echo $tr->translate("ឈ្មោះទំនិញ/សេវាកម្ម");?></td>
+							<td><?php echo $tr->translate("ប្រភេទ");?></td>
+							<td><?php echo $tr->translate("ឯកតា");?></td>
+							<td><?php echo $tr->translate("តម្លៃលក់");?></td>
 		                </tr>
 		                </thead>
 		                <tbody>
@@ -162,8 +136,6 @@ $db = new report_Model_DbProduct();
 						?>
 								<tr class='row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
 									<td align="center" style="width:3% !important">&nbsp;<?php echo $index+1 ?></td>
-									<!--<td style="white-space: nowrap;" class="center"><?php echo $row["branch"]?></td>			
-									<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_code"]?>&nbsp;&nbsp;</td>-->
 									<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
 									<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_name"]?>&nbsp;&nbsp;</td>									
 									<td style="width:10% !important;white-space: nowrap;" class="center"><?php echo $row["cat"]?></td>

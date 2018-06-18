@@ -73,15 +73,12 @@ class report_ProductController extends Zend_Controller_Action
     		$data = $this->getRequest()->getPost();
     	}else{
     		$data = array(
-    				'ad_search'	=>	'',
-    				'branch'	=>	'',
-    				'brand'		=>	'',
-    				'category'	=>	'',
-    				'model'		=>	'',
-    				'color'		=>	'',
-    				'size'		=>	'',
-    				'status'	=>	1,
-    				'status_qty'=>-1
+    				'ad_search'		=>	'',
+    				'branch'		=>	'',
+    				'brand'			=>	'',
+    				'category'		=>	'',
+    				'status_qty'	=>	-1,
+    				
     		);
     	}
 		$this->view->search = $db->getBranch($data["branch"]);
@@ -95,16 +92,16 @@ class report_ProductController extends Zend_Controller_Action
     	$db = new report_Model_DbProduct();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     				'ad_search'	=>	'',
     				'pro_id'	=>	'',
-//     				'brand'		=>	'',
-//     				'category'	=>	'',
-//     				'model'		=>	'',
-//     				'color'		=>	'',
-//     				'size'		=>	'',
-//     				'status'	=>	1
+    				'brand'		=>	'',
+    				'category'	=>	'',
+    				'start_date'=>	'',
+    				'end_date'	=>	date("Y-m-d"),
     		);
     	}
     	$this->view->product = $db->getAllAdjustStock($data);

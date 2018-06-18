@@ -80,6 +80,9 @@
 	<div class="page-sidebar-wrapper">
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+		<style>
+			li a i{color:white !important; }
+		</style>
 		<div class="page-sidebar navbar-collapse collapse">
 			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 				<li class="sidebar-toggler-wrapper">
@@ -89,48 +92,48 @@
 				<?php if($level==1 OR $level==4  OR $level==9 ){?>
 				<li class="<?php if($module=='product'){echo $class_active;}?>">
 					<a href="javascript:;">
-					<i class="icon-home"></i>
-					<span class="title"><?php echo $tr->translate("INVENTORY")?></span>
+					<i class="fa fa-cubes"></i>
+					<span class="title"><?php echo $tr->translate("ស្តុក")?></span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
 						<li>
 							<a href="<?php echo $url_pro_list[0]; ?>">
-							<i class="icon-bulb"></i><?php echo $tr->translate($url_pro_list[1])?></a>
+							<i class="icon-arrow-right" ></i><?php echo $tr->translate("តារាងទំនិញ")?></a>
 						</li>
 						<li>
 							<a href="<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'index'),null, true); ?>">
-							<i class="icon-bulb"></i>កញ្ចប់ទំនិញ/សេវាកម្ម</a>
+							<i class="icon-arrow-right"></i>កញ្ចប់ទំនិញ/សេវាកម្ម</a>
 						</li>
 						<li>
 							<a href="<?php echo $url_damagedstock[0]; ?>">
-							<i class="icon-bulb"></i><?php echo $tr->translate($url_damagedstock[1])?></a>
+							<i class="icon-arrow-right"></i><?php echo $tr->translate($url_damagedstock[1])?></a>
 						</li>
 						
 	            		<li>
 	            			<a href="<?php echo $url_adj[0]; ?>">
-							    <i class="icon-bulb"></i><?php echo $tr->translate($url_adj[1])?>
+							    <i class="icon-arrow-right"></i><?php echo $tr->translate($url_adj[1])?>
 		            		</a>
 	            		</li>
 						
 	            		<li>
 	            			<a href="<?php echo $url_category[0]; ?>">
-							      <i class="icon-bulb"></i><?php echo $tr->translate($url_category[1]);?>
+							      <i class="icon-arrow-right"></i><?php echo $tr->translate($url_category[1]);?>
 		            		</a>
 	            		</li>
 	            		<li>
 	            			<a href="<?php echo $url_brand[0]; ?>">
-							   <i class="icon-bulb"></i> <?php echo $tr->translate($url_brand[1]);?>
+							   <i class="icon-arrow-right"></i> <?php echo $tr->translate($url_brand[1]);?>
 		            		</a>
 	            		</li>
 	            		<li>
 	            			<a href="<?php echo $url_other[0]; ?>">
-							    <i class="icon-bulb"></i> <?php echo $tr->translate($url_other[1]);?>
+							    <i class="icon-arrow-right"></i> <?php echo $tr->translate($url_other[1]);?>
 		            		</a>
 	            		</li>
             			<li>
 	            			<a href="<?php echo $url_measure[0]; ?>">
-							 <i class="icon-bulb"></i><?php echo $tr->translate($url_measure[1])?></a>
+							 <i class="icon-arrow-right"></i><?php echo $tr->translate($url_measure[1])?></a>
 	            		<li>
 					</ul>
 				</li>
@@ -138,8 +141,8 @@
 				<?php if($level==1 OR $level==8){?>
 				<li class="<?php if($module=='purchase'){echo $class_active;}?>">
 					<a href="javascript:;">
-					<i class="icon-screen-desktop"></i>
-					<span class="title"><?php echo $tr->translate("PURCHASING")?></span>
+					<i class="fa fa-ambulance"></i>
+					<span class="title"><?php echo $tr->translate("ការបញ្ជាទិញ")?></span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
@@ -184,7 +187,7 @@
 				<?php }?>
 				<li  class="<?php if($module=='sales'){echo $class_active;}?>">
 					<a href="javascript:;">
-					<i class="icon-screen-desktop"></i>
+					<i class="fa fa-money"></i>
 					<span class="title"><?php echo $tr->translate("ការលក់"); ?></span>
 					<span class="arrow "></span>
 					</a>
@@ -233,7 +236,7 @@
 				</li>
 				<li class="<?php if($module=='donors'){echo $class_active;}?>">
 					<a href="javascript:;">
-					<i class="icon-screen-desktop"></i>
+					<i class="fa fa-users" ></i>
 					<span class="title"><?php echo ($tr->translate("ផ្នែកសប្បុរសជន"));?></span>
 					<span class="arrow "></span>
 					</a>
@@ -252,7 +255,7 @@
 				</li>
 				<li class="<?php if($module=='mong'){echo $class_active;}?>">
 					<a href="javascript:;">
-					<i class="icon-screen-desktop"></i>
+					<i class="fa fa-university"></i>
 					<span class="title"><?php echo ($tr->translate("ផ្នែកម៉ុង/ចេតិយ"));?></span>
 					<span class="arrow "></span>
 					</a>
@@ -304,7 +307,7 @@
 				</li>
 				<li class="<?php if($module=='report'){echo $class_active;}?>">
 					<a href="javascript:;">
-					<i class="icon-screen-desktop"></i>
+					<i class="fa fa-newspaper-o"></i>
 					<span class="title"><?php echo ($tr->translate("REPORT"));?></span>
 					<span class="arrow "></span>
 					</a>
@@ -332,39 +335,39 @@
 				<?php if($level==1){?>
 				<li>
 					<a href="javascript:;">
-					<i class="icon-screen-desktop"></i>
+					<i class="fa fa-cogs"></i>
 					<span class="title"><?php echo ($tr->translate("USERANDPERMISSION"));?></span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
 						<li>
 	            			<a href="<?php echo $url_user_list[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_user_list[1]);?>
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("អ្នកប្រើប្រាស់");?>
 		            		</a>
 	            		</li> 
             		    <li>
 	            			<a href="<?php echo $url_location[0]; ?>">
-							    <i class="icon-bulb"></i> <?php echo $tr->translate($url_location[1]);?>
+							    <i class="icon-arrow-right"></i> <?php echo $tr->translate("សាខា");?>
 		            		</a>
 	            		</li>
 	            		<li>
 	            			<a href="<?php echo $url_user_add[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_user_add[1]);?>
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("បន្ថែមអ្នកប្រើប្រាស់");?>
 		            		</a>
 	            		</li> 
 	            		<li>
 	            			<a href="<?php echo $url_add_user_access[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_add_user_access[1]);?>
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("កំណត់សិទ្ធអ្នកប្រើប្រាស់");?>
 		            		</a>
 	            		</li>
 	            		<li>
 	            			<a href="<?php echo $url_user_acl_list[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_user_acl_list[1]);?>
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("សិទ្ធទាំងអស់");?>
 		            		</a>
 	            		</li> 
 	            		<li>
 	            			<a href="<?php echo $url_user_type[0]; ?>">
-		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_user_type[1]);?>
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate("ប្រភេទអ្នកប្រើប្រាស់");?>
 		            		</a>
 	            		</li> 
 					</ul>

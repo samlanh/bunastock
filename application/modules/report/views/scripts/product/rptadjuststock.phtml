@@ -9,7 +9,7 @@ $formFilter = $this->formFilter;
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("PRODUCT_REPORT");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("របាយការណ៏ បញ្ជីកែប្រែចំនួនផលិតផលក្នុងស្តុក");?>
 				</div>
 						<div class="btn-group pull-right">
 							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -29,39 +29,41 @@ $formFilter = $this->formFilter;
 					</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-body">
-							<div class="form-group">
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('ad_search');?>
-								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('brand');?>
-								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('category');?>
-								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('model');?>
+						<div class="form-group">
+							<div class="col-md-3">
+								<?php echo $formFilter->getElement('ad_search');?>
+							</div>
+							<div class="col-md-3">
+								<?php echo $formFilter->getElement('brand');?>
+							</div>
+							<div class="col-md-3">
+								<?php echo $formFilter->getElement('category');?>
+							</div>
+							<div class="col-md-3">
+								<?php echo $formFilter->getElement('status');?>
+							</div>
+						</div>	
+						<div class="form-group">	
+							<div class="col-md-3">
+								<div class="input-icon right">
+									<i class="fa fa-calendar"></i>
+									<?php echo $formFilter->getElement('start_date');?>
+								</div>	
+							</div>
+							<div class="col-md-3">
+								<div class="input-icon right">
+									<i class="fa fa-calendar"></i>
+									<?php echo $formFilter->getElement('end_date');?>
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('size');?>
-								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('color');?>
-								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('status');?>
-								</div>
-								<div class="col-md-3">
-									<button type="submit" class="btn green"><?php echo $tr->translate("SEARCH");?></button>
-								</div>
-							</div>		
-							
-						
-				</div><div style="clear:both;"></div>	
+							<div class="col-md-1">
+								<button type="submit" class="btn green"><?php echo $tr->translate("ស្វែងរក");?></button>
+							</div>
+						</div>		
+					</div>
+					<div style="clear:both;"></div>	
 				</form> 
 	<div style=" min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm">
 	<div id="divPrint" style="width: 100%;">
@@ -80,71 +82,54 @@ $formFilter = $this->formFilter;
 			<tr>
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
-		            	<tbody><tr>
-		                	<td width="20%" valign="top"><img src="/bunastock/trunk/public/images/logosbona.jpg" height="65px" height="65px"></td>
-		                	<td width="60%" valign="top">
-		                		<ul>
-		                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:13px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីកែប្រែចំនួនផលិតផលក្នុងស្តុក</li>
-		                			<!-- <li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php //echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li> -->
-		                		</ul>
-		                	</td>
-		                    <td width="20%"></td>
-		                </tr> 
-		                <tr>
-		                	<td colspan="3" valign="top">
-		                		<table width="100%" cellpadding="0" cellspacing="0">
-		                			<tbody><tr>
-		                				<td style="font-size: 11px;">
-		                				    <span style="white-space: nowrap;"><?php echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php echo $tr->translate("TEL_COMPANY");?> 
-		                				</td>
-		                				<td width="65%"></td>
-		                			</tr>
-				                </tbody></table>
-				              </td>
-				           </tr>   
-		            </tbody></table>
+		            	<tbody>
+			            	<tr>
+			                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl()?>/images/logosbona.jpg" height="95px" ></td>
+			                	<td width="60%" valign="top">
+			                		<ul>
+			                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+			                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'">របាយការណ៏ បញ្ជីកែប្រែចំនួនផលិតផលក្នុងស្តុក</li>
+			                			<!-- <li style="text-align:center; font-size:13px;"><?php //echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php //echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li> -->
+			                		</ul>
+			                	</td>
+			                    <td width="20%"></td>
+			                </tr> 
+			            </tbody>
+		            </table>
 		        </td>
 		    </tr>
 		    <tr>
 		    	<td id="exportExcel">
-		            <table class="table2excel" border="1" &#8203;="" style="border-collapse:collapse;border:1px solid #000; font-size:10px;" width="100%" cellspacing="0">
-		                 <tbody><tr bgcolor="#B0C4DE" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
-		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
-								<td><?php echo $tr->translate("ITEM_CODE");?></ts>
-									<td><?php echo $tr->translate("ITEM_NAME");?></td>
-									<td><?php echo $tr->translate("BARCODE");?></td>
-									<td><?php echo $tr->translate("MEASURE");?></td>
-									<td><?php echo $tr->translate("QTY_BEFORE");?></td>
-									<td><?php echo $tr->translate("NEW_QTY");?></td>
-									<td><?php echo $tr->translate("DIFFER_QTY");?></td>
-									<td><?php echo $tr->translate("ADJUST_BY");?></td>
-									<td><?php echo $tr->translate("DATE");?></td>
-		                </tr>
+		            <table class="table2excel" border="1" &#8203;="" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
+		                 <tbody>
+			                 <tr bgcolor="#B0C4DE" align="center" style="font-weight:bold; line-height: 20px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
+			                    <td>&nbsp;<?php echo $tr->translate("ល.រ");?></td>
+								<td><?php echo $tr->translate("លេខកូតទំនិញ");?></td>
+								<td><?php echo $tr->translate("ទំនិញ");?></td>
+								<td><?php echo $tr->translate("លេខបាកូដ");?></td>
+								<td><?php echo $tr->translate("ខ្នាត");?></td>
+								<td><?php echo $tr->translate("ចំនួនពីមុន");?></td>
+								<td><?php echo $tr->translate("ចំនួនថ្មី");?></td>
+								<td><?php echo $tr->translate("ចំនួនខុសគ្នា");?></td>
+								<td><?php echo $tr->translate("អ្នកប្រើប្រាស់");?></td>
+								<td><?php echo $tr->translate("កាលបរិច្ឋេទ");?></td>
+			                </tr>
 		                <?php $num=1; 
 		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
 		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
 		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
 		                if(!empty($this->product))foreach ($this->product AS $index => $row){?>
-						<tr height="30" class='row-format<?php echo $num++; ?>' id="item_<?php echo $index; ?>">
+							<tr height="30" class='row-format<?php echo $num++; ?>' id="item_<?php echo $index; ?>">
 								<td align="center">&nbsp;<?php echo $index+1 ?></td>
-								<td><?php echo $row["item_code"]?></td>
-									<td><?php echo $row["item_name"]."(".$row["cat"]." ".$row["brand"]." ".$row["model"]." ".$row["size"]." ".$row["color"].")"?></td>
-									<td><?php echo $row["barcode"]?></td>
-									<td class="center"><?php echo $row["measure"]?></td>
-									<td class="center"><?php echo $row["before_qty"]?></td>
-									<td class="center"><?php echo $row["qty_after"]?></td>
-									<td class="center"><?php echo $row["differ_qty"]?></td>
-									<td class="center"><?php echo $row["username"]?></td>
-									<td class="center"><?php echo $row["date"]?></td>
-									<!-- <td class="center">
-										<?php //if($row["status"] == 1){?>
-										<span class="label label-sm label-success"><?php //echo $tr->translate("ACTIVE");?> </span>
-										<?php //}else{?>
-										<span class="label label-sm label-danger"><?php //echo $tr->translate("DEACTIVE");?> </span>
-										<?php //}?>
-									</td> -->
+								<td align="center"><?php echo $row["item_code"]?></td>
+								<td>&nbsp;<?php echo $row["item_name"]."(".$row["cat"]." ".$row["brand"].")"?></td>
+								<td align="center"><?php echo $row["barcode"]?></td>
+								<td class="center"><?php echo $row["measure"]?></td>
+								<td class="center"><?php echo $row["cur_qty"]?></td>
+								<td class="center"><?php echo $row["qty_adjust"]?></td>
+								<td class="center"><?php echo $row["defer_qty"]?></td>
+								<td class="center"><?php echo $row["username"]?></td>
+								<td class="center"><?php echo date("d-m-Y",strtotime($row["date"]));?></td>
 							</tr>
 						  <?php }?> 
 		                </tbody>

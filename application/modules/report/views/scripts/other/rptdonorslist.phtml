@@ -2,7 +2,7 @@
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->form_donors;
 ?>
-<title><?php echo $tr->translate("RPT_PURCHASE");?></title>
+<title><?php echo $tr->translate("របាយកាណ៍ឧបត្ថមរបស់សប្បុរសជន");?></title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
@@ -60,13 +60,14 @@
 		}
 		
 	</style>
+	<?php //echo $this->baseUrl();?>
 		<table style="font-family: 'Khmer OS Content'; width:100%;">
 			<tbody>
 			<tr>
 		    	<td align="center">
 		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
 		            	<tbody><tr>
-		                	<td align="center" width="16%" valign="top"><img  height="95px" src="/bunastock/trunk/public/images/logosbona.jpg"></td>
+		                	<td align="center" width="16%" valign="top"><img  height="95px" src="<?php echo $this->baseUrl();?>/images/logosbona.jpg"></td>
 		                	<td width="70%" valign="top">
 		                		<ul>
 		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
