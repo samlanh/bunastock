@@ -94,19 +94,19 @@ class Sales_PossaleController extends Zend_Controller_Action
 			$data = $this->getRequest()->getPost();
 			try {
 				if(!empty($data['identity'])){
-					$db->editSale($data);
+					$db->editSale($data,$id);
 				}
 				Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+				Application_Form_FrmMessage::message('Failed');
+				echo $e->getMessage();
 			}
 		}
 		$db = new Sales_Model_DbTable_Dbpos();
 		
 		$this->view->row = $db->getSaleById($id);
 		$this->view->row_detail = $db->getSaleDetailById($id);
+		$this->view->row_partner = $db->getPartnerServiceById($id);
 		
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
@@ -200,5 +200,14 @@ class Sales_PossaleController extends Zend_Controller_Action
 			exit();
 		}
 	}
-		
+
+	function getPackageproductAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$package =$db->getPackageProduct($post['product_id']);
+			print_r(Zend_Json::encode($package));
+			exit();
+		}
+	}
 }

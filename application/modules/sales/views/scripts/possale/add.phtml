@@ -24,7 +24,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 .hover:hover{background: #eee;}
 .full_width{width:100%;}
 </style>
-<title>ការលក់</title>
+<title>បន្ថែមការលក់</title>
 <script src="<?php echo $base_url;?>/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>/js/dojo-1.6.1/dijit/themes/soria/soria.css"/>
 <meta charset="utf-8" />
@@ -45,7 +45,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 <div class="portlet box blue">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-gift"></i><strong>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</strong>
+			<i class="fa fa-gift"></i><strong>បន្ថែមការលក់</strong>
 		</div>
 		<div class="tools">
 			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"index",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -378,7 +378,6 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		
 		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 		if (r == true) {
-			$("#save_close").attr("disabled", true);
 			return true;
 		} else {
 		   return false;	    
@@ -732,8 +731,10 @@ require(["dojo/ready"], function(ready){
 			placeHolder: "ជ្រើសរើសមុខទំនិញ រឺ សេវាកម្ម ",
 			class: 'fullside',
 			onChange: function() {
-				getType();
-				addProductRow();
+				product_name = dijit.byId("product_id").attr("displayedValue");
+				product_id = dijit.byId("product_id").get('value');
+				getType(product_id,product_name);
+				//addProductRow();
 			}
 		}, "product_id");
 
@@ -933,9 +934,9 @@ col=0;
 no=0;
 title=0;
 temp='';
-function addProductRow(){
-	product_name = dijit.byId("product_id").attr("displayedValue");
-	product_id = dijit.byId("product_id").get('value');
+function addProductRow(product_id,product_name,qty){
+	// product_name = dijit.byId("product_id").attr("displayedValue");
+	// product_id = dijit.byId("product_id").get('value');
 	if(product_name=='' ){return false;}
 	col++;no++;
 	template='';
@@ -946,7 +947,7 @@ function addProductRow(){
 	template+='<td style="min-width:20px;text-align:center">'+col+'</td>';
 	template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
 	template+='<td style="min-width:170px"><lable style="font-size:12px;" id="lblcurrent_qty'+col+'"></lable><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'"/><input type="hidden" readonly dojoType="dijit.form.TextBox" id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" dojoType="dijit.form.TextBox" name="measur_name'+col+'" id="measur_name'+col+'"/></td>';
-	template+='<td style="min-width:50px"><input type="hidden" dojoType="dijit.form.TextBox" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="fullblog" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
+	template+='<td style="min-width:50px"><input type="hidden" dojoType="dijit.form.TextBox" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="fullblog" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="fullblog" id="qtydetail_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input required="1" readonly name="qty_sold'+col+'" class="fullblog" id="qty_sold'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="fullblog" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" dojoType="dijit.form.TextBox" /></td>';
@@ -988,9 +989,11 @@ function calCualtePrice(index){
 function netTotal() {//use
 	var netTotal=0;
 	var rowId = $('#identity').val();
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number(dijit.byId('sub_total'+rowIDArray[n]).get('value'));
+	if(rowId!=''){
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++) {
+			netTotal += Number(dijit.byId('sub_total'+rowIDArray[n]).get('value'));
+		}
 	}
 	dijit.byId("sub_total").attr("value",netTotal);
 	dijit.byId('paid').attr('value',netTotal);
@@ -1133,15 +1136,16 @@ function deleteRecordPartner(index) {
 	var strings = arrays.join(',');
 	$('#identity_partner').val(strings);
 	dojo.query("#row_partner_"+index).forEach(dojo.destroy);
-	//netTotalPartner();
+	netTotalPartner();
 }
 function netTotalPartner() {//use
-	
 	var netTotal=0;
 	var rowId = $('#identity_partner').val();
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number(dijit.byId('price_service_'+rowIDArray[n]).get('value'));
+	if(rowId!=''){
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++) {
+			netTotal += Number(dijit.byId('price_service_'+rowIDArray[n]).get('value'));
+		}
 	}
 	dijit.byId("total_partner_service").attr("value",netTotal);
 }
@@ -1170,9 +1174,9 @@ function getServicePartnerPrice(index){
 	}
 }
 
+
 var url_gettype = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-type')); ?>';
-function getType(){
-	product_id = dijit.byId('product_id').get('value');
+function getType(product_id,product_name){
 	if(product_id>0){
 		dojo.xhrPost({
 			url: url_gettype,
@@ -1181,11 +1185,15 @@ function getType(){
 			},				    
 		    handleAs:"json", 
 		    load: function(data) {
-				if(data==1){
-					dijit.byId("service_id").attr('value',product_id);
-					addServicePartner();
+				if(data.is_package==1){// product package
+					getPackageProduct(product_id);
+				}else{
+					addProductRow(product_id,product_name,"");
+					if(data.is_service==1){
+						dijit.byId("service_id").attr('value',product_id);
+						addServicePartner();
+					}
 				}
-				
 		    },		
 			error: function(err) {
 				   alert(err);
@@ -1194,6 +1202,28 @@ function getType(){
 	}
 }
 
+var url_getpackage = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-packageproduct')); ?>';
+function getPackageProduct(product_id){
+	dojo.xhrPost({
+		url: url_getpackage,
+		content : {
+			'product_id':product_id,
+		},				    
+		handleAs:"json", 
+		load: function(data) {
+			if(data){
+				//alert(data);
+				for(i=0;i<data.length;i++){
+					//alert(data[i]['name']);
+					addProductRow(data[i]['product_id'],data[i]['name'],data[i]['qty']);
+				}
+			}
+		},		
+		error: function(err) {
+			   alert(err);
+		}
+	});
+}
 </script>
 
 <div class="overlay">

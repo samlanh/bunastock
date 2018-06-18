@@ -21,13 +21,18 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchAll($sql);
 	}
 	function getProductById($product_id,$branch_id){
-			$sql="	SELECT *,price as cost_price,
-			(SELECT qty FROM `tb_prolocation` WHERE pro_id=$product_id AND location_id=$branch_id LIMIT 1) AS qty,
-			(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=measure_id) as measue_name
-			FROM tb_product WHERE id=$product_id LIMIT 1";
-			return $this->getAdapter()->fetchRow($sql);
-	
-		
+		$sql="SELECT 
+					*,
+					price as cost_price,
+					(SELECT qty FROM `tb_prolocation` WHERE pro_id=$product_id AND location_id=$branch_id LIMIT 1) AS qty,
+					(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=measure_id) as measue_name
+				FROM 
+					tb_product 
+				WHERE 
+					id=$product_id 
+				LIMIT 1
+			";
+		return $this->getAdapter()->fetchRow($sql);
 	}
 	function getProductByProductId($product_id,$location){
 		$sql=" SELECT * FROM tb_prolocation WHERE pro_id = $product_id AND location_id = $location ";
@@ -117,14 +122,17 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				$ids=explode(',',$data['identity']);
 				foreach ($ids as $i)
 				{
-					$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);//check if service not need update stock
-					if(!empty($rs)){
-						$this->_name='tb_prolocation';
-						$arr = array(
-								'qty'=>$rs['qty']-$data['qty_sold'.$i]
-								);
-						$where=" id =".$rs['id'];
-						$this->update($arr, $where);
+					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
+					if($is_service['is_service']==0){ // product បានចូលធ្វើ
+						$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);//check if service not need update stock
+						if(!empty($rs)){
+							$this->_name='tb_prolocation';
+							$arr = array(
+									'qty'=>$rs['qty']-$data['qty_sold'.$i]
+									);
+							$where=" id =".$rs['id'];
+							$this->update($arr, $where);
+						}
 					}
 					$data_item= array(
 							'saleorder_id'=> $sale_id,
@@ -138,6 +146,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					);
 					$this->_name='tb_salesorder_item';
 					$this->insert($data_item);
+					
 				}
 			}
 			
@@ -166,145 +175,154 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			Application_Model_DbTable_DbUserLog::writeMessageError($err);
 		}
 	}
-	function editSale($data){
+	function editSale($data,$sale_id){
+		//print_r($data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-				
-			$sale_id= $data['sale_id'];
 			$rsdetail = $this->getSaleDetailById($sale_id);
 			if(!empty($rsdetail)){
 				foreach($rsdetail as $row){
-					$rs = $this->getProductByProductId($row['pro_id'], 1);
-					if(!empty($rs)){
-						$this->_name='tb_prolocation';
-						$arr = array(
-								'qty'=>$rs['qty']+$row['qty_order']
-						);
-						$where=" id =".$rs['id'];
-						$this->update($arr, $where);
+					$is_service = $this->getType($row['pro_id']);
+					if($is_service['is_service']==0){ // product បានចូលធ្វើ
+						$rs = $this->getProductByProductId($row['pro_id'], 1);
+						if(!empty($rs)){
+							$this->_name='tb_prolocation';
+							$arr = array(
+									'qty'=>$rs['qty']+$row['qty_order']
+							);
+							$where=" id =".$rs['id'];
+							$this->update($arr, $where);
+						}
 					}
 				}
 			}
 	
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
-				
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
+					'program_id'	=> $data['program_id'],
 					"branch_id"     => $data["branch_id"],
-					// 					"sale_no"       => $so,//$data['txt_order'],
+					"sale_no"       => $data["sale_no"],
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
-					"all_total"     => $data['total_dollar'],
-					// 				"currency_id"    => 1,//$data['currency'],
-					//"discount_value" => 	$data['dis_value'],
-					//"discount_type"  => 	$data['discount_type'],
-					//"saleagent_id"  => 	$data['saleagent_id'],
-					//"tax"			 =>     $data["total_tax"],
-					//"remark"       => 	$data['remark'],
-			        'paid_dollar'=>$data['receive_dollar'],
-					'paid_dollar'=>$data['paid_riel'],
-					"paid"           => $data['total_paid'],
-					"balance"        => $data['balance'],
-					"net_total"      => $data['total_dollar'],
-					"user_mod"       => $GetUserId,
-					'term_condition' => $data['term_condition'],
-					'pending_status' =>3,
-					"date"           => date("Y-m-d"),
-					'agreement_id'   => $data['agreement_no'],
+					"all_total"     => $data['sub_total'],
+					"paid"          => $data['paid'],
+					'paid_before'	=> $data['paid_before'],
+					'balance'		=> $data['balance'],
+					"balance_after" => $data['balance'],
+					'return_amount' => $data['return_amount'],
+					'receiver_name' => $data['receiver_name'],
+					"user_id"       => $this->getUserId(),
+					
+					"saleagent_id"  => $data["saleagent_id"],
+					
+					'comission' 	=> $data['comission'],
+					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
+					'payment_note' 	=> $data['note'],
+					'other_note'	=> $data['other_note'],
+					//"date"          => date("Y-m-d"),
+			
+					'partner_service_total'  	=> $data['total_partner_service'],
+					'partner_service_balance'  	=> $data['total_partner_service'],
 			);
 			$this->_name="tb_sales_order";
 			$where=" id = ".$sale_id;
 			$this->update($info_purchase_order, $where);
 				
+			$rsreceipt = $this->getReceiptBySaleId($sale_id);
+			
+			if($data['paid']>0){
+				$db_global = new Application_Model_DbTable_DbGlobal();
+				$receipt = $db_global->getReceiptNumber(1);
+				$info_purchase_order=array(
+						"branch_id"   	=> $data['branch_id'],
+						'invoice_id'    => $sale_id,
+						"customer_id"   => $data["customer_id"],
+						"payment_id"    => 1,	//payment by cash/paypal/cheque
+						"receipt_date"  => date("Y-m-d",strtotime($data['sale_date'])),
+						'begining_balance'=>$data['sub_total'],
+						'paid_before'	=> $data['paid_before'],
+						"total"         => $data['sub_total'],
+						"paid"          => $data["paid"],
+						"balance"       => $data['balance'],
+						"user_id"       => $this->getUserId(),
+						'status'        => 1,
+						"bank_name"     => 	'',
+						"cheque_number" => 	'',
+						"type"        	=> 1, // 
+				);
+				$this->_name="tb_receipt";
+				
+				if(!empty($rsreceipt)){
+					$where = " type = 1 and id = ".$rsreceipt['id'];
+					$this->update($info_purchase_order, $where);
+				}else{
+					$info_purchase_order['receipt_no'] = $receipt;
+					$info_purchase_order['date_input'] = date("Y-m-d");
+					
+					$reciept_id = $this->insert($info_purchase_order);
+				}
+				
+			}
+				
 			$this->_name='tb_salesorder_item';
 			$where=" saleorder_id = ".$sale_id;
 			$this->delete($where);
 			
-			$rsreceipt = $this->getReceiptDetailbysaleid($sale_id);
-			if(!empty($rsreceipt)){
-				$this->_name='tb_receipt';
-				$where=" id =".$rsreceipt['receipt_id'];
-				$this->delete($where);
-			}
-			$this->_name='tb_receipt_detail';
-			$where=" invoice_id=".$sale_id;
-			$this->delete($where);
-			
-			if($data['total_paid']>0){
-				$db_global = new Application_Model_DbTable_DbGlobal();
-				$data['receipt'] = $db_global->getReceiptNumber(1);
-				$info_purchase_order=array(
-						"branch_id"   	=> 	1,//$branch_id['branch_id'],
-						"customer_id"   => 	$data["customer_id"],
-						"payment_type"  => 	1,//payment by customer/invoice
-						"payment_id"    => 	1,	//payment by cash/paypal/cheque
-						"receipt_no"    => 	$data['receipt'],
-						"receipt_date"  =>  date("Y-m-d"),
-						"date_input"    =>  date("Y-m-d"),
-						"total"         => 	$data['total_dollar'],
-						"paid"          => 	$data["total_paid"],
-						"paid_dollar"   => 	$data['receive_dollar'],
-						"paid_riel"     => 	$data['receive_riel'],
-						"balance"       => 	$data['balance'],
-						"user_id"       => 	$GetUserId,
-						'status'        =>1,
-						"bank_name"     => 	'',
-						"cheque_number" => 	'',
-						"exchange_rate" => 	$data['exchange_rate'],
-							
-				);
-				$this->_name="tb_receipt";
-				$reciept_id = $this->insert($info_purchase_order);
-					
-				$data_item= array(
-						'receipt_id'  => $reciept_id,
-						'invoice_id'  => $sale_id,
-						'total'		  => $data['total_dollar'],
-						'paid'	      => $data["total_paid"],
-						'balance'	  => $data['balance'],
-						'is_completed'=> ($data['balance']==0)?1:0,
-						'status'      => 1,
-						'date_input'  => date("Y-m-d"),
-				);
-				$this->_name='tb_receipt_detail';
-				$this->insert($data_item);
-			}
-				
-			$ids=explode(',',$data['identity']);
-			foreach ($ids as $i)
-			{
-				$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);
-				if(!empty($rs)){
-					$this->_name='tb_prolocation';
-					$arr = array(
-							'qty'=>$rs['qty']-$data['qty_sold'.$i]
+			if(!empty($data['identity'])){
+				$ids=explode(',',$data['identity']);
+				foreach ($ids as $i)
+				{
+					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
+					if($is_service['is_service']==0){ // product បានចូលធ្វើ
+						$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);
+						if(!empty($rs)){
+							$this->_name='tb_prolocation';
+							$arr = array(
+									'qty'=>$rs['qty']-$data['qty_sold'.$i]
+									);
+							$where=" id =".$rs['id'];
+							$this->update($arr, $where);
+						}
+					}
+					$data_item= array(
+							'saleorder_id'=> $sale_id,
+							'pro_id'	  => $data['product_id'.$i],
+							'qty_unit'	  => $data['qty_'.$i],
+							'qty_detail'  => $data['qtydetail_'.$i],
+							'qty_order'	  => $data['qty_sold'.$i],
+							'price'		  => $data['price_'.$i],
+	 						'cost_price'  => $data['cost_price'.$i],
+							'sub_total'	  => $data['sub_total'.$i],
 					);
-					$where=" id =".$rs['id'];
-	
-					$this->update($arr, $where);
+					$this->_name='tb_salesorder_item';
+					$this->insert($data_item);
+					
 				}
-				$data_item= array(
-						'saleorder_id'=> $sale_id,
-						'pro_id'	  => $data['product_id'.$i],
-						'qty_unit'	  => $data['qty_'.$i],
-						'qty_detail'  => $data['qtydetail_'.$i],
-						'qty_order'	  => $data['qty_sold'.$i],
-						'price'		  => $data['price_'.$i],
-						'old_price'   => $data['price_'.$i],
-						'cost_price'  => $data['cost_price'.$i],
-						'sub_total'	  => $data['sub_total'.$i],
-				);
-				$this->_name='tb_salesorder_item';
-				$this->insert($data_item);
 			}
-	
-	
-			// 			$this->addSaleOrder($data);
+			
+			$this->_name='tb_sales_partner_service';
+			$where_partner = " saleorder_id = $sale_id";
+			$this->delete($where_partner);
+			
+			if(!empty($data['identity_partner'])){
+				$ids=explode(',',$data['identity_partner']);
+				foreach ($ids as $i)
+				{
+					$array= array(
+							'saleorder_id'	=> $sale_id,
+							'service_id'	=> $data['service_id_'.$i],
+							'partner_id'	=> $data['partner_'.$i],
+							'price'  		=> $data['price_service_'.$i],
+							'note'	  		=> $data['note_'.$i],
+					);
+					$this->insert($array);
+				}
+			}
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
+			echo $e->getMessage();exit();
 		}
 	}
 	function getSaleById($id){
@@ -336,6 +354,20 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
+	
+	function getPartnerServiceById($id){
+		$sql=" SELECT
+					ps.*,
+					(SELECT item_name FROM `tb_product` WHERE tb_product.id=ps.service_id) As service_name
+				FROM
+					tb_sales_partner_service as ps
+				WHERE
+					ps.saleorder_id = $id
+			";
+		return $this->getAdapter()->fetchAll($sql);
+	}
+	
+	
 	function deleteSale($sale_id){
 		$db = $this->getAdapter();
 		$db->beginTransaction();
@@ -359,7 +391,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$where=" id = ".$sale_id;
 			$this->delete($where);
 			
-			$rsreceipt = $this->getReceiptDetailbysaleid($sale_id);
+			$rsreceipt = $this->getReceiptBySaleId($sale_id);
 			if(!empty($rsreceipt)){
 				$this->_name='tb_receipt';
 				$where=" id =".$rsreceipt['receipt_id'];
@@ -378,21 +410,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$db->rollBack();
 		}
 	}
-	function getReceiptDetailbysaleid($sale_id){
-// 		$data_item= array(
-// 				'receipt_id'  => $reciept_id,
-// 				'invoice_id'  => $sale_id,
-// 				'total'		  => $data['total_dollar'],
-// 				'paid'	      => $data["total_paid"],
-// 				'balance'	  => $data['balance'],
-// 				'is_completed'=> ($data['balance']==0)?1:0,
-// 				'status'      => 1,
-// 				'date_input'  => date("Y-m-d"),
-// 		);
-// 		$this->_name='tb_receipt_detail';
-// 		$this->insert($data_item);
-		
-		$sql=" SELECT  receipt_id,invoice_id FROM tb_receipt_detail WHERE invoice_id = $sale_id LIMIT 1 ";
+	function getReceiptBySaleId($sale_id){
+		$sql=" SELECT * FROM tb_receipt WHERE invoice_id = $sale_id and type=1 LIMIT 1 ";
 		return $this->getAdapter()->fetchRow($sql);				
 	}
 	
@@ -410,8 +429,14 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 	function getType($product_id){
 		$db = $this->getAdapter();
-		$sql=" SELECT is_service FROM tb_product WHERE id=$product_id ";
-		return $db->fetchOne($sql);
+		$sql=" SELECT * FROM tb_product WHERE id=$product_id ";
+		return $db->fetchRow($sql);
+	}
+	
+	function getPackageProduct($product_id){
+		$db = $this->getAdapter();
+		$sql=" SELECT *,(SELECT item_name FROM `tb_product` WHERE tb_product.id=tb_product_package.product_id) As name FROM tb_product_package WHERE package_id=$product_id ";
+		return $db->fetchAll($sql);
 	}
 	
 }

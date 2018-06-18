@@ -24,7 +24,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 .hover:hover{background: #eee;}
 .full_width{width:100%;}
 </style>
-<title>ការលក់</title>
+<title>កែប្រែការលក់</title>
 <script src="<?php echo $base_url;?>/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>/js/dojo-1.6.1/dijit/themes/soria/soria.css"/>
 <meta charset="utf-8" />
@@ -45,7 +45,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 <div class="portlet box blue">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-gift"></i><strong>ផ្នែក កញ្ចប់ទំនិញ/សេវាកម្ម</strong>
+			<i class="fa fa-gift"></i><strong>កែប្រែការលក់</strong>
 		</div>
 		<div class="tools">
 			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"index",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -292,61 +292,61 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="col-md-3"></div>
 								</div>
 							
-						</div>	
-						<div class="tab-pane" id="tab_2">
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-2" style="text-align: left !important;">
-									</div>
-									<div class="col-md-6" style="text-align: left !important;">
-										  <input id="service_id" />
-									</div>
-									<div class="col-md-2" style="text-align: left !important;">
-										<button type="button" name="calcel" class="btn blue col-md-12"><i class="fa fa-search"></i>ស្វែងរកមុខទំនិញ</button>
-									</div>
-									<div class="col-md-2">
+							</div>	
+							<div class="tab-pane" id="tab_2">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-2" style="text-align: left !important;">
+										</div>
+										<div class="col-md-6" style="text-align: left !important;">
+											  <input id="service_id" />
+										</div>
+										<div class="col-md-2" style="text-align: left !important;">
+											<button type="button" name="calcel" class="btn blue col-md-12"><i class="fa fa-search"></i>ស្វែងរកមុខទំនិញ</button>
+										</div>
+										<div class="col-md-2">
+										</div>
 									</div>
 								</div>
-							</div>
-							
-							<div class="row">
-								<div class="col-md-12">
-									<table id="table_row_partner" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
-										<thead>
-											<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;">
-												<th class="aligncenter">#</th>
-												<th class="aligncenter">សេវាកម្ម</th>
-												<th class="aligncenter">អ្នកផ្គត់ផ្គង់</th>
-												<th class="aligncenter">តម្លៃជួល</th>
-												<th class="aligncenter">សម្គាល់</th>
-												<th class="aligncenter">លុប</th>
-											</tr>
-											<tr>
-												<td colspan="10" id="lbl_partnerservice" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
-											</tr>
-										</thead>
-									</table>
+								
+								<div class="row">
+									<div class="col-md-12">
+										<table id="table_row_partner" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
+											<thead>
+												<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;">
+													<th class="aligncenter">#</th>
+													<th class="aligncenter">សេវាកម្ម</th>
+													<th class="aligncenter">អ្នកផ្គត់ផ្គង់</th>
+													<th class="aligncenter">តម្លៃជួល</th>
+													<th class="aligncenter">សម្គាល់</th>
+													<th class="aligncenter">លុប</th>
+												</tr>
+												<tr>
+													<td colspan="10" id="lbl_partnerservice" align="center">មិនមាន ទំនិញ ក្នុងកន្រ្តក</td>
+												</tr>
+											</thead>
+										</table>
+									</div>
 								</div>
-							</div>
-							<div class="form-group" style="">
-								<label class="col-md-12 control-label">
-									&nbsp;
-								</label>
-							</div>
-							<div class="form-group" style="">
-								<label class="col-md-6 control-label">
-								</label>
-								<label class="col-md-2 control-label">
-									<strong style="font-size: 16px;">តម្លៃសរុប</strong>
-								</label>
-								<div class="col-md-4">
-									<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox"  name="total_partner_service" id="total_partner_service" readOnly />
+								<div class="form-group" style="">
+									<label class="col-md-12 control-label">
+										&nbsp;
+									</label>
+								</div>
+								<div class="form-group" style="">
+									<label class="col-md-7 control-label">
+									</label>
+									<label class="col-md-2 control-label">
+										<strong style="font-size: 16px;">តម្លៃសរុប</strong>
+									</label>
+									<div class="col-md-3">
+										<input type="text" class="form-control" dojoType="dijit.form.NumberTextBox"  name="total_partner_service" id="total_partner_service" readOnly />
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</div>
@@ -364,7 +364,6 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		identity =$("#identity").val();
 		if(identity=='' || identity==-1){
 			alert("Please add product row");
-			//$('#product_id').select2('open');
 			dijit.byId("product_id").focus();
 			return false;
 		}
@@ -378,12 +377,10 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		
 		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 		if (r == true) {
-			$("#save_close").attr("disabled", true);
 			return true;
 		} else {
 		   return false;	    
 		}
-		
 	});
 	
 	function getPopupCustomer(){
@@ -565,7 +562,7 @@ dojo.require("dijit.form.DateTextBox");
 var product_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->rsproduct));?> );
 var service_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->rsservice));?> );
 
-require(["dojo/ready"], function(ready){
+dojo.ready(function(){
 	 
 		new dijit.form.FilteringSelect({
 			store: product_store,
@@ -596,29 +593,37 @@ require(["dojo/ready"], function(ready){
 				addServicePartner(2);
 			}
 		}, "service_id");
-
-		setValue();
+		
 		initializeProduct();
-
+		initializePartnerService();
+		setValue();
 });
 
 function setValue(){
-	$('#customer_id').val('<?php echo $this->row['customer_id']?>');
-	$('#program_id').val('<?php echo $this->row['program_id']?>');
+	$('#customer_id').val('<?php echo $this->row['customer_id']?>').select2();
+	$('#program_id').val('<?php echo $this->row['program_id']?>').select2();
 	$('#note').val('<?php echo $this->row['payment_note']?>');
 	$('#date_clearpayment').val('<?php echo $this->row['clear_paymentdate']?>');
 	$('#sale_no').val('<?php echo $this->row['sale_no']?>');
 	$('#sale_date').val('<?php echo $this->row['date_sold']?>');
-	$('#saleagent_id').val('<?php echo $this->row['saleagent_id']?>');
+	$('#saleagent_id').val('<?php echo $this->row['saleagent_id']?>').select2();
 	$('#comission').val('<?php echo $this->row['comission']?>');
 	$('#receiver_name').val('<?php echo $this->row['receiver_name']?>');
 	$('#other_note').val('<?php echo $this->row['other_note']?>');
 	
-	// $('#sub_total').val('<?php echo $this->row['all_total']?>');
-	// $('#paid_before').val('<?php echo $this->row['paid_before']?>');
-	// $('#paid').val('<?php echo $this->row['paid']?>');
-	// $('#balance').val('<?php echo $this->row['balance_after']?>');
+	// $('#sub_total').val('<?php echo $this->row['all_total']?>').focus();
+	// $('#paid_before').val('<?php echo $this->row['paid_before']?>').focus();
+	// $('#paid').val('<?php echo $this->row['paid']?>').focus();
+	// $('#balance').val('<?php echo $this->row['balance_after']?>').focus();
+	// $('#total_partner_service').val('<?php echo $this->row['partner_service_total']?>').focus();
+	
+	dijit.byId('sub_total').attr('value','<?php echo $this->row['all_total']?>');
+	dijit.byId('paid_before').attr('value','<?php echo $this->row['paid_before']?>');
+	dijit.byId('paid').attr('value','<?php echo $this->row['paid']?>');
 	dijit.byId('balance').attr('value','<?php echo $this->row['balance_after']?>');
+	
+	dijit.byId('total_partner_service').attr('value','<?php echo $this->row['partner_service_total']?>');
+	
 }
 
 
@@ -688,14 +693,13 @@ term = 0;
 templateterm='';
 tmpterm = '';
 
-col=0;
-no=0;
-title=0;
-temp='';
+
 
 function initializeProduct(){
 	col=0;
-no=0;title=0;
+no=0;
+title=0;
+temp='';
 temp='';
 	<?php if(!empty($this->row_detail)){foreach ($this->row_detail as $rs){?>
 		product_name = "<?php echo $rs['pro_name']?>";
@@ -729,15 +733,23 @@ temp='';
 		});
 		// dijit.byId("product_id").attr("value",'');
 		// dijit.byId("product_id").focus();
-		// getProductinfo(col,product_id);
+		getProductinfo(col,product_id,"<?php echo $rs['price'];?>");
 	
-		$("#qty_"+col).val("<?php echo $rs['qty_unit'];?>");
-		$("#qtydetail_"+col).val("<?php echo $rs['qty_detail'];?>");
-		$("#qty_sold"+col).val("<?php echo $rs['qty_order'];?>");
-		$("#price_"+col).val("<?php echo $rs['price'];?>");
-		$("#sub_total"+col).val("<?php echo $rs['sub_total'];?>");
+	
+		dijit.byId('qty_'+col).attr('value','<?php echo $rs['qty_unit'];?>');
+		dijit.byId('qtydetail_'+col).attr('value','<?php echo $rs['qty_detail'];?>');
+		dijit.byId('qty_sold'+col).attr('value','<?php echo $rs['qty_order'];?>');
+		dijit.byId('price_'+col).attr('value','<?php echo $rs['price'];?>');
+		dijit.byId('sub_total'+col).attr('value','<?php echo $rs['sub_total'];?>');
+	
+		// $("#qty_"+col).val("<?php echo $rs['qty_unit'];?>").focus();
+		// $("#qtydetail_"+col).val("<?php echo $rs['qty_detail'];?>").focus();
+		// $("#qty_sold"+col).val("<?php echo $rs['qty_order'];?>").focus();
+		// $("#price_"+col).val("<?php echo $rs['price'];?>").focus();
+		// $("#sub_total"+col).val("<?php echo $rs['sub_total'];?>").focus();
 	
 	<?php }}?>
+	
 }
 
 function addProductRow(){
@@ -772,16 +784,19 @@ function addProductRow(){
 	});
 	dijit.byId("product_id").attr("value",'');
 	dijit.byId("product_id").focus();
-	getProductinfo(col,product_id);
+	getProductinfo(col,product_id,0);
 }
 function calCualtePrice(index){
+	//alert(1);
 	main_qty= $("#qty_"+index).val();
 	if(main_qty==''){main_qty=0;}
 	detail_qty= $("#qtydetail_"+index).val();//ចំនួនរាយ
 	if(detail_qty==''){detail_qty=0;}
 	qty_perunit= $("#qty_perunit"+index).val();//ចំនួនក្នុង១ឯកកតា
 	if(qty_perunit==''){qty_perunit=0;}
+	
 	qty_sold = parseFloat(main_qty) + parseFloat(detail_qty/(qty_perunit));
+	
 	$('#qty_sold'+index).val(qty_sold);
 	
 	price = dijit.byId("price_"+index).get("value");
@@ -795,9 +810,11 @@ function calCualtePrice(index){
 function netTotal() {//use
 	var netTotal=0;
 	var rowId = $('#identity').val();
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number(dijit.byId('sub_total'+rowIDArray[n]).get('value'));
+	if(rowId!=''){
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++) {
+			netTotal += Number(dijit.byId('sub_total'+rowIDArray[n]).get('value'));
+		}
 	}
 	dijit.byId("sub_total").attr("value",netTotal);
 	dijit.byId('paid').attr('value',netTotal);
@@ -831,7 +848,7 @@ function Fullpaid(){
 }
 
 var url_getproduct = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getproduct')); ?>';
-function getProductinfo(index,product_id){
+function getProductinfo(index,product_id,old_price){
 	dojo.xhrPost({
 	    url: url_getproduct,
 	    content : { 
@@ -840,7 +857,12 @@ function getProductinfo(index,product_id){
 	   handleAs:"json", 
 	   load: function(data) {
 			dijit.byId("current_qty"+index).attr('value',data.qty);
-			dijit.byId("price_"+index).attr('value',data.selling_price);
+			if(old_price>0){
+				dijit.byId("price_"+index).attr('value',old_price);
+			}else{
+				dijit.byId("price_"+index).attr('value',data.selling_price);
+			}
+			
 			dijit.byId("cost_price"+index).attr('value',data.price);
 			dijit.byId("measur_name"+index).attr('value',data.measue_name);
 			dijit.byId("unit_label"+index).attr('value',data.unit_label);
@@ -872,7 +894,9 @@ function getProductinfo(index,product_id){
 			}
 			dojo.byId("lblcurrent_qty"+index).innerHTML=current_stock+""+qty_unitlable;
 			$("#qty_perunit"+index).val(data.qty_perunit);
-			calCualtePrice(index);
+			if(old_price<=0){
+				calCualtePrice(index);
+			}
 	   },		
 	   
 	    error: function(err) {
@@ -886,6 +910,55 @@ col1=0;
 no1=0;
 title1=0;
 temp='';
+
+
+function initializePartnerService(){
+	<?php if(!empty($this->row_partner)){foreach ($this->row_partner as $rs){?>
+		service_name = "<?php echo $rs['service_name']?>";
+		service_id = "<?php echo $rs['service_id']?>";
+		if(service_name=='' ){return false;}
+		
+		col1++;no1++;
+		template='';
+		if(title1!=1){    
+			title1=1;
+			dojo.byId('lbl_partnerservice').innerHTML = '';
+		}
+		template+='<td style="min-width:20px;text-align:center">'+col1+'</td>';
+		template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+service_name+'" id="service_name'+col1+'">'+service_name+'<input type="hidden"  value="'+service_id+'" id="service_id_'+col1+'" name="service_id_'+col1+'" dojoType="dijit.form.TextBox" /></td>';
+		
+		template+='<td width="20%"><select class="fullside" onchange=""  dojoType="dijit.form.FilteringSelect" id="partner_'+col1+'" name="partner_'+col1+'" >';
+			template+='<option value="">ជ្រើសរើសដៃគូសេវាកម្ម</option>';
+			<?php foreach($this->partner as $partner){?>
+				template+='<option value="'+<?php echo $partner['id']?>+'"><?php echo $partner['name'];?></option>';
+			<?php }?>
+		template+='</select></td>';
+		
+		
+		template+='<td style="min-width:60px"><input type="text" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="fullside"  dojoType="dijit.form.NumberTextBox" /></td>';
+		template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" class="fullside" id="note_'+col1+'" dojoType="dijit.form.TextBox" /></td>';
+		template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecordPartner('+col1+')" name="save_close" class="btn default red">លុប</button></td>';
+		tmp='<tr id="row_partner_'+col1+'" class="hover">';
+		tmp+="</tr>";
+		dojo.query("#table_row_partner").append(tmp);
+
+		if($("#identity_partner").val()!="") {
+			var identity_partner = $("#identity_partner").val();
+			$("#identity_partner").val(identity_partner+','+col1);
+		} else {$("#identity_partner").val(col1);}
+		dojo.html.set(dojo.byId("row_partner_"+col1),template , {
+			 parseContent: true,
+		});
+		
+		dijit.byId('partner_'+col1).attr('value','<?php echo $rs['partner_id'];?>');
+		dijit.byId('price_service_'+col1).attr('value','<?php echo $rs['price'];?>');
+		dijit.byId('note_'+col1).attr('value','<?php echo $rs['note'];?>');
+		//$("#price_service_"+col1).val("<?php echo $rs['price'];?>").focus();
+		//$("#note_"+col1).val("<?php echo $rs['note'];?>").focus();
+		
+	<?php }}?>	
+}
+
 function addServicePartner(from_type){
 	
 	if(from_type==1){
@@ -931,6 +1004,7 @@ function addServicePartner(from_type){
 	dijit.byId("service_id").attr("value",'');
 	dijit.byId("service_id").focus();
 }
+
 function deleteRecordPartner(index) {	
 	var identity_partner = $('#identity_partner').val();
 	var arrays = identity_partner.split(',');
@@ -940,15 +1014,16 @@ function deleteRecordPartner(index) {
 	var strings = arrays.join(',');
 	$('#identity_partner').val(strings);
 	dojo.query("#row_partner_"+index).forEach(dojo.destroy);
-	//netTotalPartner();
+	netTotalPartner();
 }
 function netTotalPartner() {//use
-	
 	var netTotal=0;
 	var rowId = $('#identity_partner').val();
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number(dijit.byId('price_service_'+rowIDArray[n]).get('value'));
+	if(rowId!=''){
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++) {
+			netTotal += Number(dijit.byId('price_service_'+rowIDArray[n]).get('value'));
+		}
 	}
 	dijit.byId("total_partner_service").attr("value",netTotal);
 }
@@ -988,11 +1063,10 @@ function getType(){
 			},				    
 		    handleAs:"json", 
 		    load: function(data) {
-				if(data==1){
+				if(data.is_service==1){
 					dijit.byId("service_id").attr('value',product_id);
 					addServicePartner();
 				}
-				
 		    },		
 			error: function(err) {
 				   alert(err);
@@ -1000,6 +1074,7 @@ function getType(){
 		});
 	}
 }
+
 
 </script>
 
