@@ -33,9 +33,9 @@ class Mong_Model_DbTable_DbConstructor extends Zend_Db_Table_Abstract
 		$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " create_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
-		if(!empty($search['text_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " name LIKE '%{$s_search}%'";
 			$s_where[] = " phone LIKE '%{$s_search}%'";
 			$s_where[] = " email LIKE '%{$s_search}%'";
@@ -46,7 +46,7 @@ class Mong_Model_DbTable_DbConstructor extends Zend_Db_Table_Abstract
 			$where .= " AND status = ".$search['status'];
 		}
 		$order=" ORDER BY id DESC ";
-// 		echo $sql.$where.$order;
+//		echo $sql.$where.$order; exit();
 		return $db->fetchAll($sql.$where.$order);
 	}
 	

@@ -19,7 +19,7 @@ public function init()
 		}else{
 		    $data = array(
 		        'ad_search'	=>	'',
-		        'status'	=>	1,
+		        'status'	=>	-1,
 		    );
 		}
 		$result = $db->getAllCategory($data);

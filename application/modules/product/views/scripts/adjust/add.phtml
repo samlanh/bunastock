@@ -6,20 +6,20 @@ $url_getcurrentitem =  $this->url(array('module'=>'product','controller'=>'adjus
 $url_getProduct =  $this->url(array('module'=>'product','controller'=>'damagedstock','action'=>'get-product'),null,true);
 $formFilter = $this->formFilter;
 ?>
-<title><?php echo $tr->translate("ADJUST_STOCK");?></title>
+<title><?php echo $tr->translate("បន្ថែមបញ្ជីផលិតផលដែលខូច");?></title>
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
 <br/>
 <div class="portlet box blue">
 		<div class="portlet-title">
 			<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("ADJUST_STOCK");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("បន្ថែមបញ្ជីផលិតផលដែលខូច");?>
 			</div>
 			<div class="tools">
 				<a href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<form class="form-horizontal" method="post" action="" >
+			<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">
 				<div class="form-body">	
 					<div class="form-group">
 						<label class="col-md-2 control-label"><?php //echo $tr->translate("RECEIVE_FROM");?></label>
@@ -54,9 +54,9 @@ $formFilter = $this->formFilter;
 												<th>#</th>
 												<th><?php echo $tr->translate("PRODUCT_NAME");?></th>
 												<th><?php echo $tr->translate("CURRENT_QTY");?></th>
-												<th><?php echo $tr->translate("ADJUST_QTY_UNIT");?></th>
-												<th><?php echo $tr->translate("ADJUST_QTY_PER_UNIT");?></th>
-												<th><?php echo $tr->translate("ADJUST_TOTAL_QTY");?></th>
+												<th><?php echo $tr->translate("ចំនួនពីមុន");?></th>
+												<th><?php echo $tr->translate("ចំនួនកែប្រែ");?></th>
+												<th><?php echo $tr->translate("ខ្នាត");?></th>
 												<th><?php echo $tr->translate("REMARK");?></th>
 												<th><?php echo $tr->translate("ACTION");?></th>
 											</tr>
@@ -72,8 +72,8 @@ $formFilter = $this->formFilter;
 							<div class="form-group">
 								<div  class="col-md-12 col-md-offset-4 col-md-8">
 									<a href="<?php echo $this->baseUrl();?>/product/adjust"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
-									<button type="submit" name="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
-									<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+									<button type="submit" id="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" id="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 									
 								</div>
 							</div>
@@ -83,7 +83,22 @@ $formFilter = $this->formFilter;
 		</div>
 </div>
 <script type="text/javascript">
-
+$('#frm').submit(function() {
+	pro_name = $("#pro_name").val();
+    if(pro_name==''){
+    	alert("សូមជ្រើសរើសផលិតផល! ");
+        $('#pro_name').select2('open');
+        return false;
+    }	
+	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+	if (r == true) {
+	    return true;
+	    $("#saveclose").attr("disabled", true);
+	    $("#btnsavenew").attr("disabled", true);
+	} else {
+	   return false;    
+	}
+});
 jQuery(document).ready(function(){
 	//addRow();
 });

@@ -32,7 +32,7 @@ public function init()
 		}
    
    		$rows=$db->getAllDamagedStock($data);
-   		$columns=array("ITEM_CODE","PRO_NAME","QTY_BEFORE","QTY_ADJUST","DFFER_QTY","MEASURE","LOCATION","BY_USER","DATE");
+   		$columns=array("ITEM_CODE","​ឈ្មោះ","QTY_BEFORE","QTY_ADJUST","DFFER_QTY","MEASURE","សាខា","BY_USER","DATE");
    		
    		$this->view->list=$list->getCheckList(0, $columns, $rows);
    		$frm = new Product_Form_FrmAdjust();
@@ -50,9 +50,9 @@ public function init()
     		$db_adjust= new Product_Model_DbTable_DbAdjustStock();
     		$db_result = $db_adjust->add($post);
     		if(isset($post["save_close"])){
-    			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS",self::REDIRECT_URL_ADD_CLOSE);
+    			Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ",self::REDIRECT_URL_ADD_CLOSE);
     		}else{
-				Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
 			}
     		
     	}

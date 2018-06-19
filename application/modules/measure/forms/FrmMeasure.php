@@ -58,7 +58,6 @@ class Measure_Form_FrmMeasure extends Zend_Form
 		$name = new Zend_Form_Element_Text('name');
 		$name->setAttribs(array(
 				'class'=>'form-control',
-				'required'=>'required'
 		));
 		
 		$parent = new Zend_Form_Element_Select("parent");
@@ -76,9 +75,10 @@ class Measure_Form_FrmMeasure extends Zend_Form
 		$status = new Zend_Form_Element_Select("status");
 		$status->setAttribs(array(
 				'class'=>'form-control',
-				'required'=>'required'
 		));
-		$opt = array('1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
+		$opt = array(
+		    '1'=>$tr->translate("ACTIVE"),
+		    '0'=>$tr->translate("DEACTIVE"));
 		$status->setMultiOptions($opt);
 		
 		$this->addElements(array($parent,$name,$status));

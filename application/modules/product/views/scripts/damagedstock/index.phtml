@@ -24,11 +24,11 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 								<div class="col-md-3">
 									<?php echo $formFilter->getElement('ad_search');?>
 								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('start_date');?>
+								<div class="col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i>
+									<?php echo $formFilter->getElement('start_date');?></div>
 								</div>
-								<div class="col-md-3">
-									<?php echo $formFilter->getElement('end_date');?>
+								<div class="col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i>
+									<?php echo $formFilter->getElement('end_date');?></div>
 								</div>
 								<div class="col-md-3">
 									<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>

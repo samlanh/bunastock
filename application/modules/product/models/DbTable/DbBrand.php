@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 class Product_Model_DbTable_DbBrand extends Zend_Db_Table_Abstract
 {

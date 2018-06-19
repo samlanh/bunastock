@@ -17,8 +17,16 @@ public function init()
 		$formFilter = new Measure_Form_FrmMeasure();
 		$frmsearch = $formFilter->MeasureFilter();
 		$this->view->formFilter = $frmsearch;
+		if($this->getRequest()->isPost()){
+		    $data = $this->getRequest()->getPost();
+		}else{
+		    $data = array(
+		        'name'	     =>	'',
+		        'status'	 =>	1,
+		    );
+		}
 		$list = new Application_Form_Frmlist();
-		$result = $db->getAllMeasure();
+		$result = $db->getAllMeasure($data);
 		$this->view->resulr = $result;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}

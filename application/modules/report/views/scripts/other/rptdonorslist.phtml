@@ -108,7 +108,8 @@
 								<td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("ថ្ងៃបង់ប្រាក់	");?></td>
 								<td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("ចំនួនម្ឈូស");?></td>
 								<td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("តម្លៃរាយ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>								
+								<td>&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>		
+								<td>&nbsp;<?php echo $tr->translate("បោះពុម្ភបង្កាន់ដៃ");?></td>						
 						        <td>&nbsp;<?php echo $tr->translate("អ្នកប្រើប្រាស់");?></td>
 		               		 </tr>
 		                </thead>
@@ -128,7 +129,8 @@
 						   <td style="border:1px solid #000;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["paid_date"]));?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo number_format($rs["qty"],0);?></td>
 						   <td align="left" style="border:1px solid #000;">&nbsp;<?php echo "$ ".number_format($rs["unit_price"],2);?></td>
-						   <td align="left" style="border:1px solid #000;">&nbsp;<?php echo "$ ".number_format($rs["total_amount"],2);?></td>		
+						   <td align="left" style="border:1px solid #000;">&nbsp;<?php echo "$ ".number_format($rs["total_amount"],2);?></td>
+						   <td align="center" style="border:1px solid #000;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/index/receipt/id/".$rs["id"];?>">&nbsp;បង់ប្រាក់</a></td>		
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
 						   <!-- <td>&nbsp;<a style="color:#000;text-decoration: none;" target="_blank" href="<?php //echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>"><?php echo $tr->translate("PRINT");?></a></td> -->
 						</tr>
@@ -136,7 +138,7 @@
 							$total_amount = $total_amount+$rs["total_amount"];
                    		 }?>
                     	<tr style="font-size:13px;font-weight:bold; height: 40px;border: 1px solid #000;" align="center" >
-							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="12"></td>
+							<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="13"></td>
 							<td style="border: 1px solid #000;white-space: nowrap;">Grand Total</td>
 							<td style="border: 1px solid #000;"><?php echo  "$ ".number_format($total_amount,2);?></td>
 						</tr>
