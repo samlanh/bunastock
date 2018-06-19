@@ -164,7 +164,6 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 						"bank_name"     	=> '',
 						"cheque_number" 	=> '',
 						"type"        		=> 2, // from mong sale 
-			
 				);
 				$this->_name="tb_receipt";
 				$this->insert($arr_receipt);
@@ -217,6 +216,25 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$this->_name="tb_mong_construct_item";
 					$this->insert($arra);
 				}
+			}
+			
+			if($data['constructor_price']>0){
+				$arr = array(
+						"branch_id"   		=> $data['branch_id'],
+						"mong_id"    		=> $mong_id,
+						"date_payment"  	=> date("Y-m-d",strtotime($data['sale_date'])),
+						"payment_type"    	=> "Cash",
+						
+						"total_payment"     => $data['constructor_price'],
+						"paid"          	=> 0,
+						"balance"       	=> $data['constructor_price'],
+						
+						"create_date"  		=> date("Y-m-d H:i:s"),
+						"user_id"       	=> $this->getUserId(),
+						"status"        	=> 1,
+				);
+				$this->_name="tb_mong_constructor_payment";
+				$this->insert($arr);
 			}
 			
 			$db->commit();

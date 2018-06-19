@@ -3,13 +3,13 @@
 	$form=$this->form_sale;
 	$url_submit = $this->url(array('module'=>'mong','controller'=>'constructorpayment','action'=>'add'));
 ?>
-<title><?php echo $tr->translate("បង់ប្រាក់ថ្លៃជួលសេវាកម្ម");?></title>
+<title><?php echo $tr->translate("បន្ថែមបង់ប្រាក់ថ្លៃជាង");?></title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("បង់ប្រាក់ថ្លៃជួលសេវាកម្ម")?>
+					<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមបង់ប្រាក់ថ្លៃជាង")?>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -17,13 +17,12 @@
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
-							
 							<label class="control-label col-md-2"><?php echo $tr->translate("លេខវិក័យបត្រ");?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<select name="mong_id" id="mong_id" class="form-control select2me" onchange="getReceipt();" >
+									<select name="mong_id" id="mong_id" class="form-control select2me" onchange="getReceipt(1);" >
 										<option value="-1">ជ្រើសរើសវិក័យបត្រ</option>
 										<?php if(!empty($this->invoice)){foreach($this->invoice as $invoice){?>
 										<option value="<?php echo $invoice['id']?>"><?php echo $invoice['name']?></option>
@@ -32,15 +31,20 @@
 								</div>
 							</div>
 							
-							<label class="control-label col-md-2"><?php echo $tr->translate("កាលបរិច្ឆេទ");?><span class="required">
-							*</span>
+							<label class="control-label col-md-2"><?php echo $tr->translate("ឈ្មោះជាង");?><span class="required">
+								</span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<i class="fa fa-calendar"></i>
-									<input class="form-control date-picker" name="date_payment" id="date_payment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+									<select name="constructor_id" id="constructor_id" class="form-control select2me" onchange="getReceipt(2);" >
+										<option value="-1">ជ្រើសរើសជាង</option>
+										<?php if(!empty($this->constructor)){foreach($this->constructor as $constructor){?>
+										<option value="<?php echo $constructor['id']?>"><?php echo $constructor['name']?></option>
+										<?php }}?>
+									</select>
 								</div>
 							</div>
+							
 						</div>
 						
 						<div class="form-group">
@@ -55,6 +59,8 @@
 									<option value="Bank Transtransfer">Bank Transtransfer</option>
 								</select>
 							</div>
+							
+							
 							<label class="control-label col-md-2"><?php echo $tr->translate("សែក");?>
 								<span class="required">*</span>
 							</label>
@@ -75,6 +81,15 @@
 							</div>
 							
 							
+							<label class="control-label col-md-2"><?php echo $tr->translate("កាលបរិច្ឆេទ");?><span class="required">
+							*</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<i class="fa fa-calendar"></i>
+									<input class="form-control date-picker" name="date_payment" id="date_payment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+								</div>
+							</div>
 						</div>
 						
 						<div class="portlet-body">
@@ -184,8 +199,15 @@
 	
 	
 	<?php $urlreceipt =  $this->url(array('module'=>'mong','controller'=>'constructorpayment','action'=>'get-constructor-payment')); ?>
-	function getReceipt(){
-		mong_id=$("#mong_id").val();
+	function getReceipt(type){
+		if(type==1){
+			mong_id=$("#mong_id").val();
+			$("#constructor_id").val(mong_id).select2();
+		}else{
+			mong_id=$("#constructor_id").val();
+			$("#mong_id").val(mong_id).select2();
+		}
+		
 		if(mong_id>0){
 			//alert(cus_id+"-"+mong_id);
 			$.ajax({

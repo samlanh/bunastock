@@ -12,46 +12,47 @@ protected $_name="tb_receipt";
 	function getAllPartnerPayment($search){
 			$db= $this->getAdapter();
 			$sql=" SELECT 
-						pp.id,
-						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = pp.`branch_id` AND status=1 AND name!='' LIMIT 1) AS branch_name,
-						(SELECT sale_no FROM `tb_sales_order` WHERE id=pp.sale_order_id) AS invoice_no,
-						pp.`date_payment`,
-						pp.`payment_type`,
-						pp.`total_payment`,
-						pp.`paid`,
-						pp.`balance`,
+						cp.id,
+						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = cp.`branch_id` AND status=1 AND name!='' LIMIT 1) AS branch_name,
+						(SELECT invoice_no FROM tb_mong WHERE tb_mong.id=cp.mong_id) AS invoice_no,
+						cp.`date_payment`,
+						cp.`payment_type`,
+						cp.`total_payment`,
+						cp.`paid`,
+						cp.`balance`,
 						'លុប',
-						pp.note,
-						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = pp.`user_id`) AS user_name 
+						cp.note,
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = cp.`user_id`) AS user_name 
 					FROM 
-						`tb_partnerservice_payment` AS pp 
+						`tb_mong_constructor_payment` AS cp 
 					where 
 						1
 			";
 			
-			$from_date =(empty($search['start_date']))? '1': " pp.`date_payment` >= '".$search['start_date']." 00:00:00'";
-			$to_date = (empty($search['end_date']))? '1': " pp.`date_payment` <= '".$search['end_date']." 23:59:59'";
+			$from_date =(empty($search['start_date']))? '1': " cp.`date_payment` >= '".$search['start_date']." 00:00:00'";
+			$to_date = (empty($search['end_date']))? '1': " cp.`date_payment` <= '".$search['end_date']." 23:59:59'";
 			$where = " and ".$from_date." AND ".$to_date;
-			if(!empty($search['text_search'])){
+			if(!empty($search['ad_search'])){
 				$s_where = array();
-				$s_search = trim(addslashes($search['text_search']));
-				$s_where[] = " pp.`total_payment` LIKE '%{$s_search}%'";
-				$s_where[] = " pp.`paid` LIKE '%{$s_search}%'";
-				$s_where[] = " pp.`balance` LIKE '%{$s_search}%'";
-				$s_where[] = " pp.`note` LIKE '%{$s_search}%'";
+				$s_search = trim(addslashes($search['ad_search']));
+				$s_where[] = " cp.`total_payment` LIKE '%{$s_search}%'";
+				$s_where[] = " cp.`payment_type` LIKE '%{$s_search}%'";
+				$s_where[] = " cp.`paid` LIKE '%{$s_search}%'";
+				$s_where[] = " cp.`balance` LIKE '%{$s_search}%'";
+				$s_where[] = " cp.`note` LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['branch']>0){
-				$where .= " AND pp.`branch_id` = ".$search['branch'];
+				$where .= " AND cp.`branch_id` = ".$search['branch'];
 			}
-			if($search['sale_order_id']>0){
-				$where .= " AND pp.`sale_order_id` = ".$search['sale_order_id'];
+			if($search['mong_id']>0){
+				$where .= " AND cp.`mong_id` = ".$search['mong_id'];
 			}
 			
 			$dbg = new Application_Model_DbTable_DbGlobal();
 			$where.=$dbg->getAccessPermission();
 			
-			$order=" ORDER BY date_payment DESC,id DESC ";
+			$order=" ORDER BY cp.date_payment DESC,id DESC ";
 			
 			return $db->fetchAll($sql.$where.$order);
 	}
@@ -250,6 +251,11 @@ protected $_name="tb_receipt";
 		$sql = "SELECT id,invoice_no as name FROM tb_mong WHERE constructor_balance>0 and status=1 ";
 		return $db->fetchAll($sql);
 	}
+	function getConstructorInvoice(){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,(select name from tb_constructor where tb_constructor.id = constructor) as name FROM tb_mong WHERE constructor_balance>0 and status=1 ";
+		return $db->fetchAll($sql);
+	}
 	
 	function getConstructorPayment($mong_id){
 		$db = $this->getAdapter();
@@ -269,7 +275,7 @@ protected $_name="tb_receipt";
 	
 	function getPartnerPaymentBalance(){
 		$db = $this->getAdapter();
-		$sql = "SELECT id,sale_no as name FROM tb_sales_order where 1 ";
+		$sql = "SELECT id,invoice_no as name FROM tb_mong where 1 ";
 		return $db->fetchAll($sql);
 	}
 	

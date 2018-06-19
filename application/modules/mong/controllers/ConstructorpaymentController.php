@@ -21,7 +21,7 @@ public function init()
 					'start_date'=>date("Y-m-d"),
 					'end_date'=>date("Y-m-d"),
 					'branch'=>-1,
-					'sale_order_id'=>"",
+					'mong_id'=>"",
 				);
 		}
 		$db = new Mong_Model_DbTable_DbConstructorPayment();
@@ -38,7 +38,7 @@ public function init()
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
-		$this->view->sale_invoice = $db->getPartnerPaymentBalance();
+		$this->view->mong_invoice = $db->getPartnerPaymentBalance();
 		$this->view->search = $search;
 		
 		$formFilter = new Product_Form_FrmProduct();
@@ -61,6 +61,7 @@ public function init()
 		}
 		
 		$this->view->invoice = $db->getMongInvoice();
+		$this->view->constructor = $db->getConstructorInvoice();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->receipt = $_db->getReceiptNumber(1);

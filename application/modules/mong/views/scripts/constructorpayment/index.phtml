@@ -1,16 +1,16 @@
 <?php 					
-	$url_new = $this->url(array('module'=>'sales','controller'=>'partnerservicepayment','action'=>'add',));
+	$url_new = $this->url(array('module'=>'mong','controller'=>'constructorpayment','action'=>'add',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 ?>
-<title>បង់ប្រាក់ថ្លៃជួលសេវាកម្ម</title>
+<title>បង់ប្រាក់ថ្លៃជាង</title>
 <meta charset="utf-8" />
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("បង់ប្រាក់ថ្លៃជួលសេវាកម្ម");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("បង់ប្រាក់ថ្លៃជាង");?>
 				</div>
 				<a href="<?php echo $url_new;?>" class="btn btn-bg blue  pull-right">
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
@@ -22,10 +22,10 @@
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
 						<label class="control-label col-md-2">
-							<select name="sale_order_id" id="sale_order_id" class="form-control select2me" >
+							<select name="mong_id" id="mong_id" class="form-control select2me" >
 								<option value="">ជ្រើសរើសវិក័យបត្រ</option>
-								<?php if(!empty($this->sale_invoice)){foreach ($this->sale_invoice as $rs){?>
-								<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->search['sale_order_id']){echo "selected='selected'";}?>><?php echo $rs['name']?></option>
+								<?php if(!empty($this->mong_invoice)){foreach ($this->mong_invoice as $rs){?>
+								<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->search['mong_id']){echo "selected='selected'";}?>><?php echo $rs['name']?></option>
 								<?php }}?>
 							</select>
 						</label>

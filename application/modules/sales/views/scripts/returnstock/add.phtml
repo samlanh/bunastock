@@ -3,11 +3,18 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>						 
-<title>បន្ថែមកញ្ចប់ទំនិញ</title>
+<title>បន្ថែមផ្ទេរទំនិញចូលស្តុក</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
 		<script>
-		$('#frm').submit(function() {			
+		$('#frm').submit(function() {	
+
+			title = $("#title").val();
+		    if(title==''){
+		        $('#title').focus();
+		        return false;
+		    }
+					
 			identity = $("#identity").val();
 		    if(identity==''){
 		        alert("សូមជ្រើសរើស ផលិតផល/សេវាកម្ម! ");
@@ -16,19 +23,18 @@
 		    }
 			var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
 			if (r == true) {
+				$("#save_close").attr("disabled", true);
 			    return true;
 			} else {
 			   return false;
-			     
 			}
-			$("#save_close").attr("disabled", true);
 		});
 			
 		</script>
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>បន្ថែមកញ្ចប់ទំនិញ</strong>
+					<i class="fa fa-gift"></i><strong>បន្ថែមផ្ទេរទំនិញចូលស្តុក</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -44,43 +50,18 @@
 										<div class="col-md-3" style="text-align: left !important;">
 										</div>
 										<div class="col-md-6" style="text-align: left !important;">
-											<div class="form-group">
-												<label class="col-md-4 control-label"><strong>ទំនិញ/សេវាកម្ម</strong></label>
-												<div class="col-md-8">
-													<select name="product_type" class="form-control"><option value="0">ប្រភេទទំនិញ</option><option value="1">ប្រភេទសេវាកម្ម</option></select>
-												</div>
-											</div>
 											<div class="form-group" >
-												<label class="col-md-4 control-label">កញ្ចប់ទំនិញ/សេវាកម្ម</label>
+												<label class="col-md-4 control-label">ចំណងជើង</label>
 												<div class="col-md-8">
-													<input type="text" class="validate[required] form-control"  name="product_name" id="product_name" />
-												</div>
-											</div>
-											<div class="form-group" style="">
-												<label class="col-md-4 control-label">លេខកូដ</label>
-												<div class="col-md-8">
-													<input type="text" readonly="readonly" class="form-control" name="product_code" id="product_code" value="<?php echo $this->pro_code;?>" />
+													<input type="text" class="form-control"  name="title" id="title" />
 												</div>
 											</div>
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
-													ប្រភេទទំនិញ
+													តម្លៃសរុប
 												</label>
 												<div class="col-md-8">
-													<select name="cate_id" id="cate_id" class="form-control select2me">
-														<option value="-1">សូមជ្រើសរើសប្រភេទទំនិញ-សេវាកម្ម</option>
-														<?php if(!empty($this->caters)){ foreach($this->caters as $rs){?>
-														<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
-														<?php }}?>
-									    			</select>
-												</div>
-											</div>
-											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													តម្លៃលក់សរុប
-												</label>
-												<div class="col-md-8">
-													<input type="text" readonly="readonly" class="form-control" name="total_cost" id="total_cost" />
+													<input type="text" readonly="readonly" class="form-control" name="total_amount" id="total_amount" />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -88,7 +69,7 @@
 													សម្គាល់
 												</label>
 												<div class="col-md-8">
-													<input type="text" class="form-control" name="noted" id="noted" />
+													<textarea rows="2" name="note" id="note" class="form-control" ></textarea>
 												</div>
 											</div>
 										</div>
@@ -101,11 +82,11 @@
 											<div class="form-group" style=""></div>
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
-													<strong>ស្វែងរកមុខទំនិញ</strong>
+													<strong>មុខទំនិញ</strong>
 												</label>
 												<div class="col-md-8">
 													<select name="product_id" id="product_id" onchange="addProductRow();" class="form-control select2me">
-														<option value="-1">សូមជ្រើសរើសទំនិញ-សេវាកម្ម</option>
+														<option value="-1">សូមជ្រើសរើសទំនិញ</option>
 														<?php if(!empty($this->rsproduct)){ foreach($this->rsproduct as $rs){?>
 														<option value="<?php echo $rs['id']?>"><?php echo $rs['name'].'-'.$rs['item_code']?></option>
 														<?php }}?>
@@ -122,21 +103,21 @@
 											 <div class="portlet box blue">
 												<div class="portlet-title">
 													<div class="caption">
-														<i class="fa fa-cogs"></i>ទំនិញ/សេវាកម្ម
+														<i class="fa fa-cogs"></i>ទំនិញ
 													</div>
 												</div>
 												 <div class="portlet-body">
 													<div class="table-responsive">
 														 <table id="table_row" class="table table-bordered" style="font-size:12px !important;">
 															<thead>
-																<tr style="text-align: center !important;">
-																	<th class="aligncenter">#</th>
-																	<th class="aligncenter" style="min-width:200px;white-space: nowrap;">ឈ្មោះ/ទំនិញសេវាកម្ម</th>
-																	<th class="aligncenter">ចំនួន</th>
-																	<th class="aligncenter">តម្លៃ</th>
-																	<th class="aligncenter">សរុប</th>
-																	<th class="aligncenter">សម្គាល់</th>
-																	<th class="aligncenter">លុប</th>
+																<tr style="text-align: center !important;font-size:13px !important;font-weight: bold">
+																	<td class="aligncenter">#</td>
+																	<td class="aligncenter" style="min-width:200px;white-space: nowrap;">ឈ្មោះទំនិញ</td>
+																	<td class="aligncenter">ចំនួន</td>
+																	<td class="aligncenter">តម្លៃ</td>
+																	<td class="aligncenter">សរុប</td>
+																	<td class="aligncenter">សម្គាល់</td>
+																	<td class="aligncenter">លុប</td>
 																</tr>
 															</thead>
 															<tbody id="lbl_noproduct">
@@ -187,10 +168,10 @@ function addProductRow(){
 	template='<tr id="row_location_'+index+'">';
 	template+='<td>'+index+'</td>';
 	template+='<td>'+txt_br+'<input type="hidden" id="product_id'+index+'" name="product_id'+index+'" value="'+pro_id+'" </td>';
-	template+='<td><input type="text" onkeyup="totalQty('+index+');" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
-	template+='<td><input type="text" onkeyup="totalQty('+index+');" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeypress="return isNumberKey(event);" onkeyup="totalQty('+index+');" id="qty_'+index+'"  name="qty_'+index+'" value="" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeypress="return isNumberKey(event);" onkeyup="totalQty('+index+');" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
 	template+='<td><input readonly="readonly" type="text" id="total_'+index+'" name="total_'+index+'"  class="form-control"></td>'; 
-	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="0" class="form-control"></td>';
+	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="" class="form-control"></td>';
 	template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
 	template+='</tr>';
 	
@@ -228,7 +209,7 @@ function totalQty(index){
 }
 function netTotal(){//use
 	var netTotal=0;
-	$('#total_cost').val(0);
+	$('#total_amount').val(0);
 	var rowId = $('#identity').val();
 	var rowIDArray = rowId.split(',');
 	for(var n = 0; n < rowIDArray.length; n++) {
@@ -237,7 +218,7 @@ function netTotal(){//use
 	if(isNaN(netTotal)){
 		netTotal=0;
 	}
-	$('#total_cost').val(netTotal.toFixed(2));
+	$('#total_amount').val(netTotal.toFixed(2));
 }
 function deleteRecord(index) {
 	var identity = $('#identity').val();
@@ -251,4 +232,15 @@ function deleteRecord(index) {
 	$("#row_location_"+index).remove();
 	netTotal();
 }
+
+function isNumberKey(evt)
+{
+  	var charCode = (evt.which) ? evt.which : event.keyCode;
+  	if (charCode != 46 && charCode != 45 && charCode > 31 && (charCode < 48 || charCode > 57)){
+		return false;
+  	}else{
+		return true;
+  	}
+}
+
 </script>
