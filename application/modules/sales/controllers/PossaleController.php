@@ -152,9 +152,9 @@ class Sales_PossaleController extends Zend_Controller_Action
 			$this->_redirect("/sales/index");
 		}
 		$query = new Sales_Model_DbTable_Dbpos();
-		$rs = $query->getInvoiceById($id);
+		$rs = $query->getSaleById($id);
 		$this->view->rs = $rs;
-		$this->view->rsdetail =  $query->getInvoiceDetailById($id);
+		$this->view->rsdetail = $query->getSaleDetailById($id);
 		if(empty($rs)){
 			$this->_redirect("/sales/");
 		}

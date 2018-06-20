@@ -16,6 +16,7 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
 		$user_id = $this->getUserId();
 		$sql ="SELECT
 					id,
+					return_code,
 					title,
 					total_amount,
 					note,
@@ -27,27 +28,24 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
 				WHERE 	
 					1 
 			";
+		$from_date =(empty($data['start_date']))? '1': " create_date >= '".$data['start_date']." 00:00:00'";
+		$to_date = (empty($data['end_date']))? '1': " create_date <= '".$data['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
 		
-		$where = '';
 		if($data["ad_search"]!=""){
 			$string = str_replace(' ','',$data['ad_search']);
 			$s_where=array();
 			$s_search = addslashes(trim($string));
-			$s_where[]=" REPLACE(p.item_name,' ','') LIKE '%{$s_search}%'";
-			$s_where[]=" REPLACE(p.barcode,' ','') LIKE '%{$s_search}%'";
-			$s_where[]=" REPLACE(p.item_code,' ','') LIKE '%{$s_search}%'";
+			$s_where[]=" return_code LIKE '%{$s_search}%'";
+			$s_where[]=" title LIKE '%{$s_search}%'";
+			$s_where[]=" total_amount LIKE '%{$s_search}%'";
 			$where.=' AND ('.implode(' OR ', $s_where).')';
 		}
+		if($data["status"]!=-1){
+			$where.=' AND status='.$data["status"];
+		}
 		
-// 		if($data["category"]!=""){
-// 			$where.=' AND p.cate_id='.$data["category"];
-// 		}
-		
-// 		if($data["status"]!=-1){
-// 			$where.=' AND p.status='.$data["status"];
-// 		}
-		
-		$group_by = " GROUP BY rs.id DESC ";
+		$group_by = " GROUP BY id DESC ";
 		return $db->fetchAll($sql.$where.$group_by);
 	}
   public function getProductCode(){
@@ -80,6 +78,7 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     	$db->beginTransaction();
     	try {
     		$arr = array(
+    			'return_code'	=>	$this->getReturnCode(),
     			'title'			=>	$data["title"],
     			'total_amount'	=>	$data["total_amount"],
     			'note'			=>	$data["note"],
@@ -209,5 +208,17 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     	$sql=" SELECT * FROM tb_prolocation WHERE pro_id = $product_id AND location_id = $location ";
     	return $this->getAdapter()->fetchRow($sql);
     }
-    
+    function getReturnCode(){
+	    $db = $this->getAdapter();
+	    $sql=" SELECT COUNT(id) FROM tb_return_stock LIMIT 1 ";
+	    $pre = "RT";
+	    $acc_no = $db->fetchOne($sql);
+	    
+	    $new_acc_no= (int)$acc_no+1;
+	    $acc_no= strlen((int)$acc_no+1);
+	    for($i = $acc_no;$i<5;$i++){
+	    	$pre.='0';
+	    }
+	    return $pre.$new_acc_no;
+    }
 }

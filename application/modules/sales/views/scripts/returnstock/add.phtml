@@ -6,31 +6,7 @@
 <title>បន្ថែមផ្ទេរទំនិញចូលស្តុក</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
-		<script>
-		$('#frm').submit(function() {	
-
-			title = $("#title").val();
-		    if(title==''){
-		        $('#title').focus();
-		        return false;
-		    }
-					
-			identity = $("#identity").val();
-		    if(identity==''){
-		        alert("សូមជ្រើសរើស ផលិតផល/សេវាកម្ម! ");
-		        $('#product_id').select2('open');
-		        return false;
-		    }
-			var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
-			if (r == true) {
-				$("#save_close").attr("disabled", true);
-			    return true;
-			} else {
-			   return false;
-			}
-		});
-			
-		</script>
+		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -50,6 +26,12 @@
 										<div class="col-md-3" style="text-align: left !important;">
 										</div>
 										<div class="col-md-6" style="text-align: left !important;">
+											<div class="form-group" >
+												<label class="col-md-4 control-label">លេខកូដ</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" readonly name="return_code" id="return_code" value="<?php echo $this->return_code ;?>" />
+												</div>
+											</div>
 											<div class="form-group" >
 												<label class="col-md-4 control-label">ចំណងជើង</label>
 												<div class="col-md-8">
@@ -154,6 +136,28 @@
 </body>
 </html>
 <script>
+
+$('#frm').submit(function() {	
+	title = $("#title").val();
+	if(title==''){
+		$('#title').focus();
+		return false;
+	}
+	identity = $("#identity").val();
+	if(identity==''){
+		alert("សូមជ្រើសរើស ផលិតផល/សេវាកម្ម! ");
+		$('#product_id').select2('open');
+		return false;
+	}
+	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+	if (r == true) {
+		$("#save_close").attr("disabled", true);
+		return true;
+	} else {
+	   return false;
+	}
+});
+			
 
 index=0;
 title=0;

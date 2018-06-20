@@ -49,7 +49,7 @@ class Product_Model_DbTable_DbMeasure extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = "SELECT m.id,m.`name`,m.`status`,m.`remark` FROM `tb_measure` AS m WHERE m.id";
 		$where = '';
-		if(!empty($data["name"]!="")){
+		if($data["name"]!=""){
 		    $s_where=array();
 		    $s_search = addslashes(trim($data['name']));
 		    $s_where[]= " m.`name` LIKE '%{$s_search}%'";

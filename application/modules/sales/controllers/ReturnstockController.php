@@ -19,25 +19,23 @@ public function init()
 		$level = $result["level"];
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
-    			'branch'	=>	'',
-    			'brand'		=>	'',
-    			'category'	=>	'',
-    			'model'		=>	'',
-    			'color'		=>	'',
-    			'size'		=>	'',
-    			'status'	=>	1
+    			'start_date'=>date("Y-m-d"),
+    			'end_date'	=>date("Y-m-d"),
+    			'status'	=>	-1
     		);
     	}
 		$rows = $db->getAllReturnStock($data);
-		$columns=array("ចំណងជើង","តម្លៃសរុប","សម្គាល់","ថ្ងៃបង្កើត","អ្នកប្រើប្រាស់","ស្ថានការ");
+		$columns=array("លេខកូដ","ចំណងជើង","តម្លៃសរុប","សម្គាល់","ថ្ងៃបង្កើត","អ្នកប្រើប្រាស់","ស្ថានការ");
 		$link=array(
 				'module'=>'sales','controller'=>'returnstock','action'=>'edit',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('title'=>$link,'total_amount'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('title'=>$link,'total_amount'=>$link,'return_code'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
@@ -58,6 +56,7 @@ public function init()
 			}
 			$db = new Sales_Model_DbTable_DbReturnStock();
 			$this->view->rsproduct = $db->getAllProductName();
+			$this->view->return_code = $db->getReturnCode();
 	}
 	public function editAction()
 	{

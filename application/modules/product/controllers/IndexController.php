@@ -44,10 +44,10 @@ public function init()
 // 					"CATEGORY","MEASURE","QTY","MASTER_PRICE","DEALER_PRICE","USER","STATUS");
 // 		}
 		$link=array(
-				'module'=>'product','controller'=>'index','action'=>'edit',
+			'module'=>'product','controller'=>'index','action'=>'edit',
 		);
 		$linkcopy=array(
-				'module'=>'product','controller'=>'index','action'=>'copy',
+			'module'=>'product','controller'=>'index','action'=>'copy',
 		);
 	
 		$list = new Application_Form_Frmlist();

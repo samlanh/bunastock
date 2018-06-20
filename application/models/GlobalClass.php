@@ -325,6 +325,8 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 							cate_id = ".$cate['id']." 
 							AND item_name!='' 
 							AND status=1 
+							and is_service=0
+							and is_package=0
 						ORDER BY 
 							item_name ASC
 					";
