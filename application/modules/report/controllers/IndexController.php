@@ -996,13 +996,20 @@ class report_indexController extends Zend_Controller_Action
     				'branch_id'=>0,
     		);
     	}
-    	$this->view->rssearch = $data;
     	$query = new report_Model_DbQuery();
+    	$this->view->rssearch = $data;	
+    	if($data['suppliyer_id']==0){
     	$this->view->purchase_balance =  $query->getVendorBalance($data);
     	$this->view->partner_service_balance =  $query->getPartnerServiceBalance($data);
     	$this->view->constructor_balance =  $query->getConstructorBalance($data);
-    	$frm = new Application_Form_FrmReport();
-    
+    	}else if($data['suppliyer_id']==1){
+    		$this->view->purchase_balance =  $query->getVendorBalance($data);
+    	}else if($data['suppliyer_id']==2){
+    	$this->view->partner_service_balance =  $query->getPartnerServiceBalance($data);
+    	}else if($data['suppliyer_id']==3){
+    		$this->view->constructor_balance =  $query->getConstructorBalance($data);
+    	}    	
+    	$frm = new Application_Form_FrmReport();  
     	$form_search=$frm->FrmReportPurchase($data);
     	Application_Model_Decorator::removeAllDecorator($form_search);
     	$this->view->form_purchase = $form_search;
@@ -1368,10 +1375,10 @@ class report_indexController extends Zend_Controller_Action
 		}else{
 			$data = array(
 					'ad_search'	=>	'',
-					'branch'	=>	'',
-					'paid_type'	=>	0,
-					'start_date'=>	date("Y-m-d"),
-					'end_date'	=>	date("Y-m-d"),
+					'branch'		=>	'',
+					'start_date'	=>	date("Y-m-d"),
+					'end_date'		=>	date("Y-m-d"),
+					'paid_type'		=>0,
 			);
 		}
 		$this->view->rssearch = $data;
@@ -1382,14 +1389,21 @@ class report_indexController extends Zend_Controller_Action
 			$this->view->constructor_payment = $db->getConstructorPayment($data);
 		}else if($data['paid_type']==1){
 			$this->view->purchase_payment = $db->getPurchasePayment($data);
-		}else{
+		}else if($data['paid_type']==2){
 			$this->view->partner_service_payment = $db->getPartnerServicePayment($data);
+		}else if($data['paid_type']==3){
+			$this->view->constructor_payment = $db->getConstructorPayment($data);
 		}
 		
 		$formFilter = new Product_Form_FrmProduct();
 		$this->view->formFilter = $formFilter->productFilter();
 		$this->view->form_salemong = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
+		
+// 		$frm = new Application_Form_FrmReport();
+// 		$form_search=$frm->FrmReportPurchase($data);
+// 		Application_Model_Decorator::removeAllDecorator($form_search);
+// 		$this->view->form_purchase = $form_search;
 	}
 	
 	

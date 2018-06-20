@@ -31,8 +31,15 @@ $brach_name =  $this->branch;
 					<div class="form-group" style="padding-top: 6px;">
 						<?php $formFilter = $this->form_purchase; ?>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>					
+						<label class="control-label col-md-2">
+							<select name="suppliyer_id" id="suppliyer_id" class="form-control select2me" >
+								<option value="0" <?php if($this->rssearch['suppliyer_id']==0){echo "selected='selected'";}?>>ជ្រើសរើសប្រភេទ</option>
+								<option value="1" <?php if($this->rssearch['suppliyer_id']==1){echo "selected='selected'";}?>>ជំពាក់ថ្លៃទិញទំនិញ</option>
+								<option value="2" <?php if($this->rssearch['suppliyer_id']==2){echo "selected='selected'";}?>>ជំពាក់ថ្លៃជួលសេវាកម្ម</option>
+								<option value="3" <?php if($this->rssearch['suppliyer_id']==3){echo "selected='selected'";}?>>ជំពាក់ថ្លៃជាង</option>
+							</select>
+						</label>
 						<label class="control-label col-md-2"><div class="input-icon right"><i class="icon-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
 						<label class="control-label col-md-2"><div class="input-icon right"><i class="icon-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
 						<label class="control-label col-md-2">

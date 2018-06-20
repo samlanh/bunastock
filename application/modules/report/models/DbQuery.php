@@ -1108,15 +1108,9 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));
-			$s_where[] = " invoice_no LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=tb_purchase_order.vendor_id LIMIT 1 ) LIKE '%{$s_search}%'";
 			$s_where[] = " order_number LIKE '%{$s_search}%'";
-			$s_where[] = " net_total LIKE '%{$s_search}%'";
-			$s_where[] = " paid LIKE '%{$s_search}%'";
-			$s_where[] = " balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
-		}
-		if($search['suppliyer_id']>0){
-			$where .= " AND vendor_id = ".$search['suppliyer_id'];
 		}
 		if($search['branch_id']>0){
 			$where .= " AND branch_id =".$search['branch_id'];

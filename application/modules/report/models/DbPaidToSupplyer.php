@@ -23,16 +23,15 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					p.id=v.purchase_id
 					AND p.status=1
 			";
+//		$where= '';
 		$from_date =(empty($search['start_date']))? '1': " v.expense_date >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " v.expense_date <= '".$search['end_date']." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
-		if(!empty($search['text_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
+			$s_where[] = " p.branch_id LIKE '%{$s_search}%'";
 			$s_where[] = " p.order_number LIKE '%{$s_search}%'";
-			$s_where[] = " s.total LIKE '%{$s_search}%'";
-			$s_where[] = " s.paid LIKE '%{$s_search}%'";
-			$s_where[] = " s.balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch']>0){
@@ -40,12 +39,6 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
-		
-// 		if($search['order']==1){
-// 			$order=" ORDER BY r.receipt_date ASC , r.id ASC ";
-// 		}else{
-// 			$order=" ORDER BY r.invoice_id ASC , r.id ASC ";
-// 		}
 		$order=" ORDER BY v.id ASC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
@@ -69,35 +62,24 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					s.id=pp.sale_order_id
 					AND s.status=1
 			";
-		$where= ' ';
-	
+//		$where= ' ';
 		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " pp.date_payment <= '".$search['end_date']." 23:59:59'";
-		$where = " and ".$from_date." AND ".$to_date;
-	
-		if(!empty($search['text_search'])){
+		$where = " AND ".$from_date." AND ".$to_date;
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
+			$s_where[] = " (SELECT name FROM `tb_sublocation` WHERE id=s.branch_id) LIKE '%{$s_search}%'";
 			$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
-			$s_where[] = " pp.payment_type LIKE '%{$s_search}%'";
-			$s_where[] = " pp.paid LIKE '%{$s_search}%'";
-			$s_where[] = " pp.balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch']>0){
-			$where .= " AND s.branch_id =".$search['branch'];
+			$where .= " AND branch_id =".$search['brancd'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
-	
-		// 		if($search['order']==1){
-		// 			$order=" ORDER BY r.receipt_date ASC , r.id ASC ";
-		// 		}else{
-		// 			$order=" ORDER BY r.invoice_id ASC , r.id ASC ";
-		// 		}
-	
-		$order=" ORDER BY pp.id ASC  ";
-			
+		$order=" ORDER BY s.id ASC ";
+	//	echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
@@ -120,19 +102,16 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					m.id=mp.mong_id
 					AND m.status=1
 			";
-		$where= ' ';
-	
+//		$where= ' ';	
 		$from_date =(empty($search['start_date']))? '1': " mp.date_payment >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " mp.date_payment <= '".$search['end_date']." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
 	
-		if(!empty($search['text_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " m.invoice_no LIKE '%{$s_search}%'";
 			$s_where[] = " mp.payment_type LIKE '%{$s_search}%'";
-			$s_where[] = " mp.paid LIKE '%{$s_search}%'";
-			$s_where[] = " mp.balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch']>0){
@@ -140,15 +119,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
-	
-		// 		if($search['order']==1){
-		// 			$order=" ORDER BY r.receipt_date ASC , r.id ASC ";
-		// 		}else{
-		// 			$order=" ORDER BY r.invoice_id ASC , r.id ASC ";
-		// 		}
-	
-		$order=" ORDER BY mp.id ASC  ";
-			
+		$order=" ORDER BY mp.id ASC  ";	
+	//	echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
