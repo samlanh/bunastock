@@ -10,7 +10,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}
 	
 	function getAllProductName($is_service=null){
-		$sql="SELECT id,CONCAT(item_name,' - ',item_code) AS name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
+		$sql="SELECT id,CONCAT(item_name,' - ',item_code) AS name,item_name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
 		if($is_service!=null){
 			$sql.=" AND is_service=1";
 		}
