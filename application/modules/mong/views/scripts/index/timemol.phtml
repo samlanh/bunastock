@@ -4,7 +4,7 @@
 	$controller=$request->getControllerName();
 	$row = $this->row;
 ?>
-<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:24cm;margin: 0 auto; min-height: 28cm;padding: 0.5cm;">
+<div class="wrapper" style="border: 1px dotted #000;background: #fff;width:24cm;margin: 0 auto; min-height: 25cm;padding: 0.5cm;">
 <div id="Printtimemol" >
 		<style>
 	    	.wrapper{
@@ -65,18 +65,18 @@
 		  	<tr>
 		  		<td>
 	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:60px;font-weight: bold; list-style:none; color:#800080;">
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:50px;font-weight: bold; list-style:none; color:#800080;">
 	  					<td>
 	  						<li>សែនឆ្លងម៉ុង</li>
 	  					</td>
 	  				</tr>
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:50px;font-weight: bold; list-style:none; color:#009900;">
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:40px;font-weight: bold; list-style:none; color:#009900;">
 	  					<td>
-	  						<li>ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
+	  						<li align="center">ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
 	  						<li align="center">​Tell: 012 455 660</li>
 	  					</td>
 	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:55px;font-weight: bold; list-style:none; color:#B22222;">
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:40px;font-weight: bold; list-style:none; color:#B22222;">
 	  					<td>
 	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
 	  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>

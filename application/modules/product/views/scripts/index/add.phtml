@@ -265,11 +265,6 @@ input.btn_borwse_image {
 						</div>
 						<div class="portlet-body form">
 							<form id="frmbrand" id="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-									<script>
-										 $('#frmbrand').submit(function() {
-											 $("#btnsavenew").attr("disabled", true);
-										});							
-									</script>
 									<div class="form-body">
 										<div class="form-group">
 											<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
@@ -311,7 +306,6 @@ input.btn_borwse_image {
         </div>
     </div>
  </div>	
-
 <!-- CATEGORY Popup -->
 <?php $formcat = $this->frmCat; ?>
 <div id="categorypopup" class="modal fade" tabindex="-1" data-width="1200">
@@ -333,29 +327,6 @@ input.btn_borwse_image {
 			</div>
 			<div class="portlet-body form">
 				<form id="frmCat" id="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-					<script>
-					$('#frmCat').submit(function() {
-						parent = $("#parent").val();
-					    if(parent==''){
-					        alert("សូមបញ្ចូលជ្រើសរើសប្រភេទ! ");
-					        $('#parent').select2('open');
-					        return false;
-					    }
-						cat_name = $("#cat_name").val();
-					    if(cat_name==''){
-					        alert("សូមបញ្ចូលឈ្មោះប្រភេទទំនិញ! ");
-					        $('#cat_name').select2('open');
-					        return false;
-					    }
-						var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
-						if (r == true) {
-						    return true;
-						    $("#btnsavenew").attr("disabled", true);
-						}else{
-						   return false;    
-						}
-					});
-					</script>
 						<div class="form-body">
 						<div class="form-group">
 							<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>

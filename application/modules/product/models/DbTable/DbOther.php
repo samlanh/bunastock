@@ -10,10 +10,9 @@ class Product_Model_DbTable_DbOther extends Zend_Db_Table_Abstract
     	//$this->_name=$name;
     }
     
-    
     function getAllView($data){
     	$db = $this->getAdapter();
-    	$sql = "SELECT v.`id`,v.`name_en`,v.`status`,v.`key_code`,`type` FROM `tb_view` AS v WHERE v.`type` IN(2,3,4,6)";
+    	$sql = "SELECT v.`id`,v.`name_en`,v.`status`,`type` FROM `tb_view` AS v WHERE v.`type` IN(2,3,4,6)";
     	$where = '';
     	if($data["adv_search"]!=""){
     		$s_where=array();
