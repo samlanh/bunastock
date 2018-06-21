@@ -81,9 +81,9 @@ class Donors_IndexController extends Zend_Controller_Action
 		$this->view->row = $db->getDonorById($id);
 
 	}
-	function receiptAction(){
+	function donorpeopleAction(){
 	    $dbq = new Donors_Model_DbTable_DbIndex();
 	    $id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-	    $this->view->rs = $dbq->getRecieptById($id);
+	    $this->view->row = $dbq->getdonorpeopleById($id);
 	}
 }

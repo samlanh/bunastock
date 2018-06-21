@@ -27,10 +27,6 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					sub_total,
 					paid,
 					balance_after,
-					
-					'វិក័យបត្រ',
-					'សែនបើកឆាក',
-					'សែនឆ្លងម៉ុង',
 					other_note,
 					(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status

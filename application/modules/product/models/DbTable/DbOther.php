@@ -12,7 +12,24 @@ class Product_Model_DbTable_DbOther extends Zend_Db_Table_Abstract
     
     function getAllView($data){
     	$db = $this->getAdapter();
-    	$sql = "SELECT v.`id`,v.`name_en`,v.`status`,`type` FROM `tb_view` AS v WHERE v.`type` IN(2,3,4,6)";
+    	$sql = "SELECT 
+				  v.`id`,
+				  v.`name_en`,
+				  CASE
+ 				    WHEN `type` = 2 THEN 'ម៉ាក'
+				    WHEN `type` = 3 THEN 'ទំហំ'
+				    WHEN `type` = 4 THEN 'ពណ៍'
+				    ELSE 'Customer Type'
+				    END 
+				    AS aba,
+				    CASE
+				    WHEN `status` = 0 THEN 'Dactive'
+				    ELSE 'Active'
+				    END 
+				    AS `status`
+						FROM
+				  `tb_view` AS v 
+				WHERE v.`type` IN (2, 3, 4, 6)";
     	$where = '';
     	if($data["adv_search"]!=""){
     		$s_where=array();

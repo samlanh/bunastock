@@ -60,8 +60,8 @@ $(function(){
 				url='<?php echo $this->baseUrl()."/donors/index/edit/id/";?>';
 			}else if(key=="add"){
 				url='<?php echo $this->baseUrl()."/donors/index/add/id/";?>';
-			}else if(key=="receipt"){
-				url='<?php echo $this->baseUrl()."/donors/index/receipt/id/";?>';
+			}else if(key=="donorpeople"){
+				url='<?php echo $this->baseUrl()."/donors/index/donorpeople/id/";?>';
 			}
 			
 			gotoAction();
@@ -69,7 +69,7 @@ $(function(){
 		items: {
 			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
 			"add": {name: "បន្ថែម", icon: "add", accesskey: "e"},
-			"receipt": {name: "បង្កាន់ដៃបង់ប្រាក់", icon: "fa-newspaper-o", accesskey: "e"},
+			"donorpeople": {name: "សប្បុសជន", icon: "fa-newspaper-o", accesskey: "e"},
 		}
 	});
 });

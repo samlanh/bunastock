@@ -196,6 +196,17 @@
 											</select>
 										</div>
 									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ស្លាប់នៅថ្ងៃទី
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control" name="date_time_female" id="date_time_female" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
+											</div>
+										</div>
+									</div>
 									
 									
 									
@@ -241,6 +252,22 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
+											ទូរស័ទ្ទសមាជិកទី១
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="membersone" id="membersone"  />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ទូរស័ទ្ទសមាជិកទី២
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="memberstwo" id="memberstwo"  />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
 											សម្គាល់
 										</label>
 										<div class="col-md-8">
@@ -248,8 +275,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							
+							</div>							
 							<div class="row">
 								<div class="col-md-12">
 									<ul class="nav nav-tabs ">
@@ -462,7 +488,6 @@
 																		<th style="width:65px;text-align: center;">លុប</th>
 																	</tr>
 																</thead>
-																<tbody id="lbl_khmer_year_girl">
 																</tbody>
 															</table>
 														</div>
@@ -549,6 +574,12 @@
 
 	$(function () {
 		$('#date_time_dead').datetimepicker({
+            inline: true,
+			sideBySide: true
+		});
+	});
+	$(function () {
+		$('#date_time_female').datetimepicker({
             inline: true,
 			sideBySide: true
 		});

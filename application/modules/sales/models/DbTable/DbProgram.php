@@ -110,11 +110,14 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'partner_age'      		=> $data['partner_age'],
 	    			'partner_dob'           => empty($data['partner_dob'])?null:date("Y-m-d",strtotime($data['partner_dob'])),
 	    			'partner_status'	    => $data['partner_status'],
+	    			'date_time_female'	    => empty($data['date_time_female'])?null:date("Y-m-d H:i:s",strtotime($data['date_time_female'])),
 	    			'partner_pob'           => $data['partner_pob'],
 	    			
 	    			'place_of_program'      => $data['place_of_program'],
 	    			'type_romleay_sop'      => $data['type_romleay_sop'],
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
+	    			'membersone'           	=> $data['membersone'],
+	    			'memberstwo'           	=> $data['memberstwo'],
 	    			'note'           		=> $data['note'],
 	    			
 	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),
@@ -199,11 +202,14 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'partner_age'      		=> $data['partner_age'],
 	    			'partner_dob'           => empty($data['partner_dob'])?null:date("Y-m-d",strtotime($data['partner_dob'])),
 	    			'partner_status'	    => $data['partner_status'],
+	    			'date_time_female'	    => empty($data['date_time_female'])?null:date("Y-m-d H:i:s",strtotime($data['date_time_female'])),
 	    			'partner_pob'           => $data['partner_pob'],
 	    			
 	    			'place_of_program'      => $data['place_of_program'],
 	    			'type_romleay_sop'      => $data['type_romleay_sop'],
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
+	    			'membersone'           	=> $data['membersone'],
+	    			'memberstwo'           	=> $data['memberstwo'],
 	    			'note'           		=> $data['note'],
 	    			
 	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),

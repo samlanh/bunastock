@@ -6,7 +6,7 @@
 	$row = $this->row
 ?>	
 
-<div  class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 28cm;padding: 0.5cm;">
+<div  class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 30cm;padding: 0.5cm;">
 <div id="Printdonate">
 	<style>
 
@@ -47,7 +47,7 @@
 								</tr>
 								<tr style="list-style:12px;font-weight: bold;font-size:13px;" class="img-size">
 									<td>
-										<img style="width: 37%; height: 100px;" src="/bunastock/trunk/public/images/logosbona.jpg"><br>
+										<img style="width: 31%; height: 80px;" src="/bunastock/trunk/public/images/logosbona.jpg"><br>
 									</td>
 								</tr>
 								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
@@ -67,41 +67,52 @@
 	  	<tr>
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
-	  				<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:28px;">
-		  					他好看　(សប្បុរសជនប្រគល់អោយសព):
+	  				<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:24px;">
+		  					他好看　(សប្បុរសជន):
 		  				</div>
 			  			<tr>
-  							<td colspan="3" align="center" style="list-style:25px; font-family:   Khmer OS Muol; font-size:38px;font-weight: bold; color:red;">
-  									<?php echo $this->row['donor_name']?>
-  								</td> 											
-  						</tr>
-  							<tr>
-  								<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red;">
-  								<?php echo $this->row['donor_female']?> នឹងបុត្រ ព្រមទាំងចៅ 
-  						</td>
-  							</tr>
-  						<tr>
-  							<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red;">
-  								<?php echo $this->row['donor_phone']?>
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:34px;font-weight: bold; color:red;">
+  							<?php echo $this->row['donor_name']?>
   							</td>
   						</tr>
-		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; ">
+			  			<tr>
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+  							លោកស្រី <?php echo $this->row['donor_female']?> នឹងបុត្រ ព្រមទាំងចៅ 
+  							</td>
+  						</tr>
+			  			<tr>
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+  									汉堡包/漢堡包, 
+  							</td>
+  						</tr>
+			  			<tr>
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+  							<?php echo $this->row['tel']?>
+  							</td>
+  						</tr>
+		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px; font-weight: bold; color:#22B424;">
 	  					<td>
-	  						<?php echo $this->row['notes']?>
-						</td>
-	  				</tr>
-		  			<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
-	  					<td>
-	  						<?php echo $this->row['note']?>
+	  						汉堡包/漢堡包, 汉堡/漢堡汉堡包/漢堡包, 汉堡/漢堡
 	  					</td>
 	  				</tr>
-	  				<tr style="font-family:  Khmer OS Muol; font-size:24px;font-weight: bold;  line-height:50px; color: #6A5ACD; list-style:none;">
+	  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; color:#C70039;">
 	  					<td>
-	  						<li>ឈ្មោះ ៖  <?php echo $this->row['dead_name']?></li>
-	  						<li>ភេទ  ៖  <?php echo $this->row['dead_sex']?></li>
-	  						<li>អាយុ ៖ <?php echo $this->row['dead_age']?>&nbsp;&nbsp;ឆ្នាំ</li>
-	  						<li>លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?> </li>
-	  						<li ​align="center">ថ្ងៃទី  <?php echo date("d",strtotime($row['date_jenh']));?> ខែ <?php echo date("m",strtotime($row['date_jenh']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_jenh']));?></li>
+	  						មានចិត្តសន្ធាជ្រះថ្លាជួយក្ដារដល់សពទីទាល់ក្រ
+	  					</td>
+	  				</tr>
+	  				<tr style="list-style:23px; font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; color:red;">
+	  					<td>
+	  						ព័ត៌មានមានការបង់ប្រាក់៖
+	  					</td>
+	  				</tr>
+	  				<tr style="font-family:  Khmer OS Muol; font-size:20px;font-weight: bold; line-height:44px; color: #6A5ACD; list-style:none;">
+	  					<td>
+	  						<li>លេខបង្កាន់ដៃ  <?php echo $this->row['receipt_no']?></li>	
+	  						<li>ចំនួន  <?php echo $this->row['qty']?>&nbsp; ម្ឈូស</li>
+	  						<li>តម្លៃរាយ  <?php echo $this->row['unit_price']?>($) </li>
+	  						<li>តម្លៃសរុប  <?php echo $this->row['total_amount']?>($) </li>
+	  						<li align="center">លំនៅដ្ឋានសព្វថ្ងៃ៖  <?php echo $this->row['address']?></li>
+	  						<li align="center">ថ្ងៃទី <?php echo date("d",strtotime($row['paid_date']));?> ខែ <?php echo date("m",strtotime($row['paid_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['paid_date']));?></li>
 	  					</td>
 	  				</tr>
 	  			</table>
@@ -109,7 +120,7 @@
 	  	</tr>
 	</table>
 </div>
-<div style="padding-left:14%; margin: 0 auto;"> 
+<div style="padding-left:13%; margin: 0 auto;"> 
 <lable class="col-md-3" style=""></lable>
 <div class="col-md-2">
 <a href="<?php echo $this->baseUrl();?>/mong/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
