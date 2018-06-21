@@ -1215,7 +1215,7 @@ function getPackageProduct(product_id){
 				//alert(data);
 				for(i=0;i<data.length;i++){
 					//alert(data[i]['name']);
-					addProductRow(data[i]['product_id'],data[i]['name'],data[i]['qty']);
+					addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty']);
 				}
 			}
 		},		

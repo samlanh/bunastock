@@ -702,7 +702,7 @@ title=0;
 temp='';
 temp='';
 	<?php if(!empty($this->row_detail)){foreach ($this->row_detail as $rs){?>
-		product_name = "<?php echo $rs['pro_name']?>";
+		product_name = "<?php echo $rs['pro_name']." - ".$rs['item_code']?>";
 		product_id = "<?php echo $rs['pro_id']?>";
 		if(product_name=='' ){return false;}
 		col++;no++;

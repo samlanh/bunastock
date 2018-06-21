@@ -318,7 +318,7 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 							unit_label,
 							qty_perunit,
 							(SELECT tb_brand.name FROM `tb_brand` WHERE tb_brand.id=brand_id limit 1) As brand_name,
-							barcode AS item_code 
+							item_code 
 						FROM 
 							tb_product 
 						WHERE 
@@ -331,7 +331,7 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 							item_name ASC
 					";
 			}else{
-				$sql = " SELECT p.id,p.item_name,p.barcode AS item_code ,
+				$sql = " SELECT p.id,p.item_name,p.item_code ,
 				(SELECT tb_measure.name FROM `tb_measure` WHERE tb_measure.id=p.measure_id LIMIT 1) as measue_name,
 				p.unit_label,p.qty_perunit,
 				(SELECT tb_brand.name FROM `tb_brand` WHERE tb_brand.id=p.brand_id limit 1) As brand_name
@@ -349,7 +349,7 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 						if($value['is_service'] == 1){
 							$measure = "";
 						}else{
-							$measure = ' '.htmlspecialchars($value['item_code'].'(1'.$value['measue_name'].'='.$value['qty_perunit'].$value['unit_label'].')', ENT_QUOTES);
+							$measure = ' '.htmlspecialchars($value['item_code'].' (1'.$value['measue_name'].'='.$value['qty_perunit'].$value['unit_label'].')', ENT_QUOTES);
 						}
 						
 						$option .= '<option value="'.$value['id'].'" >'.

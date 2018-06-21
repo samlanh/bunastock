@@ -10,7 +10,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}
 	
 	function getAllProductName($is_service=null){
-		$sql="SELECT id,CONCAT(item_name) AS name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
+		$sql="SELECT id,CONCAT(item_name,' - ',item_code) AS name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
 		if($is_service!=null){
 			$sql.=" AND is_service=1";
 		}
@@ -346,11 +346,17 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	function getSaleDetailById($id){
 		$sql=" SELECT 
 					si.*,
-					(SELECT item_name FROM `tb_product` WHERE id=si.pro_id) As pro_name
+					p.item_name As pro_name,
+					p.item_code,
+					p.is_service,
+					p.is_package,
+					(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name
 				FROM 
-					tb_salesorder_item as si 
+					tb_salesorder_item as si,
+					tb_product as p 
 				WHERE 
-					si.saleorder_id = $id
+					p.id = si.pro_id
+					and si.saleorder_id = $id
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
@@ -435,7 +441,15 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 	function getPackageProduct($product_id){
 		$db = $this->getAdapter();
-		$sql=" SELECT *,(SELECT item_name FROM `tb_product` WHERE tb_product.id=tb_product_package.product_id) As name FROM tb_product_package WHERE package_id=$product_id ";
+		$sql=" SELECT 
+					*,
+					(SELECT item_name FROM `tb_product` WHERE tb_product.id=tb_product_package.product_id) As name ,
+					(SELECT item_code FROM `tb_product` WHERE tb_product.id=tb_product_package.product_id) As code 
+				FROM 
+					tb_product_package 
+				WHERE 
+					package_id=$product_id 
+			";
 		return $db->fetchAll($sql);
 	}
 	

@@ -356,11 +356,16 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	function getInvoiceDetailById($id){
 		$sql=" SELECT 
 					msi.*,
-					(SELECT item_name FROM `tb_product` WHERE id=msi.pro_id) As pro_name
+					p.item_name As pro_name,
+					p.is_service,
+					p.is_package,
+					(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name
 				FROM 
-					tb_mong_sale_item as msi 
+					tb_mong_sale_item as msi,
+					tb_product as p  
 				WHERE 
-					msi.mong_id = $id
+					p.id = msi.pro_id
+					and msi.mong_id = $id
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
