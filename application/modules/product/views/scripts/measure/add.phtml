@@ -18,12 +18,6 @@
 		</div>
 		<div class="portlet-body form">
 			<form class="form-horizontal"​ id="frm" method="post" action="<?php echo $url_new;?>" autocomplete="off">
-				<script>
-					$('#frm').submit(function() {
-				        $("#btnsavenew").attr("disabled", true);
-				        $("#save_close").attr("disabled", true);
-				      });
-				</script>
 				<div class="form-body ">
 					<div style="margin: 0 auto;" >
 							
@@ -62,3 +56,21 @@
 		</div>
 	</div>
 </div>
+<script>
+$('#frm').submit(function() {
+	measure_name = $("#measure_name").val();
+    if(measure_name==''){
+        alert("សូមបញ្ចូលឈ្មោះ! ");
+        $('#measure_name').select2('open');
+        return false;
+    }
+	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+	if (r == true) {
+	    return true;
+	    $("#saveclose").attr("disabled", true);
+	    $("#btnsavenew").attr("disabled", true);
+	} else {
+	   return false;    
+	}
+});
+</script>

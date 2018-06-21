@@ -49,7 +49,13 @@ class Product_Model_DbTable_DbBrand extends Zend_Db_Table_Abstract
 	
 	public function getAllBrands($data){
 		$db = $this->getAdapter();
-		$sql = "SELECT c.id,c.`name`,c.`parent_id`,c.`remark`,c.`status` FROM `tb_brand` AS c WHERE c.`status` =1";
+		$sql = "SELECT c.id,
+				c.`name`,
+				(SELECT v.name FROM tb_brand AS v WHERE  v.id=c.`parent_id` LIMIT 1) AS parent,
+				c.`remark`,
+				(SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=5  AND c.`status` =v.`key_code` LIMIT 1) AS STATUS
+				FROM `tb_brand` AS c 
+				WHERE c.id";
 		$where = '';
 		if($data["name"]!=""){
 			$s_where=array();
@@ -59,6 +65,10 @@ class Product_Model_DbTable_DbBrand extends Zend_Db_Table_Abstract
 			//$s_where[]= " cate LIKE '%{$s_search}%'";
 			$where.=' AND ('.implode(' OR ', $s_where).')';
 		}
+		if($data["status"]>-1!=""){
+			$where.=' AND c.`status`='.$data["status"];
+		}
+		$where.=" ORDER BY id DESC";
 		return $db->fetchAll($sql.$where);
 	}
 	public function getAllBrand(){

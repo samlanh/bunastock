@@ -32,9 +32,7 @@ public function init()
     		);
     	}
 			$rows = $db->getAllProductForAdmin($data);
-			$columns=array("ITEM_CODE","ITEM_NAME",
-					"PRODUCT_CATEGORY","ប្រភេទ","SOLD_PRICE","USER","STATUS");
-
+			$columns=array("ITEM_CODE","ITEM_NAME","PRODUCT_CATEGORY","ប្រភេទ","SOLD_PRICE","USER","STATUS");
 		$link=array(
 				'module'=>'product','controller'=>'package','action'=>'edit',
 		);

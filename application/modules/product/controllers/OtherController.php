@@ -25,9 +25,15 @@ public function init()
     					'type' => ''
     			);
     		}
-    		$rs_rows= $db->getAllView($search);//call frome model
+    		$rs_rows= $db->getAllView($search);
+    		$columns=array("ឈ្មោះ","ប្រភេទ","ស្ថានការ");
+    		$link=array(
+    				'module'=>'product','controller'=>'other','action'=>'edit',
+    		);
+    		$list = new Application_Form_Frmlist();
+    		$this->view->list=$list->getCheckList(0, $columns, $rs_rows,array('item_name'=>$link,'item_code'=>$link,'barcode'=>$link,'cat'=>$link));
     		$this->view->rs = $rs_rows;
-    	}catch (Exception $e){
+    			}catch (Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
@@ -38,16 +44,19 @@ public function init()
     }
     public function addAction()
     {
+    	$db = new Product_Model_DbTable_DbOther();
     	if($this->getRequest()->isPost()){
-    		$data=$this->getRequest()->getPost();
-    		
-    		$db = new Product_Model_DbTable_DbOther();
+    		$data=$this->getRequest()->getPost(); 		 		
     		try {
-    			$db->add($data);		
+    			$db->add($data);
+    			if(isset($data['save_new'])){   			
     				Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
+    			}	
+    			if(isset($data['save_close'])){	
+    				Application_Form_FrmMessage::message("ការ​បញ្ចូល​​ជោគ​ជ័យ", '/product/other/index');
     				Application_Form_FrmMessage::redirectUrl('/other/loantype');
-
-    		} catch (Exception $e) {
+    				}
+    			} catch (Exception $e) {
     			Application_Form_FrmMessage::message("បញ្ចូលមិនត្រឹមត្រូវ");
     			$err = $e->getMessage();
     			Application_Model_DbTable_DbUserLog::writeMessageError($err);
@@ -67,14 +76,14 @@ public function init()
     		$data["id"] = $id;
     		try {
     			$db->edit($data);
-    			//if(isset($data['save_new'])){
+//     			if(isset($data['save_new'])){
     
-    				Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
-    			//}
-    			//if(isset($data['save_close'])){
+//     				Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
+//     			}
+//     			if(isset($data['save_close'])){
     				Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ',"/product/other");
-    				//Application_Form_FrmMessage::redirectUrl('/other/loantype');
-    			//}
+//     				Application_Form_FrmMessage::redirectUrl('/other/loantype');
+//     			}
     		} catch (Exception $e) {
     			Application_Form_FrmMessage::message("បញ្ចូលមិនត្រឹមត្រូវ");
     			$err = $e->getMessage();

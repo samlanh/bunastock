@@ -22,11 +22,16 @@ public function init()
 		}else{
 		    $data = array(
 		        'name'	     =>	'',
-		        'status'	 =>	1,
+		        'status'	 =>	-1,
 		    );
 		}
-		$list = new Application_Form_Frmlist();
 		$result = $db->getAllMeasure($data);
+		$columns=array("MEASURE NAME","សម្គាល់","STATUS");
+		$link=array(
+				'module'=>'product','controller'=>'measure','action'=>'edit',
+		);
+		$list = new Application_Form_Frmlist();
+		$this->view->list=$list->getCheckList(0, $columns, $result,array('name'=>$link));
 		$this->view->resulr = $result;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
@@ -37,7 +42,7 @@ public function init()
 			$data = $this->getRequest()->getPost();
 			$db = new Product_Model_DbTable_DbMeasure();
 			$db->add($data);
-				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/measure/index');
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/measure/index');
 		}
 		$formFilter = new Measure_Form_FrmMeasure();
 		$formAdd = $formFilter->measure();
@@ -58,7 +63,7 @@ public function init()
 			//$db = new Measure_Model_DbTable_DbMeasure();
 			$db->edit($data);
 			if(isset($data['save_close'])){
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/measure/index');
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/product/measure/index');
 			}
 		}
 		$rs = $db->getMeasure($id);

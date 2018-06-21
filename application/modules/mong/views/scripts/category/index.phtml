@@ -10,12 +10,13 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>
+<title>ប្រភេទម៉ុង</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("PRODUCT_LIST");?>
+					<i class="fa fa-globe"></i>ប្រភេទម៉ុង
 				</div>
 				<a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'add'),null,true);?>" class="btn btn-bg blue  pull-right">
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>

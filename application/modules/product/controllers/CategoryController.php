@@ -23,8 +23,14 @@ public function init()
 		    );
 		}
 		$result = $db->getAllCategory($data);
-		$this->view->resulr = $result;
+		$columns=array("MEASURE NAME","ប្រភេទ","សម្គាល់","STATUS");
+		$link=array(
+				'module'=>'product','controller'=>'category','action'=>'edit',
+		);
 		$formFilter = new Product_Form_FrmProduct();
+		$list = new Application_Form_Frmlist();
+		$this->view->list=$list->getCheckList(0, $columns, $result,array('name'=>$link));
+		$this->view->resulr = $result;
 		$this->view->formFilter = $formFilter->productFilter();
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
@@ -53,7 +59,6 @@ public function init()
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			$data["id"] = $id;
-			//$db = new Product_Model_DbTable_DbCategory();
 			$db->edit($data);
 			if($data['saveclose']){
 				Application_Form_FrmMessage::Sucessfull("កែប្រែមិនជោគជ័យ", '/product/category/index');

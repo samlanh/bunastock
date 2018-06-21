@@ -21,12 +21,17 @@ public function init()
 			$data = $this->getRequest()->getPost();
 		}else{
 			$data = array(
-					'name'	=>	'',
-					'brand'		=>	'',
-					'status'	=>	1
+					'name'		=>	'',
+					'status'	=>	-1,
 			);
 		}
 		$result = $db->getAllBrands($data);
+		$columns=array("MEASURE NAME","ប្រភេទ","សម្គាល់","STATUS");
+		$link=array(
+				'module'=>'product','controller'=>'brand','action'=>'edit',
+		);
+		$list = new Application_Form_Frmlist();
+		$this->view->list=$list->getCheckList(0, $columns, $result,array('name'=>$link));
 		$this->view->resulr = $result;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
@@ -37,7 +42,7 @@ public function init()
 			$data = $this->getRequest()->getPost();
 			$db = new Product_Model_DbTable_DbBrand();
 			$db->add($data);
-				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/brand/index');
+				Application_Form_FrmMessage::Sucessfull("បញ្ចុលដោយជោគជ័យ", '/product/brand/index');
 		}
 		$formFilter = new Product_Form_FrmBrand();
 		$formAdd = $formFilter->Brand();
@@ -58,8 +63,9 @@ public function init()
 			$db = new Product_Model_DbTable_DbBrand();
 			$db->edit($data);
 			if($data['saveclose']){
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/brand/index');
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/product/brand/index');
 			}
+			
 		}
 		$rs = $db->getBrand($id);
 		$formFilter = new Product_Form_FrmBrand();

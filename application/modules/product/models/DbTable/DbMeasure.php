@@ -47,13 +47,22 @@ class Product_Model_DbTable_DbMeasure extends Zend_Db_Table_Abstract
 	}
 	public function getAllMeasure($data){
 		$db = $this->getAdapter();
-		$sql = "SELECT m.id,m.`name`,m.`status`,m.`remark` FROM `tb_measure` AS m WHERE m.id";
+		$sql = "SELECT m.id,
+						m.`name`,
+						m.`remark`,
+						(SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=5  AND m.`status`=v.`key_code` LIMIT 1) AS status 
+						FROM `tb_measure` AS m 
+						WHERE m.id";
 		$where = '';
 		if($data["name"]!=""){
 		    $s_where=array();
 		    $s_search = addslashes(trim($data['name']));
 		    $s_where[]= " m.`name` LIKE '%{$s_search}%'";
+		    $s_where[]= " m.`remark` LIKE '%{$s_search}%'";
 		    $where.=' AND ('.implode(' OR ', $s_where).')';
+		}
+		if($data["status"]>-1!=""){
+			$where.=' AND m.`status`='.$data["status"];
 		}
 		//echo $sql.$where;
 		$where.=" ORDER BY id DESC";

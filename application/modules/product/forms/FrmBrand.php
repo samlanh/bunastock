@@ -78,7 +78,7 @@ class Product_Form_FrmBrand extends Zend_Form
 				'class'=>'form-control',
 				'required'=>'required'
 		));
-		$opt = array('1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
+		$opt = array('-1'=>$tr->translate("ALL"),'1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
 		$status->setMultiOptions($opt);
 		$status->setValue($request->getParam("status"));
 		

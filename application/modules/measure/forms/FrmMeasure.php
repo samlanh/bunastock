@@ -77,6 +77,7 @@ class Measure_Form_FrmMeasure extends Zend_Form
 				'class'=>'form-control',
 		));
 		$opt = array(
+			'-1'=>$tr->translate("ALL"),
 		    '1'=>$tr->translate("ACTIVE"),
 		    '0'=>$tr->translate("DEACTIVE"));
 		$status->setMultiOptions($opt);
