@@ -91,6 +91,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"total"         => $data['sub_total'],
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
+						
+						'receiver_name'	=> $data['receiver_name'],
+						
 						"user_id"       => $this->getUserId(),
 						'status'        => 1,
 						"bank_name"     => 	'',
@@ -244,6 +247,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"total"         => $data['sub_total'],
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
+						
+						'receiver_name'	=> $data['receiver_name'],
+						
 						"user_id"       => $this->getUserId(),
 						'status'        => 1,
 						"bank_name"     => 	'',
@@ -426,6 +432,12 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$sql=" SELECT  id,partner_name as name FROM tb_partnerservice WHERE 1 ";
 		return $db->fetchAll($sql);
 	}
+	
+	function getAllReceiverName(){
+		$db = $this->getAdapter();
+		$sql=" SELECT DISTINCT(receiver_name) AS name FROM tb_receipt WHERE receiver_name!='' ";
+		return $db->fetchAll($sql);
+	}	
 	
 	function getServicePartnerPrice($partner_id , $service_id){
 		$db = $this->getAdapter();

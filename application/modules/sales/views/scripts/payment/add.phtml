@@ -3,13 +3,13 @@
 	$form=$this->form_sale;
 	$url_submit = $this->url(array('module'=>'sales','controller'=>'payment','action'=>'add'));
 ?>
-<title><?php echo $tr->translate("Customer Payment");?></title>
+<title><?php echo $tr->translate("បន្ថែមបង់ប្រាក់ថ្លៃលក់");?></title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("Customer Payment")?>
+					<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមបង់ប្រាក់ថ្លៃលក់")?>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -91,7 +91,7 @@
 								<?php echo $tr->translate("សម្គាល់");?>
 							</label>
 							<div class="col-md-4">
-								<textarea name="other_note" id="other_note" class="form-control" rows="3"></textarea>
+								<textarea name="other_note" id="other_note" class="form-control" rows="1" ></textarea>
 							</div>
 							
 							<label class="control-label col-md-2"><?php echo $tr->translate("កាលបរិច្ឆេទ");?><span class="required">
@@ -102,6 +102,25 @@
 									<i class="fa fa-calendar"></i>
 									<input class="form-control date-picker" name="date_in" id="date_in" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" style="">
+							<label class="col-md-6 control-label">
+								&nbsp;
+							</label>
+							
+							<label class="col-md-2 control-label">
+								អ្នកទទួលប្រាក់
+							</label>
+							<div class="col-md-4">
+								<select class="form-control select2me" id="receiver_name" name="receiver_name" onchange="getPopupReceiver()" >
+									<option value="0">ជ្រើសរើសអ្នកទទួលប្រាក់</option>
+									<option value="-1">បន្ថែមថ្មី</option>
+									<?php if(!empty($this->receiver_name)){foreach($this->receiver_name as $rs){?>
+										<option value="<?php echo $rs['name'];?>"><?php echo $rs['name'];?></option>
+									<?php }}?>
+								</select>
 							</div>
 						</div>
 						
@@ -130,7 +149,7 @@
 								<input type="text" class="form-control" name="all_total" id="all_total" readonly />
 							</div>
 						</div>
-						</div>
+						
 						<div class="form-group">
 							<label class="control-label col-md-7">
 							</label>
@@ -166,6 +185,7 @@
 							<div class="col-md-4">
 							</div>
 						</div>
+					</div>	
 				</form>
 			</div>
 		</div>
@@ -334,5 +354,72 @@
 		}
 
 	}
+	
+	function getPopupReceiver(){
+		val = $('#receiver_name').val();
+		if(val==-1){
+			$('#receiverpopup').modal('show');
+		}
+	}
+	
+	function addNewReceiver(){
+		name = $("#name_receiver").val();
+		if(name==''){
+			$("#name_receiver").focus();
+			return false;
+		} 
+		$('#save_receiver').attr("disabled", true);
+		$('#receiver_name').append($("<option></option>").attr("value",name).attr("selected",true).text(name));  
+		$("#receiver_name").select2();	
+		$('#receiverpopup').modal('hide');
+		$('#save_receiver').attr("disabled", false);
+	}
 
 </script>	
+
+
+ <div id="receiverpopup" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">   
+				<div class="row">
+					<div class="col-md-12">
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមអ្នកទទួលប្រាក់");?>
+								</div>
+								<div class="caption pull-right">
+									<a href="<?php //echo $url_new;?>" >
+										 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+									</a>
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<form id="frmreceiver" name="frmreceiver" dojoType="dijit.form.Form" autoComplete="off" enctype="application/x-www-form-urlencoded" class="form-horizontal" enctype="multipart/form-data" method="post">
+									<div class="form-body">
+										<div class="form-group">
+											<label class="control-label col-md-3">
+												<?php echo $tr->translate("ឈ្មោះអ្នកទទួលប្រាក់");?>
+											</label>
+											<div class="col-md-9">
+												<div class="input-icon right">
+													<input name="name_receiver" id="name_receiver" class="form-control" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label  class="col-md-12 center">
+												<button type="button" id="save_receiver" name="save_receiver" onclick="addNewReceiver();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
+											</label>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+ </div>

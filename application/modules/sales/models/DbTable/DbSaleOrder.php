@@ -276,7 +276,7 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 	
 	function getLastReceipt($id){
 		$db = $this->getAdapter();
-		$sql = "select id from tb_receipt where invoice_id = $id order by id DESC limit 1";
+		$sql = "select id from tb_receipt where invoice_id = $id and type=1 order by id DESC limit 1";
 		return $db->fetchOne($sql);
 	}
 	

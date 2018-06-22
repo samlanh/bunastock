@@ -30,18 +30,22 @@ class Sales_PaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","RECIEPT_NO","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
+		$columns=array("លេខបង្កាន់ដៃ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បោះពុម្ភ","បោះពុម្ភ","លុប","NOTE","BY_USER");
 		$link=array(
 			'module'=>'sales','controller'=>'payment','action'=>'edit',
 		);
  		$receipt=array(
- 			'module'=>'sales','controller'=>'payment','action'=>'receipt',);
- 		
+ 			'module'=>'sales','controller'=>'payment','action'=>'receipt',
+ 		);
+ 		$invoice=array(
+ 				'module'=>'sales','controller'=>'payment','action'=>'invoiceprint',
+ 		);
  		$delete=array(
- 				'module'=>'sales','controller'=>'payment','action'=>'deleteitem',);
+ 			'module'=>'sales','controller'=>'payment','action'=>'deleteitem',
+ 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បោះពុម្ភ'=>$receipt,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បង្កាន់ដៃ'=>$receipt,'វិក័យបត្រ'=>$invoice,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
 		$formFilter = new Sales_Form_FrmSearch();
@@ -66,6 +70,9 @@ class Sales_PaymentController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$this->view->customer_name = $db->getSaleCustomerName();
 		$this->view->customer_invoice = $db->getSaleInvoice();
+		
+		$db = new Sales_Model_DbTable_Dbpos();
+		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->receipt = $_db->getReceiptNumber(1);
@@ -100,6 +107,15 @@ class Sales_PaymentController extends Zend_Controller_Action
 		$this->view->items = $items->getProductOption();
 		$this->view->term_opt = $db->getAllTermCondition(1);
 	}	
+	
+	function invoiceprintAction(){
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$db = new Sales_Model_DbTable_Dbpayment();
+		$invoice_id = $db->getInvoiceByReceiptId($id);
+		if(!empty($invoice_id)){
+			$this->_redirect("/sales/possale/invoice/id/".$invoice_id);
+		}
+	}
 	
 	public function getinvoiceAction(){
 		if($this->getRequest()->isPost()){

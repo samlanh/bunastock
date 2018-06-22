@@ -32,12 +32,14 @@ class Sales_IndexController extends Zend_Controller_Action
 		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់",
 				"តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","បោះពុម្ភ","បោះពុម្ភ","អ្នកប្រើប្រាស់");
 		$link=array(
-				'module'=>'sales','controller'=>'possale','action'=>'edit',
+			'module'=>'sales','controller'=>'possale','action'=>'edit',
 		);
 		$invoice=array(
-				'module'=>'sales','controller'=>'possale','action'=>'invoice',);
+			'module'=>'sales','controller'=>'possale','action'=>'invoice'
+		);
 		$receipt=array(
-				'module'=>'sales','controller'=>'index','action'=>'lastreceipt',);
+			'module'=>'sales','controller'=>'index','action'=>'lastreceipt'
+		);
 		
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('បង្កាន់ដៃ'=>$receipt,'វិក្កយបត្រ'=>$invoice,'contact_name'=>$link,'branch_name'=>$link,'customer_name'=>$link,
@@ -47,6 +49,7 @@ class Sales_IndexController extends Zend_Controller_Action
 	    $this->view->formFilter = $formFilter->productFilter();
 	    Application_Model_Decorator::removeAllDecorator($formFilter);
 	}	
+	
 	function lastreceiptAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		$db = new Sales_Model_DbTable_DbSaleOrder();
@@ -56,48 +59,4 @@ class Sales_IndexController extends Zend_Controller_Action
 		}
 	}
 	
-	function viewappAction(){
-		if($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost();
-			try {
-				$dbq = new Sales_Model_DbTable_DbSaleOrder();
-				$dbq->RejectSale($data);
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ","/sales/index");
-			}catch (Exception $e){
-				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			}
-		}
-		
-		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		if(empty($id)){
-			$this->_redirect("/sales/salesapprove");
-		}
-		$query = new Sales_Model_DbTable_Dbsalesapprov();
-		$rs = $query->getProductSaleById($id);
-		if(empty($rs)){
-			$this->_redirect("/sales/salesapprove");
-		}
-		$this->view->product = $rs;
-	}
-	public function getproductpriceAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$rs = $db ->getProductPriceBytype($post['customer_id'], $post['product_id']);
-			echo Zend_Json::encode($rs);
-			exit();
-		}
-	}
-	function getsonumberAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$qo = $db->getSalesNumber($post['branch_id']);
-			echo Zend_Json::encode($qo);
-			exit();
-		}
-	}
-		
 }

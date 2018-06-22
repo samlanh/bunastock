@@ -14,7 +14,6 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			$db= $this->getAdapter();
 			$sql=" SELECT 
 						r.id,
-						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND name!='' LIMIT 1) AS branch_name,
 						r.`receipt_no`,
 						(SELECT sale_no FROM `tb_sales_order` WHERE id=r.invoice_id) AS invoice_no,
 						(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
@@ -22,7 +21,8 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 						r.`total`,
 						r.`paid`,
 						r.`balance`,
-						'បោះពុម្ភ',
+						'បង្កាន់ដៃ',
+						'វិក័យបត្រ',
 						'លុប',
 						r.remark,
 						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
@@ -77,7 +77,9 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 					'paid'				=> $data['paid'],
 					'balance'			=> $data['balance'],
 					'remark'			=> $data['other_note'],
-						
+
+					'receiver_name'		=> $data['receiver_name'],
+					
 					'cheque_number'		=> $data['cheque'],
 					'bank_name'			=> $data['bank_name'],
 						
@@ -305,5 +307,10 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	}
 	
+	function getInvoiceByReceiptId($id){
+		$db = $this->getAdapter();
+		$sql = "select invoice_id from tb_receipt where id = $id order by id DESC limit 1";
+		return $db->fetchOne($sql);
+	}
 	
 }

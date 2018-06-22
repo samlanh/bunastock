@@ -67,6 +67,8 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->partner = $db->getAllPartnerService();
 	
+		$this->view->receiver_name = $db->getAllReceiverName();
+		
 		$form = new Sales_Form_FrmCustomer(null);
 		$formpopup = $form->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
@@ -112,6 +114,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->partner = $db->getAllPartnerService();
+		$this->view->receiver_name = $db->getAllReceiverName();
 	
 		$form = new Sales_Form_FrmCustomer(null);
 		$formpopup = $form->Formcustomer(null);
