@@ -69,6 +69,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
 					'payment_note' 	=> $data['note'],
 					'other_note'	=> $data['other_note'],
+					'place_bun'		=> $data['place_bun'],
+					'date_deleivery'	=> empty($data['date_deleivery'])?null:date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
 					"date"          => date("Y-m-d"),
 			
 					'partner_service_total'  	=> $data['total_partner_service'],
@@ -222,6 +224,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
 					'payment_note' 	=> $data['note'],
 					'other_note'	=> $data['other_note'],
+					'place_bun'		=> $data['place_bun'],
+					'date_deleivery'=> empty($data['date_deleivery'])?null:date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
 					//"date"          => date("Y-m-d"),
 			
 					'partner_service_total'  	=> $data['total_partner_service'],
@@ -364,6 +368,23 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					p.id = si.pro_id
 					and si.saleorder_id = $id
 			";
+		return $this->getAdapter()->fetchAll($sql);
+	}
+	function getlistingById($id){
+		$sql=" SELECT
+		si.*,
+		p.item_name As pro_name,
+		p.item_code,
+		p.is_service,
+		p.is_package,
+		(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name
+		FROM
+		tb_salesorder_item as si,
+		tb_product as p
+		WHERE
+		p.id = si.pro_id
+		and si.saleorder_id = $id
+		";
 		return $this->getAdapter()->fetchAll($sql);
 	}
 	

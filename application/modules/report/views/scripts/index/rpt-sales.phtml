@@ -96,6 +96,8 @@ $brach_name =  $this->branch;
 								<td>&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
 								<td><?php echo $tr->translate("SALE_DATE");?></td>
 								<td>&nbsp;<?php echo $tr->translate("GRAND_TOTAL");?></td>
+								<td>&nbsp;<?php echo $tr->translate("ទីតាំងបុណ្យ");?></td>
+								<td>&nbsp;<?php echo $tr->translate("ពេលវេលាចេញ");?></td>
 								<td width="12%">&nbsp;<?php echo $tr->translate("PAID");?></td>
 								<td>&nbsp;<?php echo $tr->translate("BALANCE");?></td>
 								<td>&nbsp;<?php echo $tr->translate("BY_USER");?></td>
@@ -119,6 +121,8 @@ $brach_name =  $this->branch;
 						   <td>&nbsp;<?php echo $rs["phone"];?></td>
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_sold"]));?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["all_total"],2);?></td>
+						   <td>&nbsp;<?php echo $rs["place_bun"];?></td>
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y H:i:s",strtotime($rs["date_deleivery"]));?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["paid"],2);?></td>
 						   <td>&nbsp;<?php echo number_format($rs["balance"],2);?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>

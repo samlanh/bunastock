@@ -186,7 +186,27 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												<textarea name="other_note" id="other_note" class="form-control" rows="5"></textarea>
 											</div>
 										</div>
-									</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ទីតាំងបុណ្យ
+											</label>
+											<div class="col-md-7">
+												<input name="place_bun" id="place_bun" class="form-control" />
+											</div>
+										</div>
+										
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ពេលវេលាចេញ
+											</label>
+											<div class="col-md-7">
+												<div class="input-icon right">
+													<i class="fa fa-calendar"></i>
+													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
+												</div>
+											</div>
+										</div>
+									</div>			
 								</div>
 								<div class="row">
 									<div class="form-group">
@@ -388,13 +408,19 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		   return false;	    
 		}
 	});
-	
+	$(function () {
+		$('#date_deleivery').datetimepicker({
+            inline: true,
+			sideBySide: true
+		});
+	});
 	function getPopupCustomer(){
 		val = $('#customer_id').val();
 		if(val==-1){
 			$('#customerpopup').modal('show');
 		}
 	}
+
 	function getPopupReceiver(){
 		val = $('#receiver_name').val();
 		if(val==-1){
@@ -503,6 +529,8 @@ function setValue(){
 	$('#comission').val('<?php echo $this->row['comission']?>');
 	$('#receiver_name').val('<?php echo $this->row['receiver_name']?>').select2();
 	$('#other_note').val('<?php echo $this->row['other_note']?>');
+	$('#place_bun').val('<?php echo $this->row['place_bun']?>');
+	$('#date_deleivery').val('<?php echo $this->row['date_deleivery']?>');
 	
 	// $('#sub_total').val('<?php echo $this->row['all_total']?>').focus();
 	// $('#paid_before').val('<?php echo $this->row['paid_before']?>').focus();

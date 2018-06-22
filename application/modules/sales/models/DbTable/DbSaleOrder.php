@@ -3,7 +3,7 @@
 class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 {
 	protected $_name="tb_sales_order";
-	function getAllSaleOrder($search){
+	function getAllSaleOrder($search=null){
 			$db= $this->getAdapter();
 			$sql=" SELECT s.id,
 						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
@@ -14,10 +14,13 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 						
 						s.sale_no,
 						s.date_sold,
+						place_bun,
+						date_deleivery,
 						s.all_total,
 						s.paid,
 						s.balance_after,
 						'វិក្កយបត្រ',
+						'បញ្ជីទំនិញ',
 						'បង្កាន់ដៃ',
 						(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
 					FROM 

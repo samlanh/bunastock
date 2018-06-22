@@ -161,6 +161,19 @@ class Sales_PossaleController extends Zend_Controller_Action
 		if(empty($rs)){
 			$this->_redirect("/sales/");
 		}
+	}
+	function cmmoditylistingAction(){
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+// 		if(empty($id)){
+// 			$this->_redirect("/sales/index");
+// 		}
+//		$query = new Sales_Model_DbTable_Dbpos();
+// 		$rs = $query->getSaleById($id);
+// 		$this->view->rs = $rs;
+// 		$this->view->listing = $query->getlistingById($id);
+// 		if(empty($rs)){
+// 			$this->_redirect("/sales/");
+// 		}
 	}		
 	function getproductAction(){
 		if($this->getRequest()->isPost()){
