@@ -25,10 +25,12 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     					(select name_kh from tb_view as v where v.type=19 and v.key_code = partner_sex) as partner_sex,
     					(select name from tb_year_khmer as y where y.id = partner_khmer_year) as partner_khmer_year,
     					partner_age,
+    					date_time_female,
     					
     					place_of_program,
     					(select name_kh from tb_view as v where v.type=17 and v.key_code = type_romleay_sop) as type_romleay_sop,
     					place_pjos_sop,
+    					membersone,
     					note,
     					
     					create_date,

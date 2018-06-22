@@ -107,10 +107,10 @@
 	  				</tr>
 	  				<tr style="font-family:  Khmer OS Muol; font-size:20px;font-weight: bold; line-height:44px; color: #6A5ACD; list-style:none;">
 	  					<td>
-	  						<li>លេខបង្កាន់ដៃ  <?php echo $this->row['receipt_no']?></li>	
+	  						<li>លេខបង្កាន់ដៃ  (<?php echo $this->row['receipt_no']?>)</li>	
 	  						<li>ចំនួន  <?php echo $this->row['qty']?>&nbsp; ម្ឈូស</li>
-	  						<li>តម្លៃរាយ  <?php echo $this->row['unit_price']?>($) </li>
-	  						<li>តម្លៃសរុប  <?php echo $this->row['total_amount']?>($) </li>
+	  						<li>តម្លៃរាយ  <?php echo $this->row['unit_price']?> $</li>
+	  						<li>តម្លៃសរុប  <?php echo $this->row['total_amount']?> $</li>
 	  						<li align="center">លំនៅដ្ឋានសព្វថ្ងៃ៖  <?php echo $this->row['address']?></li>
 	  						<li align="center">ថ្ងៃទី <?php echo date("d",strtotime($row['paid_date']));?> ខែ <?php echo date("m",strtotime($row['paid_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['paid_date']));?></li>
 	  					</td>

@@ -293,5 +293,64 @@ function getAllworker($search){
     //	echo $sql;exit();
     	return $db->fetchRow($sql);
     }
+    
+    
+    function getAllprogram($search){
+    	$db = $this->getAdapter();
+    	$sql = " SELECT
+    	id,
+    	dead_name,
+    	dead_name_chinese,
+    	(select name_kh from tb_view as v where v.type=19 and v.key_code = dead_sex) as dead_sex,
+    	(select name from tb_year_khmer as y where y.id = dead_khmer_year) as dead_khmer_year,
+    	dead_age,
+    	date_time_dead,
+    		
+    	partner_name,
+    	partner_name_chinese,
+    	(select name_kh from tb_view as v where v.type=19 and v.key_code = partner_sex) as partner_sex,
+    	(select name from tb_year_khmer as y where y.id = partner_khmer_year) as partner_khmer_year,
+    	partner_age,
+    	date_time_female,
+    		
+    	place_of_program,
+    	(select name_kh from tb_view as v where v.type=17 and v.key_code = type_romleay_sop) as type_romleay_sop,
+    	place_pjos_sop,
+    	note,
+    	membersone,
+    	memberstwo,
+    		
+    	create_date,
+    	(select fullname from tb_acl_user as u where u.user_id=p.user_id) as user_id,
+    		
+    	(select name_kh from tb_view as v where v.type=5 and v.key_code = status) as status
+    	FROM
+    	tb_program as p
+    	WHERE
+    	1
+    	";
+    	 
+    	$order=" order by id DESC";
+    	$where = '';
+    	 
+    	$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " create_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+    	$where .= " AND ".$from_date." AND ".$to_date;
+    	 
+    	if(!empty($search['ad_search'])){
+    		$s_where=array();
+    		$s_search=addslashes(trim($search['ad_search']));
+    		$s_where[]=" dead_name LIKE '%{$s_search}%'";
+    		$s_where[]=" dead_name_chinese LIKE '%{$s_search}%'";
+    		$s_where[]=" partner_name LIKE '%{$s_search}%'";
+    		$s_where[]=" partner_name_chinese LIKE '%{$s_search}%'";
+    		$where.=' AND ('.implode(' OR ', $s_where).')';
+    	}
+    	if($search['status']>-1){
+    		$where.= " AND status = ".$db->quote($search['status']);
+    	}
+
+    	return $db->fetchAll($sql.$where.$order);
+    }
 	
 }?>

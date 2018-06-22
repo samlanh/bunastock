@@ -125,5 +125,23 @@ class report_OtherController extends Zend_Controller_Action
 //     	$donorship = $db->getDonorship();
 //     	$this->view->row = $donorship;
     }
+    public function fastiveprogramAction()
+    {
+    	$db = new report_Model_DbOther();
+    	if($this->getRequest()->isPost()){
+    		$search = $this->getRequest()->getPost();
+    	}else{
+    		$search = array(
+    				'ad_search'	=>	'',
+    				'status'	=>	-1,
+    		);
+    	}
+    	$this->view->search = $search;
+    	$this->view->other = $db->getAllprogram($search);
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	$this->view->form_fastiveprogram = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
     	
 }

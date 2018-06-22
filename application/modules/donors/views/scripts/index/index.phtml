@@ -58,8 +58,6 @@ $(function(){
 			var m = "clicked: " + key;
 			if(key=="edit"){
 				url='<?php echo $this->baseUrl()."/donors/index/edit/id/";?>';
-			}else if(key=="add"){
-				url='<?php echo $this->baseUrl()."/donors/index/add/id/";?>';
 			}else if(key=="donorpeople"){
 				url='<?php echo $this->baseUrl()."/donors/index/donorpeople/id/";?>';
 			}
@@ -68,7 +66,6 @@ $(function(){
 		},
 		items: {
 			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
-			"add": {name: "បន្ថែម", icon: "add", accesskey: "e"},
 			"donorpeople": {name: "សប្បុសជន", icon: "fa-newspaper-o", accesskey: "e"},
 		}
 	});
