@@ -353,6 +353,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$sql=" SELECT 
 					msi.*,
 					p.item_name As pro_name,
+					p.item_code,
 					p.is_service,
 					p.is_package,
 					(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name

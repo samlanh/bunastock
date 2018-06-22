@@ -109,7 +109,7 @@
 													<select name="product_id" id="product_id" onchange="addProductRow();" class="form-control select2me">
 														<option value="-1">សូមជ្រើសរើសទំនិញ-សេវាកម្ម</option>
 														<?php if(!empty($this->rsproduct)){ foreach($this->rsproduct as $rs){?>
-														<option value="<?php echo $rs['id']?>"><?php echo $rs['name'].'-'.$rs['item_code']?></option>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['item_name'].' - '.$rs['item_code']?></option>
 														<?php }}?>
 									    			</select>
 												</div>
@@ -184,7 +184,7 @@ temp='';
 function initilize(){
 	<?php if(!empty($this->rspakage)){foreach ($this->rspakage as $key=> $rs){?>
 		index++;
-		var txt_br = "<?php echo $rs['product_name'];?>";
+		var txt_br = "<?php echo $rs['product_name']." - ".$rs['product_code'];?>";
 		var pro_id = '<?php echo $rs['product_id'];?>';
 		if(pro_id<0){return false;}
 		template='<tr id="row_location_'+index+'">';

@@ -78,7 +78,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 											</label>
 											<div class="col-md-8">
 												<select class="form-control select2me" id="customer_id" name="customer_id" onChange="getPopupCustomer();">
-													<option value="">ជ្រើសរើសអតិថិជន</option>
+													<option value="0">អតិថិជនទូទៅ</option>
 													<option value="-1">បន្ថែមអតិថិជន</option>
 													<?php if(!empty($this->rscustomer)){foreach($this->rscustomer as $rs){?>
 														<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>

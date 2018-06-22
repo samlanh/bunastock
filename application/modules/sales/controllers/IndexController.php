@@ -30,102 +30,32 @@ class Sales_IndexController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_DbSaleOrder();
 		$rows = $db->getAllSaleOrder($search);
 		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់",
-				"តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","បោះពុម្ភ","លុបវិក្កយបត្រ","អ្នកប្រើប្រាស់");
+				"តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","បោះពុម្ភ","បោះពុម្ភ","អ្នកប្រើប្រាស់");
 		$link=array(
 				'module'=>'sales','controller'=>'possale','action'=>'edit',
 		);
 		$invoice=array(
 				'module'=>'sales','controller'=>'possale','action'=>'invoice',);
-		$delete=array(
-				'module'=>'sales','controller'=>'possale','action'=>'delete',);
+		$receipt=array(
+				'module'=>'sales','controller'=>'index','action'=>'lastreceipt',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុបវិក្កយបត្រ'=>$delete,'វិក្កយបត្រ'=>$invoice,'contact_name'=>$link,'branch_name'=>$link,'customer_name'=>$link,
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('បង្កាន់ដៃ'=>$receipt,'វិក្កយបត្រ'=>$invoice,'contact_name'=>$link,'branch_name'=>$link,'customer_name'=>$link,
 				'sale_no'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();
 	    Application_Model_Decorator::removeAllDecorator($formFilter);
 	}	
-	function addAction(){
-		$db = new Application_Model_DbTable_DbGlobal();
-		if($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost();
-			try {
-				$dbq = new Sales_Model_DbTable_DbSaleOrder();
-				if(!empty($data['identity'])){
-					$dbq->addSaleOrder($data);
-				}
-				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
-				if(!empty($data['btnsavenew'])){
-					Application_Form_FrmMessage::redirectUrl("/sales/quoatation");
-				}
-			}catch (Exception $e){
-				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			}
-		}
-		///link left not yet get from DbpurchaseOrder
-		$frm_purchase = new Sales_Form_FrmSale(null);
-		$form_sale = $frm_purchase->SaleOrder(null);
-		Application_Model_Decorator::removeAllDecorator($form_sale);
-		$this->view->form_sale = $form_sale;
-		 
-		// item option in select
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
-		$this->view->term_opt = $db->getAllTermCondition(1);
-		$this->view->sale_term_defual = $db->getAllTermCondition(null,2,1);
-		
-		$formpopup = new Sales_Form_FrmCustomer(null);
-		$formpopup = $formpopup->Formcustomer(null);
-		Application_Model_Decorator::removeAllDecorator($formpopup);
-		$this->view->form_customer = $formpopup;
-		
-		$this->view->userinfo = $this->GetuserInfoAction();
-	}
-	function editAction(){
+	function lastreceiptAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		$dbq = new Sales_Model_DbTable_DbSaleOrder();
-		$db = new Application_Model_DbTable_DbGlobal();
-		if($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost();
-			try {
-				if(!empty($data['identity'])){
-					$dbq->updateSaleOrder($data);
-				}
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ","/sales/index");
-			}catch (Exception $e){
-				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			}
+		$db = new Sales_Model_DbTable_DbSaleOrder();
+		$last_receipt_id = $db->getLastReceipt($id);
+		if(!empty($last_receipt_id)){
+			$this->_redirect("/sales/payment/receipt/id/".$last_receipt_id);
 		}
-		$row = $dbq->getSaleorderItemById($id);
-		if(empty($row)){
-			Application_Form_FrmMessage::Sucessfull("NO_DATA","/sales/index");
-		}if($row['is_approved']==1){
-			$user = $this->GetuserInfoAction();
-			if($user['level']!=1){
-				Application_Form_FrmMessage::Sucessfull("SALE_ORDER_WARNING","/sales/index");
-			}
-		}
-		$this->view->rs = $dbq->getSaleorderItemDetailid($id);
-		$this->view->rsterm = $dbq->getTermconditionByid($id);
-		
-		///link left not yet get from DbpurchaseOrder
-		$frm_purchase = new Sales_Form_FrmSale(null);
-		$form_sale = $frm_purchase->SaleOrder($row);
-		Application_Model_Decorator::removeAllDecorator($form_sale);
-		$this->view->form_sale = $form_sale;
-		$this->view->discount_type = $row['discount_type'];
-		 
-		// item option in select
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
-		$this->view->term_opt = $db->getAllTermCondition(1);
-	}	
+	}
+	
 	function viewappAction(){
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();

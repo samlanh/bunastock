@@ -64,7 +64,8 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
   	$db = $this->getAdapter();
   	$sql ="SELECT 
 			 p.*,
-			 (SELECT item_name FROM `tb_product` WHERE id=p.product_id limit 1) AS product_name 
+			 (SELECT item_name FROM `tb_product` WHERE id=p.product_id limit 1) AS product_name,
+			 (SELECT item_code FROM `tb_product` WHERE id=p.product_id limit 1) AS product_code 
 			FROM
 			  `tb_product_package` AS p 
 			WHERE p.package_id = $id ";

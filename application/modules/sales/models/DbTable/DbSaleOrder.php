@@ -17,7 +17,8 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 						s.all_total,
 						s.paid,
 						s.balance_after,
-						'វិក្កយបត្រ','លុបវិក្កយបត្រ',
+						'វិក្កយបត្រ',
+						'បង្កាន់ដៃ',
 						(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
 					FROM 
 						`tb_sales_order` AS s 
@@ -272,4 +273,12 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 		$sql=" SELECT * FROM `tb_quoatation_termcondition` WHERE quoation_id=$id AND term_type=2 ";
 		return $db->fetchAll($sql);
 	} 
+	
+	function getLastReceipt($id){
+		$db = $this->getAdapter();
+		$sql = "select id from tb_receipt where invoice_id = $id order by id DESC limit 1";
+		return $db->fetchOne($sql);
+	}
+	
+	
 }
