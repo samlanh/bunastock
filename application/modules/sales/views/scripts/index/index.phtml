@@ -36,3 +36,39 @@
 		</div>
 	</div>
 </div>
+<script>
+var row=0;
+var url="";
+$(function(){
+	$.contextMenu({
+		selector: '.context-menu-one', 
+		callback: function(key, options) {		
+			var m = "clicked: " + key;
+			if(key=="edit"){
+				url='<?php echo $this->baseUrl()."/donors/index/edit/id/";?>';
+			}else if(key=="invoice"){
+				url='<?php echo $this->baseUrl()."/sales/possale/invoice/id/";?>';
+			}else if(key=="comlisting"){
+				url='<?php echo $this->baseUrl()."/sales/possale/comlisting/id/";?>';
+			}else if(key=="receipt"){
+				url='<?php echo $this->baseUrl()."/sales/payment/receipt/id/";?>';
+			}
+			
+			gotoAction();
+		},
+		items: {
+			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
+			"invoice": {name: "វិក័យប័ត្រ", icon: "fa-newspaper-o", accesskey: "e"},
+			"comlisting": {name: "បញ្ជីទំនិញ", icon: "fa-newspaper-o", accesskey: "e"},
+			"receipt": {name: "បង្កាន់ដៃបង់ប្រាក់", icon: "fa-newspaper-o", accesskey: "e"},
+		}
+	});
+});
+function setrowdata(index){
+	  row = index;
+	}
+var recordid ='';
+function gotoAction(){
+	 window.open(url+row, '_blank');
+}
+</script>

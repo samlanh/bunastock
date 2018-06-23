@@ -19,9 +19,6 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 						s.all_total,
 						s.paid,
 						s.balance_after,
-						'វិក្កយបត្រ',
-						'បញ្ជីទំនិញ',
-						'បង្កាន់ដៃ',
 						(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
 					FROM 
 						`tb_sales_order` AS s 

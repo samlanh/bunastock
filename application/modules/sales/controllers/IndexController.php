@@ -31,7 +31,7 @@ class Sales_IndexController extends Zend_Controller_Action
 		$rows = $db->getAllSaleOrder($search);
 		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់","ទីតាំងបុណ្យ","ពេលវេលាចេញ
 				",
-				"តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","បោះពុម្ភ","បោះពុម្ភ","បោះពុម្ភ","អ្នកប្រើប្រាស់");
+				"តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");
 		$link=array(
 			'module'=>'sales','controller'=>'possale','action'=>'edit',
 		);
@@ -39,15 +39,14 @@ class Sales_IndexController extends Zend_Controller_Action
 			'module'=>'sales','controller'=>'possale','action'=>'invoice'
 		);
 		$listing=array(
-				'module'=>'sales','controller'=>'possale','action'=>'commditylisting'
+			'module'=>'sales','controller'=>'possale','action'=>'comlisting'
 		);
 		$receipt=array(
 			'module'=>'sales','controller'=>'index','action'=>'lastreceipt'
 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('បង្កាន់ដៃ'=>$receipt,'បញ្ជីទំនិញ'=>$listing,'វិក្កយបត្រ'=>$invoice,'contact_name'=>$link,'branch_name'=>$link,'customer_name'=>$link,
-				'sale_no'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('បង្កាន់ដៃ'=>$receipt,'បញ្ជីទំនិញ'=>$listing,'វិក្កយបត្រ'=>$invoice,'contact_name'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();
