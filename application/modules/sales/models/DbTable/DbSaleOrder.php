@@ -14,8 +14,6 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 						
 						s.sale_no,
 						s.date_sold,
-						place_bun,
-						date_deleivery,
 						s.all_total,
 						s.paid,
 						s.balance_after,
@@ -274,9 +272,9 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	} 
 	
-	function getLastReceipt($id){
+	function getLastReceipt($id,$type){
 		$db = $this->getAdapter();
-		$sql = "select id from tb_receipt where invoice_id = $id and type=1 order by id DESC limit 1";
+		$sql = "select id from tb_receipt where invoice_id = $id and type=$type order by id DESC limit 1";
 		return $db->fetchOne($sql);
 	}
 	

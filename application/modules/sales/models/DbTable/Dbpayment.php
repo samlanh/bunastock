@@ -307,9 +307,9 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	}
 	
-	function getInvoiceByReceiptId($id){
+	function getInvoiceByReceiptId($id,$type){
 		$db = $this->getAdapter();
-		$sql = "select invoice_id from tb_receipt where id = $id order by id DESC limit 1";
+		$sql = "select invoice_id from tb_receipt where id = $id and type=$type order by id DESC limit 1";
 		return $db->fetchOne($sql);
 	}
 	

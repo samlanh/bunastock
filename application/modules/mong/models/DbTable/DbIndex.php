@@ -154,6 +154,9 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 						"total"         	=> $data['sub_total'],
 						"paid"          	=> $data['paid'],
 						"balance"       	=> $data['balance'],
+						
+						'receiver_name'		=> $data['receiver_name'],
+						
 						"remark" 			=> $data['other_note'],
 						"user_id"       	=> $this->getUserId(),
 						"status"        	=> 1,
@@ -324,7 +327,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	
 	function getConstructorDetail($id){
 		$db=$this->getAdapter();
-		$sql="select * from tb_mong where id=$id limit 1 ";
+		$sql="select * from tb_constructor where id=$id limit 1 ";
 		return $db->fetchRow($sql);
 	}
 	

@@ -29,22 +29,29 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		}
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","RECIEPT_NO","បង់លើវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","បង្កាន់ដៃបង់","លុប","NOTE","BY_USER");
+		$columns=array("BRANCH_NAME","លេខបង្កាន់ដៃ","បង់លើវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER");
 		
-		$link=array('module'=>'mong','controller'=>'customerpayment','action'=>'edit',);
-		
- 		$receipt=array('module'=>'mong','controller'=>'customerpayment','action'=>'receipt',);
- 		
- 		$delete=array('module'=>'mong','controller'=>'customerpayment','action'=>'deleteitem',);
- 				
+		$link=array(
+			'module'=>'mong','controller'=>'customerpayment','action'=>'edit',
+		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បោះពុម្ភ'=>$receipt,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
-				'date_input'=>$link));
-		
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,'date_input'=>$link,'invoice'=>$link));
+				
+				
 		$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
 	}	
+	
+	function invoiceprintAction(){
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$db = new Sales_Model_DbTable_Dbpayment();
+		$invoice_id = $db->getInvoiceByReceiptId($id,2); // 2=mong receipt
+		if(!empty($invoice_id)){
+			$this->_redirect("/mong/index/invoice/id/".$invoice_id);
+		}
+	}
+	
 	function addAction(){
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		if($this->getRequest()->isPost()) {

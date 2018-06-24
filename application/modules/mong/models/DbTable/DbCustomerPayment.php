@@ -21,8 +21,6 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 					r.`total`,
 					r.`paid`,
 					r.`balance`,
-					'បោះពុម្ភ',
-					'លុប',
 					r.remark,
 					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name
 				FROM 

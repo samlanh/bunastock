@@ -2,8 +2,9 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>						 
-<title>ផ្នែកលក់ម៉ុងចេតិយ</title>
+<title>បន្ថែមលក់ម៉ុងចេតិយ</title>
 
 <style>
 	.aligncenter{text-align: center;background:#4b8df8;color:#ececec;}
@@ -15,7 +16,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>ផ្នែកលក់ម៉ុងចេតិយ</strong>
+					<i class="fa fa-gift"></i><strong>បន្ថែមលក់ម៉ុងចេតិយ</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -43,7 +44,7 @@
 										</li>
 									</ul>
 								</div>
-								<div class="tab-content">
+								<div class="tab-content" >
 									<div class="tab-pane active" id="tab_1">
 										<div class="form-body">
 											<div class="row">
@@ -53,10 +54,11 @@
 															<strong>ឈ្មោះអតិថិជន</strong>
 														</label>
 														<div class="col-md-8">
-															<select class="form-control select2me" id="customer_id" name="customer_id">
-																<option value="-1">ជ្រើសរើសអតិថិជន</option>
+															<select class="form-control select2me" id="customer_id" name="customer_id" onChange="getPopupCustomer();">
+																<option value="0">អតិថិជនទូទៅ</option>
+																<option value="-1">បន្ថែមអតិថិជន</option>
 																<?php if(!empty($this->rscustomer)){foreach($this->rscustomer as $rs){?>
-																	<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
+																	<option value="<?php echo $rs['id'];?>"><?php echo $rs['name']." - ".$rs['phone'];?></option>
 																<?php }}?>
 															</select>
 														</div>
@@ -85,7 +87,13 @@
 															អ្នកទទួលប្រាក់
 														</label>
 														<div class="col-md-8">
-															<input type="text" class="form-control" name="receiver_name" id="receiver_name" />
+															<select class="form-control select2me" id="receiver_name" name="receiver_name" onchange="getPopupReceiver()" >
+																<option value="0">ជ្រើសរើសអ្នកទទួលប្រាក់</option>
+																<option value="-1">បន្ថែមថ្មី</option>
+																<?php if(!empty($this->receiver_name)){foreach($this->receiver_name as $rs){?>
+																	<option value="<?php echo $rs['name'];?>"><?php echo $rs['name'];?></option>
+																<?php }}?>
+															</select>
 														</div>
 													</div>
 												</div>
@@ -242,195 +250,191 @@
 									</div><!-- end tab1 -->
 									<div class="tab-pane " id="tab_2">
 										<div class="col-md-4">
-												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ម៉ុង/ចេតិយ</h4>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ប្រភេទ ម៉ុង-ចេតិយ
-													</label>
-													<div class="col-md-8">
-														<select class="form-control select2me" name="construct_type" id="construct_type" >
-															<option value="1">ម៉ុង</option>
-															<option value="2">ចេតិយ</option>
-														</select>
-													</div>
+											<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ម៉ុង/ចេតិយ</h4>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ប្រភេទ ម៉ុង-ចេតិយ
+												</label>
+												<div class="col-md-8">
+													<select class="form-control select2me" name="construct_type" id="construct_type" >
+														<option value="1">ម៉ុង</option>
+														<option value="2">ចេតិយ</option>
+													</select>
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ប្រភេទម៉ុង
-													</label>
-													<div class="col-md-8">
-														<select class="form-control select2me" name="mong_type" id="mong_type" >
-															<option value="-1">ប្រភេទម៉ុង</option>
-															<?php if(!empty($this->mong_type)){foreach ($this->mong_type as $rs){?>
-															<option value="<?php echo $rs['id']?>"><?php echo $rs['title']?></option>
-															<?php }}?>
-														</select>
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ប្រភេទម៉ុង
+												</label>
+												<div class="col-md-8">
+													<select class="form-control select2me" name="mong_type" id="mong_type" >
+														<option value="-1">ប្រភេទម៉ុង</option>
+														<?php if(!empty($this->mong_type)){foreach ($this->mong_type as $rs){?>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['title']?></option>
+														<?php }}?>
+													</select>
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														អ្នកកសាង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="builder" id="builder" />
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													អ្នកកសាង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="builder" id="builder" />
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														លេខកូដម៉ុង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="mong_code" id="mong_code" />
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													លេខកូដម៉ុង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="mong_code" id="mong_code" />
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														លេខម៉ុង/ឡូតិ៍
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="mong_number" id="mong_number" />
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													លេខម៉ុង/ឡូតិ៍
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="mong_number" id="mong_number" />
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														អាស័យដ្ឋានម៉ុង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="mong_address" id="mong_address" />
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													អាស័យដ្ឋានម៉ុង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="mong_address" id="mong_address" />
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														អ្នកទទួលខុសត្រូរការងារ
-													</label>
-													<div class="col-md-8">
-														<select class="form-control select2me" name="person_in_charge" id="person_in_charge" >
-															<option value="-1">អ្នកទទួលខុសត្រូរការងារ</option>
-															<?php if(!empty($this->person_in_charge)){foreach ($this->person_in_charge as $rs){?>
-															<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
-															<?php }}?>
-														</select>
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													អ្នកទទួលខុសត្រូរ
+												</label>
+												<div class="col-md-8">
+													<select class="form-control select2me" name="person_in_charge" id="person_in_charge" >
+														<option value="-1">អ្នកទទួលខុសត្រូរការងារ</option>
+														<?php if(!empty($this->person_in_charge)){foreach ($this->person_in_charge as $rs){?>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+														<?php }}?>
+													</select>
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														សម្គាល់
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="mong_note" id="mong_note" />
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													សម្គាល់
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="mong_note" id="mong_note" />
+												</div>
+											</div>
+										</div>
+											
+										<!-- blog2 -->
+											
+										<div class="col-md-4">
+											<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតទំហំម៉ុង និងពេលវេលា</h4>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ទំហំដី(បxទ)
+												</label>
+												<div class="col-md-3">
+													<input type="text" class="form-control " name="land_longitude" id="land_longitude" />
+												</div>
+												<label class="col-md-2 control-label" style="text-align:center;">
+													X
+												</label>
+												<div class="col-md-3">
+													<input type="text" class="form-control " name="land_width" id="land_width" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ទំហំម៉ុង(បxទ)
+												</label>
+												<div class="col-md-3">
+													<input type="text" class="form-control " name="mong_longitude" id="mong_longitude" />
+												</div>
+												<label class="col-md-2 control-label" style="text-align:center;">
+													X
+												</label>
+												<div class="col-md-3">
+													<input type="text" class="form-control " name="mong_width" id="mong_width" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ថ្ងៃបញ្ចាប់សាងសង់
+												</label>
+												<div class="col-md-8 right">
+													<div class="input-icon right">
+														<i class="fa fa-calendar"></i>
+														<input type="text" class="form-control date-picker" name="date_finish" id="date_finish" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 													</div>
 												</div>
 											</div>
 											
-											<!-- blog2 -->
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ថ្ងៃសែនបើកឆាក
+												</label>
+												<div class="col-md-8 right">
+													<div class="input-icon right">
+														<i class="fa fa-calendar"></i>
+														<input type="text" class="form-control date-picker" name="date_sen" id="date_sen" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+													</div>
+												</div>
+											</div>
 											
-											<div class="col-md-4">
-												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតទំហំម៉ុង និងពេលវេលា</h4>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														បណ្តោយដី
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="land_longitude" id="land_longitude" />
-													</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ម៉ោង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="time_sen" id="time_sen"/>
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ទទឹងដី
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="land_width" id="land_width" />
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ថ្ងៃឆ្លងម៉ុង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control date-picker" name="date_chlong_mong" id="date_chlong_mong" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														បណ្តោយម៉ុង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="mong_longitude" id="mong_longitude" />
-													</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ម៉ោង
+												</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control " name="time_chlong_mong" id="time_chlong_mong" />
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ទទឹងម៉ុង
+											</div>
+										</div>
+										<div class="col-md-4">
+											<h4 style="border-bottom: 1px solid #ccc;" class="center">រូបភាពផ្សេងៗ</h4>
+											<div class="form-group" style="">
+												<div class="row">
+													<label class="col-md-12 control-label center">
+														Select Photo (one or multiple):
 													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="mong_width" id="mong_width" />
-													</div>
 												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ថ្ងៃបញ្ចាប់សាងសង់
+												<div class="row">
+													<label class="col-md-12 control-label center">
+														&nbsp;
 													</label>
-													<div class="col-md-8 right">
-														<div class="input-icon right">
-															<i class="fa fa-calendar"></i>
-															<input type="text" class="form-control date-picker" name="date_finish" id="date_finish" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-														</div>
-													</div>
 												</div>
-												
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ថ្ងៃសែនបើកឆាក
-													</label>
-													<div class="col-md-8 right">
-														<div class="input-icon right">
-															<i class="fa fa-calendar"></i>
-															<input type="text" class="form-control date-picker" name="date_sen" id="date_sen" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-														</div>
+												<div class="row">
+													<div class="col-md-3 center" >
 													</div>
-												</div>
-												
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ម៉ោង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="time_sen" id="time_sen"/>
+													<div class="col-md-6 center" >
+														<input type="file" name="photo[]" id="photo" multiple />
 													</div>
-												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ថ្ងៃឆ្លងម៉ុង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control date-picker" name="date_chlong_mong" id="date_chlong_mong" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-													</div>
-												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ម៉ោង
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="time_chlong_mong" id="time_chlong_mong" />
+													<div class="col-md-3 center" >
 													</div>
 												</div>
 											</div>
-											<div class="col-md-4">
-												<h4 style="border-bottom: 1px solid #ccc;" class="center">រូបភាពផ្សេងៗ</h4>
-												<div class="form-group" style="">
-													<div class="row">
-														<label class="col-md-12 control-label center">
-															Select Photo (one or multiple):
-														</label>
-													</div>
-													<div class="row">
-														<label class="col-md-12 control-label center">
-															&nbsp;
-														</label>
-													</div>
-													<div class="row">
-														<div class="col-md-3 center" >
-														</div>
-														<div class="col-md-6 center" >
-														    <input type="file" name="photo[]" id="photo" multiple />
-														</div>
-														<div class="col-md-3 center" >
-														</div>
-													</div>
-												</div>
-											</div>
+										</div>
 									</div>
 									<div class="tab-pane " id="tab_3">
 										<div class="row">
@@ -630,7 +634,7 @@
 													</div>
 												</div>
 											</div>
-											</div>
+										</div>
 									</div>
 									<div class="tab-pane " id="tab_4">
 										<div class="row">
@@ -793,11 +797,12 @@
 		}
 	});
 	
+		
 	function getDeadPersonDetail(){
 		var dead_id  = $("#dead_id").val();
 		if(dead_id>0){
 			$.ajax({
-				url: "/bunastock/trunk/public/mong/index/get-dead-detail",
+				url: "<?php echo $this->baseUrl()?>/mong/index/get-dead-detail",
 				type: "post",
 				data: {dead_id:dead_id},
 				success: function(data){
@@ -835,13 +840,12 @@
 		var constructor  = $("#constructor").val();
 		if(constructor>0){
 			$.ajax({
-				url: "/bunastock/trunk/public/mong/index/get-constructor-detail",
+				url: "<?php echo $this->baseUrl()?>/mong/index/get-constructor-detail",
 				type: "post",
 				data: {constructor:constructor},
 				success: function(data){
 					//alert(data);
 					rs = $.parseJSON(data);
-					//alert(rs.constructor_type);
 					if(rs){
 						$('#constructor_phone').val(rs.phone);
 						$('#constructor_type').val(rs.constructor_type).select2();
@@ -897,7 +901,7 @@
 		var item_id  = $("#item_"+index).val();
 		if(item_id>0){
 			$.ajax({
-				url: "/bunastock/trunk/public/mong/index/get-item-price",
+				url: "<?php echo $this->baseUrl()?>/mong/index/get-item-price",
 				type: "post",
 				data: {item_id:item_id},
 				success: function(data){
@@ -984,7 +988,7 @@
 	function getProductinfo(index_sale,product_id){
 		if(product_id>0){
 			$.ajax({
-				url: "/bunastock/trunk/public/sales/possale/getproduct",
+				url: "<?php echo $this->baseUrl()?>/sales/possale/getproduct",
 				type: "post",
 				data: {product_id:product_id,'branch_id':1},
 				success: function(data){
@@ -1106,10 +1110,232 @@
 		document.getElementsByClassName("overlay")[0].style.display="block";
 	}
 	
+	function getPopupCustomer(){
+		val = $('#customer_id').val();
+		if(val==-1){
+			$('#customerpopup').modal('show');
+		}
+	}
 	
+	<?php $url_add_customer =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'add-customer')); ?>
+	function addNewCustomer(){
+		txt_name = $("#txt_name").val();
+		if(txt_name==''){
+			$("#txt_name").focus();
+			return false;
+		} 
+		txt_phone = $("#txt_phone").val();
+		if(txt_phone==''){
+			$("#txt_phone").focus();
+			return false;
+		} 
+		
+		$('#save_customer').attr("disabled", true);
+		
+		$.ajax({
+			url: "<?php echo $url_add_customer;?>",
+			type: "post",
+			data: $('#frmcustomer').serialize(),
+			success: function(data){
+				rs = $.parseJSON(data);
+				$('#customer_id').append($("<option></option>").attr("value",rs['cus_id']).attr("selected",true).text(txt_name+" - "+txt_phone));                       
+				$("#customer_id").select2();
+				$('#customerpopup').modal('hide');
+				$('#save_customer').attr("disabled", false);
+				//$("#frmcustomer")[0].reset();
+			},
+			error:function(err){
+				alert("faile insert");
+			}
+		});
+	}
 	
-	
+	function getPopupReceiver(){
+		val = $('#receiver_name').val();
+		if(val==-1){
+			$('#receiverpopup').modal('show');
+		}
+	}
+	function addNewReceiver(){
+		name = $("#name_receiver").val();
+		if(name==''){
+			$("#name_receiver").focus();
+			return false;
+		} 
+		$('#save_receiver').attr("disabled", true);
+		$('#receiver_name').append($("<option></option>").attr("value",name).attr("selected",true).text(name));  
+		$("#receiver_name").select2();	
+		$('#receiverpopup').modal('hide');
+		$('#save_receiver').attr("disabled", false);
+	}
+
+
 </script>
+
+<?php $form = $this->form_customer; ?>
+<div id="customerpopup" class="modal fade" tabindex="-1" data-width="1200">
+       <div class="modal-dialog">
+		      <div class="modal-content">
+		      <div class="modal-header">   
+				<div class="row">
+				<div class="col-md-12">
+					<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-home"></i><?php echo $tr->translate("ADD_NEW_CUSTOMER");?>
+						</div>
+						<div class="caption pull-right">
+							<a href="<?php //echo $url_new;?>" >
+								 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							</a>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form id="frmcustomer" name="frmcustomer" dojoType="dijit.form.Form" autoComplete="off" enctype="application/x-www-form-urlencoded" class="form-horizontal" enctype="multipart/form-data" method="post">
+							<div class="form-body">
+								<div class="form-group">
+									<label class="control-label col-md-3"><?php echo $tr->translate("សាខា");?><span class="required">
+										</span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement("branch_id");?>
+										</div>
+									</div>
+									
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("លេខកូដអតិថិជន");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement('cu_code'); ?>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="control-label col-md-3"><?php echo $tr->translate("ឈ្មោះអតិថិជន");?><span class="required"></span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement('txt_name'); ?>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="form-group">
+									<label class="control-label col-md-3">
+									<?php echo $tr->translate("លេខទំនាក់ទំនង");?><span class="required">
+										</span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement('txt_phone'); ?>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("អាសយដ្ឋាន");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement("txt_address");?>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("អ៊ីម៉ែល");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement('txt_mail'); ?>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("សម្គាល់");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<?php echo $form->getElement('remark'); ?>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-md-12 center">
+										<button type="button" id="save_customer" name="btnsavenew" onclick="addNewCustomer();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
+									</label>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+          </div>
+        </div>
+    </div>
+ </div>
+
+<div id="receiverpopup" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">   
+				<div class="row">
+					<div class="col-md-12">
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមអ្នកទទួលប្រាក់");?>
+								</div>
+								<div class="caption pull-right">
+									<a href="<?php //echo $url_new;?>" >
+										 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+									</a>
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<form id="frmreceiver" name="frmreceiver" dojoType="dijit.form.Form" autoComplete="off" enctype="application/x-www-form-urlencoded" class="form-horizontal" enctype="multipart/form-data" method="post">
+									<div class="form-body">
+										<div class="form-group">
+											<label class="control-label col-md-3">
+												<?php echo $tr->translate("ឈ្មោះអ្នកទទួលប្រាក់");?>
+											</label>
+											<div class="col-md-9">
+												<div class="input-icon right">
+													<input name="name_receiver" id="name_receiver" class="form-control" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label  class="col-md-12 center">
+												<button type="button" id="save_receiver" name="save_receiver" onclick="addNewReceiver();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
+											</label>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+ </div>
 
 <div class="overlay">
 	<div class="overlay-load">

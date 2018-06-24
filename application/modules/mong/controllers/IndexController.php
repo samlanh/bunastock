@@ -35,23 +35,25 @@ class Mong_IndexController extends Zend_Controller_Action
 		$link=array(
 				'module'=>'mong','controller'=>'index','action'=>'edit',
 		);
-		$link_invoice=array(
-				'module'=>'mong','controller'=>'index','action'=>'invoice',
-		);
-		$link_time=array(
-				'module'=>'mong','controller'=>'index','action'=>'goodtime',
-		);
-		$link_timemol=array(
-				'module'=>'mong','controller'=>'index','action'=>'timemol',
-		);
 
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows,array('សែនឆ្លងម៉ុង'=>$link_timemol,'invoice_no'=>$link,'invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'វិក័យបត្រ'=>$link_invoice,'សែនបើកឆាក'=>$link_time));
-    	$formFilter = new Product_Form_FrmProduct();
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link));
+    	
+		$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     	
 	}
+	
+	function lastreceiptAction(){
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$db = new Sales_Model_DbTable_DbSaleOrder();
+		$last_receipt_id = $db->getLastReceipt($id,2); // 2=mong receipt
+		if(!empty($last_receipt_id)){
+			$this->_redirect("/mong/customerpayment/receipt/id/".$last_receipt_id);
+		}
+	}
+	
 	public function addAction()
 	{
 		$db = new Mong_Model_DbTable_DbIndex();
@@ -82,10 +84,17 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
 		
+		$this->view->receiver_name = $db->getAllReceiverName();
+		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getInvoiceNumber(1);
 		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
+		
+		$form = new Sales_Form_FrmCustomer(null);
+		$formpopup = $form->Formcustomer(null);
+		Application_Model_Decorator::removeAllDecorator($formpopup);
+		$this->view->form_customer = $formpopup;
 	}
 	public function editAction()
 	{

@@ -45,7 +45,7 @@ class Sales_PaymentController extends Zend_Controller_Action
  		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'បង្កាន់ដៃ'=>$receipt,'វិក័យបត្រ'=>$invoice,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('លុប'=>$delete,'បង្កាន់ដៃ'=>$receipt,'វិក័យបត្រ'=>$invoice,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
 		$formFilter = new Sales_Form_FrmSearch();
@@ -111,7 +111,7 @@ class Sales_PaymentController extends Zend_Controller_Action
 	function invoiceprintAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		$db = new Sales_Model_DbTable_Dbpayment();
-		$invoice_id = $db->getInvoiceByReceiptId($id);
+		$invoice_id = $db->getInvoiceByReceiptId($id,1); // 1=Sale receipt
 		if(!empty($invoice_id)){
 			$this->_redirect("/sales/possale/invoice/id/".$invoice_id);
 		}
