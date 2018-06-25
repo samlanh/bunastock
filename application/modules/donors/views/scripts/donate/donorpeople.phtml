@@ -5,11 +5,9 @@
 	$controller=$request->getControllerName();
 	$row = $this->row
 ?>	
-
-<div  class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 28cm;padding: 0.5cm;">
 <div id="Printdonate">
+	<div  class="wrapper"id="borderimg1" background: #fff;width:25cm;margin: 0 auto;min-height: 28cm;padding: 0.5cm;">
 	<style>
-
 	    	.wrapper{
 	    		width: 100%;
 	    		margin: 0px;
@@ -26,10 +24,14 @@
 			th, td {
 	    		padding: 4px;
 			}
+			#borderimg1 { 
+			    border: 12px dotted ;
+			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
+			}
 	    </style>
+	    <div >
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr class="no-boder">
-				<td>
 				<table width="100%" >
 					<tr>
 						<td width="20%" align="center">
@@ -60,10 +62,10 @@
 							</table>
 						</td>
 						<td width="20%" >&nbsp;</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
+					</tr>				
+				</td>
+			</tr>
+		</table>
 	  	<tr>
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
@@ -100,14 +102,15 @@
 	  						<li>ឈ្មោះ ៖  <?php echo $this->row['dead_name']?></li>
 	  						<li>ភេទ  ៖  <?php echo $this->row['dead_sex']?></li>
 	  						<li>អាយុ ៖ <?php echo $this->row['dead_age']?>&nbsp;&nbsp;ឆ្នាំ</li>
-	  						<li>លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?> </li>
+	  						<li ​align="center">លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?> </li>
 	  						<li ​align="center">ថ្ងៃទី  <?php echo date("d",strtotime($row['date_jenh']));?> ខែ <?php echo date("m",strtotime($row['date_jenh']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_jenh']));?></li>
 	  					</td>
 	  				</tr>
 	  			</table>
 	  		</td>
-	  	</tr>
-	</table>
+	  		</tr>
+	`	</table>
+</div>
 </div>
 <div style="padding-left:14%; margin: 0 auto;"> 
 <lable class="col-md-3" style=""></lable>
@@ -119,7 +122,7 @@
 </lable>
 <lable class="col-md-3" style=""></lable>
 </div>
-</div>
+
 <script>
 function printinvoice(){
 	var printContents = document.getElementById('Printdonate').innerHTML;

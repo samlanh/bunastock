@@ -3,10 +3,10 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$row = $this->row;
-?>	
-<div class="wrapper" style="border: 1px dotted #000; background: #fff;width:24cm;margin: 0 auto;min-height: 20cm;padding: 0.5cm;">
-<div id="Printgoodtime">
-	<style>
+?>
+<div id="Printgoodtime">	
+	<div class="wrapper" id="borderimg1" background: #fff;width:24cm;margin: 0 auto;min-height: 20cm;padding: 0.5cm;">
+		<style>
 	    	.wrapper{
 	    		width: 100%;
 	    		margin: 0px;
@@ -23,22 +23,10 @@
 			th, td {
 	    		padding: 4px;
 			}
-			.border-td td{
-				border:solid 1px #ddd;
+			#borderimg1 { 
+			    border: 12px solid transparent;
+			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
 			}
-			.img-logo img{
-				width: 130px;
-			}
-			.ul-li li{
-				
-			}
-			p{line-height: 25px;text-align: justify;}
-			.center-no-next{text-align: center;}
-			.back-color,.back-footer{background-color: #eee;}
-			.back-color td{padding: 20px;}
-			.text-left td{text-align: right;}
-			.img-size img{height: 15px;}
-			tr.line td{ border-bottom: 2px solid #000; }
 	    </style>
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr class="no-boder">
@@ -46,7 +34,7 @@
 				<table width="100%" >
 					<tr>
 						<td width="20%" align="center">
-							<img style="width: 138%;height: 125px;" alt="<?php ?>" src="/bunastock/trunk/public/images/logosbona.jpg"><br>
+							<img style="width: 138%;height: 125px;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
 							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 							
 						</td>
@@ -81,6 +69,7 @@
 	  			</table>
 		</table>
 	</div>
+	</div>
 <div style="padding-left:14%; margin: 0 auto;"> 
     	<lable class="col-md-3" style=""></lable>
     	<div class="col-md-2">
@@ -91,7 +80,7 @@
 		</lable>
 		<lable class="col-md-3" style=""></lable>
 	</div>
-</div>
+
 <script>
 function printinvoice(){
 	var printContents = document.getElementById('Printgoodtime').innerHTML;

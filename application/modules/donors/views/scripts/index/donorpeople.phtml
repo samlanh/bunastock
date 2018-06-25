@@ -5,11 +5,9 @@
 	$controller=$request->getControllerName();
 	$row = $this->row
 ?>	
-
-<div  class="wrapper" style="border: 1px dotted #000;background: #fff;width:25cm;margin: 0 auto;min-height: 30cm;padding: 0.5cm;">
 <div id="Printdonate">
-	<style>
-
+	<div  class="wrapper" id="borderimg1" background: #fff;width:25cm;margin: 0 auto;min-height: 30cm;padding: 0.5cm;">
+		<style>
 	    	.wrapper{
 	    		width: 100%;
 	    		margin: 0px;
@@ -25,6 +23,10 @@
 			}
 			th, td {
 	    		padding: 4px;
+			}
+			#borderimg1 { 
+			    border: 12px solid transparent;
+			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
 			}
 	    </style>
 		<table cellpadding="0" cellspacing="0" width="100%">
@@ -67,45 +69,45 @@
 	  	<tr>
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
-	  				<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:24px;">
+	  				<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:23px;">
 		  					他好看　(សប្បុរសជន):
 		  				</div>
 			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:34px;font-weight: bold; color:red;">
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:33px;font-weight: bold; color:red;">
   							<?php echo $this->row['donor_name']?>
   							</td>
   						</tr>
 			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:red;">
   							លោកស្រី <?php echo $this->row['donor_female']?> នឹងបុត្រ ព្រមទាំងចៅ 
   							</td>
   						</tr>
 			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:red;">
   									汉堡包/漢堡包, 
   							</td>
   						</tr>
 			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:red;">
   							<?php echo $this->row['tel']?>
   							</td>
   						</tr>
-		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px; font-weight: bold; color:#22B424;">
+		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px; font-weight: bold; color:#22B424;">
 	  					<td>
 	  						汉堡包/漢堡包, 汉堡/漢堡汉堡包/漢堡包, 汉堡/漢堡
 	  					</td>
 	  				</tr>
-	  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; color:#C70039;">
+	  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:24px;font-weight: bold; color:#C70039;">
 	  					<td>
 	  						មានចិត្តសន្ធាជ្រះថ្លាជួយក្ដារដល់សពទីទាល់ក្រ
 	  					</td>
 	  				</tr>
-	  				<tr style="list-style:23px; font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; color:red;">
+	  				<tr style="list-style:23px; font-family:  Khmer OS Muol; font-size:24px;font-weight: bold; color:red;">
 	  					<td>
 	  						ព័ត៌មានមានការបង់ប្រាក់៖
 	  					</td>
 	  				</tr>
-	  				<tr style="font-family:  Khmer OS Muol; font-size:20px;font-weight: bold; line-height:44px; color: #6A5ACD; list-style:none;">
+	  				<tr style="font-family:  Khmer OS Muol; font-size:18px;font-weight: bold; line-height:42px; color: #6A5ACD; list-style:none;">
 	  					<td>
 	  						<li>លេខបង្កាន់ដៃ  (<?php echo $this->row['receipt_no']?>)</li>	
 	  						<li>ចំនួន  <?php echo $this->row['qty']?>&nbsp; ម្ឈូស</li>
@@ -119,6 +121,7 @@
 	  		</td>
 	  	</tr>
 	</table>
+	</div>
 </div>
 <div style="padding-left:13%; margin: 0 auto;"> 
 <lable class="col-md-3" style=""></lable>
@@ -129,7 +132,6 @@
 <button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i> បោះពុម្ភ </button>
 </lable>
 <lable class="col-md-3" style=""></lable>
-</div>
 </div>
 <script>
 function printinvoice(){
