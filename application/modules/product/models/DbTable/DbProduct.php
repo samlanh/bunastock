@@ -398,22 +398,30 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			
     		$arr = array(
     			'item_name'		=>	$data["name"],
+    				
     			'item_code'		=>	$data["pro_code"],
     			'barcode'		=>	$data["barcode"],
     			'cate_id'		=>	$data["category"],
     			'brand_id'		=>	$data["brand"],
     			'color_id'		=>	$data["color"],
     			'measure_id'	=>	$data["measure"],
+    				
     			'is_service'	=>	$data["product_type"],
     			'is_costprice'	=>	$data["cost_pricetype"],
-    			'selling_price'	=>	$data["selling_price"],
+    				
     			"price"			=>  $data["price"],
+    			'selling_price_khmer'=>	$data["selling_price_khmer"],
+    			'selling_price'	=>	$data["selling_price"],
+    			'exchange_rate'	=>	$data["exchange_rate"],
+    				
     			'qty_perunit'	=>	$data["qty_unit"],
     			'unit_label'	=>	$data["label"],
-    			'user_id'		=>	$this->getUserId(),
     			'note'			=>	$data["description"],
+    			
+    			'user_id'		=>	$this->getUserId(),
     			'status'		=>	$data["status"],
 				'photo'			=>	$photo,
+    			'create_date'	=>	date("Y-m-d H:i:s"),
     		);
     		$this->_name="tb_product";
     		$id = $this->insert($arr);
@@ -457,8 +465,11 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     			'measure_id'	=>	$data["measure"],
     			'is_service'	=>	$data["product_type"],
     			'is_costprice'	=>	$data["cost_pricetype"],
-    			'selling_price'	=>	$data["selling_price"],
+    			
     			"price"			=>  $data["price"],
+    			'selling_price_khmer'=>	$data["selling_price_khmer"],
+    			'selling_price'	=>	$data["selling_price"],
+    			
     			'qty_perunit'	=>	$data["qty_unit"],
     			'unit_label'	=>	$data["label"],
     			'user_id'		=>	$this->getUserId(),

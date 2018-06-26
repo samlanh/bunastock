@@ -764,7 +764,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 			
 	}
 	function getAllDiePeople(){
-		$sql="SELECT id,dead_name,dead_name_chinese,dead_dob 
+		$sql="SELECT id,dead_name,dead_name_chinese,dead_dob ,membersone,memberstwo
 			FROM `tb_program` 
 		WHERE status=1 AND dead_name!='' 
 			ORDER BY id DESC";
@@ -836,5 +836,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		}
 		return $pre.$new_acc_no;
 	}
+	
+	function getExchangeRate(){
+		$db = $this->getAdapter();
+		$sql="SELECT reil from tb_exchange_rate WHERE active=1 ORDER BY id DESC LIMIT 1";
+		return $db->fetchOne($sql);
+	}
+	
 }
 ?>

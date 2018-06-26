@@ -793,7 +793,7 @@
 <script>
 	$('#frm').submit(function() {
 		customer_id=$("#customer_id").val();
-		if(customer_id<=0){
+		if(customer_id<0){
 			alert("Please select customer !!!");
 			$('#customer_id').select2('open');
 			return false;	
@@ -964,7 +964,6 @@
 		$("#total_construct_item").val(netTotal.toFixed(3));
 	}
 	
-
 	index_sale=0;
 	function addProductRow(){
 		var product_name = $("#product_id");

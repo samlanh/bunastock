@@ -132,12 +132,22 @@ class Product_Form_FrmProduct extends Zend_Form
 		
 		$price = new Zend_Form_Element_Text("price");
 		$price->setAttribs(array(
-				'class'=>'validate[required,custom[number]] form-control',
+				'class'=>'form-control',
+				'onkeypress'=>"return isNumberKey(event)",
+		));
+		$price->setValue(0);
+		
+		$selling_price_khmer = new Zend_Form_Element_Text("selling_price_khmer");
+		$selling_price_khmer->setAttribs(array(
+				'class'=>'form-control',
+				'onkeypress'=>"return isNumberKey(event)",
+				'onkeyup'=>"convertToDollar()",
 		));
 		
 		$selling_price = new Zend_Form_Element_Text("selling_price");
 		$selling_price->setAttribs(array(
-				'class'=>'validate[required,custom[number]] form-control',
+				'class'=>'form-control',
+				'onkeypress'=>"return isNumberKey(event)"
 		));
 		
 		$status = new Zend_Form_Element_Select("status");
@@ -167,6 +177,7 @@ class Product_Form_FrmProduct extends Zend_Form
 			$name->setValue($data["item_name"]);
 			$pro_code->setValue($data["item_code"]);
 			$barcode->setValue($data["barcode"]);
+			$selling_price_khmer->setValue($data["selling_price_khmer"]);
 			$selling_price->setValue($data["selling_price"]);
 			$brand->setValue($data["brand_id"]);
 			$category->setValue($data["cate_id"]);
@@ -181,7 +192,7 @@ class Product_Form_FrmProduct extends Zend_Form
 			$price->setValue($data["price"]);
 		}
 		
-		$this->addElements(array($selling_price,$price,$branch,$status,$pro_code,$name,$serial,$brand,$barcode,$category,
+		$this->addElements(array($selling_price_khmer,$selling_price,$price,$branch,$status,$pro_code,$name,$serial,$brand,$barcode,$category,
 				$color,$measure,$qty_per_unit,$unit,$label,$description));
 		return $this;
 	}

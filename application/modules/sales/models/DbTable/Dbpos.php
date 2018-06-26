@@ -17,7 +17,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchAll($sql);
 	}	
 	function getAllCustomerName(){
-		$sql="SELECT id,cust_name AS name FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
+		$sql="SELECT id,cust_name AS name,phone FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
 		return $this->getAdapter()->fetchAll($sql);
 	}
 	function getProductById($product_id,$branch_id){
@@ -40,6 +40,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	 }
 	public function addSaleOrder($data)
 	{
+		//print_r($data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
@@ -55,12 +56,12 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $invoice,
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
+					
+					"exchange_rate" => $data['exchange_rate'],
 					"all_total"     => $data['sub_total'],
 					"paid"          => $data['paid'],
-					'paid_before'	=> $data['paid_before'],
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
-					'return_amount' => $data['return_amount'],
 					'receiver_name' => $data['receiver_name'],
 					"user_id"       => $this->getUserId(),
 					
@@ -90,7 +91,6 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"receipt_date"  => date("Y-m-d",strtotime($data['sale_date'])),
 						"date_input"    => date("Y-m-d"),
 						'begining_balance'=>$data['sub_total'],
-						'paid_before'	=>$data['paid_before'],
 						"total"         => $data['sub_total'],
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
@@ -108,28 +108,28 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				$this->insert($info_purchase_order);
 			}
 	
-			
-			$arra=array(
-					"sale_order_id"  => $sale_id,
-					"date_payment"  => date("Y-m-d",strtotime($data['sale_date'])),
-					"total_payment" => $data['total_partner_service'],
-					"paid"          => 0,
-					"balance"       => $data['total_partner_service'],
-					"user_id"       => $this->getUserId(),
-					"status"        => 1,
-					"bank_name"     => 	'',
-					"cheque_number" => 	'',
-			);
-			$this->_name="tb_partnerservice_payment";
-			$this->insert($arra);
-			
+			if($data['total_partner_service']>0){
+				$arra=array(
+						"sale_order_id"  => $sale_id,
+						"date_payment"  => date("Y-m-d",strtotime($data['sale_date'])),
+						"total_payment" => $data['total_partner_service'],
+						"paid"          => 0,
+						"balance"       => $data['total_partner_service'],
+						"user_id"       => $this->getUserId(),
+						"status"        => 1,
+						"bank_name"     => 	'',
+						"cheque_number" => 	'',
+				);
+				$this->_name="tb_partnerservice_payment";
+				$this->insert($arra);
+			}
 			
 			if(!empty($data['identity'])){
 				$ids=explode(',',$data['identity']);
 				foreach ($ids as $i)
 				{
 					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
-					if($is_service['is_service']==0){ // product បានចូលធ្វើ
+					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
 						$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);//check if service not need update stock
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
@@ -143,11 +143,15 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					$data_item= array(
 							'saleorder_id'=> $sale_id,
 							'pro_id'	  => $data['product_id'.$i],
+							
 							'qty_unit'	  => $data['qty_'.$i],
 							'qty_detail'  => $data['qtydetail_'.$i],
 							'qty_order'	  => $data['qty_sold'.$i],
+							
+							'cost_price'  => $data['cost_price'.$i],
+							'price_reil'  => $data['price_reil_'.$i],
 							'price'		  => $data['price_'.$i],
-	 						'cost_price'  => $data['cost_price'.$i],
+							
 							'sub_total'	  => $data['sub_total'.$i],
 					);
 					$this->_name='tb_salesorder_item';
@@ -176,9 +180,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
-			$err =$e->getMessage();
-			echo $err;exit();
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();
 		}
 	}
 	function editSale($data,$sale_id){
@@ -211,15 +213,17 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $data["sale_no"],
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
+					
+					"exchange_rate" => $data['exchange_rate'],
 					"all_total"     => $data['sub_total'],
 					"paid"          => $data['paid'],
-					'paid_before'	=> $data['paid_before'],
+					//'paid_before'	=> $data['paid_before'],
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
-					'return_amount' => $data['return_amount'],
+					//'return_amount' => $data['return_amount'],
 					'receiver_name' => $data['receiver_name'],
-					"user_id"       => $this->getUserId(),
 					
+					"user_id"       => $this->getUserId(),
 					"saleagent_id"  => $data["saleagent_id"],
 					
 					'comission' 	=> $data['comission'],
@@ -249,7 +253,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"payment_id"    => 1,	//payment by cash/paypal/cheque
 						"receipt_date"  => date("Y-m-d",strtotime($data['sale_date'])),
 						'begining_balance'=>$data['sub_total'],
-						'paid_before'	=> $data['paid_before'],
+						//'paid_before'	=> $data['paid_before'],
 						"total"         => $data['sub_total'],
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
@@ -273,7 +277,6 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					
 					$reciept_id = $this->insert($info_purchase_order);
 				}
-				
 			}
 				
 			$this->_name='tb_salesorder_item';
@@ -285,7 +288,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				foreach ($ids as $i)
 				{
 					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
-					if($is_service['is_service']==0){ // product បានចូលធ្វើ
+					if($is_service['is_service']==0 && $is_service['is_package']==0){ // product បានចូលធ្វើ
 						$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
@@ -296,22 +299,25 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 							$this->update($arr, $where);
 						}
 					}
+					
 					$data_item= array(
 							'saleorder_id'=> $sale_id,
 							'pro_id'	  => $data['product_id'.$i],
+							
 							'qty_unit'	  => $data['qty_'.$i],
 							'qty_detail'  => $data['qtydetail_'.$i],
 							'qty_order'	  => $data['qty_sold'.$i],
+							
+							'cost_price'  => $data['cost_price'.$i],
+							'price_reil'  => $data['price_reil_'.$i],
 							'price'		  => $data['price_'.$i],
-	 						'cost_price'  => $data['cost_price'.$i],
+							
 							'sub_total'	  => $data['sub_total'.$i],
 					);
 					$this->_name='tb_salesorder_item';
 					$this->insert($data_item);
-					
 				}
 			}
-			
 			$this->_name='tb_sales_partner_service';
 			$where_partner = " saleorder_id = $sale_id";
 			$this->delete($where_partner);

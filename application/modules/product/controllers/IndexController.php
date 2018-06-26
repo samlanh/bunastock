@@ -61,43 +61,46 @@ public function init()
 	public function addAction()
 	{
 		$db = new Product_Model_DbTable_DbProduct();
-			if($this->getRequest()->isPost()){ 
-				try{
-					$post = $this->getRequest()->getPost();
-					$db->add($post);
-						Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/index');
-						Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
-				  }catch (Exception $e){
-				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-				  }
-			}
-			$rs_branch = $db->getBranch();
-			$this->view->branch = $rs_branch;
-			
-			$formProduct = new Product_Form_FrmProduct();
-			$formStockAdd = $formProduct->add(null);
-			Application_Model_Decorator::removeAllDecorator($formStockAdd);
-			$this->view->form = $formStockAdd;
-			
-			$formBrand = new Product_Form_FrmBrand();
-			$frmBrand = $formBrand->Brand();
-			$this->view->frmBrand = $frmBrand;
-			Application_Model_Decorator::removeAllDecorator($frmBrand);
-			
-			$formCat = new Product_Form_FrmCategory();
-			$frmCat = $formCat->cat();
-			$this->view->frmCat = $frmCat;
-			Application_Model_Decorator::removeAllDecorator($frmCat);
-			
-			$formMeasure = new Product_Form_FrmMeasure();
-			$frmMesure = $formMeasure->measure();
-			$this->view->frmMesure = $frmMesure;
-			Application_Model_Decorator::removeAllDecorator($frmMesure);
-			
-			$fmOther = new Product_Form_FrmOther();
-			$frmOther = $fmOther->add();
-			Application_Model_Decorator::removeAllDecorator($frmOther);
-			$this->view->frmOther = $frmOther;
+		if($this->getRequest()->isPost()){ 
+			try{
+				$post = $this->getRequest()->getPost();
+				$db->add($post);
+					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/index');
+					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
+			  }catch (Exception $e){
+			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  }
+		}
+		$rs_branch = $db->getBranch();
+		$this->view->branch = $rs_branch;
+		
+		$formProduct = new Product_Form_FrmProduct();
+		$formStockAdd = $formProduct->add(null);
+		Application_Model_Decorator::removeAllDecorator($formStockAdd);
+		$this->view->form = $formStockAdd;
+		
+		$formBrand = new Product_Form_FrmBrand();
+		$frmBrand = $formBrand->Brand();
+		$this->view->frmBrand = $frmBrand;
+		Application_Model_Decorator::removeAllDecorator($frmBrand);
+		
+		$formCat = new Product_Form_FrmCategory();
+		$frmCat = $formCat->cat();
+		$this->view->frmCat = $frmCat;
+		Application_Model_Decorator::removeAllDecorator($frmCat);
+		
+		$formMeasure = new Product_Form_FrmMeasure();
+		$frmMesure = $formMeasure->measure();
+		$this->view->frmMesure = $frmMesure;
+		Application_Model_Decorator::removeAllDecorator($frmMesure);
+		
+		$fmOther = new Product_Form_FrmOther();
+		$frmOther = $fmOther->add();
+		Application_Model_Decorator::removeAllDecorator($frmOther);
+		$this->view->frmOther = $frmOther;
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->exchange_rate = $db->getExchangeRate();
 	}
 	public function editAction()
 	{
@@ -125,24 +128,27 @@ public function init()
 		$this->view->form = $formStockAdd;
 		
 		$formBrand = new Product_Form_FrmBrand();
-			$frmBrand = $formBrand->Brand();
-			$this->view->frmBrand = $frmBrand;
-			Application_Model_Decorator::removeAllDecorator($frmBrand);
-			
-			$formCat = new Product_Form_FrmCategory();
-			$frmCat = $formCat->cat();
-			$this->view->frmCat = $frmCat;
-			Application_Model_Decorator::removeAllDecorator($frmCat);
-			
-			$formMeasure = new Product_Form_FrmMeasure();
-			$frmMesure = $formMeasure->measure();
-			$this->view->frmMesure = $frmMesure;
-			Application_Model_Decorator::removeAllDecorator($frmMesure);
-			
-			$fmOther = new Product_Form_FrmOther();
-			$frmOther = $fmOther->add();
-			Application_Model_Decorator::removeAllDecorator($frmOther);
-			$this->view->frmOther = $frmOther;
+		$frmBrand = $formBrand->Brand();
+		$this->view->frmBrand = $frmBrand;
+		Application_Model_Decorator::removeAllDecorator($frmBrand);
+		
+		$formCat = new Product_Form_FrmCategory();
+		$frmCat = $formCat->cat();
+		$this->view->frmCat = $frmCat;
+		Application_Model_Decorator::removeAllDecorator($frmCat);
+		
+		$formMeasure = new Product_Form_FrmMeasure();
+		$frmMesure = $formMeasure->measure();
+		$this->view->frmMesure = $frmMesure;
+		Application_Model_Decorator::removeAllDecorator($frmMesure);
+		
+		$fmOther = new Product_Form_FrmOther();
+		$frmOther = $fmOther->add();
+		Application_Model_Decorator::removeAllDecorator($frmOther);
+		$this->view->frmOther = $frmOther;
+		
+		
+		
 	}
 	public function copyAction()
 	{

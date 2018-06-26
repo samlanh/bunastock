@@ -62,7 +62,7 @@ input.btn_borwse_image {
     cursor: pointer;
 }
 </style>
-<form class="form-horizontal" id="product_id" method="post" action="" enctype="multipart/form-data">				
+<form class="form-horizontal" id="frm" method="post" action="" enctype="multipart/form-data" autocomplete="off">				
 			<div class="portlet box blue">
 				<div class="portlet-title">
 					<div class="caption">
@@ -152,11 +152,18 @@ input.btn_borwse_image {
 									<div class="col-md-8">
 										<div class="col-md-8">
 											<div class="form-group">
+												<label class="col-md-4 control-label"><?php echo $tr->translate("អត្រាប្តូរប្រាក់");?>(រៀល)</label>
+												<div class="col-md-8">
+													<input name="label_exchange" id="label_exchange" readOnly value="<?php echo "1 ដុល្លា = ".$this->rs['exchange_rate']." ៛";?>" class="form-control" />
+													<input type="hidden" name="exchange_rate" id="exchange_rate"  value="<?php echo $this->rs['exchange_rate'];?>" class="form-control" />
+												</div>
+											</div>
+											<div class="form-group">
 												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("ថ្លៃដើម");?></strong></label>
 												<div class="col-md-4">
 													<select onchange="checkCostprice();" name="cost_pricetype" id="cost_pricetype" class="form-control select2me">
-														<option value="1">គិតថ្លៃដើម</option>
-														<option value="0">មិនគិតថ្លៃដើម</option>
+														<option value="0" <?php if($this->rs['is_costprice']==0){echo "selected='selected'";}?>>មិនគិតថ្លៃដើម</option>
+														<option value="1" <?php if($this->rs['is_costprice']==1){echo "selected='selected'";}?>>គិតថ្លៃដើម</option>
 													</select>
 												</div>
 												<div class="col-md-4">
@@ -165,7 +172,16 @@ input.btn_borwse_image {
 											</div>
 											<div class="form-group">
 												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("តម្លៃលក់");?></strong></label>
-												<div class="col-md-8">
+												<label class="col-md-1 control-label">
+													រៀល 
+												</label>
+												<div class="col-md-3">
+													<?php echo $form->getElement('selling_price_khmer');?>
+												</div>
+												<label class="col-md-1 control-label">
+													ដុល្លា 
+												</label>
+												<div class="col-md-3">
 													<?php echo $form->getElement('selling_price');?>
 												</div>
 											</div>
@@ -513,36 +529,45 @@ input.btn_borwse_image {
     </div>
  </div>	
 <script>
-$( document ).ready(function() {
-	addProLocation();
-	getMeasureLabel();
-	$('#product_id').on('keyup keypress', function(e) {
-		var keyCode = e.keyCode || e.which;
-	  if (keyCode === 13) { 
-		e.preventDefault();
-		return false;
-	  }
+	$( document ).ready(function() {
+		addProLocation();
+		getMeasureLabel();
 	});
-});
-$('#product_id').submit(function() {
-	category = $("#category").val();
-    if(category==''){
-        alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
-        $('#category').select2('open');
-        return false;
-    }
-    if(maxSize == 1){
-      	 alert('<?php echo $tr->translate("Image size more than 5Mb can not upload");?>');
-      	 return false;
-      	}
-	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
-	if (r == true) {
-	    return true;
-	} else {
-	   return false;
-	    
-	}
-});
+
+	$('#frm').submit(function() {
+		name = $("#name").val();
+		if(name==''){
+			alert("សូមបញ្ចូលឈ្មោះទំនិញ! ");
+			$('#name').focus();
+			return false;
+		}
+		category = $("#category").val();
+		if(category==''){
+			alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
+			$('#category').select2('open');
+			return false;
+		}
+		selling_price = $("#selling_price").val();
+		if(selling_price==''){
+			alert("សូមបញ្ចូលតម្លៃលក់! ");
+			$('#selling_price').focus();
+			return false;
+		}
+		identity = $("#identity").val();
+		if(identity==''){
+			alert("សូមបញ្ចូលទំនិញក្នុងស្តុក តាមសាខា! ");
+			$('#branch').select2('open');
+			return false;
+		}	
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			return true;
+			$("#btnsavenew").attr("disabled", true);
+		} else {
+		   return false;    
+		}
+	});
+	
 	function getMeasureLabel(){
 		var sel = $("#measure");
 		var text = $("option:selected",sel).text();
@@ -563,10 +588,10 @@ $('#product_id').submit(function() {
 			template='<tr id="row_location_<?php echo $key+1;?>">';
 			template+='<td><?php echo $key+1;?></td>';
 			template+='<td><?php echo $rs["name"];?><input type="hidden" id="branch_id_<?php echo $key+1;?>" name="branch_id_<?php echo $key+1;?>" value="'+id+'"</td>';
-			template+='<td><input type="text" id="current_qty_<?php echo $key+1;?>" onKeyup="totalQty(<?php echo $key+1;?>)" name="current_qty_<?php echo $key+1;?>"  value="'+unit_qty+'" class="form-control"></td>';
-			template+='<td><input type="text" id="other_qty_<?php echo $key+1;?>" onKeyup="totalQty(<?php echo $key+1;?>)" name="other_qty_<?php echo $key+1;?>"  value="'+other_qty+'" class="form-control"></td>';  
-			template+='<td><input type="text" id="total_qty_<?php echo $key+1;?>" name="total_qty_<?php echo $key+1;?>" value="<?php echo $rs['qty'];?>" class="form-control"></td>'; 
-			template+='<td><input type="text" id="qty_warning_<?php echo $key+1;?>" name="qty_warnning_<?php echo $key+1;?>" value="<?php echo $rs['qty_warning'];?>" class="form-control"></td>';
+			template+='<td><input type="text" id="current_qty_<?php echo $key+1;?>" onkeypress="return isNumberKey(event);" onKeyup="totalQty(<?php echo $key+1;?>)" name="current_qty_<?php echo $key+1;?>"  value="'+unit_qty+'" class="form-control"></td>';
+			template+='<td><input type="text" id="other_qty_<?php echo $key+1;?>" onkeypress="return isNumberKey(event);" onKeyup="totalQty(<?php echo $key+1;?>)" name="other_qty_<?php echo $key+1;?>"  value="'+other_qty+'" class="form-control"></td>';  
+			template+='<td><input type="text" id="total_qty_<?php echo $key+1;?>" onkeypress="return isNumberKey(event);" name="total_qty_<?php echo $key+1;?>" value="<?php echo $rs['qty'];?>" class="form-control"></td>'; 
+			template+='<td><input type="text" id="qty_warning_<?php echo $key+1;?>" onkeypress="return isNumberKey(event);" name="qty_warnning_<?php echo $key+1;?>" value="<?php echo $rs['qty_warning'];?>" class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteRecord(<?php echo $key+1;?>,1)" name="save_close" class="btn default"><?php echo $tr->translate("DELETE");?></button></td>';
 			template+='</tr>';
 			$('#tr_location').append(template);
@@ -584,10 +609,10 @@ $('#product_id').submit(function() {
 			template='<tr id="row_location_'+index+'">';
 			template+='<td>'+index+'</td>';
 			template+='<td>'+txt_br+'<input type="hidden" id="branch_id_'+index+'" name="branch_id_'+index+'" value="'+branch_id+'" </td>';
-			template+='<td><input type="text" id="current_qty_'+index+'" onKeyup="totalQty('+index+')" name="current_qty_'+index+'" value="0" class="form-control"></td>'; 
-			template+='<td><input type="text" id="other_qty_'+index+'" onKeyup="totalQty('+index+')" name="other_qty_'+index+'" value="0" class="form-control"></td>'; 
-			template+='<td><input type="text" id="total_qty_'+index+'" name="total_qty_'+index+'" value="0" class="form-control"></td>'; 
-			template+='<td><input type="text" id="qty_warning_'+index+'" name="qty_warnning_'+index+'" value="0" class="form-control"></td>';
+			template+='<td><input type="text" id="current_qty_'+index+'" onkeypress="return isNumberKey(event);" onKeyup="totalQty('+index+')" name="current_qty_'+index+'" value="0" class="form-control"></td>'; 
+			template+='<td><input type="text" id="other_qty_'+index+'" onkeypress="return isNumberKey(event);" onKeyup="totalQty('+index+')" name="other_qty_'+index+'" value="0" class="form-control"></td>'; 
+			template+='<td><input type="text" id="total_qty_'+index+'" onkeypress="return isNumberKey(event);" name="total_qty_'+index+'" value="0" class="form-control"></td>'; 
+			template+='<td><input type="text" id="qty_warning_'+index+'" onkeypress="return isNumberKey(event);" name="qty_warnning_'+index+'" value="0" class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteRecord('+index+',1)" name="save_close" class="btn default"><?php echo $tr->translate("DELETE");?></button></td>';
 			template+='</tr>';
 			$('#tr_location').append(template);
@@ -850,6 +875,24 @@ $('#product_id').submit(function() {
         }
         readURL(this);
     });
+	
+	function isNumberKey(evt)
+	{
+	  	var charCode = (evt.which) ? evt.which : event.keyCode;
+	  	if (charCode != 46 && charCode != 45 && charCode > 31 && (charCode < 48 || charCode > 57)){
+			return false;
+	  	}else{
+			return true;
+	  	}
+	}
+	
+	function convertToDollar(){
+		var selling_price_khmer  = $("#selling_price_khmer").val();
+		var exchange_rate  = $("#exchange_rate").val();
+		dollar = (selling_price_khmer / exchange_rate).toFixed(3);
+		$("#selling_price").val(dollar);
+	}
+	
 </script>		
 </body>
 </html>

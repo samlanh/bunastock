@@ -12,7 +12,7 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$level = $result["level"];
 ?>						 
-<title><?php echo $tr->translate("ADD_NEW_PRODUCT");?></title>
+<title><?php echo $tr->translate("បន្ថែមទំនិញ");?></title>
 <style>
 .imgBlog {
     border: solid 1px #eee;
@@ -55,7 +55,7 @@ input.btn_borwse_image {
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><?php echo $tr->translate("ADD_NEW_PRODUCT");?>
+					<i class="fa fa-gift"></i><?php echo $tr->translate("បន្ថែមទំនិញ");?>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></button></a></label>
@@ -132,11 +132,19 @@ input.btn_borwse_image {
 									<div class="col-md-8">
 										<div class="col-md-8">
 											<div class="form-group">
+												<label class="col-md-4 control-label"><?php echo $tr->translate("អត្រាប្តូរប្រាក់");?></label>
+												<div class="col-md-8">
+													<input name="label_exchange" id="label_exchange" readOnly value="<?php echo "1 ដុល្លា = ".$this->exchange_rate." ៛";?>" class="form-control" />
+													<input type="hidden" name="exchange_rate" id="exchange_rate"  value="<?php echo $this->exchange_rate;?>" class="form-control" />
+												</div>
+											</div>
+											
+											<div class="form-group">
 												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("ថ្លៃដើម");?></strong></label>
 												<div class="col-md-4">
 													<select onchange="checkCostprice();" name="cost_pricetype" id="cost_pricetype" class="form-control select2me">
-														<option value="1">គិតថ្លៃដើម</option>
 														<option value="0">មិនគិតថ្លៃដើម</option>
+														<option value="1">គិតថ្លៃដើម</option>
 													</select>
 												</div>
 												<div class="col-md-4">
@@ -145,7 +153,16 @@ input.btn_borwse_image {
 											</div>
 											<div class="form-group">
 												<label class="col-md-4 control-label"><strong><?php echo $tr->translate("តម្លៃលក់");?></strong></label>
-												<div class="col-md-8">
+												<label class="col-md-1 control-label">
+													រៀល 
+												</label>
+												<div class="col-md-3">
+													<?php echo $form->getElement('selling_price_khmer');?>
+												</div>
+												<label class="col-md-1 control-label">
+													ដុល្លា 
+												</label>
+												<div class="col-md-3">
 													<?php echo $form->getElement('selling_price');?>
 												</div>
 											</div>
@@ -191,20 +208,21 @@ input.btn_borwse_image {
 														</div>
 														<div class="portlet-body">
 															<div class="table-responsive">
-																<table class="table table-bordered" style="font-size:12px !important;">
-																<thead>
-																<tr>
-																	<th>#</th>
-																	<th><?php echo $tr->translate("LOCATION_NAME");?></th>
-																	<th><?php echo $tr->translate("UNIT_QTY");?></th>
-																	<th><?php echo $tr->translate("QTY_PER_UNIT");?></th>
-																	<th><?php echo $tr->translate("TOTAL_QTY");?></th>
-																	<th><?php echo $tr->translate("QTY_WARNING");?></th>
-																	<th><?php echo $tr->translate("ACTION");?></th>
-																</tr>
-																</thead>
-																<tbody id="tr_location">
-																</tbody>
+																<table class="table table-bordered" style="font-size:12px !important; white-space:nowrap;">
+																	<thead>
+																		<tr align="center" style="font-weight:bold;">
+																			<td>#</td>
+																			<td><?php echo $tr->translate("LOCATION_NAME");?></td>
+																			<td><?php echo $tr->translate("UNIT_QTY");?></td>
+																			<td><?php echo $tr->translate("QTY_PER_UNIT");?></td>
+																			<td><?php echo $tr->translate("TOTAL_QTY");?></td>
+																			<td><?php echo $tr->translate("QTY_WARNING");?></td>
+																			<td><?php echo $tr->translate("DELETE");?></td>
+																		</tr>
+																	</thead>
+																	<tbody id="tr_location">
+																	
+																	</tbody>
 																</table>
 															</div>
 															<input type="hidden" name="identity" id="identity" value="" >
@@ -507,57 +525,40 @@ input.btn_borwse_image {
     </div>
  </div>
 <script>
-$('#frm').submit(function() {
-	name = $("#name").val();
-    if(name==''){
-        alert("សូមបញ្ចូលឈ្មោះទំនិញ! ");
-        $('#name').select2('open');
-        return false;
-    }
-    category = $("#category").val();
-    if(category==''){
-        alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
-        $('#category').select2('open');
-        return false;
-    }
-    selling_price = $("#selling_price").val();
-    if(selling_price==''){
-        alert("សូមបញ្ចូលតម្លៃលក់! ");
-        $('#selling_price').select2('open');
-        return false;
-    }
-    branch = $("#branch").val();
-    if(branch==''){
-        alert("សូមជ្រើសរើសសាខា! ");
-        $('#branch').select2('open');
-        return false;
-    }
-    identity = $("#identity").val();
-    if(identity==''){
-    	alert("សូមបញ្ចូលទំនិញក្នុងស្តុក តាមសាខា! ");
-        $('#identity').select2('open');
-        return false;
-    }	
-	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
-	if (r == true) {
-	    return true;
-	    $("#btnsavenew").attr("disabled", true);
-	} else {
-	   return false;    
-	}
-});
-$( document ).ready(function() {
-	//addNewProLocation();
-	//addNewPriceType();
-	$('#product_id').on('keyup keypress', function(e) {
-		var keyCode = e.keyCode || e.which;
-	  if (keyCode === 13) { 
-		e.preventDefault();
-		return false;
-	  }
+	$('#frm').submit(function() {
+		name = $("#name").val();
+		if(name==''){
+			alert("សូមបញ្ចូលឈ្មោះទំនិញ! ");
+			$('#name').focus();
+			return false;
+		}
+		category = $("#category").val();
+		if(category==''){
+			alert("សូមជ្រើសរើស ប្រភេទផលិតផល! ");
+			$('#category').select2('open');
+			return false;
+		}
+		selling_price = $("#selling_price").val();
+		if(selling_price==''){
+			alert("សូមបញ្ចូលតម្លៃលក់! ");
+			$('#selling_price').focus();
+			return false;
+		}
+		identity = $("#identity").val();
+		if(identity==''){
+			alert("សូមបញ្ចូលទំនិញក្នុងស្តុក តាមសាខា! ");
+			$('#branch').select2('open');
+			return false;
+		}	
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+		if (r == true) {
+			return true;
+			$("#btnsavenew").attr("disabled", true);
+		} else {
+		   return false;    
+		}
 	});
-});
-
+	
 	function getMeasureLabel(){
 		var sel = $("#measure");
 		var text = $("option:selected",sel).text();
@@ -569,7 +570,7 @@ $( document ).ready(function() {
 		unit_qty = $('#current_qty_'+index).val();
 		other_qty = $('#other_qty_'+index).val();
 		total_other_qty = parseFloat(other_qty)/parseFloat(o_measure);
-		total_qty = parseFloat(unit_qty)+ total_other_qty;
+		total_qty = (parseFloat(unit_qty)+ total_other_qty).toFixed(3);
 		$('#total_qty_'+index).val(total_qty);
 	}
 	
@@ -593,17 +594,18 @@ $( document ).ready(function() {
 		var strings = arrays.join(',');
 	}
 	function addNewProLocation(){
-			index++;
-			var branch_text = $("#branch");
-			var txt_br = $("option:selected",branch_text).text();
-			var branch_id = $("#branch").val();
+		index++;
+		var branch_text = $("#branch");
+		var txt_br = $("option:selected",branch_text).text();
+		var branch_id = $("#branch").val();
+		if(branch_id>0){
 			template='<tr id="row_location_'+index+'">';
 			template+='<td>'+index+'</td>';
 			template+='<td>'+txt_br+'<input type="hidden" id="branch_id_'+index+'" name="branch_id_'+index+'" value="'+branch_id+'" </td>';
-			template+='<td><input type="text" id="current_qty_'+index+'" onKeyup="totalQty('+index+')" name="current_qty_'+index+'" value="0"></td>'; 
-			template+='<td><input type="text" id="other_qty_'+index+'" onKeyup="totalQty('+index+')" name="other_qty_'+index+'" value="0" "></td>'; 
-			template+='<td><input type="text" id="total_qty_'+index+'" name="total_qty_'+index+'" value="0" class="form-control"></td>'; 
-			template+='<td><input type="text" id="qty_warning_'+index+'" name="qty_warnning_'+index+'" value="0" class="form-control"></td>';
+			template+='<td><input type="text" id="current_qty_'+index+'" onkeypress="return isNumberKey(event);" onKeyup="totalQty('+index+')" name="current_qty_'+index+'" value="0"></td>'; 
+			template+='<td><input type="text" id="other_qty_'+index+'" onkeypress="return isNumberKey(event);" onKeyup="totalQty('+index+')" name="other_qty_'+index+'" value="0" "></td>'; 
+			template+='<td><input type="text" id="total_qty_'+index+'" onkeypress="return isNumberKey(event);" name="total_qty_'+index+'" value="0" class="form-control"></td>'; 
+			template+='<td><input type="text" id="qty_warning_'+index+'" onkeypress="return isNumberKey(event);" name="qty_warnning_'+index+'" value="0" class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteRecord('+index+',1)" name="save_close" class="btn default"><?php echo $tr->translate("DELETE");?></button></td>';
 			template+='</tr>';
 			$('#tr_location').append(template);
@@ -611,7 +613,8 @@ $( document ).ready(function() {
 				var identity = $('#identity').val();
 				$('#identity').val(identity+','+index);
 			} else {$('#identity').val(index);}
-			
+			$('#branch').val('').select2();
+		}
 	}	
 	
 	
@@ -865,6 +868,24 @@ $( document ).ready(function() {
         
         readURL(this);
     });
+	
+	function isNumberKey(evt)
+	{
+	  	var charCode = (evt.which) ? evt.which : event.keyCode;
+	  	if (charCode != 46 && charCode != 45 && charCode > 31 && (charCode < 48 || charCode > 57)){
+			return false;
+	  	}else{
+			return true;
+	  	}
+	}
+	
+	function convertToDollar(){
+		var selling_price_khmer  = $("#selling_price_khmer").val();
+		var exchange_rate  = $("#exchange_rate").val();
+		dollar = (selling_price_khmer / exchange_rate).toFixed(3);
+		$("#selling_price").val(dollar);
+	}
+	
 </script>		
 </body>
 </html>

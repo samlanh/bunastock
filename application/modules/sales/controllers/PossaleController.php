@@ -79,8 +79,8 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 	
-		$db = new Sales_Model_DbTable_Dbexchangerate();
-		$this->view->rsrate= $db->getExchangeRate();
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->exchange_rate = $db->getExchangeRate();
 	}
 	
 	public function editAction()
@@ -94,11 +94,12 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_Dbpos();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
+			//print_r($data);exit();
 			try {
 				if(!empty($data['identity'])){
 					$db->editSale($data,$id);
 				}
-				Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/index/index');
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('Failed');
 				echo $e->getMessage();

@@ -175,15 +175,17 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				foreach ($iden as $i){
 					
 					$_db = new Sales_Model_DbTable_Dbpos();
-					$rs = $_db->getProductByProductId($data['pro_'.$i], $data["branch_id"]);//check if service not need update stock
-					
-					if(!empty($rs)){
-						$this->_name='tb_prolocation';
-						$arr = array(
-								'qty'=>$rs['qty']-$data['qty_sold_'.$i]
-						);
-						$where=" id =".$rs['id'];
-						$this->update($arr, $where);
+					$is_service = $_db->getType($data['pro_'.$i]); //check if service not need update stock
+					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
+						$rs = $_db->getProductByProductId($data['pro_'.$i], $data["branch_id"]);
+						if(!empty($rs)){
+							$this->_name='tb_prolocation';
+							$arr = array(
+									'qty'=>$rs['qty']-$data['qty_sold_'.$i]
+							);
+							$where=" id =".$rs['id'];
+							$this->update($arr, $where);
+						}
 					}
 					
 					$arr=array(
