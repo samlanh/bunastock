@@ -152,7 +152,7 @@
 														</div>
 													</div>
 												</div>
-											</div>
+											</div>											
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-2" style="text-align: left !important;">
@@ -173,6 +173,7 @@
 															<i class="fa fa-plus"></i>&nbsp;&nbsp;បន្ថែមមុខទំនិញថ្មី
 														</button>
 													</div>
+													
 													<div class="col-md-2" style="text-align: left !important;">
 														<button type="button" class="btn red delete col-md-12" onclick="getRefreshProduct();" >
 															<i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh
@@ -445,12 +446,7 @@
 														ឈ្មោះអ្នកស្លាប់
 													</label>
 													<div class="col-md-8">
-														<select class="form-control select2me" name="dead_id" id="dead_id" onChange="getDeadPersonDetail()">
-															<option value="-1">ឈ្មោះអ្នកស្លាប់</option>
-															<?php if(!empty($this->all_dead)){foreach ($this->all_dead as $rs){?>
-															<option value="<?php echo $rs['id']?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'];?></option>
-															<?php }}?>
-														</select>
+														<input type="text" class="form-control" name="dead_ids" id="dead_ids"​ onchange="set" readonly/>
 													</div>
 												</div>
 												<div class="form-group" style="">
@@ -627,12 +623,34 @@
 												</div>
 												<div class="form-group" style="">
 													<label class="col-md-4 control-label">
-														សម្គាល់
+														ឈ្មោះអ្នកស្លាប់
 													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="dead_note" id="dead_note" readonly />
+													<div class="col-md-7">
+														<select class="form-control select2me" name="dead_id" id="dead_id" onChange="getDeadPersonDetail()">
+															<option value="-1">ជ្រើសរើសឈ្មោះអ្នកស្លាប់</option>
+															<?php if(!empty($this->all_dead)){foreach ($this->all_dead as $rs){?>
+															<option value="<?php echo $rs['id']?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'];?></option>
+															<?php }}?>
+														</select>
 													</div>
 												</div>
+												<div class="row">
+												<div class="form-group">
+													<div class="col-md-1" style="text-align: left !important;">
+														
+													</div>
+													<div class="col-md-5" style="text-align: left !important;">
+														<button type="button" name="calcel" class="btn blue col-md-12" onclick="saleProgram();" >
+															<i class="fa fa-plus"></i>&nbsp;&nbsp;ឈ្មោះអ្នកស្លាប់
+														</button>
+													</div>
+													<div class="col-md-5" style="text-align: left !important;">
+														<button type="button" class="btn red delete col-md-12" onclick="getRefreshProgram();" >
+															<i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh
+														</button>
+													</div>
+												</div>
+											</div>
 											</div>
 										</div>
 									</div>
@@ -798,8 +816,11 @@
 	});
 	
 		
-	function getDeadPersonDetail(){
+	function getDeadPersonDetail(){		
 		var dead_id  = $("#dead_id").val();
+		if(dead_id!=-1){
+			$("#dead_ids").val($("#dead_id option:selected" ).text());
+		}
 		if(dead_id>0){
 			$.ajax({
 				url: "<?php echo $this->baseUrl()?>/mong/index/get-dead-detail",
@@ -834,6 +855,7 @@
 				}
 			});
 		}
+		
 	}
 
 	function getConstructorDetail(){
@@ -1082,8 +1104,34 @@
 	function popupProduct(){
 		window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/product/index/add";?>','_blank');
 	}
+	function saleProgram(){
+		window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
+	}
+													
+	var url_getprogram = '<?php echo $this->url(array("module"=>"mong","controller"=>"index","action"=>"refresh-program"));?>';
+	function getRefreshProgram(){
+		loading();
+		$.ajax({
+			url: url_getprogram,
+			type: "post",
+			success: function(data){
+				rs = $.parseJSON(data);
+				if(rs){
+					$('#dead_id').empty();
+					for(i=0;i<rs.length;i++){
+						$('#dead_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['dead_name']+"-"+rs[i]['dead_name_chinese']));
+					}
+				}
+				document.getElementsByClassName("overlay")[0].style.display="none";
+			},
+			error:function(err){
+				document.getElementsByClassName("overlay")[0].style.display="none";
+				alert("failed");
+			}
+		});
+	}
 	
-	var url_getproduct = '<?php echo $this->url(array("module"=>"mong","controller"=>"index","action"=>"refresh-product"));?>';										
+	var url_getproduct = '<?php echo $this->url(array("module"=>"mong","controller"=>"index","action"=>"refresh-product"));?>';
 	function getRefreshProduct(){
 		loading();
 		$.ajax({

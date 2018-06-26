@@ -75,9 +75,9 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->constructor = $db->getConstructor();
 		$this->view->constructor_item = $db->getConstructorItem();
 		
-		$_db=new Sales_Model_DbTable_DbProgram();
-		$khmer_year = $_db->getAllKhmerYear();
-		$this->view->khmer_year = $khmer_year;
+		$_db=new Sales_Model_DbTable_DbProgram();	
+		$this->view->khmer_year = $_db->getAllKhmerYear();
+
 		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->rsproduct = $db->getAllProductName();
@@ -202,6 +202,15 @@ class Mong_IndexController extends Zend_Controller_Action
 			print_r(Zend_Json::encode($product));
 			exit();
 		}
+	}
+	function refreshProgramAction(){
+ 		if($this->getRequest()->isPost()){
+ 			$data=$this->getRequest()->getPost();
+ 			$db = new Mong_Model_DbTable_DbIndex();
+ 			$program = $db->getDeadPerson();
+ 			print_r(Zend_Json::encode($program));
+ 			exit();
+ 		}
 	}
 	
 }

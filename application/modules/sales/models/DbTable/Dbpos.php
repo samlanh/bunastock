@@ -15,7 +15,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$sql.=" AND is_service=1";
 		}
 		return $this->getAdapter()->fetchAll($sql);
-	}
+	}	
 	function getAllCustomerName(){
 		$sql="SELECT id,cust_name AS name FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
 		return $this->getAdapter()->fetchAll($sql);
@@ -50,6 +50,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
+					"namebody"   => $data['namebody'],
 					'program_id'	=> $data['program_id'],
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $invoice,
@@ -205,6 +206,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
+					"namebody"   => $data['namebody'],
 					'program_id'	=> $data['program_id'],
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $data["sale_no"],
