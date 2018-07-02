@@ -37,6 +37,8 @@ class IndexController extends Zend_Controller_Action
 						$session_user->level=$user_info['user_type_id'];
 						$session_user->user_type=$user_info['user_type'];
 						$session_user->location_id=$user_info['LocationId'];
+						$session_user->branch=$user_info['LocationId'];
+						$session_user->branch_id=$user_info['LocationId'];
 						$session_user->email=$user_info['email'];
 						for($i=0; $i<count($arr_acl);$i++){
 							$arr_module[$i]=$arr_acl[$i]['module'];

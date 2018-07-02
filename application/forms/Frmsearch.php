@@ -71,9 +71,13 @@ class Application_Form_Frmsearch extends Zend_Form
 				'data-date-format'=>"dd-mm-yyyy"
 		));
 		
-		$options = $db->getAllLocation(1);
+		$options = $db->getAllBranch();
+		print_r($options);exit();
 		$locationID = new Zend_Form_Element_Select('branch_id');
 		$locationID ->setAttribs(array('class'=>'validate[required] form-control select2me'));
+		if(!empty($options)){ foreach($options as $read){
+			$options[$read['id']]=$read['name'];
+		}}
 		$locationID->setMultiOptions($options);
 		$locationID->setattribs(array());
 		$locationID->setValue($request->getParam('branch_id'));

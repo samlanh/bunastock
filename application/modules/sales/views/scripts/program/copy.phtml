@@ -197,6 +197,17 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
+											ស្លាប់នៅថ្ងៃទី
+										</label>
+										<div class="col-md-8">
+											<div class="input-icon right">
+												<i class="fa fa-calendar"></i>
+												<input type="text" class="form-control " name="date_time_female" id="date_time_female" value="<?php echo date("d-m-Y H:i",strtotime($this->row['date_time_female']))?>" data-date-format="dd-mm-yyyy  hh:ii" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
 										</label>
 										<div class="col-md-8">
 											<button type="button" name="save_close" class="btn blue btn-block btn-lg" onclick="exchangeInfo();" ><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;ប្តូរទិន្នន័យ</button>
@@ -234,6 +245,22 @@
 										</label>
 										<div class="col-md-8">
 											<input type="text" class="form-control" name="place_pjos_sop" id="place_pjos_sop" value="<?php echo $this->row['place_pjos_sop']?>" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ទូរស័ទ្ទសមាជិកទី១
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="membersone" id="membersone" value="<?php echo $this->row['membersone']?>" />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											ទូរស័ទ្ទសមាជិកទី២
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control" name="memberstwo" id="memberstwo" value="<?php echo $this->row['memberstwo']?>" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -684,6 +711,7 @@
 		dead_dob = $("#dead_dob").val();
 		dead_status = $("#dead_status").val();
 		dead_pob = $("#dead_pob").val();
+		date_time_dead = $("#date_time_dead").val();
 		
 		partner_name = $("#partner_name").val();
 		partner_name_chinese = $("#partner_name_chinese").val();
@@ -693,8 +721,8 @@
 		partner_dob = $("#partner_dob").val();
 		partner_status = $("#partner_status").val();
 		partner_pob = $("#partner_pob").val();
-		
-		
+		date_time_female = $("#date_time_female").val();
+
 		$("#dead_name").val(partner_name);
 		$("#dead_name_chinese").val(partner_name_chinese);
 		$("#dead_sex").val(partner_sex).select2();
@@ -703,7 +731,8 @@
 		$("#dead_dob").val(partner_dob);
 		$("#dead_status").val(partner_status).select2();
 		$("#dead_pob").val(partner_pob);
-		
+		$("#date_time_dead").val(date_time_female);
+
 		$("#partner_name").val(dead_name);
 		$("#partner_name_chinese").val(dead_name_chinese);
 		$("#partner_sex").val(dead_sex).select2();
@@ -711,8 +740,8 @@
 		$("#partner_age").val(dead_age);
 		$("#partner_dob").val(dead_dob);
 		$("#partner_status").val(dead_status).select2();
+		$("#date_time_female").val(date_time_dead);
 		$("#partner_pob").val(dead_pob);
-		
 	}
 	
 </script>

@@ -295,7 +295,22 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	
 	function getDeadPerson(){
 		$db=$this->getAdapter();
-		$sql="select id,dead_name,dead_name_chinese,create_date from tb_program where status=1 and dead_name!='' ";
+		$sql="SELECT 
+					id,
+					dead_name,
+					dead_name_chinese,
+					dead_dob ,
+					membersone,
+					memberstwo,
+					create_date
+				FROM 
+					`tb_program` 
+				WHERE 
+					status=1 
+					AND dead_name!='' 
+				ORDER BY 
+					id DESC
+			 ";
 		return $db->fetchAll($sql);
 	}
 	

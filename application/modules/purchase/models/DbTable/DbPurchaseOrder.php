@@ -130,7 +130,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			$locationid=$data['LocationId'];
 			foreach ($ids as $i)
 			{
-				$rsproduct = $this->getProductCostAndQty($data['item_id_'.$i]);
+				$rsproduct = $this->getProductCostAndQty($data['item_id_'.$i]); 
 				$cost_avg = (($rsproduct['qty']*$rsproduct['price'])+($data['price'.$i]*$data['qty'.$i])) / ($rsproduct['qty']+$data['qty'.$i]);
 				$array=array(
 						'price'=>$cost_avg
@@ -153,7 +153,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 				$this->insert($data_item);
 	
 				if($data["status"]==5 OR $data["status"]==4){
-					$rows=$db_global->productLocationInventory($data['item_id_'.$i], $locationid);//check stock product location
+					$rows=$db_global->productLocationInventory($data['item_id_'.$i], $locationid);// action add //check stock product location  
 					if($rows)
 					{
 						if($data["status"]==4 OR $data["status"]==5){
@@ -187,7 +187,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 				$po_item = $this->getPurchaseDetailById($data['id']);//get old item detail
 				if(!empty($po_item)){
 					foreach ($po_item as $rsitem){
-						$rows=$db_global->productLocationInventory($rsitem['pro_id'], $row_oldhistory['branch_id']);//check stock product location
+						$rows=$db_global->productLocationInventory($rsitem['pro_id'], $row_oldhistory['branch_id']);// action update //check stock product location
 						if($rows)
 						{
 							$datatostock   = array(

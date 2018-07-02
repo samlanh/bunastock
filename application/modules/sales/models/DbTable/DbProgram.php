@@ -68,6 +68,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     }
     
     public function addProgram($data){
+    	//print_r($data);exit();
     	$db=$this->getAdapter();
     	$db->beginTransaction();
     	
@@ -161,13 +162,13 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    	}
 	    	
 	    	if(!empty($data['identity_girl'])){
-	    		$ids = explode(",", $data['identity_girl']);
-	    		foreach ($ids as $i){
+	    		$ids1 = explode(",", $data['identity_girl']);
+	    		foreach ($ids1 as $j){
 	    			$array = array(
 	    					'program_id'    => $program_id,
 	    					'type'      	=> 2, // 2 = ឆ្នាំកូនស្រី
-	    					'khmer_year_id'	=> $data['khmer_year_girl_'.$i],
-	    					'note'      	=> $data['girl_note_'.$i],
+	    					'khmer_year_id'	=> $data['khmer_year_girl_'.$j],
+	    					'note'      	=> $data['girl_note_'.$j],
 	    			);
 	    			 
 	    			$this->insert($array);
@@ -256,21 +257,19 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    	}
 	    	
 	    	if(!empty($data['identity_girl'])){
-	    		$ids = explode(",", $data['identity_girl']);
-	    		foreach ($ids as $i){
+	    		$ids1 = explode(",", $data['identity_girl']);
+	    		foreach ($ids1 as $j){
 	    			$array = array(
 	    					'program_id'    => $id,
 	    					'type'      	=> 2, // 2 = ឆ្នាំកូនស្រី
-	    					'khmer_year_id'	=> $data['khmer_year_girl_'.$i],
-	    					'note'      	=> $data['girl_note_'.$i],
+	    					'khmer_year_id'	=> $data['khmer_year_girl_'.$j],
+	    					'note'      	=> $data['girl_note_'.$j],
 	    			);
 	    			 
 	    			$this->insert($array);
 	    		}
 	    	}
-	    	
 	    	$db->commit();
-	    	
     	}catch (Exception $e){
     		$db->rollBack();
     		echo $e->getMessage();

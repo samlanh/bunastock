@@ -68,6 +68,7 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->expense = $optexpense = $db->getAllExpense();
 		$this->view->receipt = $db->getExpenseReceiptNumber(1);
+		$this->view->branch = $db->getAllBranch();
 		
     }
  

@@ -29,6 +29,19 @@ $frm = $this->frm_expense;
 					
 					<div class="form-body">
 						<div class="form-group">
+							<label class="control-label col-md-2"><?php echo $tr->translate("សាខា")?><span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<select class="form-control select2me" name="branch" id="branch" >
+										<?php if(!empty($this->branch)){foreach ($this->branch as $rs){?>
+										<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
+										<?php }}?>
+									</select>
+								</div>
+							</div>
+						
 							<label class="control-label col-md-2"><?php echo $tr->translate("ពណ៌នាចំនាយ")?><span class="required">
 								</span>
 							</label>
