@@ -56,11 +56,11 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	);
     	return  $this->insert($_arr);
     }
-    function getServices($data){
-    	$db = $this->getAdapter();
-    	$sql = "SELECT id,partner_name,gender,tel,addresss,service_cate,service_fee,description FROM tb_partnerservice";
-    	return $db->fetchAll($sql);
-    }
+//     function getServices($data){
+//     	$db = $this->getAdapter();
+//     	$sql = "SELECT id,partner_name,gender,tel,addresss,service_cate,service_fee,description FROM tb_partnerservice";
+//     	return $db->fetchAll($sql);
+//     }
     function getAllService(){
     	$db = $this->getAdapter();
     	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND status=1 AND is_service=1 AND is_package=0 ORDER BY item_name ASC";

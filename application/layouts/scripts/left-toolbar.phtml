@@ -235,8 +235,17 @@
 	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'saleagent','action'=>'index'),null, true); ?>">
 							    <i class="icon-arrow-right"></i>&nbsp;ភ្នាក់ងារលក់
 		            		</a>
+	            		</li> 
+	            		<li>
+	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'borrowers','action'=>'index'),null, true); ?>">
+							    <i class="icon-arrow-right"></i>&nbsp;អ្នកខ្ចីប្រាក់
+		            		</a>
 	            		</li>  
-	            		
+	            		<li>
+	            			<a href="<?php echo $this->url(array('module'=>'sales','controller'=>'Repay','action'=>'index'),null, true); ?>">
+							    <i class="icon-arrow-right"></i>&nbsp;អ្នកសងប្រាក់
+		            		</a>
+	            		</li> 
 					</ul>
 				</li>
 				<li class="<?php if($module=='donors'){echo $class_active;}?>">
