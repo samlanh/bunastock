@@ -218,6 +218,14 @@ class Sales_PossaleController extends Zend_Controller_Action
 			exit();
 		}
 	}
+	function refreshProgramAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$product = $db->getAllProgramName();
+			exit();
+		}
+	}
 
 	function getPackageproductAction(){
 		if($this->getRequest()->isPost()){

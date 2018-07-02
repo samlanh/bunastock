@@ -75,19 +75,6 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												<strong>ជ្រើសរើសសព</strong>
-											</label>
-											<div class="col-md-8">
-												<select class="form-control select2me" id="program_id" name="program_id">
-													<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
-													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
-														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'] ; ?></option>
-													<?php }}?>
-												</select>
-											</div>
-										</div>
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
 												សម្គាល់
 											</label>
 											<div class="col-md-8">
@@ -102,6 +89,26 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												<div class="input-icon right">
 													<i class="fa fa-calendar"></i>
 													<input type="text" class="form-control date-picker" name="date_clearpayment" id="date_clearpayment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ទីតាំងបុណ្យ
+											</label>
+											<div class="col-md-8">
+												<input name="place_bun" id="place_bun" class="form-control" />
+											</div>
+										</div>
+										
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ពេលវេលាចេញ
+											</label>
+											<div class="col-md-8">
+												<div class="input-icon right">
+													<i class="fa fa-calendar"></i>
+													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
 												</div>
 											</div>
 										</div>
@@ -172,28 +179,32 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 											<div class="col-md-7">
 												<textarea name="other_note" id="other_note" class="form-control" rows="5"></textarea>
 											</div>
-										</div>
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ទីតាំងបុណ្យ
-											</label>
-											<div class="col-md-7">
-												<input name="place_bun" id="place_bun" class="form-control" />
-											</div>
-										</div>
-										
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ពេលវេលាចេញ
-											</label>
-											<div class="col-md-7">
-												<div class="input-icon right">
-													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
-												</div>
-											</div>
-										</div>
+										</div>										
 									</div>			
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-2" style="text-align: left !important;">
+										</div>
+										<div class="col-md-6" style="text-align: left !important;">
+											  <select class="form-control select2me" id="program_id" name="program_id">
+													<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
+													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
+														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['create_date'];?></option>
+													<?php }}?>
+												</select>
+										</div>
+										<div class="col-md-2" style="text-align: left !important;">
+											<button type="button" onclick="popupProgram();" class="btn red delete col-md-12">
+												<i class="fa fa-plus"></i><span>&nbsp;&nbsp;បន្ថែមឈ្មោះសព</span>
+											</button>
+										</div>
+										<div class="col-md-1">
+											<button type="button" class="btn red delete col-md-12" onclick="getRefreshProgram();" >
+												<i class="fa fa-refresh"></i>Refresh
+											</button>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="form-group">
@@ -422,6 +433,31 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		if(val==-1){
 			$('#receiverpopup').modal('show');
 		}
+	}
+	function popupProgram(){
+		window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
+	}
+	
+	var url_refreshprogram = '<?php echo $this->url(array("module"=>"sales","controller"=>"possale","action"=>"refresh-program"));?>';										
+	function getRefreshProgram(){
+		loading();
+		dojo.xhrPost({
+			url: url_refreshprogram,
+			handleAs:"json",
+			load: function(data) {
+				if(data){
+					program = data.program;
+					$('#program_id').empty();
+					for(i=0;i<program.length;i++){
+						$('#program_id').append($("<option></option>").attr("value",program[i]['id']).text(program[i]['dead_name']+"-"+program[i]['dead_name_chinese']));
+					}
+				}
+				document.getElementsByClassName("overlay")[0].style.display="none";
+			},
+			error: function(err) {
+				document.getElementsByClassName("overlay")[0].style.display="none";
+			}
+		});
 	}
 	
 	function popupProduct(){

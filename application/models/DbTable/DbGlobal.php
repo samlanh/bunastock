@@ -764,7 +764,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 			
 	}
 	function getAllDiePeople(){
-		$sql="SELECT id,dead_name,dead_name_chinese,dead_dob ,membersone,memberstwo
+		$sql="SELECT id,dead_name,dead_name_chinese,dead_dob ,membersone,memberstwo,create_date
 			FROM `tb_program` 
 		WHERE status=1 AND dead_name!='' 
 			ORDER BY id DESC";

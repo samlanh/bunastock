@@ -16,6 +16,13 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		}
 		return $this->getAdapter()->fetchAll($sql);
 	}	
+	function getAllProgramName($is_service=null){
+		$sql="select id,dead_name,dead_name_chinese,create_date from tb_program where status=1 and dead_name!='' ";
+		if($is_service!=null){
+			$sql.=" AND is_service=1";
+		}
+		return $this->getAdapter()->fetchAll($sql);
+	}
 	function getAllCustomerName(){
 		$sql="SELECT id,cust_name AS name,phone FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
 		return $this->getAdapter()->fetchAll($sql);
@@ -51,7 +58,6 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
-					"namebody"   => $data['namebody'],
 					'program_id'	=> $data['program_id'],
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $invoice,
@@ -208,7 +214,6 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
-					"namebody"   => $data['namebody'],
 					'program_id'	=> $data['program_id'],
 					"branch_id"     => $data["branch_id"],
 					"sale_no"       => $data["sale_no"],
@@ -221,11 +226,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
 					//'return_amount' => $data['return_amount'],
-					'receiver_name' => $data['receiver_name'],
-					
+					'receiver_name' => $data['receiver_name'],					
 					"user_id"       => $this->getUserId(),
-					"saleagent_id"  => $data["saleagent_id"],
-					
+					"saleagent_id"  => $data["saleagent_id"],					
 					'comission' 	=> $data['comission'],
 					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
 					'payment_note' 	=> $data['note'],
