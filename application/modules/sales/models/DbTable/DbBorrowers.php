@@ -15,13 +15,18 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
 					name_borrow,
 					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
 					phone,
-					DATE,
+					date,
 					qtys,
+					notes,
 					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS STATUS
 					FROM `tb_borrowers`
 					where name_borrow!=''
     	";
-    	$where = ''; 	
+    	$where = ''; 
+
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
     		$s_search = trim(addslashes($search['ad_search']));
@@ -42,6 +47,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'phone' 			 => $post['phone'],
     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
+    			'notes'	     	     => $post['notes'],
     			'status'	         => $post['status'],
     	);
     	return  $this->insert($_arr);
@@ -59,6 +65,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'phone' 			 => $post['phone'],
     			'date'	=> empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
+    			'notes'	     	     => $post['notes'],
     			'status'	         => $post['status'],
     	);
     	$where="id= $id";

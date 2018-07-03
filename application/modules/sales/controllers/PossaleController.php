@@ -221,8 +221,9 @@ class Sales_PossaleController extends Zend_Controller_Action
 	function refreshProgramAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Sales_Model_DbTable_Dbpos();
-			$product = $db->getAllProgramName();
+			$db = new Mong_Model_DbTable_DbIndex();
+			$program = $db->getDeadPerson();
+			print_r(Zend_Json::encode($program));
 			exit();
 		}
 	}

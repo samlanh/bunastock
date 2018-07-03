@@ -15,13 +15,18 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
 					name_pay,
 					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
 					phone,
-					DATE,
+					date,
 					qtys,
+					notes,
 					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS STATUS
 					FROM `tb_meg_pay`
 					where name_pay!=''
     	";
-    	$where = ''; 	
+    	$where = '';
+
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
     		$s_search = trim(addslashes($search['ad_search']));
@@ -42,7 +47,8 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     			'phone' 			 => $post['phone'],
     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
-    			'status'	         => $post['status'],
+    			'notes'	     	     => $post['notes'],
+    			'status'	         => 1,
     	);
     	return  $this->insert($_arr);
     }
@@ -59,7 +65,8 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     			'phone' 			 => $post['phone'],
     			'date'				=> empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
-    			'status'	         => $post['status'],
+    			'notes'	     	     => $post['notes'],
+    			'status'	         => 1,
     	);
     	$where="id= $id";
 		$this->update($_arr, $where);

@@ -104,6 +104,12 @@
 										</div>
 									</div>
 									<div class="form-group" style="">
+										<label class="col-md-4 control-label">ចំនួនថេរម្ឈូស</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control " id="qtys" name="qtys" onclick="calculateTotal();" onkeyup="calculateTotal();" readonly/>
+										</div>
+									</div>
+									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
 											តម្លៃរាយ ($)
 										</label>
@@ -196,13 +202,17 @@
 <script>
 	function calculateTotal(){
 		var qty = $('#qty').val();
+		var qtys = $('#qtys').val(qtys);
 		var unit_price = $('#unit_price').val();
 
 		qty = isNaN(qty)?0:qty;
+		qtys = isNaN(qtys)?0:qtys;
 		unit_price = isNaN(unit_price)?0:unit_price;
 
 		total = qty * unit_price;
-		$('#total_amount').val(total);		
+		qtys = qty; 
+		$('#total_amount').val(total);
+		$('#qtys').val(qtys);				
 	}	
 </script>
 

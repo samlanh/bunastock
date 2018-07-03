@@ -10,14 +10,18 @@ class Sales_BorrowersController extends Zend_Controller_Action
     	$db = new Sales_Model_DbTable_DbBorrowers();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
+    			'start_date'	=>	date("Y-m-d"),
+    			'end_date'		=>	date("Y-m-d"),
      			'status'	=>	-1,
     		);
     	}
 		$rows = $db->getAllBorrower($data);
-		$columns=array("ឈ្មោះអ្នកខ្ចី","ភេទ","លេខទូរស័ព្ទ","ថ្ងៃខ្ចី","ចំនួនទឹកប្រាក់ខ្ចី","ស្ថានការ");
+		$columns=array("ឈ្មោះអ្នកខ្ចី","ភេទ","លេខទូរស័ព្ទ","ថ្ងៃខ្ចី","ចំនួនប្រាក់ខ្ចី","កំណត់សម្គាល់","ស្ថានការ");
 		$link=array('module'=>'sales','controller'=>'borrowers','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();

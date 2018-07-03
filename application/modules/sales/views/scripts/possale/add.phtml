@@ -452,24 +452,25 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
 	}
 	
-	var url_refreshprogram = '<?php echo $this->url(array("module"=>"sales","controller"=>"possale","action"=>"refresh-program"));?>';										
+	var url_getprogram = '<?php echo $this->url(array("module"=>"mong","controller"=>"index","action"=>"refresh-program"));?>';
 	function getRefreshProgram(){
 		loading();
-		dojo.xhrPost({
-			url: url_refreshprogram,
-			handleAs:"json",
-			load: function(data) {
-				if(data){
-					program = data.program;
+		$.ajax({
+			url: url_getprogram,
+			type: "post",
+			success: function(data){
+				rs = $.parseJSON(data);
+				if(rs){
 					$('#program_id').empty();
-					for(i=0;i<program.length;i++){
-						$('#program_id').append($("<option></option>").attr("value",program[i]['id']).text(program[i]['dead_name']+"-"+program[i]['dead_name_chinese']));
+					for(i=0;i<rs.length;i++){
+						$('#program_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['dead_name']+"-"+rs[i]['dead_name_chinese']));
 					}
 				}
 				document.getElementsByClassName("overlay")[0].style.display="none";
 			},
-			error: function(err) {
+			error:function(err){
 				document.getElementsByClassName("overlay")[0].style.display="none";
+				alert("failed");
 			}
 		});
 	}

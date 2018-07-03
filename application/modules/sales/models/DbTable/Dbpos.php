@@ -16,13 +16,6 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		}
 		return $this->getAdapter()->fetchAll($sql);
 	}	
-	function getAllProgramName($is_service=null){
-		$sql="select id,dead_name,dead_name_chinese,create_date from tb_program where status=1 and dead_name!='' ";
-		if($is_service!=null){
-			$sql.=" AND is_service=1";
-		}
-		return $this->getAdapter()->fetchAll($sql);
-	}
 	function getAllCustomerName(){
 		$sql="SELECT id,cust_name AS name,phone FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
 		return $this->getAdapter()->fetchAll($sql);

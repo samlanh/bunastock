@@ -4,14 +4,14 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>						 
-<title>អ្នកខ្ចីប្រាក់</title>
+<title>បន្ថែមឈ្មោះអ្នកខ្ចីប្រាក់</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
 		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>បញ្ចីឈ្មោះអ្នកខ្ចីប្រាក់</strong>
+					<i class="fa fa-gift"></i><strong>បន្ថែមឈ្មោះអ្នកខ្ចីប្រាក់</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -25,7 +25,7 @@
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6" style="text-align: left !important;border:1px solid #ccc;">
-										<h2 style="border-bottom: 1px solid #ccc;" class="center">អ្នកខ្ចី</h2>
+										<h2 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានអ្នកខ្ចី</h2>
 									<div class="form-group" style="">
 											<label class="col-md-4 control-label">
 												ឈ្មោះអ្នកខ្ចី
@@ -75,20 +75,17 @@
 											ចំនួនទឹកប្រាក់ខ្ចី
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="qtys" name="qtys" class="validate[required,custom[number]] form-control" />
+											<input type="text" id="qtys" name="qtys" class="validate[required] form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ស្ថានការ
+											សម្គាល់
 										</label>
 										<div class="col-md-8">
-											<select name="status" id="status" class="form-control">
-											    <option value="1" label="Active">ប្រើប្រាស់</option>
-											    <option value="0" label="Deactive">មិនប្រើសប្រាស់</option>
-											</select>	
+											<input type="text" id="notes" name="notes"  class="form-control" />
 										</div>
-									</div>
+									</div>							
 								</div>
 								<div class="col-md-3" style="text-align: left !important;">
 								</div>

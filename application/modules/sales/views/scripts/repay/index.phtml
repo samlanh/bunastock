@@ -9,13 +9,13 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>
-<title>បញ្ចីឈ្មោះអ្នកខ្ចី</title>
+<title>បញ្ចីឈ្មោះអ្នកសងប្រាក់</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i>បញ្ចីឈ្មោះអ្នកខ្ចី
+					<i class="fa fa-globe"></i>បញ្ចីឈ្មោះអ្នកសងប្រាក់
 				</div>
 				<a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'add'),null,true);?>" class="btn btn-bg blue  pull-right">
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
@@ -26,10 +26,12 @@
 					<div class="form-group">
 							<label class="control-label col-md-3">
 								<?php echo $formFilter->getElement('ad_search');?>
-							</label>							
+							</label>
+							<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>							
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-3">
+							<label class="control-label col-md-2">
 								<?php echo $formFilter->getElement('status');?>
 							</label>
 							<label class="control-label col-md-3">

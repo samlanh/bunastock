@@ -352,5 +352,67 @@ function getAllworker($search){
 
     	return $db->fetchAll($sql.$where.$order);
     }
+    public function getAllRepay($search){
+    	$db = $this->getAdapter();
+    	$sql=" SELECT id,
+    	name_pay,
+    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+    	phone,
+    	date,
+    	qtys,
+    	notes,
+    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS status
+    	FROM `tb_meg_pay`
+    	where name_pay!=''
+    	";
+    	$where = '';
+    	
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+    	$where .= " AND ".$from_date." AND ".$to_date;
+    	if(!empty($search['ad_search'])){
+    		$s_where = array();
+    		$s_search = trim(addslashes($search['ad_search']));
+    		$s_where[] = " name_pay LIKE '%{$s_search}%'";
+    		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	if($search['status']>-1){
+    		$where .= " AND status = ".$search['status'];
+    	}
+    	$order=" ORDER BY id DESC ";
+    	//  	echo $sql.$where.$order;
+    	return $db->fetchAll($sql.$where.$order);
+    }
+    public function getAllBorrower($search){
+    	$db = $this->getAdapter();
+    	$sql=" SELECT id,
+    	name_borrow,
+    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+    	phone,
+    	date,
+    	qtys,
+    	notes,
+    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS status
+    	FROM `tb_borrowers`
+    	where name_borrow!=''
+    	";
+    	$where = '';
+    	
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+    	$where .= " AND ".$from_date." AND ".$to_date;
+    	if(!empty($search['ad_search'])){
+    		$s_where = array();
+    		$s_search = trim(addslashes($search['ad_search']));
+    		$s_where[] = " name_borrow LIKE '%{$s_search}%'";
+    		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	if($search['status']>-1){
+    		$where .= " AND status = ".$search['status'];
+    	}
+    	$order=" ORDER BY id DESC ";
+    	//  	echo $sql.$where.$order;
+    	return $db->fetchAll($sql.$where.$order);
+    }
 	
 }?>
