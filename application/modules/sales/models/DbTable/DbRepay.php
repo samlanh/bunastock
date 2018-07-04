@@ -18,7 +18,7 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
 					date,
 					qtys,
 					notes,
-					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS STATUS
+					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_meg_pay.status) AS STATUS
 					FROM `tb_meg_pay`
 					where name_pay!=''
     	";
@@ -30,7 +30,8 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     	if(!empty($search['ad_search'])){
     		$s_where = array();
     		$s_search = trim(addslashes($search['ad_search']));
-    		$s_where[] = " name_pay LIKE '%{$s_search}%'";
+    		$s_search = str_replace(' ', '', $s_search);
+    		$s_where[] = "REPLACE(name_pay,'','') LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
     	}
     	if($search['status']>-1){

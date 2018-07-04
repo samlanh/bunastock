@@ -18,7 +18,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
 					date,
 					qtys,
 					notes,
-					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS STATUS
+					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS STATUS
 					FROM `tb_borrowers`
 					where name_borrow!=''
     	";

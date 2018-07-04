@@ -168,14 +168,19 @@ $(function(){
 				url='<?php echo $this->baseUrl()."/sales/program/travel/id/";?>';
 			}else if(key=="copy"){
 				url='<?php echo $this->baseUrl()."/sales/program/copy/id/";?>';
+			}else if(key=="locationmong"){
+				url='<?php echo $this->baseUrl()."/sales/program/locationmong/id/";?>';
 			}
 			
 			gotoAction();
 		},
 		items: {
 			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
-			"travel": {name: "វេលាកម្មវិធី", icon:  "fa-clock-o", accesskey: "e"},
 			"copy": {name: "copy", icon:  "copy", accesskey: "e"},
+			"travel": {name: "វេលាកម្មវិធី", icon:  "fa-clock-o", accesskey: "e"},
+			"locationmong": {name: "ព័ត៌មានផ្លាកម៉ុង", icon:  "fa-map-marker", accesskey: "e"},
+			
+			
 		}
 	});
 });

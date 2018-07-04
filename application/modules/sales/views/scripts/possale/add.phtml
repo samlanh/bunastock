@@ -187,8 +187,8 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										<div class="col-md-2" style="text-align: left !important;">
 										</div>
 										<div class="col-md-6" style="text-align: left !important;">
-											  <select class="form-control select2me" id="program_id" name="program_id" onChange="getPopupProgram();>
-													<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
+											  <select class="form-control select2me" id="program_id" name="program_id" >
+													<option value="-1">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
 													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
 														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['create_date'];?></option>
 													<?php }}?>

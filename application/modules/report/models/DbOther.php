@@ -361,7 +361,7 @@ function getAllworker($search){
     	date,
     	qtys,
     	notes,
-    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS status
+    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_meg_pay.status) AS status
     	FROM `tb_meg_pay`
     	where name_pay!=''
     	";
@@ -392,7 +392,7 @@ function getAllworker($search){
     	date,
     	qtys,
     	notes,
-    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = STATUS) AS status
+    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS status
     	FROM `tb_borrowers`
     	where name_borrow!=''
     	";

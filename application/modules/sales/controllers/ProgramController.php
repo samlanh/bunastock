@@ -121,4 +121,12 @@ class Sales_ProgramController extends Zend_Controller_Action
 		$this->view->row = $db->getTravelById($id);
 		
 	}
+	function locationmongAction(){
+		$id = $this->getRequest()->getParam("id");
+ 		$db = new Sales_Model_DbTable_DbProgram();
+	
+ 		$this->view->row = $db->getLocationmongById($id);
+ 		$this->view->khmer_year_boy = $db->getAllKhmerYearBoyById($id);
+ 		$this->view->khmer_year_girl = $db->getAllKhmerYearGirlById($id);
+	}
 }

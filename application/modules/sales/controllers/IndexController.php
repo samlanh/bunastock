@@ -35,7 +35,7 @@ class Sales_IndexController extends Zend_Controller_Action
 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link,'program_name'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();

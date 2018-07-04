@@ -25,7 +25,7 @@ class Sales_RepayController extends Zend_Controller_Action
 		$link=array('module'=>'sales','controller'=>'repay','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('name_pay'=>$link,'description'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('name_pay'=>$link,'notesss'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
