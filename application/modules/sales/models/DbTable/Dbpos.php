@@ -8,6 +8,10 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
 	}
+	function getBranchId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->branch_id;
+	}
 	
 	function getAllProductName($is_service=null){
 		$sql="SELECT id,CONCAT(item_name,' - ',item_code) AS name,item_name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
@@ -46,13 +50,13 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		try{
 			
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$invoice = $db_global->getInvoiceNumber(1);
-			$receipt = $db_global->getReceiptNumber(1);
+			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
+			$receipt = $db_global->getReceiptNumber($this->getBranchId());
 			
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
 					'program_id'	=> $data['program_id'],
-					"branch_id"     => $data["branch_id"],
+					"branch_id"     => $this->getBranchId(),
 					"sale_no"       => $invoice,
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
 					
@@ -82,7 +86,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			
 			if($data['paid']>0){
 				$info_purchase_order=array(
-						"branch_id"   	=> $data['branch_id'],
+						"branch_id"   	=> $this->getBranchId(),
 						'invoice_id'    => $sale_id,
 						"customer_id"   => $data["customer_id"],
 						"payment_id"    => 1,	//payment by cash/paypal/cheque
@@ -129,7 +133,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				{
 					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
 					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
-						$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);//check if service not need update stock
+						$rs = $this->getProductByProductId($data['product_id'.$i], $this->getBranchId());//check if service not need update stock
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
@@ -208,7 +212,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$info_purchase_order=array(
 					"customer_id"   => $data['customer_id'],
 					'program_id'	=> $data['program_id'],
-					"branch_id"     => $data["branch_id"],
+					"branch_id"     => $this->getBranchId(),
 					"sale_no"       => $data["sale_no"],
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
 					
@@ -243,7 +247,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				$db_global = new Application_Model_DbTable_DbGlobal();
 				$receipt = $db_global->getReceiptNumber(1);
 				$info_purchase_order=array(
-						"branch_id"   	=> $data['branch_id'],
+						"branch_id"   	=> $this->getBranchId(),
 						'invoice_id'    => $sale_id,
 						"customer_id"   => $data["customer_id"],
 						"payment_id"    => 1,	//payment by cash/paypal/cheque
@@ -285,7 +289,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				{
 					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
 					if($is_service['is_service']==0 && $is_service['is_package']==0){ // product បានចូលធ្វើ
-						$rs = $this->getProductByProductId($data['product_id'.$i], $data["branch_id"]);
+						$rs = $this->getProductByProductId($data['product_id'.$i], $this->getBranchId());
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(

@@ -71,14 +71,15 @@ class Application_Form_Frmsearch extends Zend_Form
 				'data-date-format'=>"dd-mm-yyyy"
 		));
 		
-		$options = $db->getAllBranch();
-		print_r($options);exit();
+		$option = $db->getAllBranch();
+		//print_r($options);exit();
+		array_unshift($option, array('id'=>'','name'=>"ជ្រើសរើសសាខា"));
 		$locationID = new Zend_Form_Element_Select('branch_id');
 		$locationID ->setAttribs(array('class'=>'validate[required] form-control select2me'));
-		if(!empty($options)){ foreach($options as $read){
-			$options[$read['id']]=$read['name'];
+		if(!empty($option)){ foreach($option as $read){
+			$branch[$read['id']]=$read['name'];
 		}}
-		$locationID->setMultiOptions($options);
+		$locationID->setMultiOptions($branch);
 		$locationID->setattribs(array());
 		$locationID->setValue($request->getParam('branch_id'));
 		$this->addElement($locationID);

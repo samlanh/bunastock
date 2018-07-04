@@ -157,11 +157,11 @@
 												<div class="form-group">
 													<div class="col-md-2" style="text-align: left !important;">
 														<input type="hidden" name="identity_sale" id="identity_sale" />
-										    			<input type="hidden" name="branch_id" id="branch_id" value="1" />
+										    			<input type="hidden" name="branch" id="branch" value="<?php echo $this->branch_id;?>" />
 										    			<input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
 													</div>
 													<div class="col-md-6" style="text-align: left !important;">
-														<select class="form-control select2me" id="product_id" name="product_id" onchange="addProductRow();" >
+														<select class="form-control select2me" id="product_id" name="product_id" onchange="getType();" >
 															<option value="-1">ជ្រើសរើសមុខទំនិញ/សេវាកម្ម</option>
 															<?php if(!empty($this->rsproduct)){foreach ($this->rsproduct as $rs){?>
 															<option value="<?php echo $rs['id']?>"><?php echo $rs['item_name']." - ".$rs['item_code'];?></option>
@@ -174,9 +174,9 @@
 														</button>
 													</div>
 													
-													<div class="col-md-2" style="text-align: left !important;">
+													<div class="col-md-1" style="text-align: left !important;">
 														<button type="button" class="btn red delete col-md-12" onclick="getRefreshProduct();" >
-															<i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh
+															<i class="fa fa-refresh"></i>Refresh
 														</button>
 													</div>
 												</div>
@@ -192,7 +192,8 @@
 																<th class="aligncenter">បរិ.ដុំ</th>
 																<th class="aligncenter">បរិ.រាយ</th>
 																<th class="aligncenter">បរិមាណសរុប</th>
-																<th class="aligncenter">តម្លៃលក់</th>
+																<th class="aligncenter">តម្លៃលក់(៛)</th>
+																<th class="aligncenter">តម្លៃលក់($)</th>
 																<th class="aligncenter">សរុប</th>
 																<th class="aligncenter">លុប</th>
 															</tr>
@@ -203,6 +204,19 @@
 												</div>
 											</div>
 											<div class="col-md-4">
+												<div class="col-md-12">
+													&nbsp;
+												</div>
+												<div class="col-md-12">
+													&nbsp;
+												</div>
+												<div class="form-group">
+													<label class="col-md-4 control-label"><?php echo $tr->translate("អត្រាប្តូរប្រាក់");?></label>
+													<div class="col-md-8">
+														<input name="label_exchange" id="label_exchange" readOnly value="<?php echo "1 ដុល្លា = ".$this->exchange_rate." រៀល";?>" class="form-control" />
+														<input type="hidden" name="exchange_rate" id="exchange_rate"  value="<?php echo $this->exchange_rate;?>" class="form-control" />
+													</div>
+												</div>
 											</div>
 											<div class="col-md-4">
 											</div>
@@ -235,14 +249,6 @@
 													</label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="balance" id="balance" readOnly />
-													</div>
-												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ប្រាក់អាប់
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control" name="return_amount" id="return_amount" readOnly />
 													</div>
 												</div>
 											</div>
@@ -955,21 +961,80 @@
 		$("#total_construct_item").val(netTotal.toFixed(3));
 	}
 	
-	index_sale=0;
-	function addProductRow(){
+/////////////////////////////////////////// get product package /////////////////////////////////////////////////
+
+	var url_gettype = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-type')); ?>';
+	function getType(){
+		
 		var product_name = $("#product_id");
 		var txt_product_name = $("option:selected",product_name).text();
 		var product_id = $("#product_id").val();
+		if(product_id>0){
+			$.ajax({
+				url: url_gettype,
+				type: "post",
+				data: {'product_id':product_id},
+				success: function(data){
+					data = $.parseJSON(data);
+					if(data){
+						if(data.is_package==1){// product package
+							getPackageProduct(product_id);
+						}else{
+							addProductRow(product_id,txt_product_name,1);
+							// if(data.is_service==1){
+								// $("#service_id").val(product_id).select2();
+								// addServicePartner(1);
+							// }
+						}
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
+	}
+
+	var url_getpackage = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-packageproduct')); ?>';
+	function getPackageProduct(product_id){
+		$.ajax({
+			url: url_getpackage,
+			type: "post",
+			data: {'product_id':product_id},
+			success: function(data){
+				data = $.parseJSON(data);
+				if(data){
+					for(i=0;i<data.length;i++){
+						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty']);
+					}
+				}
+			},
+			error:function(err){
+				alert("failed");
+			}
+		});
+	}
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
+	index_sale=0;
+	function addProductRow(product_id=null,txt_product_name=null,qty=1){
+		if(product_id==null){
+			var product_name = $("#product_id");
+			var txt_product_name = $("option:selected",product_name).text();
+			var product_id = $("#product_id").val();
+		}
 		if(product_id>0){
 			index_sale++;
 			template='<tr style="white-space:nowrap;" align="center" id="row'+index_sale+'">';
 			template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
 			template+='<td>&nbsp;&nbsp;&nbsp;'+txt_product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
 			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "></td>';
-			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"></td>';
-			template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" class="form-control"></td>';
-			template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" readonly class="form-control"></td>';
-			template+='<td><input style="text-align:center;" type="text" id="selling_price_'+index_sale+'" name="selling_price_'+index_sale+'" readonly class="form-control"><input style="text-align:center;" type="hidden" id="cost_price_'+index_sale+'" name="cost_price_'+index_sale+'" readonly class="form-control"></td>';
+			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"></td>';
+			template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
+			template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="'+qty+'" readonly class="form-control"></td>';
+			template+='<td style="min-width:50px"><input style="text-align:center;" type="text" onkeyup="convertToDollar('+index_sale+');" name="price_reil_'+index_sale+'" id="price_reil_'+index_sale+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+			template+='<td><input style="text-align:center;" type="text" id="selling_price_'+index_sale+'" name="selling_price_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input style="text-align:center;" type="hidden" id="cost_price_'+index_sale+'" name="cost_price_'+index_sale+'" readonly class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="sale_total_'+index_sale+'" name="sale_total_'+index_sale+'" readonly class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteSaleRecord('+index_sale+')" name="deleteSale" class="btn default red">លុប</button></td>';
 			template+='</tr>';
@@ -981,7 +1046,18 @@
 				$("#identity_sale").val(identity+','+index_sale);
 			} else {$("#identity_sale").val(index_sale);}
 			getProductinfo(index_sale,product_id);
+			
+			//calCualteSalePrice(index_sale);
+			
 		}
+	}
+	
+	function convertToDollar(index){
+		var price_reil= $("#price_reil_"+index).val();
+		var exchange_rate  = $("#exchange_rate").val();
+		dollar = (price_reil / exchange_rate).toFixed(3);
+		$("#selling_price_"+index).val(dollar);
+		calCualteSalePrice(index);
 	}
 	
 	function deleteSaleRecord(index_sale) {
@@ -999,15 +1075,17 @@
 
 	function getProductinfo(index_sale,product_id){
 		if(product_id>0){
+			branch_id = $('#branch').val();
 			$.ajax({
 				url: "<?php echo $this->baseUrl()?>/sales/possale/getproduct",
 				type: "post",
-				data: {product_id:product_id,'branch_id':1},
+				data: {product_id:product_id,'branch_id':branch_id},
 				success: function(data){
 					data = $.parseJSON(data);
 					if(data){
 						$('#current_qty_'+index_sale).val(data.qty);
 						$('#cost_price_'+index_sale).val(data.cost_price);
+						$('#price_reil_'+index_sale).val(data.selling_price_khmer);
 						$('#selling_price_'+index_sale).val(data.selling_price);
 						$('#measur_name_'+index_sale).val(data.measue_name);
 						$('#unit_label_'+index_sale).val(data.unit_label);
@@ -1036,7 +1114,7 @@
 						$("#lblcurrent_qty_"+index_sale).val(current_stock+""+qty_unitlable);
 						
 						$("#qty_perunit_"+index_sale).val(data.qty_perunit);
-						//calCualteSalePrice(index_sale);
+						calCualteSalePrice(index_sale);
 					}
 				},
 				error:function(err){
@@ -1053,6 +1131,7 @@
 		if(detail_qty==''){detail_qty=0;}
 		qty_perunit= $("#qty_perunit_"+index_sale).val();//ចំនួនក្នុង១ឯកកតា
 		if(qty_perunit==''){qty_perunit=0;}
+		
 		qty_sold = parseFloat(main_qty) + parseFloat(detail_qty/(qty_perunit));
 		$('#qty_sold_'+index_sale).val(qty_sold.toFixed(3));
 		
@@ -1060,9 +1139,9 @@
 
 		total = (price*qty_sold);
 		$("#sale_total_"+index_sale).val(total.toFixed(3));
-		
 		netTotal();
 	}
+	
 	function netTotal() {//use
 		var netTotal=0;
 		var rowId = $('#identity_sale').val();
@@ -1076,19 +1155,18 @@
 		calCualtepaid();
 	}
 	function calCualtepaid(){
-		paid = $("#paid").val();
+		paid = $('#paid').val();
 		total_received = isNaN(paid)?0:paid;
+		total_dollar = $('#sub_total').val();
 		
-		total_dollar = $("#sub_total").val();
-		return_amount = total_received-total_dollar;
-		
-		$("#balance").val(0);
-		if(return_amount<0){
-			return_amount = -return_amount;
-			$("#balance").val(return_amount);
-			return_amount=0;
+		balance = total_dollar - total_received;
+		if(balance<0){
+			alert("can not pay more than total payment !!! ");
+			$('#paid').val(total_dollar);
+			$('#balance').val(0);
+		}else{
+			$('#balance').val(balance);
 		}
-		$("#return_amount").val(return_amount.toFixed(3));
 	}
 	
 	function popupProduct(){
@@ -1207,7 +1285,15 @@
 		$('#save_receiver').attr("disabled", false);
 	}
 
-
+function isNumberKey(evt)
+{
+	var charCode = (evt.which) ? evt.which : event.keyCode;
+	if (charCode != 46 && charCode != 45 && charCode > 31 && (charCode < 48 || charCode > 57)){
+		return false;
+	}else{
+		return true;
+	}
+}
 </script>
 
 <?php $form = $this->form_customer; ?>

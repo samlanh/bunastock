@@ -69,6 +69,8 @@ class Mong_IndexController extends Zend_Controller_Action
 			  }
 		}
 		
+		$this->view->branch_id = $db->getBranchId();
+		
 		$this->view->mong_type = $db->getMongType();
 		$this->view->person_in_charge = $db->getPersonInCharge();
 		$this->view->all_dead = $db->getDeadPerson();
@@ -95,6 +97,9 @@ class Mong_IndexController extends Zend_Controller_Action
 		$formpopup = $form->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
 		$this->view->form_customer = $formpopup;
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->exchange_rate = $db->getExchangeRate();
 	}
 	public function editAction()
 	{

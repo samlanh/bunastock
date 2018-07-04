@@ -61,6 +61,9 @@ class Sales_PossaleController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
+		
+		$this->view->branch_id = $db->getBranchId();
+		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);

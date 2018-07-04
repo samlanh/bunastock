@@ -221,7 +221,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 											  
 											  <input type="hidden" name="identity" id="identity" />
 											  <input type="hidden" name="identity_partner" id="identity_partner" />
-											  <input type="hidden" name="branch_id" id="branch_id" value="1" />
+											  <input type="hidden" name="branch" id="branch" value="<?php echo $this->branch_id;?>" />
 											  <input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
 										</div>
 										<div class="col-md-2" style="text-align: left !important;">
@@ -269,7 +269,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="form-group">
 										<label class="col-md-4 control-label"><?php echo $tr->translate("អត្រាប្តូរប្រាក់");?></label>
 										<div class="col-md-8">
-											<input name="label_exchange" id="label_exchange" readOnly value="<?php echo "1 ដុល្លា = ".$this->exchange_rate." ៛";?>" class="form-control" />
+											<input name="label_exchange" id="label_exchange" readOnly value="<?php echo "1 ដុល្លា = ".$this->exchange_rate." រៀល";?>" class="form-control" />
 											<input type="hidden" name="exchange_rate" id="exchange_rate"  value="<?php echo $this->exchange_rate;?>" class="form-control" />
 										</div>
 									</div>
@@ -644,7 +644,7 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1){
 	template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
-	dojo.query("#table_row").append(tmp);
+	dojo.query("#lbl_product_item").append(tmp);
 
 	if($("#identity").val()!="") {
 		var identity = $("#identity").val();
@@ -672,6 +672,7 @@ function calCualtePrice(index){
 	if(detail_qty==''){detail_qty=0;}
 	qty_perunit= $("#qty_perunit"+index).val();//ចំនួនក្នុង១ឯកកតា
 	if(qty_perunit==''){qty_perunit=0;}
+	
 	qty_sold = parseFloat(main_qty) + parseFloat(detail_qty/(qty_perunit));
 	$('#qty_sold'+index).val(qty_sold);
 	price = $('#price_'+index).val();
@@ -710,10 +711,11 @@ function calCualtepaid(){
 }
 var url_getproduct = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getproduct')); ?>';
 function getProductinfo(index,product_id){
+	branch_id = $('#branch').val();
 	dojo.xhrPost({
 	    url: url_getproduct,
 	    content : { 
-	    	'product_id':product_id,'branch_id':1,
+	    	'product_id':product_id,'branch_id':branch_id,
 		},				    
 	   handleAs:"json", 
 	   load: function(data) {

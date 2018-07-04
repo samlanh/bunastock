@@ -9,7 +9,7 @@ class Product_Form_FrmDamagedProduct extends Zend_Form
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Product_Model_DbTable_DbAdjustStock();
 		$db_global = new Application_Model_DbTable_DbGlobal();
-		$rs_from_loc = $db_global -> getAllLocation();
+		$rs_from_loc = $db_global -> getAllBranch();
 		
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
 		$result = $user_info->getUserInfo();

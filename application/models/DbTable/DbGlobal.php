@@ -496,6 +496,13 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	}
 	
+	function getAllLocation(){
+		$db=$this->getAdapter();
+		$branch = $this->getAccessPermission("id");
+		$sql=" SELECT id,`name` FROM `tb_sublocation` WHERE `name`!='' AND status=1 $branch ";
+		return $db->fetchAll($sql);
+	}
+	
 	public function getAccessPermission($branch_str='branch_id'){
 		$session_user=new Zend_Session_Namespace('auth');
 		$branch_id = $session_user->branch_id;
@@ -510,6 +517,27 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 				return $result;
 			}
 		}
+	}
+	
+	function getAllProduct(){
+		$db = $this->getAdapter();
+		$sql = "SELECT
+					p.`id`,
+					p.`item_name`,
+					p.`item_name` as name,
+					p.`item_code`,
+					p.`item_code` as code,
+					(SELECT c.name FROM `tb_category` AS c WHERE c.id = p.`cate_id` limit 1) AS category
+				FROM
+					`tb_product` AS p,
+					`tb_prolocation` AS pl
+				WHERE
+					p.`id` = pl.`pro_id`
+					AND p.status = 1
+					and p.is_service = 0
+					and p.is_package = 0
+			";
+		return $db->fetchAll($sql);
 	}
 	
 }

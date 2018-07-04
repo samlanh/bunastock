@@ -20,7 +20,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 	
 		$tran_num = new Zend_Form_Element_Text('tran_num');
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
-		$tran_num->setValue($db->getTransferNo());
+		//$tran_num->setValue($db->getTransferNo());
     	
     	$date =new Zend_Date();
     	$tran_date = new Zend_Form_Element_Text('tran_date');
@@ -31,7 +31,7 @@ class Product_Form_FrmTransfer extends Zend_Form
     	$remark->setAttribs(array('class'=>'form-control','style'=>'width: 100%;height:35px'));
     	
 		
-		$rs_from_loc = $db_global -> getAllLocation();
+		$rs_from_loc = $db_global->getAllBranch();
 		//print_r($rs_from_loc);
     	$from_loc = new Zend_Form_Element_Select("from_loc");
     	$from_loc->setAttribs(array(
@@ -68,7 +68,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$row_product = $db_stock->getProductName();
     	if(!empty($row_product)){
     		foreach ($row_product as $rs){
-    			$opt[$rs["id"]] = $rs["item_name"]." ".$rs["model"]." ".$rs["size"]." ".$rs["color"];
+    			$opt[$rs["id"]] = $rs["item_name"];
     		}
     	}
     	$pro_name->setMultiOptions($opt);
@@ -211,7 +211,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 	
 		$tran_num = new Zend_Form_Element_Text('tran_num');
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
-		$tran_num->setValue($db->getTransferNo(1));
+		//$tran_num->setValue($db->getTransferNo(1));
 		
 		$re_num = new Zend_Form_Element_Text('re_num');
 		$re_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
@@ -312,7 +312,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 			if(@$data["tran_no"]!=""){
 				$tran_num->setValue($data["tran_no"]);
 			}else{
-    		$tran_num->setValue($db->getTransferNo($data["tran_location"]));
+    		//$tran_num->setValue($db->getTransferNo($data["tran_location"]));
 			}
 			$re_date->setValue(date("m/d/Y",strtotime($data["re_date"])));
     		$remark->setValue($data["remark"]);
@@ -340,7 +340,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 	
 		$tran_num = new Zend_Form_Element_Text('tran_num');
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
-		$tran_num->setValue($db->getTransferNo(1));
+		//$tran_num->setValue($db->getTransferNo(1));
 		
 		$re_num = new Zend_Form_Element_Text('re_num');
 		$re_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
@@ -441,7 +441,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 			if(@$data["tran_no"]!=""){
 				$tran_num->setValue($data["tran_no"]);
 			}else{
-    		$tran_num->setValue($db->getTransferNo($data["tran_location"]));
+    			//$tran_num->setValue($db->getTransferNo($data["tran_location"]));
 			}
 			$re_date->setValue(date("m/d/Y",strtotime($data["re_date"])));
     		$remark->setValue($data["remark"]);
@@ -469,7 +469,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 	
 		$tran_num = new Zend_Form_Element_Text('tran_num');
 		$tran_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
-		$tran_num->setValue($db->getTransferNo(1));
+		//$tran_num->setValue($db->getTransferNo(1));
 		
 		$re_num = new Zend_Form_Element_Text('re_num');
 		$re_num->setAttribs(array('class'=>'form-control', 'required'=>'required','readOnly'=>true));
@@ -570,7 +570,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 			if(@$data["tran_no"]!=""){
 				$tran_num->setValue($data["tran_no"]);
 			}else{
-    		$tran_num->setValue($db->getTransferNo($data["tran_location"]));
+    			//$tran_num->setValue($db->getTransferNo($data["tran_location"]));
 			}
 			$re_date->setValue(date("m/d/Y",strtotime($data["re_date"])));
     		$remark->setValue($data["remark"]);
@@ -586,7 +586,7 @@ class Product_Form_FrmTransfer extends Zend_Form
 		$db=new Product_Model_DbTable_DbTransfer();
 		$db_global = new Application_Model_DbTable_DbGlobal();
 		$db_stock = new Product_Model_DbTable_DbAdjustStock();
-		$rs_loc = $db_global->getAllLocation();
+		$rs_loc = $db_global->getAllBranch();
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$request=Zend_Controller_Front::getInstance()->getRequest();
 		

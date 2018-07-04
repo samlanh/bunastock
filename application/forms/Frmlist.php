@@ -193,7 +193,7 @@ class Application_Form_Frmlist
 		<table border="1" id="datatable-responsive" style="  border-collapse: collapse;   border-color: #ddd;"  class="display nowrap dataTable dtr-inline collapsed" cellspacing="0" width="100%" >
 		';
 		$col_str='';
-		$col_str .='<thead><tr>';
+		$col_str .='<thead><tr style="background:#4b8df8;">';
 		if($delete== 1) {
 			$col_str .= '<th class="tdheader tdcheck"></td>';
 		}elseif($delete==2){

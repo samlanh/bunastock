@@ -9,7 +9,7 @@ class Product_Form_FrmAdjust extends Zend_Form
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Product_Model_DbTable_DbAdjustStock();
 		$db_global = new Application_Model_DbTable_DbGlobal();
-		$rs_from_loc = $db_global -> getAllLocation();
+		$rs_from_loc = $db_global -> getAllBranch();
 		
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
 		$result = $user_info->getUserInfo();
@@ -68,7 +68,7 @@ class Product_Form_FrmAdjust extends Zend_Form
 		if(!empty($re_start_date)){
 			$start_date ->setValue($re_start_date);
 		}else{
-			$start_date ->setValue($date->get('MM/d/Y'));
+			$start_date ->setValue($date->get('d-m-Y'));
 		}
 		
 		$end_date = New Zend_Form_Element_Text("end_date");
@@ -81,7 +81,7 @@ class Product_Form_FrmAdjust extends Zend_Form
 		if(!empty($re_end_date)){
 			$end_date ->setValue($re_end_date);
 		}else{
-			$end_date ->setValue($date->get('MM/d/Y'));
+			$end_date ->setValue($date->get('d-m-Y'));
 		}
 		
 		$this->addElements(array($pro_name,$end_date,$start_date));

@@ -70,16 +70,37 @@ class Application_Form_purchase extends Zend_Form
     	
     	$options="";
 
-    	$productValue = $request->getParam('LocationId');
-    	$locationID = new Zend_Form_Element_Select('LocationId');
-    	$locationID ->setAttribs(array('class'=>'form-control select2me'));
+//     	$branch = $request->getParam('LocationId');
+//     	$locationID = new Zend_Form_Element_Select('LocationId');
+//     	$locationID ->setAttribs(array('class'=>'form-control select2me'));
     	
-    	$options = $db->getAllLocation(1);
-    	$locationID->setMultiOptions($options);
-    	$locationID->setattribs(array(
-    			'Onchange'=>'AddLocation()',));
-    	$locationID->setValue($productValue);
+//     	$options = $db->getAllBranch();
+//     	array_unshift($option, array('id'=>'','name'=>"select branch"));
+//     	$locationID->setMultiOptions($options);
+//     	$locationID->setattribs(array(
+//     			'Onchange'=>'AddLocation()',));
+//     	$locationID->setValue($branch);
+//     	$this->addElement($locationID);
+    	
+    	
+    	$option = $db->getAllBranch();
+    	//print_r($options);exit();
+    	array_unshift($option, array('id'=>'','name'=>"ជ្រើសរើសសាខា"));
+    	$locationID = new Zend_Form_Element_Select('LocationId');
+    	$locationID ->setAttribs(array('class'=>'validate[required] form-control select2me'));
+    	if(!empty($option)){
+    		foreach($option as $read){
+    			$branch[$read['id']]=$read['name'];
+    		}
+    	}
+    	$locationID->setMultiOptions($branch);
+    	$locationID->setattribs(array());
+    	$locationID->setValue($request->getParam('LocationId'));
     	$this->addElement($locationID);
+    	
+    	
+    	
+    	
 
     	$paymentmethodElement = new Zend_Form_Element_Select('payment_name');
     	$options_cg = $db->getAllPaymentmethod(1);
