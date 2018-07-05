@@ -293,6 +293,8 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     public function getLocationmongById($id){
     	$db = $this->getAdapter();
     	$sql = "SELECT *,
+    					(SELECT name_kh FROM tb_view WHERE TYPE=18 AND key_code = partner_status) AS partner,
+			    		(SELECT name_kh FROM tb_view WHERE TYPE=18 AND key_code = dead_status) AS dead,
 			    		(select name from tb_year_khmer where tb_year_khmer.id = tb_program.lerk_sop_opposite_year limit 1) as hae_sop_jol_mchhos,
 			    		(select name from tb_year_khmer where tb_year_khmer.id = tb_program.hae_sop_opposite_year limit 1) as hae_sop_jenh,
 			    		(select name from tb_year_khmer where tb_year_khmer.id = tb_program.pjos_sop_opposite_year limit 1) as pjos_sop

@@ -61,14 +61,14 @@
 	  				</tr>
 	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:53px; font-size:25px;font-weight: bold; list-style:none; color:#009900;">
 	  					<td>
-	  						<li>ព័ត៌មានរបស់សព៖ (<?php echo $this->row['dead_status']?>)</li>
+	  						<li>ព័ត៌មានរបស់សព (<?php echo $this->row['partner']?>)៖ </li>
 	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ខ្មែរ)  <?php echo $this->row['dead_name']?></li>
 	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ចិន)  <?php echo $this->row['dead_name_chinese']?></li>
 	  					</td>
 	  				</tr>
 	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:53px; font-size:25px;font-weight: bold; list-style:none; color:#009900;">
 	  					<td>
-	  						<li>ព័ត៌មានរបស់ដៃគូសព៖</li>
+	  						<li>ព័ត៌មានរបស់ដៃគូសព (<?php echo $this->row['dead']?>)៖ </li>
 	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ខ្មែរ)  <?php echo $this->row['partner_name']?></li>
 	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ចិន)  <?php echo $this->row['partner_name_chinese']?></li>
 	  					</td>
@@ -81,12 +81,12 @@
 	  						<li><i class="fa fa-chevron-circle-right" style="font-size:25px;"></i>ស្រុកកំណើតសព៖ <?php echo $this->row['dead_pob']?></li>
 	  					<li><i class="fa fa-chevron-circle-right" style="font-size:25px;"></i>ឆ្នាំកូនប្រុស៖
 	  					<?php     
-		              		  if(!empty($this->khmer_year_boy))foreach ($this->khmer_year_boy AS $index => $rs){?>-
+		              		  if(!empty($this->khmer_year_boy))foreach ($this->khmer_year_boy AS $index => $rs){?><?php if ($index>0)echo '-';?>
 	  					<?php echo $rs["khmer_year_name"];?>				  						
 	  					<?php }?></li>
 	  					<li><i class="fa fa-chevron-circle-right" style="font-size:25px;"></i>ឆ្នាំកូនស្រី៖
 	  					<?php     
-		              		  if(!empty($this->khmer_year_girl))foreach ($this->khmer_year_girl AS $index => $rs){?>-
+		              		  if(!empty($this->khmer_year_girl))foreach ($this->khmer_year_girl AS $index => $rs){?><?php if ($index>0)echo '-';?>
 	  					<?php echo $rs["khmer_year_name"];?>				  						
 	  					<?php }?></li>
 	  					</td>		
