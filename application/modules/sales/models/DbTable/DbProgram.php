@@ -18,8 +18,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     					(select name_kh from tb_view as v where v.type=19 and v.key_code = dead_sex) as dead_sex,
     					(select name from tb_year_khmer as y where y.id = dead_khmer_year) as dead_khmer_year,
     					dead_age,
-    					date_time_dead,
-    					
+    					date_time_dead, 					
     					partner_name,
     					partner_name_chinese,
     					(select name_kh from tb_view as v where v.type=19 and v.key_code = partner_sex) as partner_sex,

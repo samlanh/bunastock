@@ -20,7 +20,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
 					notes,
 					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS STATUS
 					FROM `tb_borrowers`
-					where name_borrow!=''
+					where name_borrow!='' AND type=1
     	";
     	$where = ''; 
 
@@ -40,7 +40,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
   //  	echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
-    public function addRepays($post){
+    public function addBorrowers($post){
     	$_arr=array(
     			'name_borrow' 		 => $post['name_borrow'],
     			'gender'			 => $post['gender'],
@@ -48,7 +48,8 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
     			'notes'	     	     => $post['notes'],
-    			'status'	         => $post['status'],
+    			'status'	         => 1,
+    			'type'	         	 => 1,
     	);
     	return  $this->insert($_arr);
     }
@@ -67,6 +68,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'qtys'	     	     => $post['qtys'],
     			'notes'	     	     => $post['notes'],
     			'status'	         => $post['status'],
+    			'type'	        	 => 1,
     	);
     	$where="id= $id";
 		$this->update($_arr, $where);

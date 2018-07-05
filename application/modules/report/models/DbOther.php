@@ -293,8 +293,7 @@ function getAllworker($search){
     //	echo $sql;exit();
     	return $db->fetchRow($sql);
     }
-    
-    
+       
     function getAllprogram($search){
     	$db = $this->getAdapter();
     	$sql = " SELECT
@@ -352,55 +351,57 @@ function getAllworker($search){
 
     	return $db->fetchAll($sql.$where.$order);
     }
-    public function getAllRepay($search){
+	public function getAllRepay($search=null){
+		//print_r($search);exit();
     	$db = $this->getAdapter();
     	$sql=" SELECT id,
-    	name_pay,
-    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
-    	phone,
-    	date,
-    	qtys,
-    	notes,
-    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_meg_pay.status) AS status
-    	FROM `tb_meg_pay`
-    	where name_pay!=''
+					name_borrow,
+					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+					phone,
+					date,
+					qtys,
+					notes,
+					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS status
+					FROM `tb_borrowers`
+					WHERE name_borrow!='' AND  type=2
     	";
     	$where = '';
-    	
-    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
-    	$where .= " AND ".$from_date." AND ".$to_date;
+
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
     		$s_search = trim(addslashes($search['ad_search']));
-    		$s_where[] = " name_pay LIKE '%{$s_search}%'";
+    		$s_search = str_replace(' ', '', $s_search);
+    		$s_where[] = "REPLACE(name_borrow,'','') LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
     	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];
     	}
     	$order=" ORDER BY id DESC ";
-    	//  	echo $sql.$where.$order;
+   // 	echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
-    public function getAllBorrower($search){
+	public function getAllBorrower($search){//print_r($search);exit();
     	$db = $this->getAdapter();
     	$sql=" SELECT id,
-    	name_borrow,
-    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
-    	phone,
-    	date,
-    	qtys,
-    	notes,
-    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS status
-    	FROM `tb_borrowers`
-    	where name_borrow!=''
+					name_borrow,
+					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+					phone,
+					date,
+					qtys,
+					notes,
+					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS status
+					FROM `tb_borrowers`
+					where name_borrow!='' AND type=1
     	";
-    	$where = '';
-    	
-    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
-    	$where .= " AND ".$from_date." AND ".$to_date;
+    	$where = ''; 
+
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
     		$s_search = trim(addslashes($search['ad_search']));
@@ -411,7 +412,7 @@ function getAllworker($search){
     		$where .= " AND status = ".$search['status'];
     	}
     	$order=" ORDER BY id DESC ";
-    	//  	echo $sql.$where.$order;
+   //		echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
 	

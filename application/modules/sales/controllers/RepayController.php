@@ -18,6 +18,7 @@ class Sales_RepayController extends Zend_Controller_Action
     			'start_date'	=>	date("Y-m-d"),
     			'end_date'		=>	date("Y-m-d"),
      			'status'		=>	-1,
+    			'type'			=>	2,
     		);
     	}
 		$rows = $db->getAllRepay($data);
@@ -25,7 +26,7 @@ class Sales_RepayController extends Zend_Controller_Action
 		$link=array('module'=>'sales','controller'=>'repay','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('name_pay'=>$link,'notesss'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('name_borrow'=>$link,'notesss'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);

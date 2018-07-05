@@ -148,19 +148,18 @@ class report_OtherController extends Zend_Controller_Action
      	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
-    				'start_date'=>date("Y-m-d"),
-    				'end_date'=>date("Y-m-d"),
-    				'branch'		=>	'',
-    				'paid_type'		=>0,
+    				'start_date'	=>date("Y-m-d"),
+    				'end_date'		=>date("Y-m-d"),
+    				'paid_type'		=>	0,
     				'status'		=> -1,
     				
     		);
     	}
      	$this->view->rssearch = $data;
-    
     	if($data['paid_type']==0){
     		$this->view->borrowers_payment = $db->getAllBorrower($data);
     		$this->view->mepay_payment = $db->getAllRepay($data);
@@ -175,10 +174,10 @@ class report_OtherController extends Zend_Controller_Action
     	$this->view->form_borrowandpay = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     
-//     	// 		$frm = new Application_Form_FrmReport();
-//     	// 		$form_search=$frm->FrmReportPurchase($data);
-//     	// 		Application_Model_Decorator::removeAllDecorator($form_search);
-//     	// 		$this->view->form_purchase = $form_search;
+//     			$frm = new Application_Form_FrmReport();
+//     			$form_search=$frm->FrmReportPurchase($data);
+//     			Application_Model_Decorator::removeAllDecorator($form_search);
+//     			$this->view->form_purchase = $form_search;
      }
     	
 }

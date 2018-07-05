@@ -31,7 +31,7 @@
 												ឈ្មោះសង
 											</label>
 											<div class="col-md-8">
-												<select class="form-control select2me" id="name_pay" name="name_pay" onchange="getPopupRepays()" value="1">
+												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getPopupRepays()" value="1">
 													<option value="">ជ្រើសរើសឈ្មោះអ្នកសងប្រាក់</option>
 													<option value="-1">បន្ថែមឈ្មោះ</option>
 													<?php if(!empty($this->name_pay)){foreach($this->name_pay as $rs){?>
@@ -143,7 +143,7 @@
 
 	
 	function getPopupRepays(){
-		val = $('#name_pay').val();
+		val = $('#name_borrow').val();
 		if(val==-1){
 			$('#repaypopup').modal('show');
 		}
@@ -155,8 +155,8 @@
 			return false;
 		} 
 		$('#save_repays').attr("disabled", true);
-		$('#name_pay').append($("<option></option>").attr("value",name).attr("selected",true).text(name));  
-		$("#name_pay").select2();	
+		$('#name_borrow').append($("<option></option>").attr("value",name).attr("selected",true).text(name));  
+		$("#name_borrow").select2();	
 		$('#repaypopup').modal('hide');
 		$('#save_repays').attr("disabled", false);
 	}

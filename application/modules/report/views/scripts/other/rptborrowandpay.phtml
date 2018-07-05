@@ -1,6 +1,6 @@
 <?php 
 $tr=Application_Form_FrmLanguages::getCurrentlanguage();
-$brach_name =  $this->branch;
+// $brach_name =  $this->branch;
 ?>
 <title>របាយការណ៍ អ្នកខ្ចីប្រាក់ នឹង អ្នកសងប្រាក់</title>
 <div class="row">
@@ -148,11 +148,11 @@ $brach_name =  $this->branch;
 			                foreach ($this->mepay_payment AS $index => $rs){?>
 							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
-							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["name_pay"];?></td>
+							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["name_borrow"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["gender"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["phone"];?></td>
 							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["date"];?></td>
-							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo "$ ".number_format($rs["qtys"],2);?></td>
+							   <td align="center" style=" border:1px solid #000;">&nbsp;<?php echo "$ ".number_format($rs["qtys"],2);?></td>
 							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["notes"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["status"];?></td>
 							</tr>

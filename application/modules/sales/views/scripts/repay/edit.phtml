@@ -31,11 +31,11 @@
 												ឈ្មោះអ្នកខ្ចី
 											</label>
 											<div class="col-md-8">
-												<select class="form-control select2me" id="name_pay" name="name_pay" onchange="getPopupBorrowers()" value="1">
+												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getPopupBorrowers()" value="1">
 													<option value="">ជ្រើសរើសឈ្មោះអ្នកខ្ចី</option>
 													<option value="-1">បន្ថែមឈ្មោះ</option>
 													<?php if(!empty($this->name_pay)){foreach($this->name_pay as $rs){?>
-														<option <?php if($rs["name"]==$this->row['name_pay']){echo"selected";}?>
+														<option <?php if($rs["name"]==$this->row['name_borrow']){echo"selected";}?>
 														 value="<?php echo $rs['name'];?>"><?php echo $rs['name'];?></option>
 													<?php }}?>
 												</select>
@@ -76,7 +76,7 @@
 											ចំនួនទឹកប្រាក់ខ្ចី
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="qtys" name="qtys" value="<?php echo $this->row['qtys']?>" class="validate[required,custom[number]] form-control" />
+											<input type="text" id="qtys" name="qtys" value="<?php echo $this->row['qtys']?>" class="form-control" />
 										</div>
 									</div>
 									<div class="form-group" style="">
