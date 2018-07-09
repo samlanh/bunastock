@@ -83,7 +83,7 @@ $db = new report_Model_DbProduct();
 		            	<tbody>
 		            		<tr>
 			                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logosbona.jpg" height="95px" ></td>
-			                	<td width="60%" valign="top">
+			                	<td width="60%" >
 			                		<ul>
 			                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 			                			<li style="text-align:center; font-size:15px; font-family:'Khmer OS Muol Light'">បញ្ជីរាយឈ្មោះទំនិញ-សេវាកម្មលក់</li>
@@ -99,76 +99,58 @@ $db = new report_Model_DbProduct();
 		    <tr>
 		    	<td id="exportExcel">
 		            <table class="table2excel" border="1"  style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">               
-		                 <thead>
-		                 <tr bgcolor="#B0C4DE" class="style" align="center" style="font-weight:bold; line-height: 27px; font-size:13px; padding:1px 0px; white-space: nowrap; ">
-		                    <td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
-							<td><?php echo $tr->translate("លេខកូដ");?></td>
-							<td><?php echo $tr->translate("ឈ្មោះទំនិញ/សេវាកម្ម");?></td>
-							<td><?php echo $tr->translate("ប្រភេទ");?></td>
-							<td><?php echo $tr->translate("ឯកតា");?></td>
-							<td><?php echo $tr->translate("តម្លៃលក់");?></td>
-		                </tr>
-		                </thead>
-		                <tbody>
-		                <?php $num=1; 
-		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
-		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
-		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
-		                if(!empty($this->product))foreach ($this->product AS $index => $row){
-							$raw_qty = $row["qty"];
-							$array = explode(".",$row["qty"]);
-							$qty = $array[0];
-							$qty_unit = ($raw_qty*$row["qty_perunit"]) - ($row["qty_perunit"]*$array[0]);
-							$l_qty = 0;
-							if(abs($raw_qty)>0){
-								if(abs($qty)>0 and $qty_unit>0){
-									$l_qty = $qty." ".$row["measure"]." & ".round($qty_unit)." ".$row["unit_label"];
-								}elseif(abs($qty)==0 and $qty_unit>0){
-									$l_qty = round($qty_unit)." ".$row["unit_label"];
-								}elseif(abs($qty)>0 and $qty_unit==0){
-									$l_qty =  $qty." ".$row["measure"];
-								}
-							}else{
-								$l_qty = 0;
-							}
+		                 
+		                 <?php 	$i=0;$location_id=0;$total=1;if(!empty($this->product)){foreach($this->product as $key => $row){
+								$i++;
+								if($location_id != $row['location_id']){
+									if($key>0){
+						 ?>
+									</table>
+									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;margin-top: 15px;">
+								<?php 
+										$i=1;
+									}
+								?>
 							
-							//$qty_loc = $db->getQtyProductByProId($row["id"]);
-						?>
-								<tr class='row-format<?php echo $num; ?>' id="item_<?php echo $index; ?>">
-									<td align="center" style="width:3% !important">&nbsp;<?php echo $index+1 ?></td>
-									<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
-									<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_name"]?>&nbsp;&nbsp;</td>									
-									<td style="width:10% !important;white-space: nowrap;" class="center"><?php echo $row["cat"]?></td>
-									<?php
-									$loc = $db->getAllLOcation();
-									foreach($loc AS $rs){
-										$qty_loc = $db->getQtyProductByProIdLoca($row["id"],$rs["id"]);
-										$raw_qty_loc = $qty_loc;
-										$array_loc = explode(".",$qty_loc);
-										$qty_loc = $array_loc[0];
-										$qty_unit_loc = ($raw_qty_loc*$row["qty_perunit"]) - ($row["qty_perunit"]*$array_loc[0]);
-										$loc_qty = 0;
-										if(abs($raw_qty_loc)>0){
-											if(abs($qty_loc)>0 and abs($qty_unit_loc)>0){
-												$loc_qty = $qty_loc." ".$row["measure"]." & ".round($qty_unit_loc)." ".$row["unit_label"];
-											}elseif(abs($qty_loc)==0 and abs($qty_unit_loc)>0){
-												$loc_qty = round($qty_unit_loc)." ".$row["unit_label"];
-											}elseif(abs($qty_loc)>0 and abs($qty_unit_loc)==0){
-												$loc_qty =  $qty_loc." ".$row["measure"];
-											}
-										}else{
-											$loc_qty = 0;
+										<tr style="font-size:10px; color:#000; height: 23px; border-left:1px solid #fff; border-right:1px solid #fff; border-top: 1px solid #fff;"​ align="center">
+										    <th colspan="16" style="text-align:left">
+										    	<strong style="color:#000; font-size: 14px;font-family:'Khmer OS Battambang';font-weight: bold;" ><?php echo $tr->translate('សាខា').' : '.$row['location_name']; ?></strong>
+										    </th>
+										</tr>
+										<tr style="font-family:'khmer os battambang';font-size:14px; height: 20px;border: 1px solid #000;white-space: nowrap;background-color: #b0bdfd;line-height:30px;font-weight: bold;" align="center" >
+											<td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
+											<td><?php echo $tr->translate("លេខកូដ");?></td>
+											<td><?php echo $tr->translate("ឈ្មោះទំនិញ/សេវាកម្ម");?></td>
+											<td><?php echo $tr->translate("ប្រភេទ");?></td>
+											<td><?php echo $tr->translate("ឯកតា");?></td>
+											<td><?php echo $tr->translate("តម្លៃលក់");?></td>
+											<td><?php echo $tr->translate("ចំនួនក្នុងស្តុក");?></td>
+										</tr>
+									<?php 
+									$total = 0;
+								}
+										$location_id = $row['location_id'];
+										if($row['status']==1){
+											$total = $total + $row['price'];
 										}
-									?>		
-									<?php }?>
-									<td style="width:10% !important" class="center"><?php echo $row["measure"];?></td>
-									<td style="width:10% !important" class="center"><?php echo "$ ".number_format($row["selling_price"],2);?></td>
-							</tr>
-						  <?php }?>
-					
-		                </tbody>
-		           </table>
-		            <br>
+									?>	
+									<tr class="hover" style="font-size:13px; height: 25px;border: 1px solid #000; white-space: nowrap;<?php if($row['status']==0){echo "color:red;";}?>" align="center" >
+										<td align="center" style="width:3% !important">&nbsp;<?php echo $i?></td>
+										<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
+										<td style="white-space: nowrap;">&nbsp;&nbsp;<?php echo $row["item_name"]?>&nbsp;&nbsp;</td>									
+										<td style="width:10% !important;white-space: nowrap;" class="center"><?php echo $row["cat"]?></td>
+										<td style="width:10% !important" class="center"><?php echo $row["measure"];?></td>
+										<td style="width:10% !important" class="center"><?php echo "$ ".number_format($row["selling_price"],2);?></td>
+										<td style="width:10% !important; <?php if($row["qty"]<=$row['qty_warning']){echo "color:red;";}?>" class="center"><?php if($row['is_service']==0){echo $row["qty"];}?></td>
+									</tr>
+						<?php		
+							}}
+						?>
+						</table>
+		                 
+		                 
+		                 
+		                 
 		             
 		              <br>
 		              <table align="center" width="100%">
@@ -195,53 +177,4 @@ $db = new report_Model_DbProduct();
 <script>
 function doPrint() {var divToPrint = document.getElementById('divPrint');var htmlToPrint = '' +'<style type="text/css">' +'</style>';htmlToPrint += divToPrint.outerHTML;window.document.write(htmlToPrint);window.print();window.close();}
 
-/*var currentTime = new Date();
-var month = currentTime.getMonth() + 1;
-var day = currentTime.getDate();
-var year = currentTime.getFullYear();
-	var date =(year + "-" + month + "-" + day );
-
-var start_date = $('#start_date').val();
-var end_date =$('#end_date').val();
-
-if(end_date!="" | start_date!=""){
-    start_date = $('#start_date').val();
-	end_date =$('#end_date').val();
-	
-}else{
-	start_date = $('#start_date').val(date);
-	end_date = $('#end_date').val(date);
-}*/
-
-<?php //$url_item_filter =  $this->url(array('module'=>'report','controller'=>'index','action'=>'get-item-filter')); ?>
-/*function getProductFilter(){
-	var location_id=$("#LocationId").val();
-	var branch_id = $('#branch_id').val();
-	var category_id = $('#category_id').val();
-		$.ajax({
-			url:"<?php //echo $url_item_filter;?>",
-			type:"post",
-			data:{'category_id':category_id,'branch_id':branch_id,'location_id':location_id},
-			success: function(data){
-				items = $.parseJSON(data);
-				if(items){
-					 $('#item').empty();
-					 $('#item').val('').trigger("liszt:updated");
-					 $('#item').append($("<option></option>").attr("value","").text("Please Select Item"));
-					 for (var index = 1 ; index <= items.length; index++) {
-							$('#item').append($("<option></option>").attr("value",items[index-1]['pro_id']).text(items[index-1]['item_code'] + items[index-1]['item_name'])); 
-							$("select#item").find("option#items[index-1]['pro_id']").attr("selected", true);
-					 }           
-					$('#item').val('').trigger("liszt:updated");
-				}else{
-					 $('#item').empty();
-					 $('#item').val('').trigger("liszt:updated");
-						 $('#item').append($("<option></option>").attr("value","").text("No Items Result!"));
-						 $('#item').val('').trigger("liszt:updated");
-				}
-			},
-			error:function(){
-			}
-		});
-	}*/
 </script>

@@ -13,7 +13,7 @@ Class report_Model_DbExpense extends Zend_Db_Table_Abstract{
 					e.*,
 					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id=e.branch_id LIMIT 1) AS branch_name,
 					(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id = e.user_id)  AS user_name,
-					(select name_en from tb_view where type = 5 and key_code = e.status) as status
+					(select name_kh from tb_view where type = 5 and key_code = e.status) as status
 				FROM 
 					tb_expense as e  
 				WHERE 
@@ -32,7 +32,7 @@ Class report_Model_DbExpense extends Zend_Db_Table_Abstract{
 		if(!empty($search['user'])){
 			$where.=" AND e.user_id = ".$search['user'] ;
 		}
-		if($search['branch_id']>-1){
+		if($search['branch_id']!=''){
 			$where.= " AND branch_id = ".$search['branch_id'];
 		}
 		 
@@ -104,7 +104,7 @@ Class report_Model_DbExpense extends Zend_Db_Table_Abstract{
 		if(!empty($search['user'])){
 			$where.=" AND e.user_id = ".$search['user'] ;
 		}
-		if($search['branch_id']>-1){
+		if($search['branch_id']!=''){
 			$where.= " AND branch_id = ".$search['branch_id'];
 		}
 		if($search['title']>-0){

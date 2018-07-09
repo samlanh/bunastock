@@ -3,7 +3,8 @@
   $rpt_current=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptcurrentstock'), null, true);
   $rpt_current_all=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptallcurrentstock'), null, true);
   $rpt_ajust=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptadjuststock'), null, true);
-  $rpt_transfer=$this->url(array('module'=>'report','controller'=>'product','action'=>'rpttransfer'), null, true);
+  $rpt_transfer_stock=$this->url(array('module'=>'report','controller'=>'product','action'=>'rpt-transferstock'), null, true);
+  $rpt_transfer_stock_detail=$this->url(array('module'=>'report','controller'=>'product','action'=>'rpt-transferstockdetail'), null, true);
   
   
   $user_info = new Application_Model_DbTable_DbGetUserInfo();
@@ -37,26 +38,6 @@
 	</div>
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="dashboard-stat red-intense">
-			<a class="more" href="<?php echo $rpt_current;?>">
-			<div class="visual">
-				<i class="fa fa-bar-chart-o"></i>
-			</div>
-			<div class="details">
-				<div class="number">
-					 
-				</div>
-				<div class="desc">
-					  របាយការណ៍ចំនួនស្តុកបច្ចុប្បន្ន
-				</div>
-			</div>
-			</a>
-			<a class="more" href="javascript:;">
-			View more <i class="m-icon-swapright m-icon-white"></i>
-			</a>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat red-intense">
 			<a class="more" href="<?php echo $rpt_current_all;?>">
 			<div class="visual">
 				<i class="fa fa-bar-chart-o"></i>
@@ -75,7 +56,6 @@
 			</a>
 		</div>
 	</div>
-	<?php if($level==1 OR $level==4 OR $level==9){?>
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="dashboard-stat green-haze">
 			<a class="more" href="<?php echo $rpt_ajust;?>">
@@ -95,18 +75,18 @@
 			</a>
 		</div>
 	</div>
-	<!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat purple-plum">
-			<a class="more" href="<?php //echo $rpt_transfer;?>">
+	
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat green-haze">
+			<a class="more" href="<?php echo $rpt_transfer_stock;?>">
 			<div class="visual">
-				<i class="fa fa-globe"></i>
+				<i class="fa fa-shopping-cart"></i>
 			</div>
 			<div class="details">
 				<div class="number">
-					 
 				</div>
 				<div class="desc">
-					 Transfer Product Report
+					 របាយការណ៍ផ្ទេរទំនិញ
 				</div>
 			</div>
 			</a>
@@ -114,7 +94,25 @@
 			View more <i class="m-icon-swapright m-icon-white"></i>
 			</a>
 		</div>
-	</div> -->
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<a class="more" href="<?php echo $rpt_transfer_stock_detail;?>">
+			<div class="visual">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+				</div>
+				<div class="desc">
+					 របាយការណ៍ផ្ទេរទំនិញលម្អិត
+				</div>
+			</div>
+			</a>
+			<a class="more" href="javascript:;">
+			View more <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
 	
-	<?php }?>
 </div>

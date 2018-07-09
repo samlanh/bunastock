@@ -33,9 +33,19 @@ class Product_Model_DbTable_DbTransferStock extends Zend_Db_Table_Abstract
 		$to_date = (empty($search['end_date']))? '1': " create_date <= '".$search['end_date']." 23:59:59'";
 		$where = " WHERE ".$from_date." AND ".$to_date;
 		
- 		if(!empty($search["text_search"])){
+		if($search['status']!=-1){
+			$where .= " and status = ".$search['status'];
+		}
+		if(!empty($search['from_location'])){
+			$where .= " and from_location = ".$search['from_location'];
+		}
+		if(!empty($search['to_location'])){
+			$where .= " and to_location = ".$search['to_location'];
+		}
+		
+ 		if(!empty($search["ad_search"])){
  			$s_where=array();
- 			$s_search = addslashes(trim($search['text_search']));
+ 			$s_search = addslashes(trim($search['ad_search']));
  			$s_where[]= " (select name from tb_sublocation as l where l.id = t.from_location) LIKE '%{$s_search}%'";
  			$s_where[]= " (select name from tb_sublocation as l where l.id = t.to_location) LIKE '%{$s_search}%'";
  			$s_where[]= " t.note LIKE '%{$s_search}%'";

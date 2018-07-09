@@ -263,11 +263,12 @@ class report_indexController extends Zend_Controller_Action
     		if($this->getRequest()->isPost()){
     			$search=$this->getRequest()->getPost();
     			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+    			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
     		}
     		else{
     			$search = array(
-    					"adv_search"=>'',
-    					"branch_id"=>-1,
+    					"text_search"=>'',
+    					"branch_id"=>"",
     					'title'=>-1,
     					"status"=>-1,
     					'start_date'=> date('Y-m-d'),
@@ -300,11 +301,12 @@ class report_indexController extends Zend_Controller_Action
     		if($this->getRequest()->isPost()){
     			$search=$this->getRequest()->getPost();
     			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+    			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
     		}
     		else{
     			$search = array(
-    					"adv_search"=>'',
-    					"branch_id"=>-1,
+    					"text_search"=>'',
+    					"branch_id"=>'',
     					'title'=>-1,
     					"status"=>-1,
     					'start_date'=> date('Y-m-d'),
@@ -350,10 +352,9 @@ class report_indexController extends Zend_Controller_Action
     	}else if($data['suppliyer_id']==3){
     		$this->view->constructor_balance =  $query->getConstructorBalance($data);
     	}    	
-    	$frm = new Application_Form_FrmReport();  
-    	$form_search=$frm->FrmReportPurchase($data);
-    	Application_Model_Decorator::removeAllDecorator($form_search);
-    	$this->view->form_purchase = $form_search;
+    	$formFilter = new Application_Form_Frmsearch();
+    	$this->view->formFilter = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
     }
 
 	public function rptReceiptAction()//purchase report

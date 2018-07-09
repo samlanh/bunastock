@@ -22,9 +22,12 @@ class Product_TransferstockController extends Zend_Controller_Action
     		$data['end_date'] = date("Y-m-d",strtotime($data['end_date']));
     	}else{
 			$data = array(
-    			'text_search'	=>	'',
+    			'ad_search'		=>	'',
     			'start_date'	=>	date("Y-m-d"),
 				'end_date'		=>	date("Y-m-d"),
+				'from_location'	=>	'',
+				'to_location'	=>	'',
+				'status'		=>	-1,
     		);
 		}
 		$link=array(
@@ -34,9 +37,14 @@ class Product_TransferstockController extends Zend_Controller_Action
    		$columns=array("ផ្ទេរពីសាខា","ទៅសាខា","សម្គាល់","ថ្ងៃបង្កើត","អ្នកប្រើប្រាស់","ស្ថានភាព");
    		$this->view->list=$list->getCheckList(0, $columns, $rows,array('from_loc'=>$link,'to_loc'=>$link,'note'=>$link));
    		
-   		$formFilter = new Application_Form_Frmsearch ();
-		$this->view->formFilter = $formFilter;
-		Application_Model_Decorator::removeAllDecorator ( $formFilter );
+   		$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    	
+    	$this->view->search = $data;
+    	
+    	$db = new Application_Model_DbTable_DbGlobal();
+    	$this->view->branch = $db->getAllBranch();
    	}
    	
     public function addAction()

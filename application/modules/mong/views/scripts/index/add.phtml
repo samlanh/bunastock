@@ -505,20 +505,32 @@
 												</div>
 												<div class="form-group" style="">
 													<label class="col-md-4 control-label">
-														ស្លាប់នៅថ្ងៃទី
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control " name="date_time_dead" id="date_time_dead" readonly/>
-													</div>
-												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
 														ទីកន្លែងកំណើត
 													</label>
 													<div class="col-md-8">
 														<input type="text" class="form-control " name="dead_pob" id="dead_pob" readonly/>
 													</div>
 												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ស្លាប់-រស់
+													</label>
+													<div class="col-md-8">
+														<select class="form-control select2me" name="dead_status" id="dead_status" disabled="true">
+															<option value="1">រស់</option>
+															<option value="0">ស្លាប់</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ស្លាប់នៅថ្ងៃទី
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control " name="date_time_dead" id="date_time_dead" readonly/>
+													</div>
+												</div>
+												
 											</div>
 											<div class="col-md-4" style="text-align: left !important;">
 													<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ដៃគូសព</h4>
@@ -580,6 +592,14 @@
 												</div>
 												<div class="form-group" style="">
 													<label class="col-md-4 control-label">
+														ទីកន្លែងកំណើត
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control " name="partner_pob" id="partner_pob" readonly />
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
 														ស្លាប់-រស់
 													</label>
 													<div class="col-md-8">
@@ -589,12 +609,13 @@
 														</select>
 													</div>
 												</div>
+												
 												<div class="form-group" style="">
 													<label class="col-md-4 control-label">
-														ទីកន្លែងកំណើត
+														ស្លាប់នៅថ្ងៃទី
 													</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control " name="partner_pob" id="partner_pob" readonly />
+														<input type="text" class="form-control " name="date_time_dead" id="date_time_dead" readonly/>
 													</div>
 												</div>
 											</div>
@@ -626,7 +647,32 @@
 													<div class="col-md-8">
 														<input type="text" class="form-control "  name="place_pjos_sop" id="place_pjos_sop" readonly />
 													</div>
-												</div>																					
+												</div>		
+
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទូរស័ទ្ទសមាជិកទី១
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control" name="membersone" id="membersone" readonly>
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														ទូរស័ទ្ទសមាជិកទី១
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control" name="memberstwo" id="memberstwo" readonly>
+													</div>
+												</div>
+												<div class="form-group" style="">
+													<label class="col-md-4 control-label">
+														សម្គាល់
+													</label>
+													<div class="col-md-8">
+														<input type="text" class="form-control" name="note" id="note" readonly>
+													</div>
+												</div>
 											</div>																				
 										</div>
 										<div class="form-group" style="">

@@ -54,7 +54,7 @@
 		                		<td  align="center">
 		                			<strong style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></strong><br>
 		                			<strong style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("SALES_REPORT");?></strong><br>
-		                			<strong style="text-align:center; font-size:16px;"><?php if(!empty($this->search['start_date'])){?><?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));}?></strong>
+		                			<strong style="text-align:center; font-size:14px;"><?php if(!empty($this->search['start_date'])){?><?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));}?></strong>
 		                		</td>
 		                    <td width="20%"></td>
 		                </tr> 
@@ -83,7 +83,7 @@
 									</tr>
 								 <style> td{padding:0 3px; }</style>
 								<?php $i=0;if(!empty($this->expense)){foreach($this->expense as $row){ $i++;?>
-									<tr class="hover" style="font-size:12px; height: 25px;border: 1px solid #000; white-space: nowrap;" align="center" >
+									<tr class="hover" style="font-size:13px; height: 25px;border: 1px solid #000; white-space: nowrap;" align="center" >
 										<td style="border: 1px solid #000;"><?php echo $i;?></td>
 										<td style="border: 1px solid #000;"><a style="text-decoration: none;color: #000;" href="<?php echo $this->baseUrl()."/report/index/rpt-expense-detail/id/".$row['id']?>" target="_bkank"><?php echo $row['branch_name'];?></a></td>
 										<td style="border: 1px solid #000;"><a style="text-decoration: none;color: #000;" href="<?php echo $this->baseUrl()."/report/index/rpt-expense-detail/id/".$row['id']?>" target="_bkank"><?php echo $row['expense_title'];?></a></td>

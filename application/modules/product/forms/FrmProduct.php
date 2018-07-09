@@ -222,12 +222,20 @@ class Product_Form_FrmProduct extends Zend_Form
 		
 		
 		$status = new Zend_Form_Element_Select("status");
-		$opt = array('-1'=>$tr->translate("All"),'1'=>$tr->translate("Active"),'0'=>$tr->translate("Deactive"));
+		$opt = array('-1'=>$tr->translate("ស្ថានភាព"),'1'=>$tr->translate("ប្រើប្រាស់"),'0'=>$tr->translate("មិនប្រើប្រាស់"));
 		$status->setAttribs(array(
 				'class'=>'form-control select2me',
 		));
 		$status->setMultiOptions($opt);
 		$status->setValue($request->getParam("status"));
+		
+		$type = new Zend_Form_Element_Select("type");
+		$opt = array('-1'=>$tr->translate("ប្រភេទ"),'0'=>$tr->translate("ផលិតផល"),'1'=>$tr->translate("សេវាកម្ម"));
+		$type->setAttribs(array(
+				'class'=>'form-control select2me',
+		));
+		$type->setMultiOptions($opt);
+		$type->setValue($request->getParam("type"));
 		
 		$opt = array(''=>$tr->translate("SELECT_BRAND"));
 		$brand = new Zend_Form_Element_Select("brand");
@@ -379,7 +387,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$vendor_element->setValue($vendorValue);
 		$this->addElement($vendor_element);
 		
-		$this->addElements(array($start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$scale,$service,$category,$color,$size,$status));
+		$this->addElements(array($type,$start_date,$end_date,$status_qty,$ad_search,$branch,$brand,$model,$scale,$service,$category,$color,$size,$status));
 		return $this;
 	}
 }

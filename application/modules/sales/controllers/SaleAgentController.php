@@ -1,6 +1,6 @@
 <?php
 
-class Sales_SaleAgentController extends Zend_Controller_Action
+class Sales_SaleagentController extends Zend_Controller_Action
 {
 
 public function init()

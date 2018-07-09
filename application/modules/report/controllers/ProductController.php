@@ -74,15 +74,13 @@ class report_ProductController extends Zend_Controller_Action
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
-    				'branch'		=>	'',
     				'brand'			=>	'',
     				'category'		=>	'',
-    				'status_qty'	=>	-1,
-    				
+    				'type'			=>	'',
     		);
     	}
-		$this->view->search = $db->getBranch($data["branch"]);
     	$this->view->product = $db->getAllProduct($data);
+    	$this->view->search = $data;
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);    
@@ -110,25 +108,6 @@ class report_ProductController extends Zend_Controller_Action
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     
     }
-    public function rpttransferAction()
-    {
-    	$db = new Product_Model_DbTable_DbTransfer();
-    	if($this->getRequest()->isPost()){
-    		$data = $this->getRequest()->getPost();
-    	}else{
-    		$data = array(
-    			'tran_num'	=>	'',
-    			'tran_date'	=>	date("d-m-Y"),
-    			'type'		=>	'',
-    			'status'	=>	1,
-    			'to_loc'	=>	'',
-    		);
-    	}
-    	$this->view->product = $db->getTransfer($data);
-    	$formFilter = new Product_Form_FrmTransfer();
-    	$this->view->formFilter = $formFilter->frmFilter();
-    	Application_Model_Decorator::removeAllDecorator($formFilter); 
-    }
     function showbarcodeAction(){
     	$id = ($this->getRequest()->getParam('id'));
     	$sql ="SELECT id,barcode,item_name,cate_id,
@@ -149,8 +128,69 @@ class report_ProductController extends Zend_Controller_Action
     	$renderer = Zend_Barcode::factory(
     			'Code128', 'image', $barcodeOptions, $rendererOptions
     	)->render();
-    
     }
     
+    public function rptTransferstockAction()
+    {
+    	$db = new report_Model_DbTransferStock();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    		$data['start_date'] = date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date'] = date("Y-m-d",strtotime($data['end_date']));
+    	}else{
+    		$data = array(
+    				'ad_search'		=>	'',
+    				'from_location'	=>	'',
+    				'to_location'	=>	'',
+    				'status'		=>	-1,
+    				'start_date'	=>	date("Y-m-d"),
+    				'end_date'		=>	date("Y-m-d"),
+    		);
+    	}
+    	$this->view->transfer = $db->getAllTransferStock($data);
+    	$this->view->search = $data;
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    	
+    	$db = new Application_Model_DbTable_DbGlobal();
+    	$this->view->branch = $db->getAllBranch();
+    	
+    }
+    
+    public function rptTransferstockbyidAction()
+    {
+    	$id = $this->getRequest()->getParam("id");
+    	$db = new report_Model_DbTransferStock();
+    	$this->view->transfer_detaiil = $db->getAllTransferStockById($id);
+    }
 	
+    public function rptTransferstockdetailAction()
+    {
+    	$db = new report_Model_DbTransferStock();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    		$data['start_date'] = date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date'] = date("Y-m-d",strtotime($data['end_date']));
+    	}else{
+    		$data = array(
+    				'ad_search'		=>	'',
+    				'from_location'	=>	'',
+    				'to_location'	=>	'',
+    				'status'		=>	-1,
+    				'start_date'	=>	date("Y-m-d"),
+    				'end_date'		=>	date("Y-m-d"),
+    		);
+    	}
+    	$this->view->transfer_detail = $db->getAllTransferStockDetail($data);
+    	$this->view->search = $data;
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    	 
+    	$db = new Application_Model_DbTable_DbGlobal();
+    	$this->view->branch = $db->getAllBranch();
+    	 
+    }
+    
 }
