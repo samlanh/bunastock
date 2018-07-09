@@ -75,10 +75,21 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												សម្គាល់
+												កម្មវិធីបុណ្យ
 											</label>
-											<div class="col-md-8">
-												<textarea name="note" id="note" class="form-control"></textarea>
+											<div class="col-md-6">
+												<select class="form-control select2me" id="program_id" name="program_id" onchange="popupProgram();">
+													<option value="0">ជ្រើសរើសកម្មវិធីបុណ្យ</option>
+													<option value="-1">បន្ថែមកម្មវិធីបុណ្យ</option>
+													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
+														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].' - '.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'];?></option>
+													<?php }}?>
+												</select>
+											</div>
+											<div class="col-md-2">
+												<button type="button" class="btn red delete col-md-12 left" onclick="getRefreshProgram();" >
+													<i class="fa fa-refresh"></i>
+												</button>
 											</div>
 										</div>
 										<div class="form-group" style="">
@@ -184,45 +195,28 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 								</div>
 								<div class="row">
 									<div class="form-group">
-										<div class="col-md-2" style="text-align: left !important;">
+										<div class="col-md-1" style="text-align: left !important;">
 										</div>
-										<div class="col-md-6" style="text-align: left !important;">
-											  <select class="form-control select2me" id="program_id" name="program_id">
-													<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
-													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
-														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['create_date'];?></option>
+										<div class="col-md-2" style="text-align: left !important;">										  
+											  <select class="form-control select2me" id="category" name="category" onchange="getProductByCategory();" >
+													<option value="-1">ជ្រើសរើសប្រភេទ</option>
+													<?php if(!empty($this->category)){foreach ($this->category as $rs){?>
+													<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
 													<?php }}?>
-												</select>
-										</div>
-										<div class="col-md-2" style="text-align: left !important;">
-											<button type="button" onclick="popupProgram();" class="btn red delete col-md-12">
-												<i class="fa fa-plus"></i><span>&nbsp;&nbsp;បន្ថែមឈ្មោះសព</span>
-											</button>
-										</div>
-										<div class="col-md-1">
-											<button type="button" class="btn red delete col-md-12" onclick="getRefreshProgram();" >
-												<i class="fa fa-refresh"></i>Refresh
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-2" style="text-align: left !important;">
-										</div>
-										<div class="col-md-6" style="text-align: left !important;">
+											  </select>
+										</div>							
+										<div class="col-md-5" style="text-align: left !important;">
 											  <select class="form-control select2me" id="product_id" name="product_id" onchange="getType();" >
 													<option value="-1">ជ្រើសរើសមុខទំនិញ/សេវាកម្ម</option>
 													<?php if(!empty($this->rsproduct)){foreach ($this->rsproduct as $rs){?>
 													<option value="<?php echo $rs['id']?>"><?php echo $rs['item_name']." - ".$rs['item_code'];?></option>
 													<?php }}?>
-											  </select>
-											  
+											  </select>											  
 											  <input type="hidden" name="identity" id="identity" />
 											  <input type="hidden" name="identity_partner" id="identity_partner" />
-											  <input type="hidden" name="branch_id" id="branch_id" value="1" />
+											  <input type="hidden" name="branch" id="branch" value="<?php echo $this->branch_id;?>" />
 											  <input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
-										</div>
+										</div>										
 										<div class="col-md-2" style="text-align: left !important;">
 											<button type="button" onclick="popupProduct();" class="btn red delete col-md-12">
 												<i class="fa fa-plus"></i><span>&nbsp;&nbsp;បន្ថែមមុខទំនិញថ្មី</span>
@@ -435,7 +429,10 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		}
 	}
 	function popupProgram(){
-		window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
+		program_id = $("#program_id").val();
+		if(program_id==-1){
+			window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
+		}
 	}
 	
 	var url_refreshprogram = '<?php echo $this->url(array("module"=>"sales","controller"=>"possale","action"=>"refresh-program"));?>';										
@@ -445,13 +442,16 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 			url: url_refreshprogram,
 			handleAs:"json",
 			load: function(data) {
-				if(data){
+				rs = $.parseJSON(data);
+				/*if(data){
 					program = data.program;
 					$('#program_id').empty();
 					for(i=0;i<program.length;i++){
 						$('#program_id').append($("<option></option>").attr("value",program[i]['id']).text(program[i]['dead_name']+"-"+program[i]['dead_name_chinese']));
 					}
-				}
+				}*/
+				$('#program_id').empty();
+				$('#program_id').append(rs);
 				document.getElementsByClassName("overlay")[0].style.display="none";
 			},
 			error: function(err) {
@@ -531,7 +531,7 @@ dojo.ready(function(){
 function setValue(){
 	$('#customer_id').val('<?php echo $this->row['customer_id']?>').select2();
 	$('#program_id').val('<?php echo $this->row['program_id']?>').select2();
-	$('#note').val('<?php echo $this->row['payment_note']?>');
+	//$('#note').val('<?php echo $this->row['payment_note']?>');
 	$('#date_clearpayment').val('<?php echo $this->row['clear_paymentdate']?>');
 	$('#sale_no').val('<?php echo $this->row['sale_no']?>');
 	$('#sale_date').val('<?php echo $this->row['date_sold']?>');
@@ -999,6 +999,30 @@ function getType(){
 						addServicePartner(1);
 					}
 				}
+		    },		
+			error: function(err) {
+				   alert(err);
+			}
+		});
+	}
+}
+
+
+var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-productbycategory')); ?>';
+function getProductByCategory(){
+	$('#product_id').empty();
+	category = $("#category").val();
+	if(category>0){
+		dojo.xhrPost({
+			url: url_getcategory,
+			content : {
+				'category':category,
+				'type':0 // get all product and service
+			},				    
+		    handleAs:"json", 
+		    load: function(data) {
+				//alert(data)
+				$('#product_id').append(data); 
 		    },		
 			error: function(err) {
 				   alert(err);

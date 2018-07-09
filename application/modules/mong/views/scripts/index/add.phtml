@@ -47,6 +47,7 @@
 								<div class="tab-content" >
 									<div class="tab-pane active" id="tab_1">
 										<div class="form-body">
+										
 											<div class="row">
 												<div class="col-md-4" style="text-align: left !important;">
 													<div class="form-group" style="">
@@ -155,14 +156,22 @@
 											</div>											
 											<div class="row">
 												<div class="form-group">
-													<div class="col-md-2" style="text-align: left !important;">
+													<div class="col-md-1" style="text-align: left !important;">
 														<input type="hidden" name="identity_sale" id="identity_sale" />
 										    			<input type="hidden" name="branch" id="branch" value="<?php echo $this->branch_id;?>" />
 										    			<input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
 													</div>
-													<div class="col-md-6" style="text-align: left !important;">
+													<div class="col-md-2" style="text-align: left !important;">										  
+														  <select class="form-control select2me" id="category" name="category" onchange="getProductByCategory();" >
+																<option value="-1">ជ្រើសរើសប្រភេទ</option>
+																<?php if(!empty($this->category)){foreach ($this->category as $rs){?>
+																<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
+																<?php }}?>
+														  </select>
+													</div>	
+													<div class="col-md-5" style="text-align: left !important;">
 														<select class="form-control select2me" id="product_id" name="product_id" onchange="getType();" >
-															<option value="-1">ជ្រើសរើសមុខទំនិញ/សេវាកម្ម</option>
+															<option value="-1">ជ្រើសរើសមុខទំនិញ</option>
 															<?php if(!empty($this->rsproduct)){foreach ($this->rsproduct as $rs){?>
 															<option value="<?php echo $rs['id']?>"><?php echo $rs['item_name']." - ".$rs['item_code'];?></option>
 															<?php }}?>
@@ -445,6 +454,29 @@
 									</div>
 									<div class="tab-pane " id="tab_3">
 										<div class="row">
+											<div class="col-md-12 form-group" style="">
+												<label class="col-md-1 control-label">
+													
+												</label>
+												<div class="col-md-6">
+													<select class="form-control select2me" name="dead_id" id="dead_id" onChange="getDeadPersonDetail();">
+														<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
+														<?php if(!empty($this->all_dead)){foreach($this->all_dead as $rs){?>
+															<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'] ; ?></option>
+														<?php }}?>
+													</select>
+												</div>
+												<div class="col-md-2" style="text-align: left !important;">
+													<button type="button" name="calcel" class="btn blue col-md-12" onclick="saleProgram();" >
+														<i class="fa fa-plus"></i>&nbsp;&nbsp;ឈ្មោះអ្នកស្លាប់
+													</button>
+												</div>
+												<div class="col-md-2" style="text-align: left !important;">
+													<button type="button" class="btn red delete col-md-12" onclick="getRefreshProgram();" >
+														<i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh
+													</button>
+												</div>
+											</div>	
 											<div class="col-md-4">
 												<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់សព</h4>
 												<div class="form-group" style="">
@@ -530,7 +562,6 @@
 														<input type="text" class="form-control " name="date_time_dead" id="date_time_dead" readonly/>
 													</div>
 												</div>
-												
 											</div>
 											<div class="col-md-4" style="text-align: left !important;">
 													<h4 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានលម្អិតរបស់ដៃគូសព</h4>
@@ -615,7 +646,7 @@
 														ស្លាប់នៅថ្ងៃទី
 													</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control " name="date_time_dead" id="date_time_dead" readonly/>
+														<input type="text" class="form-control " name="partner_date_time_dead" id="partner_date_time_dead" readonly/>
 													</div>
 												</div>
 											</div>
@@ -670,34 +701,11 @@
 														សម្គាល់
 													</label>
 													<div class="col-md-8">
-														<input type="text" class="form-control" name="note" id="note" readonly>
+														<input type="text" class="form-control" name="dead_note" id="dead_note" readonly>
 													</div>
 												</div>
 											</div>																				
 										</div>
-										<div class="form-group" style="">
-											<label class="col-md-2 control-label">
-												
-											</label>
-											<div class="col-md-6">
-												<select class="form-control select2me" name="dead_id" id="dead_id" onChange="getDeadPersonDetail();">
-													<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
-													<?php if(!empty($this->all_dead)){foreach($this->all_dead as $rs){?>
-														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'] ; ?></option>
-													<?php }}?>
-												</select>
-											</div>
-											<div class="col-md-2" style="text-align: left !important;">
-												<button type="button" name="calcel" class="btn blue col-md-12" onclick="saleProgram();" >
-													<i class="fa fa-plus"></i>&nbsp;&nbsp;ឈ្មោះអ្នកស្លាប់
-												</button>
-											</div>
-											<div class="col-md-2" style="text-align: left !important;">
-												<button type="button" class="btn red delete col-md-12" onclick="getRefreshProgram();" >
-													<i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh
-												</button>
-											</div>
-										</div>			
 									</div>
 									<div class="tab-pane " id="tab_4">
 										<div class="row">
@@ -878,7 +886,9 @@
 						$('#dead_age').val(rs.dead_age);
 						$('#dead_dob').val(rs.dead_dob);
 						$('#date_time_dead').val(rs.date_time_dead);
+						$('#dead_status').val(rs.dead_status).select2();
 						$('#dead_pob').val(rs.dead_pob);
+						
 						$('#partner_name').val(rs.partner_name);
 						$('#partner_name_chinese').val(rs.partner_name_chinese);
 						$('#partner_sex').val(rs.partner_sex).select2();
@@ -887,9 +897,13 @@
 						$('#partner_dob').val(rs.partner_dob);
 						$('#partner_status').val(rs.partner_status).select2();
 						$('#partner_pob').val(rs.partner_pob);
+						$('#partner_date_time_dead').val(rs.date_time_female);
+						
 						$('#place_of_program').val(rs.place_of_program);
 						$('#type_romleay_sop').val(rs.type_romleay_sop).select2();
 						$('#place_pjos_sop').val(rs.place_pjos_sop);
+						$('#membersone').val(rs.membersone);
+						$('#memberstwo').val(rs.memberstwo);
 						$('#dead_note').val(rs.note);
 					}
 				},
@@ -1230,12 +1244,14 @@
 			type: "post",
 			success: function(data){
 				rs = $.parseJSON(data);
-				if(rs){
+				/*if(rs){
 					$('#dead_id').empty();
 					for(i=0;i<rs.length;i++){
 						$('#dead_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['dead_name']+"-"+rs[i]['dead_name_chinese']));
 					}
-				}
+				}*/
+				$('#dead_id').empty();
+				$('#dead_id').append(rs);
 				document.getElementsByClassName("overlay")[0].style.display="none";
 			},
 			error:function(err){
@@ -1256,7 +1272,7 @@
 				if(rs){
 					$('#product_id').empty();
 					for(i=0;i<rs.length;i++){
-						$('#product_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['name']+"-"+rs[i]['item_code']));
+						$('#product_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['item_name']+" - "+rs[i]['item_code']));
 					}
 				}
 				document.getElementsByClassName("overlay")[0].style.display="none";
@@ -1311,6 +1327,27 @@
 			}
 		});
 	}
+
+	function getProductByCategory(){
+		$('#product_id').empty();
+		category = $("#category").val();
+		$.ajax({
+			url: "<?php echo $this->baseUrl()?>/sales/possale/get-productbycategory",
+			type: "post",
+			data: {
+					'category':category,
+					'type':1 // get only product 
+				},
+			success: function(data){
+				data = $.parseJSON(data);
+				$('#product_id').append(data);
+			},
+			error:function(err){
+				alert("failed");
+			}
+		});
+	}
+	
 	
 	function getPopupReceiver(){
 		val = $('#receiver_name').val();

@@ -76,10 +76,21 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												សម្គាល់
+												កម្មវិធីបុណ្យ
 											</label>
-											<div class="col-md-8">
-												<textarea name="note" id="note" class="form-control"></textarea>
+											<div class="col-md-6">
+												<select class="form-control select2me" id="program_id" name="program_id" onchange="popupProgram();">
+													<option value="0">ជ្រើសរើសកម្មវិធីបុណ្យ</option>
+													<option value="-1">បន្ថែមកម្មវិធីបុណ្យ</option>
+													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
+														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].' - '.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'];?></option>
+													<?php }}?>
+												</select>
+											</div>
+											<div class="col-md-2">
+												<button type="button" class="btn red delete col-md-12 left" onclick="getRefreshProgram();" >
+													<i class="fa fa-refresh"></i>
+												</button>
 											</div>
 										</div>
 										<div class="form-group" style="">
@@ -184,41 +195,17 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 								</div>
 								<div class="row">
 									<div class="form-group">
-										<div class="col-md-2" style="text-align: left !important;">
-										</div>
-										<div class="col-md-6" style="text-align: left !important;">
-											  <select class="form-control select2me" id="program_id" name="program_id" >
-													<option value="-1">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
-													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
-														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['create_date'];?></option>
-													<?php }}?>
-												</select>
-										</div>
-										<div class="col-md-2" style="text-align: left !important;">
-											<button type="button" onclick="popupProgram();" class="btn red delete col-md-12">
-												<i class="fa fa-plus"></i><span>&nbsp;&nbsp;បន្ថែមឈ្មោះសព</span>
-											</button>
-										</div>
-										<div class="col-md-1">
-											<button type="button" class="btn red delete col-md-12" onclick="getRefreshProgram();" >
-												<i class="fa fa-refresh"></i>Refresh
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-2" style="text-align: left !important;">
+										<div class="col-md-1" style="text-align: left !important;">
 										</div>
 										<div class="col-md-2" style="text-align: left !important;">										  
-											  <select class="form-control select2me" id="category" name="category" onchange="getCategory();" >
+											  <select class="form-control select2me" id="category" name="category" onchange="getProductByCategory();" >
 													<option value="-1">ជ្រើសរើសប្រភេទ</option>
 													<?php if(!empty($this->category)){foreach ($this->category as $rs){?>
 													<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
 													<?php }}?>
 											  </select>
 										</div>							
-										<div class="col-md-4" style="text-align: left !important;">
+										<div class="col-md-5" style="text-align: left !important;">
 											  <select class="form-control select2me" id="product_id" name="product_id" onchange="getType();" >
 													<option value="-1">ជ្រើសរើសមុខទំនិញ/សេវាកម្ម</option>
 													<?php if(!empty($this->rsproduct)){foreach ($this->rsproduct as $rs){?>
@@ -455,10 +442,13 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 	
 	
 	function popupProgram(){
-		window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
+		program_id = $("#program_id").val();
+		if(program_id==-1){
+			window.open('<?php echo Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/program/add";?>','_blank');
+		}
 	}
 	
-	var url_getprogram = '<?php echo $this->url(array("module"=>"mong","controller"=>"index","action"=>"refresh-program"));?>';
+	var url_getprogram = '<?php echo $this->url(array("module"=>"sales","controller"=>"possale","action"=>"refresh-program"));?>';
 	function getRefreshProgram(){
 		loading();
 		$.ajax({
@@ -466,12 +456,18 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 			type: "post",
 			success: function(data){
 				rs = $.parseJSON(data);
-				if(rs){
-					$('#program_id').empty();
-					for(i=0;i<rs.length;i++){
-						$('#program_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['dead_name']+"-"+rs[i]['dead_name_chinese']));
-					}
-				}
+				//alert(rs);
+				/*if(rs){
+					 $('#program_id').empty();
+					 $('#program_id').append($("<option></option>").attr("value",0).text("ជ្រើសរើសកម្មវិធីបុណ្យ"));
+					 $('#program_id').append($("<option></option>").attr("value",-1).text("បន្ថែមកម្មវិធីបុណ្យ"));
+					 for(i=0;i<rs.length;i++){
+						$('#program_id').append($("<option></option>").attr("value",rs[i]['id']).text(rs[i]['dead_name']+" - "+rs[i]['dead_name_chinese']+" - "+rs[i]['membersone']+" - "+rs[i]['memberstwo']));
+					 }
+				}*/
+				$('#program_id').empty();
+				$('#program_id').append(rs);
+
 				document.getElementsByClassName("overlay")[0].style.display="none";
 			},
 			error:function(err){
@@ -495,13 +491,13 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 					product = data.product;
 					$('#product_id').empty();
 					for(i=0;i<product.length;i++){
-						$('#product_id').append($("<option></option>").attr("value",product[i]['id']).text(product[i]['name']+"-"+product[i]['item_code']));
+						$('#product_id').append($("<option></option>").attr("value",product[i]['id']).text(product[i]['item_name']+" - "+product[i]['item_code']));
 					}
 					
 					service = data.service;
 					$('#service_id').empty();
 					for(i=0;i<service.length;i++){
-						$('#service_id').append($("<option></option>").attr("value",service[i]['id']).text(service[i]['name']+"-"+service[i]['item_code']));
+						$('#service_id').append($("<option></option>").attr("value",service[i]['id']).text(service[i]['item_name']+"-"+service[i]['item_code']));
 					}
 				}
 				document.getElementsByClassName("overlay")[0].style.display="none";
@@ -897,22 +893,21 @@ function getType(){
 	}
 }
 
-var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getcategory')); ?>';
-function getCategory(){
-	
-
-	
-	if(product_id>0){
+var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-productbycategory')); ?>';
+function getProductByCategory(){
+	$('#product_id').empty();
+	category = $("#category").val();
+	if(category>0){
 		dojo.xhrPost({
 			url: url_getcategory,
 			content : {
-				'product_id':product_id,
+				'category':category,
+				'type':0 // get all product and service
 			},				    
 		    handleAs:"json", 
 		    load: function(data) {
-				if(data.is_package==1){// product package
-					getPackageProduct(product_id);
-				}
+				//alert(data)
+				$('#product_id').append(data); 
 		    },		
 			error: function(err) {
 				   alert(err);

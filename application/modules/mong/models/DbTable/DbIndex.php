@@ -313,7 +313,6 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					`tb_program` 
 				WHERE 
 					status=1 
-					AND dead_name!='' 
 				ORDER BY 
 					id DESC
 			 ";
@@ -392,6 +391,31 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
-	
+	function getRefreshProgram(){
+		$db=$this->getAdapter();
+		$sql="SELECT
+					id,
+					dead_name,
+					dead_name_chinese,
+					dead_dob ,
+					membersone,
+					memberstwo,
+					create_date
+				FROM
+					`tb_program`
+				WHERE
+					status=1
+				ORDER BY 
+					id DESC	
+			";
+		$result = $db->fetchAll($sql);
+		$option = "<option value='0'>ជ្រើសរើសកម្មវិធីបុណ្យ</option> <option value='-1'>បន្ថែមកម្មវិធីបុណ្យ</option>";
+		if(!empty($result)){
+			foreach ($result as $rs){
+				$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['dead_name']." - ".$rs['dead_name_chinese']." - ".$rs['membersone']." - ".$rs['memberstwo'], ENT_QUOTES).'</option>';
+			}
+		}
+		return $option;
+	}
 	
 }

@@ -15,8 +15,11 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 	function getAllProductName($is_service=null){
 		$sql="SELECT id,CONCAT(item_name,' - ',item_code) AS name,item_name,item_code  FROM `tb_product` WHERE item_name!='' AND status=1 ";
-		if($is_service!=null){
-			$sql.=" AND is_service=1";
+		if($is_service==1){ // only service
+			$sql.=" AND is_service=1 ";
+		}
+		if($is_service==2){ // only product
+			$sql.=" AND is_service = 0 ";
 		}
 		return $this->getAdapter()->fetchAll($sql);
 	}
@@ -79,7 +82,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					
 					'comission' 	=> $data['comission'],
 					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
-					'payment_note' 	=> $data['note'],
+					//'payment_note' 	=> $data['note'],
 					'other_note'	=> $data['other_note'],
 					'place_bun'		=> $data['place_bun'],
 					'date_deleivery'	=> empty($data['date_deleivery'])?null:date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
@@ -235,7 +238,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					"saleagent_id"  => $data["saleagent_id"],					
 					'comission' 	=> $data['comission'],
 					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
-					'payment_note' 	=> $data['note'],
+					//'payment_note' 	=> $data['note'],
 					'other_note'	=> $data['other_note'],
 					'place_bun'		=> $data['place_bun'],
 					'date_deleivery'=> empty($data['date_deleivery'])?null:date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
@@ -500,5 +503,26 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			";
 		return $db->fetchAll($sql);
 	}
+	
+	function getProductByCategoryId($category,$type=0){
+		$sql="SELECT
+					*
+				FROM
+					tb_product
+				WHERE
+					cate_id=$category
+					and status=1
+			";
+		if($type==1){
+			$sql .= " and is_service=0 ";
+		}
+		$result = $this->getAdapter()->fetchAll($sql);
+		$option = '<option value="-1">'.htmlspecialchars("ជ្រើសរើសមុខទំនិញ", ENT_QUOTES).'</option>';
+		if(!empty($result)){foreach ($result as $rs){
+			$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['item_name']." - ".$rs['item_code'], ENT_QUOTES).'</option>';
+		}}
+		return $option;
+	}
+	
 	
 }

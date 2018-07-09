@@ -121,6 +121,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->partner = $db->getAllPartnerService();
 		$this->view->receiver_name = $db->getAllReceiverName();
+		$this->view->category = $db->getAllProductCategory();
 	
 		$form = new Sales_Form_FrmCustomer(null);
 		$formpopup = $form->Formcustomer(null);
@@ -191,15 +192,6 @@ class Sales_PossaleController extends Zend_Controller_Action
 			exit();
 		}
 	}
-	function getcategoryAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Sales_Model_DbTable_Dbpos();
-			$rs =$db->getProductById($post['product_id'],$post['branch_id']);
-			print_r(Zend_Json::encode($rs));
-			exit();
-		}
-	}
 	
 	function getServicePartnerPriceAction(){
 		if($this->getRequest()->isPost()){
@@ -236,7 +228,8 @@ class Sales_PossaleController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
 			$db = new Mong_Model_DbTable_DbIndex();
-			$program = $db->getDeadPerson();
+			//$program = $db->getDeadPerson();
+			$program = $db->getRefreshProgram();
 			print_r(Zend_Json::encode($program));
 			exit();
 		}
@@ -248,6 +241,16 @@ class Sales_PossaleController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_Dbpos();
 			$package =$db->getPackageProduct($post['product_id']);
 			print_r(Zend_Json::encode($package));
+			exit();
+		}
+	}
+	
+	function getProductbycategoryAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$rs = $db->getProductByCategoryId($post['category'],$post['type']);
+			print_r(Zend_Json::encode($rs));
 			exit();
 		}
 	}

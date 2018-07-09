@@ -74,6 +74,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->mong_type = $db->getMongType();
 		$this->view->person_in_charge = $db->getPersonInCharge();
 		$this->view->all_dead = $db->getDeadPerson();
+		
 		$this->view->constructor = $db->getConstructor();
 		$this->view->constructor_item = $db->getConstructorItem();
 		
@@ -82,9 +83,10 @@ class Mong_IndexController extends Zend_Controller_Action
 
 		
 		$db = new Sales_Model_DbTable_Dbpos();
-		$this->view->rsproduct = $db->getAllProductName();
+		$this->view->rsproduct = $db->getAllProductName(2);
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
+		$this->view->category = $db->getAllProductCategory();
 		
 		$this->view->receiver_name = $db->getAllReceiverName();
 		
@@ -132,7 +134,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->khmer_year = $khmer_year;
 		
 		$db = new Sales_Model_DbTable_Dbpos();
-		$this->view->rsproduct = $db->getAllProductName();
+		$this->view->rsproduct = $db->getAllProductName(2);
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
 		
@@ -203,7 +205,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_Dbpos();
-			$product = $db->getAllProductName();
+			$product = $db->getAllProductName(2);
 			print_r(Zend_Json::encode($product));
 			exit();
 		}
@@ -212,7 +214,8 @@ class Mong_IndexController extends Zend_Controller_Action
  		if($this->getRequest()->isPost()){
  			$data=$this->getRequest()->getPost();
  			$db = new Mong_Model_DbTable_DbIndex();
- 			$program = $db->getDeadPerson();
+ 			//$program = $db->getDeadPerson();
+ 			$program = $db->getRefreshProgram();
  			print_r(Zend_Json::encode($program));
  			exit();
  		}
