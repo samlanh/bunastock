@@ -25,15 +25,9 @@
 								<div class="col-md-5" style="text-align: left !important;border:1px solid #ccc;">
 										<h4 style="border-bottom: 1px solid #ccc;" class="center">ការឧបត្ថមរបស់សប្បុរសជន</h4>
 									<div class="form-group" >
-										<label class="col-md-4 control-label">ឈ្មោះប្ដី</label>
+										<label class="col-md-4 control-label">សប្បុរសជន</label>
 										<div class="col-md-8">
-											<input type="text" class="validate[required] form-control " id="donor_name" name="donor_name" value="<?php echo $this->row['donor_name']?>" />
-										</div>
-									</div>
-									<div class="form-group" >
-										<label class="col-md-4 control-label">ឈ្មោះប្រពន្ទ</label>
-										<div class="col-md-8">
-											<input type="text" class="validate[required] form-control " id="donor_female" name="donor_female" value="<?php echo $this->row['donor_female']?>" />
+											<input type="text" class="validate[required] form-control " id="donor" name="donor" value="<?php echo $this->row['donor']?>" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -69,10 +63,18 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											សម្គាល់ផ្សេងៗ
+											សម្គាល់(ខ្មែរ)
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control " name="note" id="note" value="<?php echo $this->row['note']?>" />
+											<input type="text" class="form-control " id="detail_kh" name="detail_kh" value="<?php echo $this->row['detail_kh']?>"  />
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											សម្គាល់(ចិន)
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control " id="detail_chi" name="detail_chi" value="<?php echo $this->row['detail_chi']?>" />
 										</div>
 									</div>
 								</div>

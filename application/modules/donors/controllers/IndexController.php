@@ -30,7 +30,7 @@ class Donors_IndexController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllDonor($data);
-		$columns=array("ឈ្មោះប្ដី","ឈ្មោះប្រពន្ទ","ទូរស័ព្ទ","អាស័យដ្ឋាន","តម្រូវការ","ប្រើយូរបំផុត","សម្គាល់ផ្សេងៗ","លេខបង្កាន់ដៃ","ថ្ងៃបង់ប្រាក់","ចំនួនដើមម្ឈូស","ចំនួនម្ឈូស","តម្លៃរាយ","តម្លៃសរុប","សម្គាល់","ថ្ងៃបង្កើត","USER","STATUS");
+		$columns=array("ឈ្មោះសប្បុរសជន","ទូរស័ព្ទ","អាស័យដ្ឋាន","តម្រូវការ","ប្រើយូរបំផុត","សម្គាល់(ខ្មែរ)","សម្គាល់(ចិន)","លេខបង្កាន់ដៃ","ថ្ងៃបង់ប្រាក់","ចំនួនដើមម្ឈូស","ចំនួនម្ឈូស","តម្លៃរាយ","តម្លៃសរុប","ថ្ងៃបង្កើត","សម្គាល់ផ្សេងៗ","USER","STATUS");
 		$link=array(
 				'module'=>'donors','controller'=>'index','action'=>'edit',
 		);
@@ -38,7 +38,7 @@ class Donors_IndexController extends Zend_Controller_Action
 		    'module'=>'donors','controller'=>'index','action'=>'receipt',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows,array('donor_name'=>$link,'donor_female'=>$link,'tel'=>$link,'address'=>$link,'receipt_no'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('donor'=>$link,'tel'=>$link,'address'=>$link,'receipt_no'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);

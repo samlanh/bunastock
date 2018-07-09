@@ -17,7 +17,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
 					dead_age,date_jom,
 					dead_address,
-					(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,
+					(select donor from tb_donors where tb_donors.id = donor_id) as donor,
 					date_jenh,
 					note,notes,
 					create_date,
@@ -38,7 +38,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 			$s_where = array();
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " dead_name LIKE '%{$s_search}%'";
-			$s_where[] = " (select donor_name from tb_donors where tb_donors.id = donor_id) LIKE '%{$s_search}%'";
+			$s_where[] = " (select donor from tb_donors where tb_donors.id = donor_id) LIKE '%{$s_search}%'";
 			$s_where[] = " (select name_kh from tb_view where type=19 and key_code=dead_sex) LIKE '%{$s_search}%'";
 			$s_where[] = " dead_address LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
@@ -137,8 +137,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					*,
 					(select name_kh from tb_view where type=19 and key_code = dead_sex) as dead_sex,
 					(select tel from tb_donors where tb_donors.id = donor_id) as donor_phone,
-					(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,  
-					(select donor_female from tb_donors where tb_donors.id = donor_id) as donor_female 
+					(select donor from tb_donors where tb_donors.id = donor_id) as donor  
 				FROM 
 					tb_donor_donate 
 				where 
@@ -156,7 +155,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
     
     function getAllDonor(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,donor_name as name, donor_female FROM tb_donors where status=1";
+    	$sql = "SELECT id,donor FROM tb_donors where status=1";
     	return $db->fetchAll($sql);
     }
 

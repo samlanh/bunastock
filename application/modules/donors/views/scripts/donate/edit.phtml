@@ -72,7 +72,7 @@
 											<select type="text" class="validate[required] form-control select2me" name="donor_id" id="donor_id"  >
 												<option value="-1" <?php echo "disabled='disabled'";?>>ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
-												<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['donor_id']){echo "selected='selected'";}else{echo "disabled='disabled'";}?>><?php echo $rs['name']?></option>
+												<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['donor_id']){echo "selected='selected'";}?>><?php echo $rs['donor']?></option>
 												<?php }}?>
 											</select>
 										</div>

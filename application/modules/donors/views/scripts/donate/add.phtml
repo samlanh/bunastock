@@ -73,7 +73,7 @@
 											<select type="text" class="form-control select2me" name="donor_id" id="donor_id" >
 												<option value="-1">ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
-												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']." - ".$rs['donor_female']?></option>
+												<option value="<?php echo $rs['id']?>"><?php echo $rs['donor']?></option>
 												<?php }}?>
 											</select>
 										</div>

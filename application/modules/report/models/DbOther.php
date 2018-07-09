@@ -8,20 +8,22 @@ Class report_Model_DbOther extends Zend_Db_Table_Abstract{
 	}
 function getAllDonors($search){
 		$db = $this->getAdapter();
-		$sql=" SELECT 
+		$sql="  SELECT 
 					id,
-					donor_name,
-					donor_female,
+					donor,
 					tel,
 					address,
 					required_using,
 					invalid_date,
+					detail_chi,
+					detail_kh,
 					note,
 					receipt_no,
 					paid_date,
+					qtys,
 					qty,
 					unit_price,
-					total_amount,
+					total_amount, 
 					payment_note,
 					create_date,
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
@@ -29,7 +31,7 @@ function getAllDonors($search){
 		 		FROM 
 					tb_donors as d
 				WHERE 
-					donor_name!='' 
+					donor!='' 
 			";
 		
 		$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
@@ -67,7 +69,7 @@ function getAllDonors($search){
 					(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
 					dead_age,date_jom,
 					dead_address,
-					(select donor_name from tb_donors where tb_donors.id = donor_id) as donor_name,
+					(select donor from tb_donors where tb_donors.id = donor_id) as donor,
 					date_jenh,
 					note,notes,
 					create_date,'សប្បុរសជន',
@@ -289,7 +291,7 @@ function getAllworker($search){
 	}
 	function getAllDonorship($id){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,donor_name, donor_female, tel, address FROM tb_donors WHERE status=1 and id=$id";
+    	$sql = "SELECT id,donor, tel, address FROM tb_donors WHERE status=1 and id=$id";
     //	echo $sql;exit();
     	return $db->fetchRow($sql);
     }
