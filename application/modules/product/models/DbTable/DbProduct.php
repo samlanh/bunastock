@@ -206,17 +206,11 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 	  	if($data["branch"]!=""){
 	  		$where.=' AND pl.`location_id`='.$data["branch"];
 	  	}
-	  	if($data["brand"]!=""){
-	  		$where.=' AND p.brand_id='.$data["brand"];
-	  	}
 	  	if($data["category"]!=""){
 	  		$where.=' AND p.cate_id='.$data["category"];
 	  	}
 	  	if($data["scale"]!=""){
 	  		$where.=' AND measure_id='.$data["scale"];
-	  	}
-	  	if($data["color"]!=""){
-	  		$where.=' AND p.color_id='.$data["color"];
 	  	}
 	  	if($data["status"]!=-1){
 	  		$where.=' AND p.status='.$data["status"];

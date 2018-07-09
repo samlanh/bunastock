@@ -65,6 +65,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->branch_id = $db->getBranchId();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
+		$this->view->category = $db->getAllProductCategory();
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
@@ -84,6 +85,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 	
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->exchange_rate = $db->getExchangeRate();
+		
 	}
 	
 	public function editAction()
@@ -181,6 +183,15 @@ class Sales_PossaleController extends Zend_Controller_Action
 	}
 		
 	function getproductAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_Dbpos();
+			$rs =$db->getProductById($post['product_id'],$post['branch_id']);
+			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
+	function getcategoryAction(){
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_Dbpos();

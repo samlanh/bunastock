@@ -210,20 +210,26 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="form-group">
 										<div class="col-md-2" style="text-align: left !important;">
 										</div>
-										<div class="col-md-6" style="text-align: left !important;">
-											  
+										<div class="col-md-2" style="text-align: left !important;">										  
+											  <select class="form-control select2me" id="category" name="category" onchange="getCategory();" >
+													<option value="-1">ជ្រើសរើសប្រភេទ</option>
+													<?php if(!empty($this->category)){foreach ($this->category as $rs){?>
+													<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
+													<?php }}?>
+											  </select>
+										</div>							
+										<div class="col-md-4" style="text-align: left !important;">
 											  <select class="form-control select2me" id="product_id" name="product_id" onchange="getType();" >
 													<option value="-1">ជ្រើសរើសមុខទំនិញ/សេវាកម្ម</option>
 													<?php if(!empty($this->rsproduct)){foreach ($this->rsproduct as $rs){?>
 													<option value="<?php echo $rs['id']?>"><?php echo $rs['item_name']." - ".$rs['item_code'];?></option>
 													<?php }}?>
-											  </select>
-											  
+											  </select>											  
 											  <input type="hidden" name="identity" id="identity" />
 											  <input type="hidden" name="identity_partner" id="identity_partner" />
 											  <input type="hidden" name="branch" id="branch" value="<?php echo $this->branch_id;?>" />
 											  <input type="hidden" name="invoice" id="invoice" value="<?php echo $this->invoice;?>" /> 
-										</div>
+										</div>										
 										<div class="col-md-2" style="text-align: left !important;">
 											<button type="button" onclick="popupProduct();" class="btn red delete col-md-12">
 												<i class="fa fa-plus"></i><span>&nbsp;&nbsp;បន្ថែមមុខទំនិញថ្មី</span>
@@ -890,6 +896,32 @@ function getType(){
 		});
 	}
 }
+
+var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getcategory')); ?>';
+function getCategory(){
+	
+
+	
+	if(product_id>0){
+		dojo.xhrPost({
+			url: url_getcategory,
+			content : {
+				'product_id':product_id,
+			},				    
+		    handleAs:"json", 
+		    load: function(data) {
+				if(data.is_package==1){// product package
+					getPackageProduct(product_id);
+				}
+		    },		
+			error: function(err) {
+				   alert(err);
+			}
+		});
+	}
+}
+
+
 
 var url_getpackage = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-packageproduct')); ?>';
 function getPackageProduct(product_id){

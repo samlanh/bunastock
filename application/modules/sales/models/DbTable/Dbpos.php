@@ -19,6 +19,13 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$sql.=" AND is_service=1";
 		}
 		return $this->getAdapter()->fetchAll($sql);
+	}
+	function getAllProductCategory($is_service=null){
+		$sql="SELECT id, name FROM `tb_category` WHERE NAME!='' AND STATUS=1";
+		if($is_service!=null){
+			$sql.=" AND is_service=1";
+		}
+		return $this->getAdapter()->fetchAll($sql);
 	}	
 	function getAllCustomerName(){
 		$sql="SELECT id,cust_name AS name,phone FROM `tb_customer` WHERE status=1 AND cust_name!='' ";
@@ -41,7 +48,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	function getProductByProductId($product_id,$location){
 		$sql=" SELECT * FROM tb_prolocation WHERE pro_id = $product_id AND location_id = $location ";
 		return $this->getAdapter()->fetchRow($sql);
-	 }
+	}
 	public function addSaleOrder($data)
 	{
 		//print_r($data);exit();

@@ -69,8 +69,7 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract
 	//	$where.="ORDER BY id DESC";
 	//	echo $sql.$where;exit();
 		return $db->fetchAll($sql.$where);
-	}
-	
+	}	
 	public function getCategory($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT c.id,c.`name`,c.`parent_id`,c.`remark`,c.`status` FROM `tb_category` AS c WHERE c.`id`= $id";
