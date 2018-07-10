@@ -66,7 +66,6 @@ class Mong_IndexController extends Zend_Controller_Action
 
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនត្រឹមត្រូវ",$err = $e->getMessage());
-			  	echo $e->getMessage();exit();
 			  }
 		}
 		
