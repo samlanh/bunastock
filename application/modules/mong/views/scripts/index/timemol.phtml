@@ -5,7 +5,7 @@
 	$row = $this->row;
 ?>
 <div id="Printtimemol" >
-<div class="wrapper" id="borderimg1" background: #fff;width:24cm;margin: 0 auto; min-height: 25cm;padding: 0.5cm;">
+<div class="wrapper" id="borderimg1" style="background: #fff;width:24cm;margin: 0 auto; min-height: 35cm;padding: 0.5cm;">
 		<style>
 	    	.wrapper{
 	    		width: 100%;
@@ -33,7 +33,7 @@
 				<td>
 				<table width="100%" >
 					<tr>
-						<td width="20%" align="center">
+						<td width="21%" align="center">
 							<img style="width: 135%;height: 125px;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
 							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 							
@@ -58,23 +58,16 @@
 	  						<li>សែនឆ្លងម៉ុង</li>
 	  					</td>
 	  				</tr>
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:40px;font-weight: bold; list-style:none; color:#009900;">
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none; color:#009900;">
 	  					<td>
 	  						<li align="center">ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
 	  						<li align="center">​Tell: 012 455 660</li>
 	  					</td>
 	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:40px;font-weight: bold; list-style:none; color:#B22222;">
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none; color:#B22222;">
 	  					<td>
 	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
 	  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>
-	  					</td>
-	  				</tr>
-	  			</table>
-	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:50px;font-weight: bold; list-style:none; color:#800080;">
-	  					<td>
-	  						<li>&nbsp;</li>
 	  					</td>
 	  				</tr>
 	  			</table>

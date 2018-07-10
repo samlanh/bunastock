@@ -6,7 +6,7 @@
 	$row = $this->row
 ?>	
 <div id="Printdonate">
-	<div  class="wrapper"id="borderimg1" background: #fff;width:25cm;margin: 0 auto;min-height: 28cm;padding: 0.5cm;">
+	<div  class="wrapper"id="borderimg1" style="background: #fff;width:25cm;margin: 0 auto;min-height: 36cm;padding: 0.5cm;">
 		<style>
 	    	.wrapper{
 	    		width: 100%;
@@ -29,7 +29,6 @@
 			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
 			}
 	    </style>
-	    <div >
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr class="no-boder">
 				<table width="100%" >
@@ -41,27 +40,26 @@
 						</td>
 						<td width="60%">
 							<table   style="text-align:center; border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold;">
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:35px;font-weight: bold;">
 									<td>ព្រះរាជាណាចក្រកម្ពុជា</td>
 								</tr>
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold;">
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:35px;font-weight: bold;">
 									<td>ជាតិ សាសនា ព្រះមហាក្សត្រ</td>
 								</tr>
 								<tr style="list-style:12px;font-weight: bold;font-size:13px;" class="img-size">
 									<td>
-										<img style="width: 37%; height: 100px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
+										<img style="width: 40%; height: 130px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
 									</td>
 								</tr>
 								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
 									<td>Tel: 012/ 015 73 73 03</td>
 								</tr>
-								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:15px;">
-									<td class="pan-input">
-									</td>
+								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
+									<td>&nbsp;</td>
 								</tr>
 							</table>
 						</td>
-						<td width="20%" >&nbsp;</td>
+						<td width="20%" ></td>
 					</tr>				
 				</td>
 			</tr>
@@ -70,51 +68,50 @@
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
 	  				<div style="font-weight: bold; font-family:  Khmer OS Muol; font-size:28px;">
-		  					他好看　(សប្បុរសជនប្រគល់អោយសព):
-		  				</div>
+		  					热心者　(សប្បុរសជន):
+		  				</div><br>
 			  			<tr>
   							<td colspan="3" align="center" style="list-style:25px; font-family:   Khmer OS Muol; font-size:38px;font-weight: bold; color:red;">
   									<?php echo $this->row['donor']?>
   								</td> 											
   						</tr>
   						<tr>
-  							<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red;">
+  							<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:31px;font-weight: bold; color:red;">
   								<?php echo $this->row['donor_phone']?>
   							</td>
   						</tr>
-		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; ">
+		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; ">
 	  					<td>
 	  						<?php echo $this->row['notes']?>
 						</td>
 	  				</tr>
-		  			<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red;">
+		  			<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red;">
 	  					<td>
 	  						<?php echo $this->row['note']?>
 	  					</td>
 	  				</tr>
-	  				<tr style="font-family:  Khmer OS Muol; font-size:24px;font-weight: bold;  line-height:50px; color: #6A5ACD; list-style:none;">
+	  				<tr align="left" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red;">
+	  					<td>
+	  						ព័ត៌មានមានសព៖
+	  					</td>
+	  				</tr>
+	  				<tr style="font-family:  Khmer OS Muol; font-size:30px;font-weight: bold;  line-height:50px; color: #6A5ACD; list-style:none;">
 	  					<td>
 	  						<li>ឈ្មោះសព ៖  <?php echo $this->row['dead_name']?></li>
 	  						<li>ភេទ  ៖  <?php echo $this->row['dead_sex']?></li>
-	  						<li>អាយុ ៖ <?php echo $this->row['dead_age']?>&nbsp;&nbsp;ឆ្នាំ</li>
-	  						<li ​align="center">លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?> </li>
-	  						<li ​align="center">ថ្ងៃទី  <?php echo date("d",strtotime($row['date_jenh']));?> ខែ <?php echo date("m",strtotime($row['date_jenh']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_jenh']));?></li>
+	  						<li>អាយុ ៖ <?php echo $this->row['dead_age']?>&nbsp;&nbsp;ឆ្នាំ</li>	  			
 	  					</td>
 	  				</tr>
-	  				<table   style="text-align:center; border:solid 1px #FFF;">
-						<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:15px;">
-							<td class="pan-input">
-							</td>
-						</tr>
-						<td width="20%" >&nbsp;</td>
-					</table>
-					<table   style="text-align:center; border:solid 1px #FFF;">
-						<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:15px;">
-							<td class="pan-input">
-							</td>
-						</tr>
-						<td width="20%" >&nbsp;</td>
-					</table>
+	  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:#6A5ACD;">
+	  					<td>
+	  						 លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?>
+	  					</td>
+	  				</tr>
+	  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:#6A5ACD;">
+	  					<td>
+	  						 <?php echo date("d",strtotime($row['date_jenh']));?> ខែ <?php echo date("m",strtotime($row['date_jenh']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_jenh']));?>
+	  					</td>
+	  				</tr>
 	  			</table>				
 	  			</td>
 	  		</tr>
@@ -122,7 +119,7 @@
 	</div>
 </div>
 </div>
-<div style="padding-left:14%; margin: 0 auto;"> 
+<div style="padding-left:32%; margin: 0 auto;"> 
 <lable class="col-md-3" style=""></lable>
 <div class="col-md-2">
 <a href="<?php echo $this->baseUrl();?>/mong/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
