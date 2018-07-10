@@ -14,8 +14,8 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	}
 	
 	function getAllMong($search){
+		//print_r($search);//exit();
 		$db = $this->getAdapter();
-		
 		$sql=" SELECT 
 					id,
 					invoice_no,
@@ -55,7 +55,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$s_where[] = " (SELECT name FROM `tb_constructor` AS c WHERE c.id=m.constructor LIMIT 1 ) LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if(!empty($search['customer_id'])){
+		if($search['customer_id']>-1){
 			$where .= " AND customer_id = ".$search['customer_id'];
 		}
 		$order=" ORDER BY id DESC ";

@@ -59,7 +59,7 @@
 								 </span>
 							</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="receipt" id="receipt" readonly value="<?php echo $this->receipt;?>" />
+								<input type="text" class="form-control" style="color:red" name="receipt" id="receipt" readonly value="<?php echo $this->receipt;?>" />
 							</div>
 						</div>
 						
@@ -249,7 +249,7 @@
 			$.ajax({
 				url:"<?php echo $urlreceipt;?>",
 				type:"post",
-				data:{'mong_id':mong_id,'cus_id':cus_id,'type_id':1},
+				data:{'mong_id':mong_id,'cus_id':cus_id,'type_id':1,'action':'add'},
 				success: function(data){	
 					$("#table_order").html("");
 					template='<tr height="33px" align="center" style="font-weight: bold;">';

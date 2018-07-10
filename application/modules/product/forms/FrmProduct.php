@@ -373,8 +373,8 @@ class Product_Form_FrmProduct extends Zend_Form
 		$end_date->setValue($_date);
 		
 		$db=new Application_Model_DbTable_DbGlobal();
-		$rs=$db->getGlobalDb('SELECT id,cust_name,`phone` FROM tb_customer WHERE cust_name!="" AND status=1 ');
-		$options=array($tr->translate('Choose Customer'));
+		$rs=$db->getGlobalDb('SELECT id,cust_name,`phone` FROM tb_customer WHERE cust_name!="" AND status=1 order by id ASC');
+		$options=array('-1'=>$tr->translate('Choose Customer'));
 		$vendorValue = $request->getParam('customer_id');
 		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['cust_name'];
 		$vendor_element=new Zend_Form_Element_Select('customer_id');

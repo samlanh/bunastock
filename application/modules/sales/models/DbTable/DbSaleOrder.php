@@ -37,7 +37,7 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 			if($search['branch']>0){
 				$where .= " AND s.branch_id = ".$search['branch'];
 			}
-			if($search['customer_id']>0){
+			if($search['customer_id']>=0){
 				$where .= " AND s.customer_id =".$search['customer_id'];
 			}
 			$dbg = new Application_Model_DbTable_DbGlobal();
