@@ -3,13 +3,13 @@
 	$form=$this->form_sale;
 	$url_submit = $this->url(array('module'=>'mong','controller'=>'customerpayment','action'=>'add'));
 ?>
-<title><?php echo $tr->translate("Customer Payment");?></title>
+<title><?php echo $tr->translate("បន្ថែមអតិថិជនបង់ប្រាក់");?></title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("Customer Payment")?>
+					<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមអតិថិជនបង់ប្រាក់")?>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -239,6 +239,7 @@
 						template+='<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>';
 						template+='<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>';
 						template+='<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>';
+						template+='<td><?php echo $tr->translate("សម្គាល់");?></td>';
 					template+='</tr>';
 					
 					$('#identity').val("");
@@ -258,6 +259,7 @@
 							if(data[i].paid==null){data[i].paid=0;}
 							template+='<td >'+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
 							template+='<td >'+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';
+							template+='<td >'+data[i].remark+'<input type="hidden" value='+data[i].note+' id="note_'+index+'" name="note_'+index+'"/></td>';
 						template+="</tr>";
 						
 						if($('#identity').val()!="") {

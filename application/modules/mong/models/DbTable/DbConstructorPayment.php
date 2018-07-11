@@ -9,7 +9,7 @@ protected $_name="tb_receipt";
 		return $session_user->user_id;
 	}
 	
-	function getAllPartnerPayment($search){
+	function getAllConstructorPayment($search){
 			$db= $this->getAdapter();
 			$sql=" SELECT 
 						cp.id,
@@ -20,9 +20,9 @@ protected $_name="tb_receipt";
 						cp.`total_payment`,
 						cp.`paid`,
 						cp.`balance`,
-						'លុប',
 						cp.note,
-						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = cp.`user_id`) AS user_name 
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = cp.`user_id`) AS user_name,
+						(select name_kh from tb_view where type=5 and key_code = cp.status) as status_name 
 					FROM 
 						`tb_mong_constructor_payment` AS cp 
 					where 

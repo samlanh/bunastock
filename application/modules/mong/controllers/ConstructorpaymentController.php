@@ -25,8 +25,8 @@ public function init()
 				);
 		}
 		$db = new Mong_Model_DbTable_DbConstructorPayment();
-		$rows = $db->getAllPartnerPayment($search);
-		$columns=array("សាខា","វិក័យបត្រ","កាលបរិច្ឋេទ","បង់ជា","តម្លៃសរុប","ប្រាក់បានបង់","នៅខ្វះ","លុប","សម្គាល់","អ្នកប្រើប្រាស់");
+		$rows = $db->getAllConstructorPayment($search);
+		$columns=array("សាខា","បង់លើវិក័យបត្រ","កាលបរិច្ឋេទ","បង់ជា","តម្លៃសរុប","ប្រាក់បានបង់","នៅខ្វះ","សម្គាល់","អ្នកប្រើប្រាស់","ស្ថានភាព");
 		$link=array(
 			'module'=>'mong','controller'=>'constructorpayment','action'=>'edit',
 		);
@@ -35,7 +35,7 @@ public function init()
  				'module'=>'mong','controller'=>'constructorpayment','action'=>'deleteitem',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('invoice_no'=>$link,'payment_type'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
 		$this->view->mong_invoice = $db->getPartnerPaymentBalance();

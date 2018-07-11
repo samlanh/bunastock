@@ -62,14 +62,10 @@
 							*</span>
 							</label>
 							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("cheque");?>
-								</div>
+								<input type="text" class="form-control" name="cheque" id="cheque" readonly placeholder="លេខសែក"​/>
 							</div>
 							<div class="col-md-2">
-								<div class="input-icon right">
-									<?php echo $form->getElement("bank_name");?>
-								</div>
+								<input type="text" class="form-control" name="bank_name" id="bank_name" readonly placeholder="ឈ្មោះធនាគារ"/>
 							</div>
 							
 						</div>
@@ -79,7 +75,7 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<?php echo $form->getElement("remark");?>
+									<textarea name="remark" id="remark" class="form-control" rows="1"></textarea>
 								</div>
 							</div>
 							
@@ -88,7 +84,7 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right"><i class="fa fa-calendar"></i>
-								<?php echo $form->getElement("expense_date");?>
+									<input class="form-control date-picker" name="expense_date" id="expense_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 								</div>
 							</div>
 					    </div>
@@ -103,7 +99,8 @@
 									<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>
 									<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>
 									<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>
-							</tr>
+									<td><?php echo $tr->translate("សម្គាល់");?></td>
+								</tr>
 						 </table>
 						 <input type="hidden" id="identity" name="identity" />
 					</div>
@@ -122,7 +119,7 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-								<?php echo $form->getElement("all_total");?>
+									<input type="text" class="form-control" name="all_total" id="all_total" readonly />
 								</div>
 							</div>
 						</div>
@@ -137,7 +134,7 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<?php echo $form->getElement("paid");?>
+									<input type="text" class="form-control" name="paid" id="paid" onkeyup="doRemain();"/>
 								</div>
 							</div>	
 						</div>
@@ -155,7 +152,7 @@
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-								<?php echo $form->getElement("balance");?>
+									<input type="text" class="form-control" name="balance" id="balance" readonly />
 								</div>
 							</div>
 						</div>
@@ -237,7 +234,7 @@ function getInvoice(type){
 		$.ajax({
 			url:"<?php echo $urlgetinvoice;?>",
 			type:"post",
-			data:{'post_id':post_id},
+			data:{'post_id':post_id,'action':"add"},
 			success: function(data){	
 				$("#table_order").html("");
 				template='<tr height="33px" align="center" style="font-weight:bold;">';
@@ -248,6 +245,7 @@ function getInvoice(type){
 					template+='<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>';
 					template+='<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>';
 					template+='<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>';
+					template+='<td><?php echo $tr->translate("សម្គាល់");?></td>';
 				template+='</tr>';
 				
 				$('#identity').val("");
@@ -261,10 +259,11 @@ function getInvoice(type){
 						template+='<td >'+data[i].vendor+'</td>';
 						template+='<td align="center">'+data[i].order_number+'</td>';
 						template+='<td align="center">'+data[i].expense_date+'</td>';
-						template+='<td >'+data[i].total+'<input type="hidden" value='+data[i].total+' id="subtotal'+index+'" name="subtotal'+index+'"/></td>';
-						template+='<td >'+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
-						template+='<td >'+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';
-				    template+="</tr>";
+						template+='<td align="center">'+"$ "+data[i].total+'<input type="hidden" value='+data[i].total+' id="subtotal'+index+'" name="subtotal'+index+'"/></td>';
+						template+='<td align="center">'+"$ "+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
+						template+='<td align="center">'+"$ "+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';
+						template+='<td >'+data[i].remark+'<input type="hidden" value='+data[i].remark+' id="remark_'+index+'" name="remark_'+remark+'"/></td>';
+					template+="</tr>";
 					if($('#identity').val()!="") {
 						var identity = $('#identity').val();
 						$('#identity').val(identity+','+index);
@@ -314,7 +313,7 @@ function doRemain() {
 		 $('#balance').val(0);
    }else{
 	   remain = all_total-paid;
-	   $('#balance').val(remain.toFixed(2));
+	   $('#balance').val(remain);
 	}	
 }
 function getCustomerInfo(){

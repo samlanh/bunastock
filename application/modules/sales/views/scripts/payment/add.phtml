@@ -259,6 +259,7 @@
 						template+='<td><?php echo $tr->translate("ចំនួនទឹកប្រាក់");?></td>';
 						template+='<td><?php echo $tr->translate("ទឹកប្រាក់បានបង់");?></td>';
 						template+='<td><?php echo $tr->translate("ទឹកប្រាក់នៅខ្វះ");?></td>';
+						template+='<td><?php echo $tr->translate("សម្គាល់");?></td>';
 					template+='</tr>';
 					
 					$('#identity').val("");
@@ -278,6 +279,7 @@
 							if(data[i].paid==null){data[i].paid=0;}
 							template+='<td >'+data[i].paid+'<input type="hidden" value='+data[i].paid+' id="paid_amount'+index+'" name="paid_amount'+index+'"/></td>';
 							template+='<td >'+data[i].balance+'<input type="hidden" value='+data[i].balance+' id="balance_after'+index+'" name="balance_after'+index+'"/></td>';
+							template+='<td >'+data[i].remark+'<input type="hidden" value='+data[i].remark+' id="remark_'+index+'" name="remark_'+index+'"/></td>';
 						template+="</tr>";
 						
 						if($('#identity').val()!="") {

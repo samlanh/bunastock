@@ -3,7 +3,7 @@
 class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 {
 	//use for add purchase order 29-13
-	protected $_name="tb_receipt";
+	protected $_name="tb_vendor_payment";
 	
 	function getUserId(){
 		$session_user=new Zend_Session_Namespace('auth');
@@ -22,8 +22,8 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 						r.`total`,
 						r.`paid`,
 						r.`balance`,
-						
-						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name ,
+						(select name_kh from tb_view where type=5 and key_code = r.status) as status_name 
 					FROM 
 						`tb_vendor_payment` AS r,
 						tb_purchase_order as p
@@ -88,10 +88,10 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			$rspurchase = $this->getPurchaseInfo($data['purchase_id']);
 			if(!empty($rspurchase)){
 				$arr = array(
-							'paid'				=>	$rspurchase['paid']+$data['paid'],
-							'balance'			=>	$rspurchase['balance']-$data['paid'],
-							'is_completed'	  	=> 	$compelted,
-							);
+						'paid'			=>	$rspurchase['paid']+$data['paid'],
+						'balance'		=>	$rspurchase['balance']-$data['paid'],
+						'is_completed'	=> 	$compelted,
+					);
 				$this->_name='tb_purchase_order';
 				$where = 'id = '.$data['purchase_id'];
 				$this->update($arr, $where);
@@ -101,217 +101,53 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
-			$err =$e->getMessage();
-			echo $err;exit();
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();exit();
 		}
 	}
-	public function updatePayment($data){
+	public function updatePurchasePayment($data,$id){
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			$id = $data["id"];
-			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
-			
-			$ids=explode(',',$data['identity']);
-			$count = count($ids);
-			$paid = $data['paid'];
-			$compelted = 0;
-			foreach ($ids as $row){
-				
-				$branch_id = $this->getPurchaseInfo($data['invoice_no'.$row]);
-				break;
-			}
-			
-			$info_purchase_order=array(
-					"branch_id"   	=> 	$branch_id['branch_id'],
-					"vendor_id"   => 	$data["customer_id"],
-					"payment_type"  => 	$data["payment_method"],//payment by customer/invoice
-					"payment_id"    => 	$data["payment_name"],	//payment by cash/paypal/cheque
-					"receipt_no"    => 	'',//$data['receipt'],
-					"date_input"  =>  date("Y-m-d"),
-					"che_issuedate"  =>  date("Y-m-d",strtotime($data['cheque_issuedate'])),
-					"che_withdrawaldate"  =>  date("Y-m-d",strtotime($data['cheque_withdrawdate'])),
-					"expense_date"  =>  date("Y-m-d",strtotime($data['expense_date'])),
-					"total"         => 	$data['all_total'],
-					"paid"          => 	$data['paid'],
-					"balance"       => 	$data['balance'],
-					"remark"        => 	$data['remark'],
-					"user_id"       => 	$GetUserId,
-					'status'        =>1,
-					"bank_name" => 	$data['bank_name'],
-					"cheque_number" => 	$data['cheque'],
-					"withdraw_name" => 	$data['holder_name'],
-				 // "paid_dollar"   => 	$data['paid_dollar'],
-// 				    "paid_riel"     => 	$data['paid_riel'],
-				
-			);
-			$this->_name="tb_vendor_payment";
-			$where = "id=".$data['id'];
-			
-			$db->getProfiler()->setEnabled(true);
-			$reciept_id = $this->update($info_purchase_order,$where); 
-			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-$db->getProfiler()->setEnabled(false);
-			
-			
-			
-			foreach ($ids as $key => $i)
-			{
-				$old_purchase_amount = $this->getPurchaseExist($data['invoice_no'.$i]);
-				if($old_purchase_amount){
-					$arr_old_po = array(
-						'net_totalafter'		=>	$old_purchase_amount["net_totalafter"]+$data['old_paid_'.$i],
-						'balance_after'			=>	$old_purchase_amount["balance_after"]+$data['old_paid_'.$i],
-						'paid'					=>	$old_purchase_amount["paid"]-$data['old_paid_'.$i],
-					);
+			if($data['status']==0){
+				$rs = $this->getPaymentById($id);
+				if(!empty($rs)){
+					$rspurchase = $this->getPurchaseInfo($data['purchase_id']);
+					if(!empty($rspurchase)){
+						$arr = array(
+								'paid'		=>	$rspurchase['paid']-$data['paid'],
+								'balance'	=>	$rspurchase['balance']+$data['paid'],
+								'is_completed'	=> 	0,
+							);
+						$this->_name='tb_purchase_order';
+						$where = 'id = '.$data['purchase_id'];
+						$this->update($arr, $where);
+					}
 				}
-				$this->_name = "tb_purchase_order";
-				$where = "id=".$data['invoice_no'.$i];
 				
-				$db->getProfiler()->setEnabled(true);
-				$this->update($arr_old_po,$where);
-				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-$db->getProfiler()->setEnabled(false);
-
-				$sql = "DELETE FROM tb_vendorpayment_detail WHERE receipt_id=".$data['id'];
-				$db->getProfiler()->setEnabled(true);
-				$db->query($sql);
-				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-$db->getProfiler()->setEnabled(false);
-				
-				$paid = $paid -($data['balance_after'.$i]);
-				$recipt_paid = 0;
-				if ($paid>=0){
-					$paided = $data['balance_after'.$i];
-					$balance=0;
-					$compelted=1;
-				}else{
-					$paided = $data['paid'];
-					$balance= $data['balance_after'.$i]-$data['paid'];
-					$compelted=0;
-				}
-				$data_item= array(
-						'receipt_id'=> $data['id'],
-						'invoice_id'=> 	$data['invoice_no'.$i],
-						'total'=>$data['balance_after'.$i],
-// 						'discount'  => 	$data['discount'.$i],
-						'paid'	  => 	$paided,
-						'balance'		  => 	$balance,
-						'is_completed'   =>    $compelted,
-						'status'  => 1,
-						'date_input'	  => date("Y-m-d"),
+				$this->_name="tb_vendor_payment";
+				$array= array(
+						'status' =>$data['status'],
 				);
-				$this->_name='tb_vendorpayment_detail';
-				
-				$db->getProfiler()->setEnabled(true);
-				$this->insert($data_item);
-				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-$db->getProfiler()->setEnabled(false);
-				
-				$rsinvoice = $this->getPurchaseInfo($data['invoice_no'.$i]);
-				if(!empty($rsinvoice)){
-					$data_invoice = array(
-								'paid'=>$rsinvoice['paid']+$paided,
-								'discount_after'  => 	0,
-								'paid_after'	  => 	$paided,
-								'balance_after'	  => 	$balance,
-								'net_totalafter' =>    $balance,
-								'is_completed'	  => 	$compelted,
-								);
-					$this->_name='tb_purchase_order';
-					$where = 'id = '.$data['invoice_no'.$i];
-					
-					$db->getProfiler()->setEnabled(true);
-					$this->update($data_invoice, $where);
-					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-$db->getProfiler()->setEnabled(false);
-
-				}
-				
-// 				if ($key== ($count-1)){
-// 						if ($paid>0){
-// 							$idss= explode(',',$data['identity']);
-// 							foreach ($idss as $k)
-// 							{
-// 								$paid = $paid - $data['balance_after'.$k];
-// 								if ($paid>=0){
-// 									$paided = 0;
-// 									$recipt_paid =$data['balance_after'.$k]+$data['paid_amount'.$k];
-// 								}else{
-// 									$paided = abs($paid);
-// 									$recipt_paid = $data['paid_amount'.$k]+($data['balance_after'.$k] - $paided);
-// 									$paid=0;
-// 								}
-// 								$data_item= array(
-// 										'paid'	  => 	$recipt_paid,
-// 										'balance'		  => 	$paided,
-// 										'is_completed'   =>    1,
-// 										'status'  => 1,
-// 								);
-// 								$this->_name='tb_receipt_detail';
-// 								$wheres = 'invoice_id = '.$data['invoice_no'.$k];
-// 								$this->update($data_item, $wheres);
-								
-// 								$data_invoice = array(
-// 										'balance_after'	  => 	$paided,
-// 										'is_fullpaid'	  => 	($balance>0)?0:1,
-// 								);
-// 								$this->_name='tb_invoice';
-// 								$where = 'id = '.$data['invoice_no'.$k];
-// 								$this->update($data_invoice, $where);
-// 							}
-// 						}
-// 				}
-				
-			 }
-				
-			//exit();
+				$where1 = "id = $id ";
+				$this->update($array,$where1);
+			}
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
-			$err =$e->getMessage();
-			echo $err;
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();
 		}
 	}
-	function getPurchaseInfo($invoice_id){
+	function getPurchaseInfo($purchase_id){
 		$db =$this->getAdapter();
-		$sql="SELECT * FROM `tb_purchase_order` AS p WHERE p.`id` = $invoice_id LIMIT 1";
+		$sql="SELECT * FROM `tb_purchase_order` AS p WHERE p.`id` = $purchase_id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
-	function getRecieptById($id){
+	function getPaymentById($id){
 		$db = $this->getAdapter();
-		$sql=" SELECT * FROM $this->_name WHERE id = $id LIMIT 1 ";
+		$sql=" SELECT * FROM tb_vendor_payment WHERE id = $id LIMIT 1 ";
 		return $db->fetchRow($sql);
 	}
-	function getRecieptDetail($reciept_id){
-		$db= $this->getAdapter();
-		$sql="SELECT d.`id`,d.`receipt_id`,d.`invoice_id`,
-		( SELECT i.invoice_no FROM `tb_invoice` AS i  WHERE i.id = d.`invoice_id` ) AS invoice_no,
-		d.`total`,d.`paid`,d.`balance`,d.`discount`,d.`date_input`
-		FROM `tb_receipt_detail` AS d WHERE d.`receipt_id` =".$reciept_id;
-		return $db->fetchAll($sql);
-	}
-	function getSaleorderItemDetailid($id){
-		$db = $this->getAdapter();
-		$sql=" SELECT * FROM `tb_salesorder_item` WHERE saleorder_id=$id ";
-		return $db->fetchAll($sql);
-	}
-	function getTermconditionByid($id){
-		$db = $this->getAdapter();
-		$sql=" SELECT * FROM `tb_quoatation_termcondition` WHERE quoation_id=$id AND term_type=2 ";
-		return $db->fetchAll($sql);
-	} 
 	
 	function getAllVendor(){
 		$db = $this->getAdapter();
@@ -338,20 +174,26 @@ $db->getProfiler()->setEnabled(false);
 		return $db->fetchAll($sql);
 	}
 	
-	function getAllInvoicePaymentPurchase($purchase_id){
+	function getAllInvoicePaymentPurchase($purchase_id,$action){
 		$db= $this->getAdapter();
+		$status="";
+		if($action=="add"){
+			$status = " and vp.status=1";
+		}
 		$sql="select 
 					vp.*,
 					p.order_number,
 					DATE_FORMAT(vp.expense_date, '%d-%m-%Y') AS expense_date,
 					(select v_name from tb_vendor as v where v.vendor_id = p.vendor_id) as vendor,
-					p.balance as total_payment
+					p.balance as total_payment,
+					(select name_kh from tb_view where type=5 and key_code = vp.status) as status_name 
 				from 	
 		 			tb_vendor_payment as vp,
 		 			tb_purchase_order as p
 		 		where 
 		 			p.id = vp.purchase_id
 		 			and vp.purchase_id = $purchase_id	
+		 			$status
 		";
 		 
 		return  $db->fetchAll($sql);
