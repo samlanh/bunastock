@@ -22,7 +22,8 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 						r.`paid`,
 						r.`balance`,
 						r.remark,
-						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name 
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name ,
+						(select name_kh from tb_view where type=5 and key_code = r.status) as status_name
 					FROM 
 						`tb_receipt` AS r 
 					where 

@@ -71,7 +71,7 @@
 								<?php echo $tr->translate("សម្គាល់");?>
 							</label>
 							<div class="col-md-4">
-								<textarea name="note" id="note" class="form-control" rows="3"></textarea>
+								<textarea name="note" id="note" class="form-control" rows="2"></textarea>
 							</div>
 							
 							
@@ -102,7 +102,7 @@
 								<input type="text" class="form-control" name="total_payment" id="total_payment" readonly />
 							</div>
 						</div>
-						</div>
+						
 						<div class="form-group">
 							<label class="control-label col-md-7">
 							</label>
@@ -138,6 +138,7 @@
 							<div class="col-md-4">
 							</div>
 						</div>
+					</div>	
 				</form>
 			</div>
 		</div>
@@ -191,7 +192,7 @@
 			$.ajax({
 				url:"<?php echo $urlreceipt;?>",
 				type:"post",
-				data:{'sale_order_id':sale_order_id},
+				data:{'sale_order_id':sale_order_id,'action':"add"},
 				success: function(data){	
 					$("#table_order").html("");
 					template='<tr height="33px" align="center" style="font-weight: bold;">';
@@ -237,6 +238,12 @@
 					alert("error"+e);
 				}
 			});	
+		}else{
+			$("#table_order").html("");
+			$('#identity').val("");
+			$('#total_payment').val(0);
+			$('#balance').val(0);
+			$('#paid').val(0);
 		}
 	}
 

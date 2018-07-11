@@ -30,7 +30,7 @@ class Sales_PaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("លេខបង្កាន់ដៃ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER");
+		$columns=array("លេខបង្កាន់ដៃ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
 		$link=array(
 			'module'=>'sales','controller'=>'payment','action'=>'edit',
 		);

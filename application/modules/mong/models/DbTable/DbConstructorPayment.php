@@ -106,65 +106,31 @@ protected $_name="tb_receipt";
 			echo $e->getMessage();exit();
 		}
 	}
-	public function updatePayment($data){
+	public function updateConstructorPayment($data,$id){
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			$id = $data["id"];
-			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
-				
-			$ids=explode(',',$data['identity']);
-			$branch_id = '';
-			foreach ($ids as $row){
-				$branch_id = $this->getBranchByInvoice($data['invoice_no'.$row]);
-				$data_invoice = array(
-						'discount_after'  => 	$branch_id['discount'],
-						'paid_after'	  => 	$branch_id['paid_amount'],
-						'balance_after'	  => 	$branch_id['balance'],
-						'is_fullpaid'	  => 	0,
+			if($data['status']==0){
+				$rs = $this->getConstructorPaymentById($id);
+				if(!empty($rs)){
+					$rssale = $this->getMongById($rs['mong_id']);
+					if(!empty($rssale)){
+						$arr= array(
+								'constructor_balance'	=>$rssale['constructor_balance']+$rs['paid'],
+								'constructor_paid'		=>$rssale['constructor_paid']-$rs['paid'],
+						);
+						$this->_name="tb_mong";
+						$where = " id = ".$rs['mong_id'];
+						$this->update($arr, $where);
+					}
+				}
+				$this->_name="tb_mong_constructor_payment";
+				$array= array(
+						'status' =>$data['status'],
 				);
-				$this->_name='tb_invoice';
-				$where = 'id = '.$data['invoice_no'.$row];
-				$this->update($data_invoice, $where); // Reset Invoice like As The First
-				unset($data_invoice);
+				$where1 = "id = $id ";
+				$this->update($array,$where1);
 			}
-				
-			$info_purchase_order=array(
-					"branch_id"   => 	$branch_id['branch_id'],
-					"customer_id"     => 	$data["customer_id"],
-					"payment_type"       => 	$data["payment_method"],//payment by customer/invoice
-					"payment_id"     => 	$data["payment_name"],	//payment by cash/paypal/cheque
-					"receipt_no"  => 	$data['receipt'],
-					"receipt_date"    => $data['date_in'],
-					"total"         => 	$data['all_total'],
-					"paid"      => 	$data['paid'],
-					"balance" => 	$data['balance'],
-					"remark"      => 	$data['remark'],
-					"user_id"       => 	$GetUserId,
-					'status' =>1,
-					"date_input"      => 	date("Y-m-d"),
-			);
-			$this->_name="tb_receipt";
-			$where_reciept="id = ".$id;
-			$this->update($info_purchase_order, $where_reciept);
-			unset($info_purchase_order);
-		
-			$this->_name='tb_receipt_detail';
-			$where_detail = " receipt_id =".$id;
-			$this->delete($where_detail);
-			
-			$ids=explode(',',$data['identity']);
-			$count = count($ids);
-			$paid = $data['paid'];
-			foreach ($ids as $key => $i)
-			{
-				$invoice = $this->getBranchByInvoice($data['invoice_no'.$i]);
-
-			}
-				
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -178,9 +144,9 @@ protected $_name="tb_receipt";
 		$sql="SELECT * FROM `tb_invoice` AS i WHERE i.`id` = $invoice_id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
-	function getSaleById($sale_id){
+	function getMongById($mong_id){
 		$db =$this->getAdapter();
-		$sql="SELECT * FROM `tb_sales_order` AS i WHERE i.`id` = $sale_id LIMIT 1";
+		$sql="SELECT * FROM `tb_mong` WHERE `id` = $mong_id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
 	
@@ -204,14 +170,14 @@ protected $_name="tb_receipt";
 		return $db->fetchRow($sql);
 	}
 	
-	function getRecieptDetail($reciept_id){
+	function getConstructorPaymentById($id){
 		$db= $this->getAdapter();
 		$sql="SELECT 
 					*
 				FROM 
-					tb_receipt AS d 
+					tb_mong_constructor_payment
 				WHERE 
-					d.id = $reciept_id
+					id = $id
 				limit 1	
 			";
 		return $db->fetchRow($sql);
@@ -224,7 +190,7 @@ protected $_name="tb_receipt";
 			
 			$rs = $this->getRecieptDetail($id);
 			if(!empty($rs)){
-				$rssale = $this->getSaleById($rs['invoice_id']);
+				$rssale = $this->getMongById($rs['invoice_id']);
 				if(!empty($rssale)){
 					$data= array(
 						'balance_after'=>$rssale['balance_after']+$rs['paid'],
@@ -257,18 +223,24 @@ protected $_name="tb_receipt";
 		return $db->fetchAll($sql);
 	}
 	
-	function getConstructorPayment($mong_id){
+	function getConstructorPayment($mong_id,$action){
 		$db = $this->getAdapter();
+		$status="";
+		if($action=="add"){
+			$status = " and mp.status=1";
+		}
 		$sql = "SELECT 
 					mp.*,
 					DATE_FORMAT(mp.date_payment, '%d-%M-%Y') AS receipt_date,
-					m.constructor_balance 
+					m.constructor_balance,
+					(select name_kh from tb_view where type=5 and key_code = mp.status) as status_name 
 				FROM 
 					tb_mong_constructor_payment AS mp,
 					tb_mong AS m 
 				WHERE 
 					m.id = mp.mong_id 
 					AND mp.mong_id=$mong_id
+					$status
 			";
 		return $db->fetchAll($sql);
 	}

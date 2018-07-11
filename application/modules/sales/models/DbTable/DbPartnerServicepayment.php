@@ -21,9 +21,9 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 						pp.`total_payment`,
 						pp.`paid`,
 						pp.`balance`,
-						'លុប',
 						pp.note,
-						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = pp.`user_id`) AS user_name 
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = pp.`user_id`) AS user_name,
+						(select name_kh from tb_view where type=5 and key_code = pp.status) as status_name 
 					FROM 
 						`tb_partnerservice_payment` AS pp 
 					where 
@@ -106,65 +106,34 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 			echo $e->getMessage();exit();
 		}
 	}
-	public function updatePayment($data){
+	public function updatePartnerServicePayment($data,$id){
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			$id = $data["id"];
-			$db_global = new Application_Model_DbTable_DbGlobal();
-			$session_user=new Zend_Session_Namespace('auth');
-			$userName=$session_user->user_name;
-			$GetUserId= $session_user->user_id;
-				
-			$ids=explode(',',$data['identity']);
-			$branch_id = '';
-			foreach ($ids as $row){
-				$branch_id = $this->getBranchByInvoice($data['invoice_no'.$row]);
-				$data_invoice = array(
-						'discount_after'  => 	$branch_id['discount'],
-						'paid_after'	  => 	$branch_id['paid_amount'],
-						'balance_after'	  => 	$branch_id['balance'],
-						'is_fullpaid'	  => 	0,
-				);
-				$this->_name='tb_invoice';
-				$where = 'id = '.$data['invoice_no'.$row];
-				$this->update($data_invoice, $where); // Reset Invoice like As The First
-				unset($data_invoice);
-			}
-				
-			$info_purchase_order=array(
-					"branch_id"   => 	$branch_id['branch_id'],
-					"customer_id"     => 	$data["customer_id"],
-					"payment_type"       => 	$data["payment_method"],//payment by customer/invoice
-					"payment_id"     => 	$data["payment_name"],	//payment by cash/paypal/cheque
-					"receipt_no"  => 	$data['receipt'],
-					"receipt_date"    => $data['date_in'],
-					"total"         => 	$data['all_total'],
-					"paid"      => 	$data['paid'],
-					"balance" => 	$data['balance'],
-					"remark"      => 	$data['remark'],
-					"user_id"       => 	$GetUserId,
-					'status' =>1,
-					"date_input"      => 	date("Y-m-d"),
-			);
-			$this->_name="tb_receipt";
-			$where_reciept="id = ".$id;
-			$this->update($info_purchase_order, $where_reciept);
-			unset($info_purchase_order);
-		
-			$this->_name='tb_receipt_detail';
-			$where_detail = " receipt_id =".$id;
-			$this->delete($where_detail);
 			
-			$ids=explode(',',$data['identity']);
-			$count = count($ids);
-			$paid = $data['paid'];
-			foreach ($ids as $key => $i)
-			{
-				$invoice = $this->getBranchByInvoice($data['invoice_no'.$i]);
-
+			if($data['status']==0){
+				$rs = $this->getPartnerSerivcePaymentById($id);
+				if(!empty($rs)){
+					$rssale = $this->getSaleById($rs['sale_order_id']);
+					if(!empty($rssale)){
+						$arr= array(
+								'partner_service_balance'	=>$rssale['partner_service_balance']+$rs['paid'],
+								'partner_service_paid'		=>$rssale['partner_service_paid']-$rs['paid'],
+						);
+						$this->_name="tb_sales_order";
+						$where = " id = ".$rs['sale_order_id'];
+						$this->update($arr, $where);
+					}
+				}
+				$this->_name="tb_partnerservice_payment";
+				$array= array(
+						'status' =>$data['status'],
+				);
+				$where1 = "id = $id ";
+				$this->update($array,$where1);
 			}
-				
+			
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -252,18 +221,24 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	}
 	
-	function getPartnerSerivcePayment($sale_id){
+	function getPartnerSerivcePayment($sale_id,$action){
 		$db = $this->getAdapter();
+		$status="";
+		if($action=="add"){
+			$status=" and pp.status=1";
+		}
 		$sql = "SELECT 
 					pp.*,
 					DATE_FORMAT(pp.date_payment, '%d-%M-%Y') AS receipt_date,
-					s.partner_service_balance 
+					s.partner_service_balance ,
+					(select name_kh from tb_view where type=5 and key_code = pp.status) as status_name
 				FROM 
 					tb_partnerservice_payment as pp,
 					tb_sales_order as s 
 				WHERE 
 					s.id = pp.sale_order_id 
 					and sale_order_id=$sale_id
+					$status
 			";
 		return $db->fetchAll($sql);
 	}
@@ -272,6 +247,12 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = "SELECT id,sale_no as name FROM tb_sales_order where 1 ";
 		return $db->fetchAll($sql);
+	}
+	
+	function getPartnerSerivcePaymentById($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM tb_partnerservice_payment where id = $id limit 1";
+		return $db->fetchRow($sql);
 	}
 	
 }

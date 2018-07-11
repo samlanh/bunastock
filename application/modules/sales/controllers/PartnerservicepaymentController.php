@@ -26,7 +26,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_DbPartnerServicepayment();
 		$rows = $db->getAllPartnerPayment($search);
-		$columns=array("សាខា","វិក័យបត្រ","កាលបរិច្ឋេទ","បង់ជា","តម្លៃសរុប","ប្រាក់បានបង់","នៅខ្វះ","លុប","សម្គាល់","អ្នកប្រើប្រាស់");
+		$columns=array("សាខា","វិក័យបត្រ","កាលបរិច្ឋេទ","បង់ជា","តម្លៃសរុប","ប្រាក់បានបង់","នៅខ្វះ","សម្គាល់","អ្នកប្រើប្រាស់","ស្ថានភាព");
 		$link=array(
 			'module'=>'sales','controller'=>'partnerservicepayment','action'=>'edit',
 		);
@@ -35,7 +35,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
  				'module'=>'sales','controller'=>'partnerservicepayment','action'=>'deleteitem',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('លុប'=>$delete,'receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
 		$this->view->sale_invoice = $db->getPartnerPaymentBalance();
@@ -68,15 +68,12 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 	}
 	function editAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		$dbq = new Sales_Model_DbTable_DbPartnerServicepayment();
-		$db = new Application_Model_DbTable_DbGlobal();
+		$db = new Sales_Model_DbTable_DbPartnerServicepayment();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			$data['id']=$id;
 			try {
-				if(!empty($data['identity'])){
-					$dbq->updatePayment($data);
-				}
+				$db->updatePartnerServicePayment($data,$id);
 				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/partnerservicepayment");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('UPDATE_FAIL');
@@ -84,16 +81,13 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$row = $dbq->getRecieptById($id);
-		$this->view->reciept_detail = $dbq->getRecieptDetail($id);
-		$frm = new Sales_Form_FrmPayment(null);
-		$form_pay = $frm->Payment($row);
-		Application_Model_Decorator::removeAllDecorator($form_pay);
-		$this->view->form_sale = $form_pay;
-				 
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
-		$this->view->term_opt = $db->getAllTermCondition(1);
+		
+		$this->view->row = $db->getPartnerSerivcePaymentById($id);
+		
+		$this->view->invoice = $db->getSaleInvoice();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->receipt = $_db->getReceiptNumber(1);
 	}	
 	
 	public function getinvoiceAction(){
@@ -145,7 +139,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_DbPartnerServicepayment();
-			$rs = $db->getPartnerSerivcePayment($post['sale_order_id']);
+			$rs = $db->getPartnerSerivcePayment($post['sale_order_id'],$post['action']);
 			echo Zend_Json::encode($rs);
 			exit();
 		}

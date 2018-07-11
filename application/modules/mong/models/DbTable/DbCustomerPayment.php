@@ -22,7 +22,8 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 					r.`paid`,
 					r.`balance`,
 					r.remark,
-					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name
+					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name,
+					(select name_kh from tb_view where type=5 and key_code = r.status) as status_name
 				FROM 
 					`tb_receipt` AS r 
 				where 
@@ -110,35 +111,37 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 		}
 		
 	}
-	public function updateCustomer($post){
-		$session_user=new Zend_Session_Namespace('auth');
-		$userName=$session_user->user_name;
-		$GetUserId= $session_user->user_id;
+	public function updateCustomerPayment($data,$id){
 		$db = $this->getAdapter();
-		$data=array(
-				//'cu_code'		=> $post['cu_code'],
-				'cust_name'		=> $post['txt_name'],
-				'phone'			=> $post['txt_phone'],
-				'contact_name'	=> $post['txt_contact_name'],//test
-				'contact_phone'	=> $post['contact_phone'],//test
-				'address'		=> $post['txt_address'],
-				'province_id'=> $post['province'],
-				'fax'			=> $post['txt_fax'],
-				'email'			=> $post['txt_mail'],
-				'website'		=> $post['txt_website'],//test
-				'add_remark'	=>	$post['remark'],
-				'user_id'		=> $GetUserId,
-				'date'			=> date("Y-m-d"),
-				'branch_id'		=> $post['branch_id'],
-				'customer_level'=> $post['customer_level'],
-				'cu_type'		=>	$post["customer_type"],
-				'credit_limit'	=>	$post["credit_limit"],
-				'credit_team'	=>	$post["credit_tearm"],
-				'status'	=>	$post["status"],
-		);
-		$where=$this->getAdapter()->quoteInto('id=?',$post["id"]);
-		$this->_name="tb_customer";
-		$this->update($data,$where);
+		$db->beginTransaction();
+		try{
+			if($data['status']==0){
+				$rs = $this->getRecieptDetail($id);
+				if(!empty($rs)){
+					$rssale = $this->getSaleById($rs['invoice_id']);
+					if(!empty($rssale)){
+						$arr= array(
+							'balance_after'=>$rssale['balance_after']+$rs['paid'],
+							'paid'	=>$rssale['paid']-$rs['paid'],
+						);
+						$this->_name="tb_mong";
+						$where = " id = ".$rs['invoice_id'];
+						$this->update($arr, $where);
+					}
+				}
+				$this->_name="tb_receipt";
+				$array= array(
+					'status' =>$data['status'],
+				);
+				$where1 = "id = $id ";
+				$this->update($array,$where1);
+			}
+			$db->commit();
+		}catch(Exception $e){
+			$db->rollBack();
+			Application_Form_FrmMessage::message('INSERT_FAIL');
+			echo $e->getMessage();
+		}
 	}
 	
 	function getRecieptById($id){
@@ -227,17 +230,23 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 		return $db->fetchRow($sql);
 	}
 	
-    function getReceipt($mong_id,$cus_id,$type){
+    function getReceipt($mong_id,$cus_id,$type,$action){
     	$db = $this->getAdapter();
+    	$status="";
+    	if($action=="add"){
+    		$status = " and status=1";
+    	}
     	$sql = "SELECT 
     				*,
-    				DATE_FORMAT(receipt_date, '%d-%M-%Y') AS receipt_date 
+    				DATE_FORMAT(receipt_date, '%d-%M-%Y') AS receipt_date,
+    				(select name_kh from tb_view where type=5 and key_code = tb_receipt.status) as status_name
     			FROM 
     				tb_receipt 
     			WHERE 
     				invoice_id=$mong_id 
     				and customer_id=$cus_id 
     				and type=$type
+    				$status
     			order by 
     				id ASC		
     		";

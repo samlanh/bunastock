@@ -29,7 +29,7 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		}
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","លេខបង្កាន់ដៃ","បង់លើវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER");
+		$columns=array("BRANCH_NAME","លេខបង្កាន់ដៃ","បង់លើវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
 		
 		$link=array(
 			'module'=>'mong','controller'=>'customerpayment','action'=>'edit',
@@ -73,6 +73,8 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->receipt = $_db->getReceiptNumber(1);
 		
+		$db = new Sales_Model_DbTable_Dbpos();
+		$this->view->receiver_name = $db->getAllReceiverName();
 	}
 	function editAction(){
 		$id = $this->getRequest()->getParam('id');
@@ -82,9 +84,7 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 			$data = $this->getRequest()->getPost();
 			$data['id']=$id;
 			try {
-				if(!empty($data['identity'])){
-					$db->updatePayment($data);
-				}
+				$db->updateCustomerPayment($data,$id);
 				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ","/sales/payment");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
@@ -92,7 +92,15 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$row = $db->getRecieptById($id);
+		$this->view->row = $db->getRecieptById($id);
+		$this->view->customer_name = $db->getMongCustomerName();
+		$this->view->customer_invoice = $db->getMongInvoice();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->receipt = $_db->getReceiptNumber(1);
+		
+		$db = new Sales_Model_DbTable_Dbpos();
+		$this->view->receiver_name = $db->getAllReceiverName();
 	}	
 	
 	function receiptAction(){
@@ -135,7 +143,7 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Mong_Model_DbTable_DbCustomerPayment();
-			$rs = $db->getReceipt($post['mong_id'],$post['cus_id'],$post['type_id']);
+			$rs = $db->getReceipt($post['mong_id'],$post['cus_id'],$post['type_id'],$post['action']);
 			echo Zend_Json::encode($rs);
 			exit();
 		}

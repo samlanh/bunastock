@@ -69,15 +69,11 @@ public function init()
 	}
 	function editAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		$dbq = new Mong_Model_DbTable_DbConstructorPayment();
-		$db = new Application_Model_DbTable_DbGlobal();
+		$db = new Mong_Model_DbTable_DbConstructorPayment();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
-			$data['id']=$id;
 			try {
-				if(!empty($data['identity'])){
-					$dbq->updatePayment($data);
-				}
+				$db->updateConstructorPayment($data,$id);
 				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/mong/constructorpayment");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('UPDATE_FAIL');
@@ -85,16 +81,13 @@ public function init()
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$row = $dbq->getRecieptById($id);
-		$this->view->reciept_detail = $dbq->getRecieptDetail($id);
-		$frm = new Sales_Form_FrmPayment(null);
-		$form_pay = $frm->Payment($row);
-		Application_Model_Decorator::removeAllDecorator($form_pay);
-		$this->view->form_sale = $form_pay;
-				 
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
-		$this->view->term_opt = $db->getAllTermCondition(1);
+		$this->view->row = $db->getConstructorPaymentById($id);
+		
+		$this->view->invoice = $db->getMongInvoice();
+		$this->view->constructor = $db->getConstructorInvoice();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->receipt = $_db->getReceiptNumber(1);
 	}	
 	
 	public function getinvoiceAction(){
@@ -146,7 +139,7 @@ public function init()
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Mong_Model_DbTable_DbConstructorPayment();
-			$rs = $db->getConstructorPayment($post['mong_id']);
+			$rs = $db->getConstructorPayment($post['mong_id'],$post['action']);
 			echo Zend_Json::encode($rs);
 			exit();
 		}
