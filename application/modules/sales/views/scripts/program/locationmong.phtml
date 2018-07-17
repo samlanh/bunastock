@@ -24,24 +24,24 @@
 	    		padding: 4px;
 			}
 			#borderimg1 { 
-			    border: 88px dotted ;
+			    border: 90px dotted ;
 			    border-image: url("<?php echo $this->baseUrl()?>/images/coll.png") 120 stretch;
 			}
 	    </style>
-		<table cellpadding="0" cellspacing="0" width="100%" style="margin-top: -80px;">
+		<table cellpadding="0" cellspacing="0" width="100%" style="margin-top: -75px;">
 			<tr class="no-boder">
 				<td>
 				<table width="100%" >
 					<tr>
 						<td width="20%" align="center">
-							<img style="width: 135%;height: 125px;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
+							<img style="width: 145%;height: 125px;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
 							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 							
 						</td>
 						<td width="67%">
 							<table   style="text-align:center;border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:48px;font-weight: bold;color:red;">
-									<td>ព័ត៌មានផ្លាកម៉ុង</td>
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:48px;font-weight: bold;">
+									<td style="color:red !important;">ព័ត៌មានផ្លាកម៉ុង</td>
 								</tr>	
 							</table>
 						</td>
@@ -53,45 +53,44 @@
 		  	<tr>
 		  		<td>
 	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:68px; font-size:35px;font-weight: bold; list-style:none; color:#800080;">
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:68px; font-size:35px; font-weight: bold; list-style:none;">
 	  					<td>
-	  						<li>ទីតាំង៖ &nbsp; <?php echo $this->row['place_of_program']?></li>
-	  						<li>ទូរស័ទ្ទ៖ &nbsp; <?php echo $this->row['membersone']?> - <?php echo $this->row['memberstwo']?></li>
+	  						<li style="color:#800080 !important;">ទីតាំង៖ &nbsp; <?php echo $this->row['place_of_program']?></li>
+	  						<li style="color:#800080 !important;">ទូរស័ទ្ទ៖ &nbsp; <?php echo $this->row['membersone']?> - <?php echo $this->row['memberstwo']?></li>
 	  					</td>
 	  				</tr>
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none; color:#009900;">
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none;">
 	  					<td>
-	  						<li>ព័ត៌មានរបស់សព (<?php echo $this->row['partner']?>)៖ </li>
-	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ខ្មែរ)  <?php echo $this->row['dead_name']?></li>
-	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ចិន)  <?php echo $this->row['dead_name_chinese']?></li>
+	  						<li style="color:#009900 !important;">ព័ត៌មានរបស់សព (<?php echo $this->row['partner']?>)៖ </li>
+	  						<li style="color:#009900 !important;">&nbsp;&nbsp;ឈ្មោះ(ខ្មែរ)  <?php echo $this->row['dead_name']?></li>
+	  						<li style="color:#009900 !important;">&nbsp;&nbsp;ឈ្មោះ(ចិន)  <?php echo $this->row['dead_name_chinese']?></li>
 	  					</td>
 	  				</tr>
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none; color:#009900;">
+	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none;">
 	  					<td>
-	  						<li>ព័ត៌មានរបស់ដៃគូសព (<?php echo $this->row['dead']?>)៖ </li>
-	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ខ្មែរ)  <?php echo $this->row['partner_name']?></li>
-	  						<li>&nbsp;&nbsp;<i class="fa fa-bullseye" style="font-size:20px;"></i>ឈ្មោះ(ចិន)  <?php echo $this->row['partner_name_chinese']?></li>
+	  						<li style="color:#009900 !important;">ព័ត៌មានរបស់ដៃគូសព (<?php echo $this->row['dead']?>)៖ </li>
+	  						<li style="color:#009900 !important;">&nbsp;&nbsp;ឈ្មោះ(ខ្មែរ)  <?php echo $this->row['partner_name']?></li>
+	  						<li style="color:#009900 !important;">&nbsp;&nbsp;ឈ្មោះ(ចិន)  <?php echo $this->row['partner_name_chinese']?></li>
 	  					</td>
 	  				</tr>
 	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none; color:#B22222;">			
 	  					<td>
-	  						<li><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃកើត៖  <?php echo $this->row['dead_dob']?> </li>
-	  						<li><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃស្លាប់៖   <?php echo $this->row['date_time_dead']?></li>
-	  						<li></li>
-	  					<li><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ឆ្នាំកូនប្រុស៖
+	  						<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃកើត៖  <?php echo $this->row['dead_dob']?> </li>
+	  						<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃស្លាប់៖   <?php echo $this->row['date_time_dead']?></li>
+	  					<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ឆ្នាំកូនប្រុស៖
 	  					<?php     
 		              		  if(!empty($this->khmer_year_boy))foreach ($this->khmer_year_boy AS $index => $rs){?><?php if ($index>0)echo '-';?>
 	  					<?php echo $rs["khmer_year_name"];?>				  						
 	  					<?php }?></li>
-	  					<li><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ឆ្នាំកូនស្រី៖
+	  					<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ឆ្នាំកូនស្រី៖
 	  					<?php     
 		              		  if(!empty($this->khmer_year_girl))foreach ($this->khmer_year_girl AS $index => $rs){?><?php if ($index>0)echo '-';?>
 	  					<?php echo $rs["khmer_year_name"];?>				  						
 	  					<?php }?></li>
 	  					</td>		
 	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:35px;font-weight: bold; list-style:none; color:#009900;">
-	  					<td>
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:35px;font-weight: bold; list-style:none;">
+	  					<td style="color:black !important;">
 	  						ស្រុកកំណើតសព៖ <?php echo $this->row['dead_pob']?>
 	  					</td>
 	  				</tr>

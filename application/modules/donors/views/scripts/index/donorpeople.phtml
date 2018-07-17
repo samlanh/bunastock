@@ -25,15 +25,15 @@
 	    		padding: 4px;
 			}
 			#borderimg1 { 
-			    border: 12px solid transparent;
-			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
+			    border: 90px dotted ;
+			    border-image: url("<?php echo $this->baseUrl()?>/images/coll.png") 120 stretch;
 			}
 	    </style>
-	    <div id="borderimg1" style="background: #fff;width:25cm;margin: 0 auto;min-height: 36cm; padding: 0.9cm;">
+	    <div id="borderimg1" style="background: #fff;width:25cm;margin: 0 auto;min-height: 35cm; padding: 0.9cm;">
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr class="no-boder">
 				<td>
-				<table width="100%" >
+				<table width="100%"  style="margin-top: -95px;">
 					<tr>
 						<td width="20%" align="center">
 							<img style="max-height:100px;"><br>
@@ -41,16 +41,16 @@
 							
 						</td>
 						<td width="60%">
-							<table   style="text-align:center; border:solid 1px #FFF; line-height: 59px;">
-								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:35px;font-weight: bold;">
+							<table   style="text-align:center; border:solid 1px #FFF; line-height: 49px;">
+								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold;">
 									<td>ព្រះរាជាណាចក្រកម្ពុជា</td>
 								</tr>
-								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:35px;font-weight: bold;">
+								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold;">
 									<td>ជាតិ សាសនា ព្រះមហាក្សត្រ</td>
 								</tr>
 								<tr style="list-style:11px;font-weight: bold;font-size:13px;" class="img-size">
 									<td>
-										<img style="width: 43%; height: 143px;"  alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
+										<img style="width: 43%; height: 123px;"  alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
 									</td>
 								</tr>
 								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
@@ -67,54 +67,49 @@
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
 		  				<tr>
-  						<td colspan="3" align="left" style="list-style:25px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:black;">
+  						<td colspan="3" align="left" style="list-style:25px; font-family:  Khmer OS Muol; font-size:26px;font-weight: bold; color:black;">
   							热心者　(សប្បុរសជន):
   							</td>
   						</tr>
 			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:35px;font-weight: bold; color:red;">
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:29px;font-weight: bold; color:red !important;">
   							<?php echo $this->row['donor']?>
   							</td>
   						</tr>
-  						<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; color:#C70039;">
-	  					<td>
+  						<tr>
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:24px;font-weight: bold; color:#C70039 !important;">
 	  						<?php echo $this->row['tel']?>
 	  					</td>
-	  					</tr>
-			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:29px;font-weight: bold; color:red;">
-  									汉堡包/漢堡
-  							</td>
-  						</tr>
-			  			<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:29px;font-weight: bold; color:red;">
+	  					</tr>			  			
+		  				<tr>
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:34px; font-weight: bold; color:#22B424 !important;">
+	  						<?php echo $this->row['detail_chi']?>
+	  					</td>
+	  					<tr>
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:red !important;">
   							<?php echo $this->row['detail_kh']?>
   							</td>
   						</tr>
-		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px; font-weight: bold; color:#22B424;">
-	  					<td>
-	  						<?php echo $this->row['detail_chi']?>
-	  					</td>
 	  				</tr>	  				
-	  				<tr style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:red;">
-	  					<td>
+	  				<tr>
+	  					<td style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:red !important;">
 	  						ព័ត៌មានមានការបង់ប្រាក់៖
 	  					</td>
 	  				</tr>	  				
-	  				<tr style="font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; line-height:42px; color: #6A5ACD; list-style:none;">
+	  				<tr style="font-family:  Khmer OS Muol; font-size:25px;font-weight: bold; line-height:42px; list-style:none;">
 	  					 <?php 
 	  					 ?>
 	  					<td>
-	  						<li>លេខបង្កាន់ដៃ  (<?php echo $row['receipt_no']?>)</li>	
-	  						<li>ចំនួន:&nbsp;<?php echo number_format($row['qtys'],0)?>&nbsp;x&nbsp;<?php echo number_format($row['unit_price'],0)?>&nbsp;=&nbsp;<?php echo number_format($row['total_amount'],0)?> $</li>						
-	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['paid_date']));?> ខែ <?php echo date("m",strtotime($row['paid_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['paid_date']));?></li>
+	  						<li style="color: #6A5ACD !important;">លេខបង្កាន់ដៃ  (<?php echo $row['receipt_no']?>)</li>	
+	  						<li style="color: #6A5ACD !important;">ចំនួន:&nbsp;<?php echo number_format($row['qtys'],0)?>&nbsp;x&nbsp;<?php echo number_format($row['unit_price'],0)?>&nbsp;=&nbsp;<?php echo number_format($row['total_amount'],0)?> $</li>						
+	  						<li style="color: #6A5ACD !important;">ថ្ងៃទី <?php echo date("d",strtotime($row['paid_date']));?> ខែ <?php echo date("m",strtotime($row['paid_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['paid_date']));?></li>
 	  						<li align="center"></li>
 	  					</td>
 	  					<?php 
                     	?>
 	  				</tr>
-	  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:32px; font-weight: bold; color:#6A5ACD;">
-	  					<td>
+	  				<tr>
+	  					<td align="center" style="list-style:20px; font-family:  Khmer OS Muol; font-size:22px; font-weight: bold; color:#6A5ACD !important;">
 	  						លំនៅដ្ឋានសព្វថ្ងៃ៖  <?php echo $this->row['address']?>
 	  					</td>
 	  				</tr>	

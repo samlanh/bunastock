@@ -15,7 +15,7 @@
 							<td width="38%" valign="top">								
 							</td>
 							<td width="30%" align="center" style="line-height: 37px;">
-								<div style="font-size: 32px;font-family:'Khmer OS Muol Light'; color:red;">ចៅ ប៊ុនណា 73</div>
+								<div style="font-size: 32px;font-family:'Khmer OS Muol Light'; color:red !important;">ចៅ ប៊ុនណា 73</div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light'; color:black;">សេវាកម្មបុណ្យសពតាំងពីឆ្នាំ 1982</div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light';">បញ្ជីទំនិញ</div>
 							</td>
@@ -39,8 +39,30 @@
 				  display: table-header-group;
 				  page-break-inside:avoid; page-break-after:auto;
 				}
-				#footer {
-				  display: table-footer-group;
+				footer {
+				  font-size: 9px;
+				  color: black !important;
+				 text-align:center;
+				}
+				
+				@page {
+				  size: A4;
+				  margin: 11mm 17mm 17mm 17mm;				
+					
+				}
+				
+				@media print {
+				  footer {
+				    position: fixed;
+				    bottom: 0;
+				  	text-align:center; 
+				  	padding-left:16%; 
+				  	color: red !important;
+				  }				
+				  html, body {
+				    width: 210mm;
+				    height: 297mm;
+				  }
 				}
 				@page {
 					   @bottom-left {
@@ -125,7 +147,7 @@
 								<td colspan="6" valign="top">
 									<table class="tablesorter" align="center" style=" width: 100%; padding: 0px; margin-top: 3px !important; border-collapse: collapse; border: 1px solid #000; font-size:11px;font-family:Khmer OS Battambang !important;  " id="table">
 										<thead>
-											<tr bgcolor="#b0bdfd" class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#f2f2f2 !important;font-weight:bold;">
+											<tr bgcolor="#b0bdfd" class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#b0bdfd !important; font-weight:bold;">
 												<td style="border:1px solid #000;">លរ</td>
 												<td style="border:1px solid #000;"><strong style="color:#000;">លេខកូតទំនិញ</strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;">ឈ្មោះ/名称</strong></td>
@@ -137,8 +159,8 @@
 											if(!empty($this->rsdetail)){foreach($this->rsdetail as $key => $item){ $index++;?>
 											<tr style=" font-size:15px !important; text-align:center;font-weight:bold;">
 												<td style="border:1px solid #000;"><?php echo $key+1;?></td>
-												<td style="border:1px solid #000;text-align: left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['pro_name'];?> </strong></td>
 												<td style="border:1px solid #000;text-align: left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['item_code'];?> </strong></td>
+												<td style="border:1px solid #000;text-align: left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['pro_name'];?> </strong></td>									
 												<td style="border:1px solid #000;"><strong style="color:#000;"><?php echo number_format($item['qty_order'],0);if(/*$item['is_service']==0 && */ $item['is_package']==0){echo " ".$item['measure_name'];}?></strong></td>
 											</tr>
 											<?php } }
@@ -147,6 +169,7 @@
 											<tr style=" font-size:15px !important; text-align:center;font-weight:bold;">
 												<td style="border:1px solid #000;"><?php echo $index+1;?></td>
 												<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;</strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;"></strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;"></strong></td>
 											</tr>
 											<?php }?>
@@ -161,12 +184,15 @@
 							</tr>
 						</tbody>
 					</table>
+					<footer style="margin-top: 20%;">
+						 <p>អាស័យដ្ឋានៈ ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ ១០០ (មុខក្រសួងប្រៃសណីយ៍វត្តភ្នំ)</p>						
+					</footer>	
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-    <div style="text-align: center;margin: 0 auto;"> 
+    <div style="padding-left:14%; margin: 0 auto;"> 
     	<lable class="col-md-3" style=""></lable>
     	<div class="col-md-2">
 			<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>

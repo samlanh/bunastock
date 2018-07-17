@@ -4,7 +4,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>វិក្កយបត្រលក់</title>
-<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 1px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 31cm; ">
+<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 1px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 26cm; ">
 
 	<table class="print" cellspacing="0" cellpadding="0" style="width:98%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top:0 auto;white-space:nowrap;">
 		<tbody>
@@ -41,8 +41,30 @@
 				  display: table-header-group;
 				  page-break-inside:avoid; page-break-after:auto;
 				}
-				#footer {
-				  display: table-footer-group;
+				footer {
+				  font-size: 9px;
+				  color: black !important;
+				 text-align:center;
+				}
+				
+				@page {
+				  size: A4;
+				  margin: 11mm 17mm 17mm 17mm;				
+					
+				}
+				
+				@media print {
+				  footer {
+				    position: fixed;
+				    bottom: 0;
+				  	text-align:center; 
+				  	padding-left:16%; 
+				  	color: red !important;
+				  }				
+				  html, body {
+				    width: 210mm;
+				    height: 297mm;
+				  }
 				}
 				@page {
 					   @bottom-left {
@@ -50,7 +72,7 @@
 						}
 					 }
 				@media print {
-					footer {page-break-after: always;}
+					footer {page-break-after: always;}			
 				}
 			</style>			
 			
@@ -117,12 +139,12 @@
 									<table class="tablesorter" align="center" style=" width: 100%; padding: 0px; margin-top: 3px !important; border-collapse: collapse; border: 1px solid #000; font-size:11px;font-family:Khmer OS Battambang !important;  " id="table">
 										<thead>
 											<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center; background:#b0bdfd !important;font-weight:bold;">
-												<td style="border:1px solid #000;">លរ</td>
-												<td style="border:1px solid #000;"><strong style="color:#000;">លេខកូតទំនិញ</strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;">ឈ្មោះ/名称</strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;">ចំនួន/数量</strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;">តំលៃ/价格</strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;">សរុប/总额</strong></td>
+												<th style="border:1px solid #000;">លរ</th>
+												<th style="border:1px solid #000;"><strong style="color:#000;">លេខកូតទំនិញ</strong></th>
+												<th style="border:1px solid #000;"><strong style="color:#000;">ឈ្មោះ/名称</strong></th>
+												<th style="border:1px solid #000;"><strong style="color:#000;">ចំនួន/数量</strong></th>
+												<th style="border:1px solid #000;"><strong style="color:#000;">តំលៃ/价格</strong></th>
+												<th style="border:1px solid #000;"><strong style="color:#000;">សរុប/总额</strong></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -185,7 +207,9 @@
 							</tr>
 						</tbody>
 					</table>
-					
+					<footer>
+						 <p>អាស័យដ្ឋានៈ ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ ១០០ (មុខក្រសួងប្រៃសណីយ៍វត្តភ្នំ)</p>						
+					</footer>
 				</td>
 			</tr>
 		</tbody>
