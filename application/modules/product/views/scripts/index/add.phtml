@@ -50,8 +50,7 @@ input.btn_borwse_image {
     cursor: pointer;
 }
 </style>
-<body>
-	<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_submit;?>" enctype="multipart/form-data" autocomplete="off">						
+						
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
@@ -61,7 +60,8 @@ input.btn_borwse_image {
 					<label><a href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></button></a></label>
 				</div>
 			</div>
-			<div class="portlet-body">
+			<div class="portlet-body form">
+				<form class="form-horizontal" id="frm" method="post" action="<?php echo $url_submit;?>" enctype="multipart/form-data" autocomplete="off">	
 				<div class="tabbable-custom ">
 					<div class="portlet-body form">
 							<div class="form-body">
@@ -257,10 +257,12 @@ input.btn_borwse_image {
 								<div class="col-md-3">
 								</div>
 							</div>
+						</div>	
 					</div>
 				</div>
+				</form>	
 			</div>
-	</form>	
+	
 	
 <!--Popup Form Brand-->
 <?php $formBrand = $this->frmBrand; ?>
@@ -887,5 +889,3 @@ input.btn_borwse_image {
 	}
 	
 </script>		
-</body>
-</html>

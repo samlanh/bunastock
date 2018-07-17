@@ -20,7 +20,9 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 					s.all_total,
 					s.paid,
 					s.balance,
-					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = s.user_id LIMIT 1 ) AS user_name
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = s.user_id LIMIT 1 ) AS user_name,
+					(SELECT name_kh FROM tb_view WHERE type=5 AND key_code=s.status LIMIT 1) status_name,
+					s.status
 				FROM 
 					`tb_sales_order` AS s 
 		
@@ -68,7 +70,8 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 					r.paid,
 					r.balance,
 					r.remark,
-					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = s.user_id LIMIT 1 ) AS user_name
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = s.user_id LIMIT 1 ) AS user_name,
+					(SELECT name_kh FROM tb_view WHERE type=5 AND key_code=r.status LIMIT 1) status
 				FROM 
 					tb_receipt as r,
 					tb_sales_order AS s,

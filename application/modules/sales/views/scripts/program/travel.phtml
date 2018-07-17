@@ -24,96 +24,81 @@
 			    border: 12px solid transparent;
 			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
 			}
+			
 	    </style>
-		<table cellpadding="0" cellspacing="0" width="100%" >		 
-			<tr class="no-boder">
-				<td>
-				<table width="100%" >
-					<tr>
-						<td width="20%" align="center">
-							<img style="max-height:200px; width: 98%;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
-							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
-							
-						</td>
-						<td width="60%">
-							<table   style="text-align:center;border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:56px;font-weight: bold;">
-									<td>ចៅ ប៊ុនណា</td>
-								</tr>
-				
-							</table>
-						</td>
-						<td width="20%" >&nbsp;</td>
-					</tr>
-				</table>
+		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold;">		 
+			<tr>
+				<td width="20%" align="center">
+					<img style="max-height:200px; width: 98%;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
+					<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 				</td>
+				<td align="center" width="60%" style="color:red !important;font-size: 65px;">
+					ចៅ ប៊ុនណា
+				</td>
+				<td width="20%" >&nbsp;</td>
 			</tr>
 		  	<tr>
-		  		<td>
-	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">	
-		  			
-		  					<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:42px; color:red;font-weight: bold;">
-	  					<td>
-	  						លើកសពចូលម្ឈូស
-	  					</td>
-	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; list-style:none; color: #943126;">
-	  					<td>
-	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
-	  							វេលាម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?></li>
-	  						<li>ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?></li>
-	  					</td>
-	  				</tr>
-	  			</table>
-		  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;color:red; font-size:42px;font-weight: bold;">
-	  					<td>
-	  						ហែរសពចេញ
-	  					</td>
-	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; list-style:none; color: #943126 !important;">
-	  					<td>
-	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
-	  							វេលាម៉ោងៈ  <?php echo $this->row['hae_sop_time']?></li>
-	  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?></li>
-	  				</td>
-	  			</tr>
-	  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:42px;font-weight: bold;color:red;">
-	  					<td>
-	  						បញ្ចុះ/បូជា
-	  					</td>
-	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; list-style:none; color: #943126;">
-	  					<td>
-	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
-	  							វេលាម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?></li>
-	  						<li>ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?></li>
-	  				</td>
-	  			</tr>
-	  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;color:#22B424; font-size:40px;font-weight: bold;">
-	  					<td>
-	  						កូនចៅកាន់ទុក្ខមិនឆុងទេ!
-	  					</td>
-	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 65px; color: #6A5ACD; font-size:30px;font-weight: bold; list-style:none;">
-	  					<td>
-	  						<li><i class="fa fa-home" style="font-size: 38px;"></i> ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ ១០០ <br>(ខាងជើងផ្សាររាត្រី) </li>
-	  						<li><i class="fa fa-facebook-square" style="font-size: 35px;"></i> Chao Bunna 73 Funeral Service</li>
-	  						<li><i class="fa fa-phone-square" style="font-size: 35px;"></i> 012 9 3333 0 / 096 3333 936</li>
-	  					</td>
-	  				</tr>	  								  	
-			</table>
+		  		<td colspan="3" align="center" style="color:blue !important;font-size: 45px;">
+	  				លើកសពចូលម្ឈូស
+	  			</td>
+	  		</tr>		
+  			<tr >
+  				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
+  					ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
+  					វេលាម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?> <br />
+  					ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td colspan="3" align="center" style="color:blue !important;font-size: 45px;"> 
+  					ហែរសពចេញ
+  				</td>
+  			</tr>
+  			<tr >
+  				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
+  					ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
+  					វេលាម៉ោងៈ  <?php echo $this->row['hae_sop_time']?> <br />
+  					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?>
+  				</td>
+	  		</tr>
+  			<tr>
+  				<td colspan="3" align="center" style="color:red !important;font-size: 45px;">
+  					បញ្ចុះ/បូជា
+  				</td>
+  			</tr>
+  			<tr>
+  				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
+  					ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
+  					វេលាម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?> <br />
+  					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?>
+  				</td>
+  			</tr>
+	  		<tr>
+  				<td colspan="3" align="center" style="font-size: 50px; ">
+  					<u style="color:#22B424 !important;">កូនចៅកាន់ទុក្ខមិនឆុងទេ!</u>
+  				</td>
+  			</tr>
+  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 65px; color: #6A5ACD; font-size:30px;font-weight: bold; list-style:none;">
+  				<td  colspan="3" align="center" style="color: #6A5ACD !important; ">
+  					<i class="fa fa-home" style="font-size: 38px;"></i> ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ ១០០ <br>(ខាងជើងផ្សាររាត្រី) <br >
+  					<i class="fa fa-facebook-square" style="font-size: 35px;"></i> Chao Bunna 73 Funeral Service <br >
+  					<i class="fa fa-phone-square" style="font-size: 35px;"></i> 012/015 73 73 03 , 012 30 73 73
+  				</td>
+  			</tr>	  								  	
+		</table>
 	</div>
 </div>
 <div style="padding-left:16%; margin: 0 auto;"> 
-<lable class="col-md-3" style=""></lable>
-<div class="col-md-2">
-<a href="<?php echo $this->baseUrl();?>/mong/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
+	<lable class="col-md-3" style=""></lable>
+	<div class="col-md-2">
+		<a href="<?php echo $this->baseUrl();?>/mong/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
+	</div>
+	<lable class="col-md-2" style="">
+		<button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i> បោះពុម្ភ </button>
+	</lable>
+	<lable class="col-md-3" style=""></lable>
 </div>
-<lable class="col-md-2" style="">
-<button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i> បោះពុម្ភ </button>
-</lable>
-<lable class="col-md-3" style=""></lable>
-</div>
+
 <script>
 function printinvoice(){
 	var printContents = document.getElementById('Printdonate').innerHTML;

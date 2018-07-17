@@ -186,7 +186,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
-									'qty'=>$rs['qty']-$data['qty_sold_'.$i]
+								'qty'=>$rs['qty']-$data['qty_sold_'.$i]
 							);
 							$where=" id =".$rs['id'];
 							$this->update($arr, $where);
@@ -196,9 +196,14 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$arr=array(
 						'mong_id'		=> $mong_id,
 						'pro_id'		=> $data['pro_'.$i],
+
+						'is_package'	=> $data['is_package_'.$i],
+						'package_id'	=> $data['packageid_'.$i],
+							
 						'qty_unit'		=> $data['qtyunit_'.$i],
 						'qty_detail'	=> $data['qtydetail_'.$i],
 						'qty_order'		=> $data['qty_sold_'.$i],
+							
 						'cost_price'	=> $data['cost_price_'.$i],
 						'price_riel'	=> $data['price_reil_'.$i],
 						'price'			=> $data['selling_price_'.$i],

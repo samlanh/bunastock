@@ -213,10 +213,18 @@
 $('#frm').submit(function() {
 	customer_id=$("#v_name").val();
 	if(customer_id==-1 || customer_id==0){
-		alert("Please select vendor name");
+		alert("Please select vendor name !!! ");
 		$('#v_name').select2('open');
 		return false;	
 	}
+	
+	LocationId=$("#LocationId").val();
+	if(LocationId=='' || LocationId==0){
+		alert("Please select branch !!! ");
+		$('#LocationId').select2('open');
+		return false;	
+	}
+	
 	identity =$("#identity").val();
 	if(identity=='' || identity==-1){
 		alert("Please add product row");
@@ -516,6 +524,8 @@ var index=1;
 function addRow(item_id) {
 	index5++; //var first = index5;
 	index=index+1;
+	branch_id = $("#LocationId").val();
+	if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");return false;}
 	for(i=1; i<index5; i++){
 		new_item=parseInt(item_id);
 		items = parseInt($("#item_id_"+i).val());
@@ -555,39 +565,39 @@ function addRow(item_id) {
 		$('#global_disc').val(0);
 		$("#paid").val(0);
 	}
-	 $("#item_id_"+index5).select2();
+	$("#item_id_"+index5).select2();
 	$("#row_order_0").remove();
 }
 <?php $url_qty =  $this->url(array('module'=>'purchase','controller'=>'index','action'=>'getqtybyid')); ?>
 function getQtyById(index){//use
-				item_id=$("#item_id_"+index).val();
-				qty_unit=$("#qty_unit_"+index).val();
-				qty_per_unit=$("#qty_per_unit_"+index).val();
-				branch_id = $("#LocationId").val();
-				if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}
-				if(qty_unit==null || qty_unit==""){
-					if(qty_per_unit!==null && qty_per_unit!==""){
-						$("#qty"+index).val(qty_per_unit);
-					}
-				}else{
-					$.ajax({
-						url:"<?php echo $url_qty;?>",
-						type:"post",
-						data:{'item_id':item_id,'branch_id':branch_id},
-						success: function(data){
-							item_qty = $.parseJSON(data);										
-							$("#qty_detail_"+index).val(item_qty.qty_perunit);
-							main_qty =$("#qty_unit_"+index).val();
-							detail_qty =  $("#qty_per_unit_"+index).val();
-							$("#current_qty"+index).val(item_qty.qty);
-							total_qty = parseFloat(main_qty) + parseFloat(detail_qty/(item_qty.qty_perunit));
-							$("#qty"+index).val(total_qty.toFixed(3));
-						},
-						error:function(e){
-							alert("err product"+e);
-						}
-				});
+	item_id=$("#item_id_"+index).val();
+	qty_unit=$("#qty_unit_"+index).val();
+	qty_per_unit=$("#qty_per_unit_"+index).val();
+	branch_id = $("#LocationId").val();
+	if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");return false;}
+	if(qty_unit==null || qty_unit==""){
+		if(qty_per_unit!==null && qty_per_unit!==""){
+			$("#qty"+index).val(qty_per_unit);
+		}
+	}else{
+		$.ajax({
+			url:"<?php echo $url_qty;?>",
+			type:"post",
+			data:{'item_id':item_id,'branch_id':branch_id},
+			success: function(data){
+				item_qty = $.parseJSON(data);										
+				$("#qty_detail_"+index).val(item_qty.qty_perunit);
+				main_qty =$("#qty_unit_"+index).val();
+				detail_qty =  $("#qty_per_unit_"+index).val();
+				$("#current_qty"+index).val(item_qty.qty);
+				total_qty = parseFloat(main_qty) + parseFloat(detail_qty/(item_qty.qty_perunit));
+				$("#qty"+index).val(total_qty.toFixed(3));
+			},
+			error:function(e){
+				alert("err product"+e);
 			}
+		});
+	}
 }
 function getItemOrder(){
 	item_ids=$("#add_item").val();

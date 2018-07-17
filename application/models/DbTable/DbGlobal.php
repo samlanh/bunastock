@@ -482,6 +482,19 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		}
 		return $pre.$new_acc_no;
 	}
+	public function getAdjustCode(){
+		$db = $this->getAdapter();
+		$branch = $this->getAccessPermission("id");
+		$sql=" SELECT COUNT(id) FROM tb_product_adjust WHERE 1 $branch LIMIT 1 ";
+		$acc_no = $db->fetchOne($sql);
+		$new_acc_no= (int)$acc_no+1;
+		$acc_no= strlen((int)$acc_no+1);
+		$pre = "Adj-";
+		for($i = $acc_no;$i<5;$i++){
+			$pre.='0';
+		}
+		return $pre.$new_acc_no;
+	}
 	
 	function getExchangeRate(){
 		$db = $this->getAdapter();
@@ -508,7 +521,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$branch_id = $session_user->branch_id;
 		if(!empty($branch_id)){
 			$level = $session_user->level;
-			if($level==1 OR $level==2){
+			if($level==1 ){//OR $level==2
 				$result = "";
 				return $result;
 			}

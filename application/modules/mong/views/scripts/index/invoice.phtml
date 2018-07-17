@@ -28,22 +28,25 @@
 		<table class="print" cellspacing="0" cellpadding="0" style="width:98%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top:0 auto;white-space:nowrap;">
 			<tbody>
 				<tr height="40px;">
-				    <td colspan="10" style="" align="center" valign="top">
-						<table width="100%" style="font-size: 10px;margin-bottom: 0px;"   >
+					<td colspan="10" style="" align="center" valign="top">
+						<table width="100%" border="0" style="font-size: 14px;margin-top: 10px; white-space: nowrap;"   >
 							<tr>
-								<td width="40%" valign="top" align="center">
-									<img style="height:65px" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br />
-									<div style="font-size: 12px;font-family:'Khmer MEF2';text-align: center;width:100%;"><?php echo $tr->translate("COMPANY_CUSTOMER"); ?></div>
+								<td width="38%" valign="top">								
 								</td>
-								<td width="20%" align="center" valign="top" style="">
-									<div style="font-size: 25px;font-family:'Khmer MEF2';">វិក្កយបត្រ</div>
-									<div  style="font-size: 22px;font-family:Times New Roman;font-weight: bold;">INVOICE</div>
+								<td width="30%" align="center" valign="top" style="line-height: 37px;">
+									<div style="font-size: 32px;font-family:'Khmer OS Muol Light'; color:red !important;">ចៅ ប៊ុនណា 73</div>
+									<div style="font-size: 23px;font-family:'Khmer OS Muol Light'; color:black;">សេវាកម្មបុណ្យសពតាំងពីឆ្នាំ 1982</div>
+									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:red !important;">周德福棺木店</div>
+									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:blue !important;"><i class="fa fa-facebook-square" style="font-size: 32px;"></i>: Chao Bunna 73 Funeral Service</div>
+									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';">INVOICE</div>
 								</td>
-								<td width="40%" valign="top">
-								</td>
+								<td width="28%" valign="top" align="center">
+									<img style="height:115px; width:150px; alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br />
+									<div style="font-size: 20px;font-family:'Khmer OS Muol Light';text-align: center;width:90%;">Tel: 012/015 737303</div>
+								</td>							
 							</tr>
-						</table>
-				    </td>
+						</table>                
+					</td>
 				</tr>
 				<style>
 				.bold{
@@ -132,11 +135,11 @@
 											<thead>
 												<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#f2f2f2 !important;font-weight:bold;">
 													<td style="border:1px solid #000;">លរ</td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">ឈ្មោះមុខទំនិញ</strong></td>
 													<td style="border:1px solid #000;"><strong style="color:#000;">លេខកូតទំនិញ</strong></td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">ចំនួន</strong></td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">តម្លៃរាយ</strong></td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">សរុប</strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;">ឈ្មោះ/名称</strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;">ចំនួន/数量</strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;">តំលៃ/价格</strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;">សរុប/总额</strong></td>
 												</tr>
 											</thead>
 											<tbody>
@@ -145,11 +148,11 @@
 												if(!empty($this->row_detail)){foreach($this->row_detail as $key => $item){ $index++;?>
 												<tr style="font-size:15px; text-align:center;font-weight:bold;">
 													<td style="border:1px solid #000;"><?php echo $key+1;?></td>
-													<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php echo $item['pro_name'];?> </strong></td>
-													<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php echo $item['item_code'];?> </strong></td>
+													<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['pro_name'];?> </strong></td>
+													<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['item_code'];?> </strong></td>
 													<td style="border:1px solid #000;"><strong style="color:#000;"><?php echo number_format($item['qty_order'],0); if(/*$item['is_service']==0 && */ $item['is_package']==0){echo " ".$item['measure_name'];}?></strong></td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo number_format($item['price'],2);?></strong></td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo number_format($item['sub_total'],2);?></strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['package_id']==0){if($item['price_riel']>0){echo number_format($item['price_riel'])." ៛";}else{echo "$ ".number_format($item['price'],3);}}?></strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['package_id']==0){echo "$ ".number_format($item['sub_total'],3);}?></strong></td>
 												</tr>
 												<?php } }
 												for($index;$index<15;$index++){
@@ -166,17 +169,17 @@
 												
 												<tr style=" font-size:15px; text-align:right;font-weight:bold;">
 													<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="4" valign="bottom" >- សូមពិនិត្យទំនិញអោយបានត្រឹមត្រូវ</td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">សរុប&nbsp;</strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;">សរុប/总额&nbsp;</strong></td>
 													<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['sub_total'],3)?></strong></td>
 												</tr>
 												<tr style=" font-size:15px; text-align:right;font-weight:bold;">
-													<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="4" valign="bottom">- ទំនិញដែលទិញហើយមិនអាចប្តូរវិញបានទេ</td>
-													<td style="border:1px solid #000;"><strong style=" color:#000;">បានបង់&nbsp;</strong></td>
+													<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="4" valign="bottom">- ប្រាក់ដែលបានបង់រួចហើយមិនអាចដកវិញបានទេ</td>
+													<td style="border:1px solid #000;"><strong style=" color:#000;">កក់ប្រាក់/定金&nbsp;</strong></td>
 													<td style="border:1px solid #000;"><strong style=" color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['paid'],3)?></strong></td>
 												</tr>
 												<tr style=" font-size:15px; text-align:right;font-weight:bold;">
 													<td style="border:1px solid #fff;border-right:1px solid #000" colspan="4"></td>
-													<td style="border:1px solid #000;"><strong style="color:#000;">នៅខ្វះ&nbsp;</strong></td>
+													<td style="border:1px solid #000;"><strong style="color:#000;">នៅខ្វះ/余额&nbsp;</strong></td>
 													<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['balance_after'],3)?></strong></td>
 												</tr>	
 												

@@ -82,7 +82,7 @@
 													តម្លៃលក់សរុប
 												</label>
 												<div class="col-md-8">
-													<input type="text" value="<?php echo $rsitem['selling_price'];?>"  readonly="readonly" class="form-control" name="total_cost" id="total_cost" />
+													<input type="text" value="<?php echo $rsitem['selling_price'];?>" class="form-control" name="total_cost" id="total_cost" />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -190,10 +190,10 @@ function initilize(){
 		template='<tr id="row_location_'+index+'">';
 		template+='<td>'+index+'</td>';
 		template+='<td>'+txt_br+'<input type="hidden" id="product_id'+index+'" name="product_id'+index+'" value="'+pro_id+'" </td>';
-		template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
-		template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
+		template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" class="validate[required,custom[number]] form-control"></td>'; 
+		template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" class="validate[required,custom[number]] form-control"></td>'; 
 		template+='<td><input readonly="readonly" type="text" id="total_'+index+'" name="total_'+index+'"  class="form-control"></td>'; 
-		template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="0" class="form-control"></td>';
+		template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" class="form-control"></td>';
 		template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
 		template+='</tr>';
 		$('#lbl_noproduct').append(template);
@@ -219,10 +219,10 @@ function addProductRow(){
 	template='<tr id="row_location_'+index+'">';
 	template+='<td>'+index+'</td>';
 	template+='<td>'+txt_br+'<input type="hidden" id="product_id'+index+'" name="product_id'+index+'" value="'+pro_id+'" </td>';
-	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
-	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" value="0" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="qty_'+index+'"  name="qty_'+index+'" value="1" class="validate[required,custom[number]] form-control"></td>'; 
+	template+='<td><input type="text" onkeyup="totalQty('+index+');return isNumberKey(event);" id="price_'+index+'" name="price_'+index+'" class="validate[required,custom[number]] form-control"></td>'; 
 	template+='<td><input readonly="readonly" type="text" id="total_'+index+'" name="total_'+index+'"  class="form-control"></td>'; 
-	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" value="0" class="form-control"></td>';
+	template+='<td><input type="text" id="note_'+index+'" name="note_'+index+'" class="form-control"></td>';
 	template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
 	template+='</tr>';
 	$('#lbl_noproduct').append(template);
@@ -243,6 +243,7 @@ function getProductPrice(index,product_id){
 		success: function(data){
 			rs = $.parseJSON(data);
 			$('#price_'+index).val(rs);
+			totalQty(index);
 		},
 		error:function(err){
 			alert("failed");
@@ -254,7 +255,7 @@ function totalQty(index){
 	qty=$("#qty_"+index).val();
 	price=$("#price_"+index).val();
 	total = qty*price;
-	$("#total_"+index).val(total);
+	$("#total_"+index).val(total.toFixed(3));
 	netTotal();
 }
 function netTotal(){//use
@@ -268,7 +269,7 @@ function netTotal(){//use
 	if(isNaN(netTotal)){
 		netTotal=0;
 	}
-	$('#total_cost').val(netTotal.toFixed(2));
+	$('#total_cost').val(netTotal.toFixed(3));
 }
 function deleteRecord(index) {
 	var identity = $('#identity').val();

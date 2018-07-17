@@ -61,9 +61,7 @@ class Mong_IndexController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addMong($data);
-					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/index/index');
-					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
-
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/mong/index/index');
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនត្រឹមត្រូវ",$err = $e->getMessage());
 			  }

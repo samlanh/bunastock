@@ -11,7 +11,7 @@
 	$url_category =  array($this->url(array('module'=>'product','controller'=>'category','action'=>'index'),null, true), "PRODUCT_CATEGORY");
 	$url_brand = array($this->url(array('module'=>'product','controller'=>'brand','action'=>'index'),null, true), "BRAND_NAME");
 	$url_curr =  array($this->url(array('module'=>'product','controller'=>'current-stock','action'=>'index'),null, true), "MENU_PRODUCT_CURRENT_STOCK_INDEX");
-	$url_adj =  array($this->url(array('module'=>'product','controller'=>'adjust','action'=>'add'),null, true), "ADJUST_STOCK");
+	$url_adj =  array($this->url(array('module'=>'product','controller'=>'adjust','action'=>'index'),null, true), "ADJUST_STOCK");
 	$url_transfer = array($this->url(array('module'=>'product','controller'=>'transfer','action'=>'index'),null, true), "MENU_PRODUCT_ADJUST_STOCK_TRANSFER_STOCK");
 	$url_location = array($this->url(array('module'=>'product','controller'=>'branch','action'=>'index'),null, true), "MENU_PRODUCT_INDEX_INDEX_LOCATION");
 	$url_other = array($this->url(array('module'=>'product','controller'=>'other','action'=>'index')), "MENU_OTHER");
@@ -109,11 +109,12 @@
 							<a href="<?php echo $this->url(array('module'=>'product','controller'=>'transferstock','action'=>'index'),null, true); ?>">
 							<i class="icon-arrow-right"></i>&nbsp;ផ្ទេរទំនិញ</a>
 						</li>
+						<?php /*?>
 						<li>
 							<a href="<?php echo $url_damagedstock[0]; ?>">
 							<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_damagedstock[1])?></a>
 						</li>
-						
+						<?php */?>
 	            		<li>
 	            			<a href="<?php echo $url_adj[0]; ?>">
 							    <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_adj[1])?>
@@ -365,20 +366,20 @@
 					</a>
 					<ul class="sub-menu">
 						<li>
-	            			<a href="<?php echo $url_user_list[0]; ?>">
-		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("អ្នកប្រើប្រាស់");?>
-		            		</a>
-	            		</li> 
-            		    <li>
 	            			<a href="<?php echo $url_location[0]; ?>">
 							    <i class="icon-arrow-right"></i>&nbsp; <?php echo $tr->translate("សាខា");?>
 		            		</a>
 	            		</li>
-	            		<li>
-	            			<a href="<?php echo $url_user_add[0]; ?>">
-		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("បន្ថែមអ្នកប្រើប្រាស់");?>
+						<li>
+	            			<a href="<?php echo $url_user_list[0]; ?>">
+		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("អ្នកប្រើប្រាស់");?>
 		            		</a>
-	            		</li> 
+	            		</li>
+	            		<li>
+	            			<a href="<?php echo $url_user_type[0]; ?>">
+		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("ប្រភេទអ្នកប្រើប្រាស់");?>
+		            		</a>
+	            		</li>
 	            		<li>
 	            			<a href="<?php echo $url_add_user_access[0]; ?>">
 		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("កំណត់សិទ្ធអ្នកប្រើប្រាស់");?>
@@ -387,11 +388,6 @@
 	            		<li>
 	            			<a href="<?php echo $url_user_acl_list[0]; ?>">
 		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("សិទ្ធទាំងអស់");?>
-		            		</a>
-	            		</li> 
-	            		<li>
-	            			<a href="<?php echo $url_user_type[0]; ?>">
-		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("ប្រភេទអ្នកប្រើប្រាស់");?>
 		            		</a>
 	            		</li> 
 	            		<li>

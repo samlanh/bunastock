@@ -41,8 +41,8 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		$this->view->search = $search;
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
-				'date_input'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('vendor_name'=>$link,'order_number'=>$link,'branch_name'=>$link,
+				'payment_type'=>$link));
 		
 		$formFilter = new Product_Form_FrmProduct();
 		$this->view->formFilter = $formFilter->productFilter();

@@ -157,6 +157,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 							'saleorder_id'=> $sale_id,
 							'pro_id'	  => $data['product_id'.$i],
 							
+							'is_package'	=> $data['is_package_'.$i],
+							'package_id'	=> $data['packageid_'.$i],
+							
 							'qty_unit'	  => $data['qty_'.$i],
 							'qty_detail'  => $data['qtydetail_'.$i],
 							'qty_order'	  => $data['qty_sold'.$i],
@@ -313,6 +316,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					$data_item= array(
 							'saleorder_id'=> $sale_id,
 							'pro_id'	  => $data['product_id'.$i],
+							
+							'is_package'	=> $data['is_package_'.$i],
+							'package_id'	=> $data['packageid_'.$i],
 							
 							'qty_unit'	  => $data['qty_'.$i],
 							'qty_detail'  => $data['qtydetail_'.$i],

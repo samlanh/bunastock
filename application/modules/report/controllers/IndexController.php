@@ -17,16 +17,15 @@ class report_indexController extends Zend_Controller_Action
     {
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
-    				'ad_search'=>'',
+    				'ad_search'	=>'',
     				'start_date'=>date("Y-m-d"),
-    				'end_date'=>date("Y-m-d"),
-    				'suppliyer_id'=>0,
-    				'branch_id'=>-1,
-    				'status_paid'=>-1,
-					'saleagent_id'=>-1
+    				'end_date'	=>date("Y-m-d"),
+    				'status'	=>-1,
+    				'branch'	=>'',
     		);
     	}
     	$this->view->rssearch = $data;
@@ -55,11 +54,11 @@ class report_indexController extends Zend_Controller_Action
     		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
     	}else{
     		$search = array(
-    				'txt_search'=>'',
+    				'ad_search'	=>'',
     				'start_date'=>date("Y-m-d"),
-    				'end_date'=>date("Y-m-d"),
+    				'end_date'	=>date("Y-m-d"),
     				'product_id'=>'',
-    				'branch'=>0,
+    				'branch'	=>0,
     		);
     	}
     	$this->view->rssearch=$search;
@@ -109,6 +108,7 @@ class report_indexController extends Zend_Controller_Action
     {
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
@@ -152,6 +152,7 @@ class report_indexController extends Zend_Controller_Action
     	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']	= date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(

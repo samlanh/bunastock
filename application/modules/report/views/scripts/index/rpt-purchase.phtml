@@ -1,6 +1,7 @@
 <?php 
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 	$brach_name =  $this->branch;
+	$formFilter = $this->form_salemong; 
 ?>
 <title><?php echo $tr->translate("RPT_PURCHASE");?></title>
 <div class="row">
@@ -28,18 +29,15 @@
 			</div>
             <div class="portlet-body form frmfilter">
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
-					<?php $formFilter = $this->form_salemong; ?>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
-						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('status');?></label>
 					
-					<div class="form-group" style="padding-top: 6px;">
-						<label class="control-label col-md-2">
-							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
-						</label>
-					</div>
+					<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
+					<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
+					<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+					<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+					<label class="control-label col-md-2"><?php echo $formFilter->getElement('status');?></label>
+					<label class="control-label col-md-1">
+						<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+					</label>
 					<div style="clear:both;"></div>	
 				</form> 
 			</div>	
@@ -105,8 +103,8 @@
 								<td><?php echo $tr->translate("ប្រាក់ត្រូវបង់");?></td>
 								<td><?php echo $tr->translate("ប្រាក់បានបង់");?></td>
 								<td><?php echo $tr->translate("ជំពាក់");?></td>
-								<td><?php echo $tr->translate("ស្ថានការ");?></td>
 						        <td><?php echo $tr->translate("អ្នកប្រើប្រាស់");?></td>
+						        <td><?php echo $tr->translate("ស្ថានភាព");?></td>
 						        <td><?php echo $tr->translate("ប្រវត្តិ");?></td>
 		               	 	</tr>
 		                <thead>
@@ -122,11 +120,11 @@
 						   <td><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["vendor_name"];?></a></td>
 						   <td align="center"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["order_number"];?></a></td>
 						   <td align="center">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_order"]));?></td>
-						   <td>&nbsp;<?php echo "$ ".number_format($rs["total_payment"],2);?></td>
-						   <td>&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?></td>
-						   <td>&nbsp;<?php echo "$ ".number_format($rs["balance"],2);?></td>
-						   <td>&nbsp;<?php echo $rs["purchase_status"];?></td>
-						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
+						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["total_payment"],2);?></td>
+						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?></td>
+						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["balance"],2);?></td>
+						   <td align="center">&nbsp;<?php echo $rs["user_name"];?></td>
+						   <td align="center">&nbsp;<?php echo $rs["status"];?></td>
 						   <td align="center"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/rpt-purchase-payment/id/".$rs["id"];?>">បង់ប្រាក់</a></td>
 						</tr>
 						   <?php 
@@ -139,15 +137,15 @@
 		            <br>
 		             <table border="1" align="center" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="50%" cellspacing="0">
 		                <tbody>
-			                <tr height="30px;" bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
+			                <tr height="30px;" bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
 			                    <td><strong><?php echo $tr->translate("ទឹកប្រាក់ទិញសរុប");?></strong></td>
 			                    <td><strong><?php echo $tr->translate("ប្រាក់បានបង់សរុប");?></strong></td>
 			                    <td><strong><?php echo $tr->translate("នៅខ្វះសរុប");?></strong></td>
 			                </tr>
 			                 <tr align="center" class="style" style=" line-height: 24px; font-size:11px;">
-			                    <td>&nbsp;<?php echo "$ ".number_format($d_netotal,2);?>&nbsp;</td>
-			                    <td>&nbsp;<?php echo "$ ".number_format($d_paid,2);?>&nbsp;</td>
-			                    <td>&nbsp;<?php echo "$ ".number_format($d_balance,2);?>&nbsp;</td>
+			                    <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($d_netotal,2);?>&nbsp;</td>
+			                    <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($d_paid,2);?>&nbsp;</td>
+			                    <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($d_balance,2);?>&nbsp;</td>
 			                 </tr>
 		               </tbody>
 		             </table>

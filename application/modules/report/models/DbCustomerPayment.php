@@ -17,7 +17,7 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 					m.invoice_no,
 					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = r.branch_id LIMIT 1) AS branch_name,
 					(SELECT fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.user_id)  AS user_name,
-					(select name_en from tb_view where type = 5 and key_code = r.status) as status
+					(select name_kh from tb_view where type = 5 and key_code = r.status) as status
 				FROM 
 					tb_receipt as r,
 					tb_mong as m,
@@ -50,7 +50,8 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 					r.paid,
 					r.balance,
 					r.remark,
-					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = r.user_id LIMIT 1 ) AS user_name
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = r.user_id LIMIT 1 ) AS user_name,
+					(select name_kh from tb_view where type = 5 and key_code = r.status) as status
 				FROM
 					tb_receipt AS r
 				where
@@ -99,7 +100,8 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 					r.paid,
 					r.balance,
 					r.remark,
-					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = r.user_id LIMIT 1 ) AS user_name
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = r.user_id LIMIT 1 ) AS user_name,
+					(select name_kh from tb_view where type = 5 and key_code = r.status) as status
 				FROM
 					tb_receipt AS r
 				where

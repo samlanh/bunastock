@@ -16,33 +16,35 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					total_payment,
 					paid,
 					balance,
-					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=1 LIMIT 1 ) As purchase_status,
-					(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=5 LIMIT 1),
+					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=5 LIMIT 1 ) As purchase_status,
+					(SELECT name_kh FROM `tb_view` WHERE key_code =tb_purchase_order.status AND type=5 LIMIT 1) as status,
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 ) AS user_name
 				FROM 
-					`tb_purchase_order`  
+					`tb_purchase_order`
 		
 			";
 	
 		$from_date =(empty($search['start_date']))? '1': " date_order >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " date_order <= '".$search['end_date']." 23:59:59'";
-		$where = " WHERE status=1 and ".$from_date." AND ".$to_date;
+		$where = " WHERE ".$from_date." AND ".$to_date;
 	
-		if(!empty($search['text_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " order_number LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=tb_purchase_order.vendor_id LIMIT 1 ) LIKE '%{$s_search}%'";
 			$s_where[] = " net_total LIKE '%{$s_search}%'";
 			$s_where[] = " paid LIKE '%{$s_search}%'";
 			$s_where[] = " balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-// 		if($search['suppliyer_id']>0){
-// 			$where .= " AND vendor_id = ".$search['suppliyer_id'];
-// 		}
-// 		if($search['branch_id']>0){
-// 			$where .= " AND branch_id =".$search['branch_id'];
-// 		}
+		
+		if($search['status']>-1){
+			$where .= " AND status = ".$search['status'];
+		}
+		if(!empty($search['branch'])){
+			$where .= " AND branch_id =".$search['branch'];
+		}
 	
 // 		if($search['status_paid']>0){
 // 			if($search['status_paid']==1){
@@ -110,6 +112,7 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					(SELECT address FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS address,
 					(SELECT name_en FROM `tb_view` WHERE key_code = purchase_status AND `type`=1 LIMIT 1) As purchase_status,
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = p.user_mod LIMIT 1 ) AS user_name,
+					(SELECT name_kh FROM `tb_view` WHERE key_code = p.status AND `type`=5 LIMIT 1) As status,
 					
 					po.qty_order,
 					po.price,
@@ -132,7 +135,6 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 				WHERE 
 					p.id=po.purchase_id 
 					AND it.id=po.pro_id
-					AND po.status=1  AND p.status=1 
 			
 			";
 		
@@ -140,9 +142,9 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 		$to_date = (empty($search['end_date']))? '1': " p.date_order <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		
-		if(!empty($search['txt_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['txt_search']));
+			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " it.item_name LIKE '%{$s_search}%'";
 			$s_where[] = " it.item_code LIKE '%{$s_search}%'";
 			$s_where[] = " it.barcode LIKE '%{$s_search}%'";
@@ -178,7 +180,8 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					v.payment_type,
 					v.total,
 					v.paid,
-					v.balance
+					v.balance,
+					(SELECT name_kh FROM `tb_view` WHERE key_code = v.status AND `type`=5 LIMIT 1) As status
 				FROM
 					`tb_purchase_order` AS p,
 					`tb_vendor_payment` AS v
@@ -201,7 +204,8 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					pp.total_payment,
 					pp.paid,
 					pp.balance,
-					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = pp.user_id LIMIT 1 ) AS user_name
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = pp.user_id LIMIT 1 ) AS user_name,
+					(SELECT name_kh FROM `tb_view` WHERE key_code = pp.status AND `type`=5 LIMIT 1) As status
 				FROM
 					`tb_sales_order` AS s,
 					`tb_partnerservice_payment` AS pp
@@ -224,7 +228,8 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 					mp.total_payment,
 					mp.paid,
 					mp.balance,
-					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = mp.user_id LIMIT 1 ) AS user_name
+					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = mp.user_id LIMIT 1 ) AS user_name,
+					(SELECT name_kh FROM `tb_view` WHERE key_code = mp.status AND `type`=5 LIMIT 1) As status
 				FROM
 					`tb_mong` AS m,
 					`tb_mong_constructor_payment` AS mp

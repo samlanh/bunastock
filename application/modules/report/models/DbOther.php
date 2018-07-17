@@ -145,6 +145,7 @@ function getAllDonors($search){
 					id,
 					invoice_no,
 					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
+					(SELECT phone FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_phone,
 						
 					(select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) as dead_id,
 					(select name_kh from tb_view where type=20 and key_code=m.construct_type LIMIT 1) as construct_type,
@@ -162,7 +163,8 @@ function getAllDonors($search){
 					'សែនឆ្លងម៉ុង',
 					other_note,
 					(SELECT fullname FROM tb_acl_user as u WHERE user_id=user_id LIMIT 1) AS user_name,
-					(SELECT name_en FROM tb_view WHERE type=5 AND key_code=status LIMIT 1) status
+					(SELECT name_kh FROM tb_view WHERE type=5 AND key_code=m.status LIMIT 1) status_name,
+					m.status
 				FROM
 					tb_mong as m
 				WHERE

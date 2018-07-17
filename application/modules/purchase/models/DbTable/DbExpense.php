@@ -18,7 +18,7 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 					note,
 					for_date,
 					(SELECT fullname FROM `tb_acl_user` WHERE user_id=tb_expense.user_id LIMIT 1) AS user_name,
-					(SELECT tb_view.name_en FROM `tb_view` WHERE tb_view.type=5 AND tb_view.key_code=tb_expense.status LIMIT 1) AS status,
+					(SELECT tb_view.name_kh FROM `tb_view` WHERE tb_view.type=5 AND tb_view.key_code=tb_expense.status LIMIT 1) AS status,
 					'បង្កាន់ដៃ'
 				FROM
 					tb_expense
@@ -38,14 +38,14 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 			$s_where[] = " note LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['branch_id']>-1){
+		if($search['branch_id']!=''){
 			$where.= " AND branch_id = ".$search['branch_id'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 	
 		$order=" order by id desc ";
-	
+// 		echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
@@ -55,9 +55,9 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 		$receipt = $db->getExpenseReceiptNumber(1);
 		
 		$arr = array(
-			'branch_id'		=>1,
+			'branch_id'		=>$this->getUserId(),
 			'expense_title'	=>$data['expense_title'],
-			'receipt'		=>$data['receipt'],
+			'receipt'		=>$receipt,
 			'total_amount'	=>$data['total_amount'],
 			'for_date'		=>date("Y-m-d",strtotime($data['for_date'])),
 			'note'			=>$data['note'],
@@ -65,7 +65,6 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 			'create_date'	=>date('Y-m-d H:i:s'),
 			'status'		=>1,
 			'user_id'		=>$this->getUserId(),
-			
 		);
 		$id = $this->insert($arr);
 
@@ -128,21 +127,21 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 		total_amount,`desc`,for_date,(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=status LIMIT 1) FROM tb_expense ";
 		
 		if (!empty($search['adv_search'])){
-				$s_where = array();
-				$s_search = trim(addslashes($search['adv_search']));
-				$s_where[] = " title LIKE '%{$s_search}%'";
-				$s_where[] = " total_amount LIKE '%{$s_search}%'";
-				$s_where[] = " invoice LIKE '%{$s_search}%'";
-				$where .=' AND ('.implode(' OR ',$s_where).')';
-			}
-			if($search['branch_id']>-1){
-				$where.= " AND branch_id = ".$search['branch_id'];
-			}
-			if($search['title']>-1){
-				$where.= " AND title = ".$search['title'];
-			}
-	       $order=" order by id desc ";
-			return $db->fetchAll($sql.$where.$order);
+			$s_where = array();
+			$s_search = trim(addslashes($search['adv_search']));
+			$s_where[] = " title LIKE '%{$s_search}%'";
+			$s_where[] = " total_amount LIKE '%{$s_search}%'";
+			$s_where[] = " invoice LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if($search['branch_id']>-1){
+			$where.= " AND branch_id = ".$search['branch_id'];
+		}
+		if($search['title']>-1){
+			$where.= " AND title = ".$search['title'];
+		}
+        $order=" order by id desc ";
+		return $db->fetchAll($sql.$where.$order);
 	}
 
 

@@ -124,51 +124,107 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		return $db->fetchAll($sql);
 	}
 	
-	function getAllAdjustStock($data){
+	function getAllAdjustStock($search){
 		$db = $this->getAdapter();
-		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$sql ="SELECT 
-				  a.* ,
-				  p.`item_name`,
-				  p.`barcode`,
-				  p.`item_code`,
-				  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id` = p.`brand_id`) AS brand ,
-				  (SELECT b.`name` FROM `tb_category` AS b WHERE b.`id` = p.`cate_id`) AS cat ,
-				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
-				  (SELECT s.`name` FROM `tb_sublocation` AS s WHERE s.id=a.`location_id` LIMIT 1) AS location,
-				  (SELECT u.`fullname` FROM `tb_acl_user` AS u WHERE u.`user_id`=a.`user_id` LIMIT 1) AS `username`,
-				   a.`date`
+				   adj.id,
+				  (SELECT sl.name FROM `tb_sublocation` AS sl WHERE sl.id=adj.`branch_id`) AS branch,
+				  code,
+				  note,
+				  create_date,
+				  (SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id=adj.`user_id`) AS `user`,
+				  (select name_kh from tb_view where type=5 and key_code = adj.status) as status
 				FROM
-				  `tb_product_adjust` AS a ,
-				  `tb_product` AS p
+				  `tb_product_adjust` AS adj  
 				WHERE 
-					a.`pro_id`=p.`id`";
-		$where = '';
+					1
+			";
+		$from_date =(empty($search['start_date']))? '1': " create_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " create_date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
 		
-		$from_date =(empty($data['start_date']))? '1': " a.date >= '".$data['start_date']." 00:00:00'";
-		$to_date = (empty($data['end_date']))? '1': " a.date <= '".$data['end_date']." 23:59:59'";
-		$where = " and ".$from_date." AND ".$to_date;
-		
-		if($data["ad_search"]!=""){
+ 		if($search["ad_search"]!=""){
+ 			$s_where=array();
+ 			$s_search = addslashes(trim($search['ad_search']));
+ 			$s_where[]= " code LIKE '%{$s_search}%'";
+ 			$s_where[]= " note LIKE '%{$s_search}%'";
+ 			$s_where[]= " (SELECT sl.name FROM `tb_sublocation` AS sl WHERE sl.id=adj.`branch_id`) LIKE '%{$s_search}%'";
+ 			$where.=' AND ('.implode(' OR ', $s_where).')';
+ 		}
+ 		if(!empty($search['branch'])){
+ 			$where .= " and branch_id = ".$search['branch'];
+ 		}
+		return $db->fetchAll($sql.$where);
+	}
+	
+	function getAllAdjustStockDetail($search){
+		$db = $this->getAdapter();
+		$sql ="SELECT
+					adj.id,
+					(SELECT sl.name FROM `tb_sublocation` AS sl WHERE sl.id=adj.`branch_id`) AS branch,
+					adj.code,
+					adj.note,
+					adj.create_date,
+					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id=adj.`user_id`) AS `user`,
+					(select name_kh from tb_view where type=5 and key_code = adj.status) as status,
+					adjd.*,
+					(select item_name from tb_product as p where p.id = adjd.pro_id) as pro_name,
+					(select item_code from tb_product as p where p.id = adjd.pro_id) as pro_code,
+					(select qty_perunit from tb_product as p where p.id = adjd.pro_id) as qty_perunit,
+					(select unit_label from tb_product as p where p.id = adjd.pro_id) as unit_label,
+					(select name from tb_measure as m where m.id = (select measure_id from tb_product as p where p.id = adjd.pro_id)) as measure_name
+				FROM
+					`tb_product_adjust` AS adj,
+					tb_product_adjust_detail as adjd
+				WHERE
+					adj.id = adjd.adj_id
+			";
+		$from_date =(empty($search['start_date']))? '1': " create_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " create_date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+	
+		if($search["ad_search"]!=""){
 			$s_where=array();
-			$s_search = addslashes(trim($data['ad_search']));
-			$s_where[]= " p.item_name LIKE '%{$s_search}%'";
-			$s_where[]= " p.barcode LIKE '%{$s_search}%'";
-			$s_where[]= " p.item_code LIKE '%{$s_search}%'";
+			$s_search = addslashes(trim($search['ad_search']));
+			$s_where[]= " adj.code LIKE '%{$s_search}%'";
+			$s_where[]= " adj.note LIKE '%{$s_search}%'";
+			$s_where[]= " (SELECT sl.name FROM `tb_sublocation` AS sl WHERE sl.id=adj.`branch_id`) LIKE '%{$s_search}%'";
 			$where.=' AND ('.implode(' OR ', $s_where).')';
 		}
-		
-		if($data["brand"]!=""){
-			$where.=' AND p.brand_id='.$data["brand"];
+		if(!empty($search['branch'])){
+			$where .= " and branch_id = ".$search['branch'];
 		}
-		if($data["category"]!=""){
-			$where.=' AND p.cate_id='.$data["category"];
+		if(!empty($search['pro_id'])){
+			$where .= " and adjd.pro_id = ".$search['pro_id'];
 		}
-		
-		$location = $db_globle->getAccessPermission('m.`location_id`');
-// 		echo $sql.$where.$location;
-		return $db->fetchAll($sql.$where.$location);
-			
+		return $db->fetchAll($sql.$where);
+	}
+	
+	function getAdjustStockById($id){
+		$db = $this->getAdapter();
+		$sql ="SELECT
+					adj.id,
+					(SELECT sl.name FROM `tb_sublocation` AS sl WHERE sl.id=adj.`branch_id`) AS branch,
+					adj.code,
+					adj.note,
+					adj.create_date,
+					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id=adj.`user_id`) AS `user`,
+					(select name_kh from tb_view where type=5 and key_code = adj.status) as status,
+					adjd.*,
+					(select item_name from tb_product as p where p.id = adjd.pro_id) as pro_name,
+					(select item_code from tb_product as p where p.id = adjd.pro_id) as pro_code,
+					(select qty_perunit from tb_product as p where p.id = adjd.pro_id) as qty_perunit,
+					(select unit_label from tb_product as p where p.id = adjd.pro_id) as unit_label,
+					(select name from tb_measure as m where m.id = (select measure_id from tb_product as p where p.id = adjd.pro_id)) as measure_name
+				FROM
+					`tb_product_adjust` AS adj,
+					tb_product_adjust_detail as adjd
+				WHERE
+					adj.id = adjd.adj_id
+					and adjd.adj_id = $id
+			";
+		//echo $sql;exit();
+		return $db->fetchAll($sql);
 	}
 	
 }

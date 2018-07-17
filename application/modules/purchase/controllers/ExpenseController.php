@@ -22,7 +22,7 @@ class Purchase_ExpenseController extends Zend_Controller_Action
     		else{
     			$formdata = array(
     					"adv_search"=>'',
-    					"branch_id"=>-1,
+    					"branch_id"=>"",
     					"status"=>-1,
     					'start_date'=> date('Y-m-d'),
     					'end_date'=>date('Y-m-d'),
