@@ -172,9 +172,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				$this->_name="tb_receipt";
 				$this->insert($arr_receipt);
 			}
-			
-			
-			
+
 			if(!empty($data['identity_sale'])){
 				$iden = explode(",", $data['identity_sale']);
 				foreach ($iden as $i){
@@ -256,6 +254,172 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		}
 	}
 	
+	public function editMong($data,$mong_id)
+	{
+//		print_r($data); exit();
+		try{
+			$db = $this->getAdapter();
+			$db->beginTransaction();
+				
+			$db_global = new Application_Model_DbTable_DbGlobal();
+			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
+			$receipt = $db_global->getReceiptNumber($this->getBranchId());
+			
+			$array=array(
+					'branch_id'   			=> $this->getBranchId(),
+					'customer_id'			=> $data['customer_id'],
+					'note'					=> $data['note'],
+					'date_clearpayment'		=> date("Y-m-d",strtotime($data['date_clearpayment'])),
+					'receiver_name'			=> $data['receiver_name'],
+					'invoice_no'			=> $invoice,
+					'sale_date'				=> date("Y-m-d",strtotime($data['sale_date'])),
+					'sale_agent'			=> $data['sale_agent'],
+					'comission'				=> $data['comission'],
+					'other_note'			=> $data['other_note'],
+					'sub_total'				=> $data['sub_total'],
+			//		'paid_before'			=> $data['paid_before'],
+					'paid'					=> $data['paid'],
+					'balance'				=> $data['balance'],
+					'balance_after'			=> $data['balance'],
+					'return_amount'			=> $data['return_amount'],
+						
+					'construct_type'		=> $data['construct_type'],
+					'mong_type'				=> $data['mong_type'],
+					'builder'				=> $data['builder'],
+					'mong_code'				=> $data['mong_code'],
+					'mong_number'			=> $data['mong_number'],
+					'mong_address'			=> $data['mong_address'],
+					'person_in_charge'		=> $data['person_in_charge'],
+					'mong_note'				=> $data['mong_note'],
+					'land_longitude'		=> $data['land_longitude'],
+					'land_width'			=> $data['land_width'],
+					'mong_longitude'		=> $data['mong_longitude'],
+					'mong_width'			=> $data['mong_width'],
+					'date_finish'			=> date("Y-m-d",strtotime($data['date_finish'])),
+					'date_sen'				=> date("Y-m-d",strtotime($data['date_sen'])),
+					'time_sen'				=> $data['time_sen'],
+					'date_chlong_mong'		=> date("Y-m-d",strtotime($data['date_chlong_mong'])),
+					'time_chlong_mong'		=> $data['time_chlong_mong'],
+			//		'photo'					=> $array_photo_name,
+						
+					'dead_id'				=> $data['dead_id'],
+						
+					'constructor'			=> $data['constructor'],
+					'constructor_price'		=> $data['constructor_price'],
+					'constructor_paid'		=> 0,
+					'constructor_balance'	=> $data['constructor_price'],
+					'total_construct_item'	=> $data['total_construct_item'],
+						
+					'user_id'			=> $this->getUserId(),
+					'status'			=> 1,
+					'create_date'		=> date("Y-m-d H:i:s"),
+			);
+			$where=" id = ".$data['id'];
+			$this->update($array, $where);
+				
+			if($data['paid']>0){
+				$arr_receipt = array(
+						"branch_id"   		=> $this->getBranchId(),
+						"invoice_id"    	=> $mong_id,
+						"customer_id"   	=> $data['customer_id'],
+						"payment_id"    	=> 1,//payment by cash/paypal/cheque
+						"receipt_no"    	=> $receipt,
+						"receipt_date"  	=> date("Y-m-d",strtotime($data['sale_date'])),
+						"date_input"    	=> date("Y-m-d"),
+						"begining_balance"	=> $data['sub_total'],
+						"total"         	=> $data['sub_total'],
+						"paid"          	=> $data['paid'],
+						"balance"       	=> $data['balance'],
+	
+						'receiver_name'		=> $data['receiver_name'],
+	
+						"remark" 			=> $data['other_note'],
+						"user_id"       	=> $this->getUserId(),
+						"status"        	=> 1,
+						"bank_name"     	=> '',
+						"cheque_number" 	=> '',
+						"type"        		=> 2, // from mong sale
+				);
+				$this->_name="tb_receipt";
+				$this->insert($arr_receipt);
+			}
+	
+			if(!empty($data['identity_sale'])){
+				$iden = explode(",", $data['identity_sale']);
+				foreach ($iden as $i){
+						
+					$_db = new Sales_Model_DbTable_Dbpos();
+					$is_service = $_db->getType($data['pro_'.$i]); //check if service not need update stock
+					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
+						$rs = $_db->getProductByProductId($data['pro_'.$i], $this->getBranchId());
+						if(!empty($rs)){
+							$this->_name='tb_prolocation';
+							$arr = array(
+									'qty'=>$rs['qty']-$data['qty_sold_'.$i]
+							);
+							$where=" id =".$rs['id'];
+							$this->update($arr, $where);
+						}
+					}
+						
+					$arr=array(
+							'mong_id'		=> $mong_id,
+							'pro_id'		=> $data['pro_'.$i],
+							'qty_unit'		=> $data['qtyunit_'.$i],
+							'qty_detail'	=> $data['qtydetail_'.$i],
+							'qty_order'		=> $data['qty_sold_'.$i],
+							'cost_price'	=> $data['cost_price_'.$i],
+							'price_riel'	=> $data['price_reil_'.$i],
+							'price'			=> $data['selling_price_'.$i],
+							'sub_total'		=> $data['sale_total_'.$i],
+					);
+					$this->_name="tb_mong_sale_item";
+					$this->insert($arr);
+				}
+			}
+				
+			if(!empty($data['identity'])){
+				$iden = explode(",", $data['identity']);
+				foreach ($iden as $i){
+					$arra=array(
+							'mong_id'		=> $mong_id,
+							'constructor'	=> $data['constructor'],
+							'item_id'		=> $data['item_'.$i],
+							'item_price'	=> $data['item_price_'.$i],
+							'item_qty'		=> $data['item_qty_'.$i],
+							'item_total'	=> $data['item_total_'.$i],
+					);
+					$this->_name="tb_mong_construct_item";
+					$this->insert($arra);
+				}
+			}
+				
+			if($data['constructor_price']>0){
+				$arr = array(
+						"branch_id"   		=> $this->getBranchId(),
+						"mong_id"    		=> $mong_id,
+						"date_payment"  	=> date("Y-m-d",strtotime($data['sale_date'])),
+						"payment_type"    	=> "Cash",
+	
+						"total_payment"     => $data['constructor_price'],
+						"paid"          	=> 0,
+						"balance"       	=> $data['constructor_price'],
+	
+						"create_date"  		=> date("Y-m-d H:i:s"),
+						"user_id"       	=> $this->getUserId(),
+						"status"        	=> 1,
+				);
+				$this->_name="tb_mong_constructor_payment";
+				$this->insert($arr);
+			}
+				
+			$db->commit();
+		}catch(Exception $e){
+			$db->rollBack();
+			echo $e->getMessage();
+		}
+	}
+	
 	public function editConstructor($data,$id)
 	{
 		$db=$this->getAdapter();
@@ -274,7 +438,42 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$this->update($array, $where);
 	}
 	
+	function getMongDetailById($id){
+		$sql=" SELECT
+					si.*,
+					p.item_name AS pro_name,
+					p.item_code,
+					p.is_service,
+					p.is_package,
+					(SELECT NAME FROM tb_measure WHERE tb_measure.id = p.measure_id) AS measure_name
+				FROM
+					tb_mong_sale_item AS si,
+					tb_product AS p
+				WHERE
+					p.id = si.pro_id
+					AND si.mong_id = $id
+				";
+			return $this->getAdapter()->fetchAll($sql);
+	}
+	function getItemCost($id){
+		$sql="SELECT  
+					si.*,
+					p.title AS name_s			
+				FROM tb_mong_construct_item AS si,
+				     tb_constructor_item  AS p
+				 WHERE 
+					p.id = si.item_id
+					AND si.mong_id = $id
+				";
+			return $this->getAdapter()->fetchAll($sql);
+	}
 	
+	function getMongAll($id){
+		$db=$this->getAdapter();
+		$sql="select * from tb_mong where id = $id";
+		return $db->fetchRow($sql);
+	}
+		
 	function getGoodtimeById($id){
 		$db=$this->getAdapter();
 		$sql="select * from tb_mong where id = $id";

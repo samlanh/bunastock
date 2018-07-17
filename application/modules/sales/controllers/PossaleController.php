@@ -106,7 +106,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 				}
 				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/index/index');
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('Failed');
+				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
 				echo $e->getMessage();
 			}
 		}

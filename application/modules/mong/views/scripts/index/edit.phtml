@@ -58,7 +58,7 @@
 															<select class="form-control select2me" id="customer_id" name="customer_id" onChange="getPopupCustomer();">
 																<option value="0">អតិថិជនទូទៅ</option>
 																<option value="-1">បន្ថែមអតិថិជន</option>
-																<?php if(!empty($this->rscustomer)){foreach($this->rscustomer as $rs){?>
+																<?php if(!empty($this->customer_id)){foreach($this->customer_id as $rs){?>
 																	<option value="<?php echo $rs['id'];?>"><?php echo $rs['name']." - ".$rs['phone'];?></option>
 																<?php }}?>
 															</select>
@@ -79,7 +79,7 @@
 														<div class="col-md-8">
 															<div class="input-icon right">
 																<i class="fa fa-calendar"></i>
-																<input type="text" class="form-control date-picker" name="date_clearpayment" id="date_clearpayment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+																<input type="text" class="form-control date-picker" name="date_clearpayment" id="date_clearpayment" value="<?php echo date("d-m-Y")?>" data-date-format="yyyy-mm-dd" />
 															</div>
 														</div>
 													</div>
@@ -89,10 +89,10 @@
 														</label>
 														<div class="col-md-8">
 															<select class="form-control select2me" id="receiver_name" name="receiver_name" onchange="getPopupReceiver()" >
-																<option value="">ជ្រើសរើសអ្នកទទួលប្រាក់</option>
+																<option value="0">ជ្រើសរើសអ្នកទទួលប្រាក់</option>
 																<option value="-1">បន្ថែមថ្មី</option>
 																<?php if(!empty($this->receiver_name)){foreach($this->receiver_name as $rs){?>
-																	<option value="<?php echo $rs['name'];?>"><?php echo $rs['name'];?></option>
+																	<option value="<?php echo $rs['name'];?>" ><?php echo $rs['name'];?></option>
 																<?php }}?>
 															</select>
 														</div>
@@ -115,7 +115,7 @@
 														<div class="col-md-8">
 															<div class="input-icon right">
 																<i class="fa fa-calendar"></i>
-																<input type="text" class="form-control date-picker" name="sale_date" id="sale_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+																<input type="text" class="form-control date-picker" name="sale_date" id="sale_date" value="<?php echo date("d-m-Y")?>" data-date-format="yyyy-mm-dd" />
 															</div>
 														</div>
 													</div>
@@ -138,7 +138,7 @@
 															កំរៃជើងសា
 														</label>
 														<div class="col-md-8">
-															<input type="text" class="form-control validate[required,custom[number]]" name="comission" id="comission" value="0" />
+															<input type="text" class="form-control validate[required,custom[number]]" name="" id="comission" value="0" />
 														</div>
 													</div>
 													
@@ -385,7 +385,7 @@
 												<div class="col-md-8 right">
 													<div class="input-icon right">
 														<i class="fa fa-calendar"></i>
-														<input type="text" class="form-control date-picker" name="date_finish" id="date_finish" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+														<input type="text" class="form-control date-picker" name="date_finish" id="date_finish" value="<?php echo date("d-m-Y")?>" data-date-format="yyyy-mm-dd" />
 													</div>
 												</div>
 											</div>
@@ -397,7 +397,7 @@
 												<div class="col-md-8 right">
 													<div class="input-icon right">
 														<i class="fa fa-calendar"></i>
-														<input type="text" class="form-control date-picker" name="date_sen" id="date_sen" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+														<input type="text" class="form-control date-picker" name="date_sen" id="date_sen" value="<?php echo date("d-m-Y")?>" data-date-format="yyyy-mm-dd" />
 													</div>
 												</div>
 											</div>
@@ -417,7 +417,7 @@
 												<div class="col-md-8 right">
 													<div class="input-icon right">
 														<i class="fa fa-calendar"></i>
-														<input type="text" class="form-control date-picker" name="date_chlong_mong" id="date_chlong_mong" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+														<input type="text" class="form-control date-picker" name="date_chlong_mong" id="date_chlong_mong" value="<?php echo date("d-m-Y")?>" data-date-format="yyyy-mm-dd" />
 													</div>
 												</div>
 											</div>
@@ -939,8 +939,38 @@
 			});
 		}
 	}
+	function initializeConstructItem(){
+		index=0;
+		alert(1);
+		<?php if(!empty($this->row_price)){foreach ($this->row_price as $rs){?>
+			var item_names = "<?php echo $rs['name_s']?>";
+			var construct_item_id = "<?php echo $rs['item_id']?>";
+			
+			if(construct_item_id>0){
+				index++;
+				template='<tr align="center" id="row_construct_item_'+index+'">';
+				template+='<td>'+index+'</td>';
+				template+='<td>'+item_names+'<input type="hidden" id="item_'+index+'" name="item_'+index+'" value="'+construct_item_id+'" </td>';
+				template+='<td><input style="text-align:center;" type="text" id="item_price_'+index+'" name="item_price_'+index+'" readonly value="" class="form-control"></td>';
+				template+='<td><input style="text-align:center;" type="text" id="item_qty_'+index+'" name="item_qty_'+index+'" onkeyup="calculateTotal('+index+')" value="" class="form-control"></td>';
+				template+='<td><input style="text-align:center;" type="text" id="item_total_'+index+'" name="item_total_'+index+'" readonly value="" class="form-control"></td>';
+				template+='<td><button type="button" onClick="deleteRecord('+index+')" name="delete" class="btn default red">លុប</button></td>';
+				template+='</tr>';
+				$('#lbl_construct_item').append(template);
+				if($('#identity').val()!="") {
+					var identity = $('#identity').val();
+					$('#identity').val(identity+','+index);
+				} else {$('#identity').val(index);}
 
-
+				
+				$("#item_price_"+index).val("<?php echo $rs['item_price'];?>");
+				$("#item_qty_"+index).val("<?php echo $rs['item_qty'];?>");
+				$("#item_total_"+index).val("<?php echo $rs['item_total'];?>");
+			}
+			
+		
+		<?php }}?>		
+	}
 	index=0;
 	function addConstructItem(){
 		var construct_item = $("#construct_item");
@@ -1041,10 +1071,9 @@
 					data = $.parseJSON(data);
 					if(data){
 						if(data.is_package==1){// product package
-							addProductRow(product_id,txt_product_name,1,1,0);
 							getPackageProduct(product_id);
 						}else{
-							addProductRow(product_id,txt_product_name,1,0,0);
+							addProductRow(product_id,txt_product_name,1);
 							// if(data.is_service==1){
 								// $("#service_id").val(product_id).select2();
 								// addServicePartner(1);
@@ -1069,7 +1098,7 @@
 				data = $.parseJSON(data);
 				if(data){
 					for(i=0;i<data.length;i++){
-						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty'],0,product_id);
+						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty']);
 					}
 				}
 			},
@@ -1081,20 +1110,64 @@
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
+	function initializeProduct(){
+		index_sale=0;
+		<?php if(!empty($this->row_detail)){foreach ($this->row_detail as $rs){?>
+			product_name = "<?php echo $rs['pro_name']." - ".$rs['item_code']?>";
+			product_id = "<?php echo $rs['pro_id']?>";
+			if(product_id>0){
+				index_sale++;
+				template='<tr style="white-space:nowrap;" align="center" id="row'+index_sale+'">';
+				template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
+				template+='<td>&nbsp;&nbsp;&nbsp;'+product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
+				template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "></td>';
+				template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"></td>';
+				template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
+				template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="" readonly class="form-control"></td>';
+				template+='<td style="min-width:50px"><input style="text-align:center;" type="text" onkeyup="convertToDollar('+index_sale+');" name="price_reil_'+index_sale+'" id="price_reil_'+index_sale+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+				template+='<td><input style="text-align:center;" type="text" id="selling_price_'+index_sale+'" name="selling_price_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input style="text-align:center;" type="hidden" id="cost_price_'+index_sale+'" name="cost_price_'+index_sale+'" readonly class="form-control"></td>';
+				template+='<td><input style="text-align:center;" type="text" id="sale_total_'+index_sale+'" name="sale_total_'+index_sale+'" readonly class="form-control"></td>';
+				template+='<td><button type="button" onClick="deleteSaleRecord('+index_sale+')" name="deleteSale" class="btn default red">លុប</button></td>';
+				template+='</tr>';				
+				$('#lbl_product_item').append(template);
+
+				if($("#identity_sale").val()!="") {
+					var identity = $("#identity_sale").val();
+					$("#identity_sale").val(identity+','+index_sale);
+				}
+				 else {$("#identity_sale").val(index_sale);}
+				 				
+				getProductinfo(index_sale,product_id,"<?php echo $rs['price'];?>");
+				
+				//$("#current_qty_"+index_sale).val("<?php echo $rs['qty_unit'];?>");
+				$("#qtyunit_"+index_sale).val("<?php echo $rs['qty_unit'];?>");
+				$("#qtydetail_"+index_sale).val("<?php echo $rs['qty_detail'];?>");
+				$("#qty_sold_"+index_sale).val("<?php echo $rs['qty_order'];?>");
+				$("#cost_price_"+index_sale).val("<?php echo $rs['cost_price'];?>");
+				$("#price_reil_"+index_sale).val("<?php echo $rs['price_riel'];?>");
+				$("#selling_price_"+index_sale).val("<?php echo $rs['price'];?>");
+				$("#sub_total_"+index_sale).val("<?php echo $rs['sub_total'];?>");
+			}
+			
+		
+		<?php }}?>		
+	}
+
+	
 	index_sale=0;
-	function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,package_id=0){
+	function addProductRow(product_id=null,txt_product_name=null,qty=1){
 		if(product_id==null){
 			var product_name = $("#product_id");
 			var txt_product_name = $("option:selected",product_name).text();
 			var product_id = $("#product_id").val();
 		}
-		if(product_id>0){
+		if(product_id>0)
 			index_sale++;
 			template='<tr style="white-space:nowrap;" align="center" id="row'+index_sale+'">';
 			template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
 			template+='<td>&nbsp;&nbsp;&nbsp;'+txt_product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
-			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" name="is_package_'+index_sale+'" id="is_package_'+index_sale+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+index_sale+'" id="packageid_'+index_sale+'" value="'+package_id+'" class="form-control" /></td>';
-			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
+			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "></td>';
+			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="'+qty+'" readonly class="form-control"></td>';
 			template+='<td style="min-width:50px"><input style="text-align:center;" type="text" onkeyup="convertToDollar('+index_sale+');" name="price_reil_'+index_sale+'" id="price_reil_'+index_sale+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
@@ -1109,11 +1182,11 @@
 				var identity = $("#identity_sale").val();
 				$("#identity_sale").val(identity+','+index_sale);
 			} else {$("#identity_sale").val(index_sale);}
-			getProductinfo(index_sale,product_id,package_id);
+			
+			getProductinfo(index_sale,product_id);
 			
 			//calCualteSalePrice(index_sale);
-			
-		}
+					
 	}
 	
 	function convertToDollar(index){
@@ -1137,7 +1210,7 @@
 		netTotal();
 	}
 
-	function getProductinfo(index_sale,product_id,package_id=0){
+	function getProductinfo(index_sale,product_id,old_price=0){
 		if(product_id>0){
 			branch_id = $('#branch').val();
 			$.ajax({
@@ -1151,15 +1224,12 @@
 						$('#measur_name_'+index_sale).val(data.measue_name);
 						$('#unit_label_'+index_sale).val(data.unit_label);
 
-						if(package_id>0){
-							$('#selling_price_'+index_sale).prop('readonly', true);
-							$('#price_reil_'+index_sale).prop('readonly', true);
-						}else{
+						if(old_price==0){
 							$('#cost_price_'+index_sale).val(data.cost_price);
 							$('#price_reil_'+index_sale).val(data.selling_price_khmer);
 							$('#selling_price_'+index_sale).val(data.selling_price);
 						}
-						
+
 						qty = data.qty;
 						if(qty==null){qty=0;}
 						qtyall_detail = qty*(data.qty_perunit);//eg;qty 1.5 and 1unit =24cans; =>1.5*24 =36cans.
@@ -1387,8 +1457,50 @@ function isNumberKey(evt)
 		return true;
 	}
 }
-</script>
 
+
+$(document).ready(function() {
+	  setValue();
+	  initializeProduct();
+	  initializeConstructItem();
+	  getDeadPersonDetail();
+	  getConstructorDetail();
+	});
+
+	function setValue(){
+		$('#customer_id').val('<?php echo $this->row['customer_id']?>');
+		$('#note').val('<?php echo $this->row['note']?>');
+		$('#date_clearpayment').val('<?php echo $this->row['date_clearpayment']?>');
+		$('#receiver_name').val('<?php echo $this->row['receiver_name']?>');
+		$('#sale_date').val('<?php echo $this->row['sale_date']?>');
+		$('#comission').val('<?php echo $this->row['comission']?>');
+		$('#other_note').val('<?php echo $this->row['other_note']?>');
+		$('#sale_agent').val('<?php echo $this->row['sale_agent']?>');
+		$('#construct_type').val('<?php echo $this->row['construct_type']?>');
+		$('#mong_type').val('<?php echo $this->row['mong_type']?>');
+		$('#builder').val('<?php echo $this->row['builder']?>');
+		$('#mong_code').val('<?php echo $this->row['mong_code']?>');
+		$('#mong_number').val('<?php echo $this->row['mong_number']?>');
+		$('#mong_address').val('<?php echo $this->row['mong_address']?>');
+		$('#person_in_charge').val('<?php echo $this->row['person_in_charge']?>');
+		$('#mong_note').val('<?php echo $this->row['mong_note']?>');
+		$('#land_longitude').val('<?php echo $this->row['land_longitude']?>');
+		$('#land_width').val('<?php echo $this->row['land_width']?>');
+		$('#mong_longitude').val('<?php echo $this->row['mong_longitude']?>');
+		$('#mong_width').val('<?php echo $this->row['mong_width']?>');
+		$('#date_finish').val('<?php echo $this->row['date_finish']?>');
+		$('#date_sen').val('<?php echo $this->row['date_sen']?>');
+		$('#time_sen').val('<?php echo $this->row['time_sen']?>');
+		$('#date_chlong_mong').val('<?php echo $this->row['date_chlong_mong']?>');
+		$('#time_chlong_mong').val('<?php echo $this->row['time_chlong_mong']?>');
+		$('#dead_id').val('<?php echo $this->row['dead_id']?>');
+		$('#constructor').val('<?php echo $this->row['constructor']?>');
+		$('#constructor_price').val('<?php echo $this->row['constructor_price']?>');
+		$('#constructor').val('<?php echo $this->row['constructor']?>');
+	}
+	
+</script>	
+	
 <?php $form = $this->form_customer; ?>
 <div id="customerpopup" class="modal fade" tabindex="-1" data-width="1200">
        <div class="modal-dialog">

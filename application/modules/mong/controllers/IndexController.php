@@ -103,45 +103,57 @@ class Mong_IndexController extends Zend_Controller_Action
 	}
 	public function editAction()
 	{
-		$id = $this->getRequest()->getParam("id"); 
+		$id = ($this->getRequest()->getParam('id'));
 		$db = new Mong_Model_DbTable_DbIndex();
+		if($this->getRequest()->isPost()){
+			$data["id"] = $id;
+			try{
+				$data = $this->getRequest()->getPost();
+				$db->editMong($data,$id);
+					Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/index/index');
+					Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
+			  }catch (Exception $e){
+			  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
+			  }
+		}
+		$this->view->row = $db->getMongAll($id);
+		$this->view->row_detail = $db->getMongDetailById($id);
+		$this->view->row_price = $db->getItemCost($id);
+	 //	print_r($this->view->row_price); exit();
 		
-// 		if($this->getRequest()->isPost()){ 
-// 				try{
-// 					$post = $this->getRequest()->getPost();
-// 					$post["id"] = $id;
-// 					$db->edit($post);
-// 					if(isset($post["save_close"]))
-// 					{
-// 						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/index');
-// 					}
-// 				  }catch (Exception $e){
-// 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-// 				  }
-// 		}
-// 		$this->view->rs_location = $db->getProductLocation($id);
+		$this->view->branch_id = $db->getBranchId();
 		
 		$this->view->mong_type = $db->getMongType();
 		$this->view->person_in_charge = $db->getPersonInCharge();
-		$this->view->all_dead = $db->getDeadPerson();
+		$this->view->all_dead = $db->getDeadPerson();		
 		$this->view->constructor = $db->getConstructor();
 		$this->view->constructor_item = $db->getConstructorItem();
 		
-		$_db=new Sales_Model_DbTable_DbProgram();
-		$khmer_year = $_db->getAllKhmerYear();
-		$this->view->khmer_year = $khmer_year;
+		$_db=new Sales_Model_DbTable_DbProgram();	
+		$this->view->khmer_year = $_db->getAllKhmerYear();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->rsproduct = $db->getAllProductName(2);
 		$this->view->rsservice = $db->getAllProductName(1);
-		$this->view->rscustomer = $db->getAllCustomerName();
+		$this->view->customer_id = $db->getAllCustomerName();
+		$this->view->category = $db->getAllProductCategory();
+		
+		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getInvoiceNumber(1);
 		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
-
+		
+		$form = new Sales_Form_FrmCustomer(null);
+		$formpopup = $form->Formcustomer(null);
+		Application_Model_Decorator::removeAllDecorator($formpopup);
+		$this->view->form_customer = $formpopup;
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->exchange_rate = $db->getExchangeRate();
 	}
+	
 	public function goodtimeAction()
 	{
 		$id = $this->getRequest()->getParam("id");

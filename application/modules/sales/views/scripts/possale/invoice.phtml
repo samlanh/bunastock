@@ -4,7 +4,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>វិក្កយបត្រលក់</title>
-<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 1px; margin-bottom:30px; ">
+<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 1px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 31cm; ">
 
 	<table class="print" cellspacing="0" cellpadding="0" style="width:98%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top:0 auto;white-space:nowrap;">
 		<tbody>
@@ -116,7 +116,7 @@
 								<td colspan="6" valign="top">
 									<table class="tablesorter" align="center" style=" width: 100%; padding: 0px; margin-top: 3px !important; border-collapse: collapse; border: 1px solid #000; font-size:11px;font-family:Khmer OS Battambang !important;  " id="table">
 										<thead>
-											<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#f2f2f2 !important;font-weight:bold;">
+											<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center; background:#b0bdfd !important;font-weight:bold;">
 												<td style="border:1px solid #000;">លរ</td>
 												<td style="border:1px solid #000;"><strong style="color:#000;">លេខកូតទំនិញ</strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;">ឈ្មោះ/名称</strong></td>
@@ -185,12 +185,13 @@
 							</tr>
 						</tbody>
 					</table>
+					
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-    <div style="text-align: center;margin: 0 auto;"> 
+    <div style="padding-left:15%; margin: 0 auto;"> 
     	<lable class="col-md-3" style=""></lable>
     	<div class="col-md-2">
 			<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
