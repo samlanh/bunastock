@@ -4,7 +4,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>វិក្កយបត្រលក់ម៉ុង</title>
-<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 0px; margin-bottom:30px; ">
+<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 0px; margin-bottom:30px;">
 	<style>
 		.hearder_table{height:25px !important;}
 		.defaulheight{line-height: 22px !important;}
@@ -13,31 +13,30 @@
 		    display: table-footer-group;
 		}
 		footer {
-				  font-size: 9px;
-				  color: black !important;
+				 font-size: 9px;
+				 color: black !important;
 				 text-align:center;
 				}
-				
 				@page {
 				  size: A4;
-				  margin: 11mm 17mm 17mm 17mm;				
-					
+				  margin: 11mm 17mm 17mm 17mm;									
 				}
-				
 				@media print {
 				  footer {
 				    position: fixed;
-				    bottom: 0;
-				  	text-align:center; 
+  				    bottom: 0;
 				  	padding-left:16%; 
-				  	color: red !important;
-				  }				
+				  	margin-bottom: -12px;
+				  }	
+				  .content-block, p {
+				    page-break-inside: avoid;
+				  }			
 				  html, body {
 				    width: 210mm;
 				    height: 297mm;
 				  }
 				}
-		#pageFooter:after {
+			#pageFooter:after {
 		    counter-increment: page;
 		    content:"Page " counter(page);
 		    left: 0; 
@@ -72,31 +71,7 @@
 							</tr>
 						</table>                
 					</td>
-				</tr>
-				<style>
-				.bold{
-					font-weight:bold;
-					}
-				.tablesorter td{font-family:'khmer os battambang' !important;}
-				.one{line-height: 15px;font-weight: bold;font-size: 16px;}
-				table { page-break-inside:auto }
-				  tr{ page-break-inside:avoid; page-break-after:auto; }
-				#header {
-				  display: table-header-group;
-				  page-break-inside:avoid; page-break-after:auto;
-				}
-				#footer {
-				  display: table-footer-group;
-				}
-				@page {
-				       @bottom-left {
-				            content: counter(page) "/" counter(pages);
-				        }
-				     }
-				@media print {
-				    footer {page-break-after: always;}
-				}
-				</style>			
+				</tr>			
 				<tr height="80px">
 					<td colspan="6" width="60%" valign="top">
 						<table width="100%" style=" ;font-size: 16px;border: 1px solid #000;">

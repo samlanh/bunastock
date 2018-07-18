@@ -256,7 +256,6 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	
 	public function editMong($data,$mong_id)
 	{
-		
 		try{
 			$db = $this->getAdapter();
 			$db->beginTransaction();				

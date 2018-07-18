@@ -965,8 +965,6 @@
 				$("#item_qty_"+index).val("<?php echo $rs['item_qty'];?>");
 				$("#item_total_"+index).val("<?php echo $rs['item_total'];?>");
 			}
-			
-		
 		<?php }}?>		
 	}
 	index=0;
@@ -1150,8 +1148,6 @@
 		
 		<?php }}?>		
 	}
-
-	
 	index_sale=0;
 	function addProductRow(product_id=null,txt_product_name=null,qty=1){
 		if(product_id==null){
@@ -1183,8 +1179,7 @@
 			
 			getProductinfo(index_sale,product_id);
 			
-			//calCualteSalePrice(index_sale);
-					
+			//calCualteSalePrice(index_sale);				
 	}
 	
 	function convertToDollar(index){
