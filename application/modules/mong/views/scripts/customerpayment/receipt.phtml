@@ -13,6 +13,31 @@
 		#pageFooter {
 		    display: table-footer-group;
 		}
+		footer {
+				  font-size: 9px;
+				  color: black !important;
+				 text-align:center;
+				}
+				
+				@page {
+				  size: A4;
+				  margin: 11mm 17mm 17mm 17mm;				
+					
+				}
+				
+				@media print {
+				  footer {
+				    position: fixed;
+				    bottom: 0;
+				  	text-align:center; 
+				  	padding-left:16%; 
+				  	color: red !important;
+				  }				
+				  html, body {
+				    width: 210mm;
+				    height: 297mm;
+				  }
+				}
 		#pageFooter:after {
 		    counter-increment: page;
 		    content:"Page " counter(page);
@@ -32,12 +57,12 @@
 				<table width="100%" style="margin-bottom: 0px;"   >
 					<tr>
 						<td width="35%" valign="top" align="center">
-							<img style="height:65px; width:80px; alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br />
-							<div style="font-size: 12px;font-family:'Khmer OS Muol Light';text-align: center;width:100%;"><?php echo $tr->translate("COMPANY_CUSTOMER"); ?></div>
+							<img style="height:85px; width:120px; alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br />
+							
 						</td>
 						<td width="30%" align="center" valign="top" style="">
-							<div style="font-size: 20px;font-family:'Khmer OS Muol Light';">បង្កាន់ដៃបង់ប្រាក់</div>
-							<div style="font-size: 18px;font-family:Times New Roamn;font-weight: bold;">OFFICIAL RECEIPT</div>
+							<div style="font-size: 25px;font-family:'Khmer OS Muol Light'; color:red !important;">បង្កាន់ដៃបង់ប្រាក់</div>
+							<div style="font-size: 20px;font-family:Times New Roamn;font-weight: bold; color:red !important;">OFFICIAL RECEIPT</div>
 						</td>
 						<td width="35%" valign="top">
 							
@@ -135,7 +160,7 @@
 						<td colspan="6" valign="top">
 							<table class="tablesorter" align="center" style=" width: 100%; padding: 0px; margin-top: 3px !important; border-collapse: collapse; border: 1px solid #000; font-size:14px;font-family:Khmer OS Battambang !important;  " id="table">
 								<thead>
-									<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#f2f2f2 !important;font-weight:bold;">
+									<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#b0bdfd !important;font-weight:bold;">
 										<td style="border:1px solid #000;">លរ</td>
 										<td style="border:1px solid #000;"><strong style="color:#000;">ពណ៌នា</strong></td>
 										<td style="border:1px solid #000;"><strong style="color:#000;">ប្រាក់សរុប</strong></td>
@@ -204,6 +229,9 @@
 						</td>
 					</tr>
 				</table>
+				<footer style="padding-top: 150px;">
+					 <p><?php echo $tr->translate("FOOTER_BUNA");?></p>						
+				</footer>
 			</td>
 		</tr>
 	</table>

@@ -1,6 +1,7 @@
 
 <?php 
 	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$row = $this->row
@@ -52,11 +53,9 @@
 									</td>
 								</tr>
 								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
-									<td>Tel: 012/ 015 73 73 03</td>
+									<td><?php echo $tr->translate("PHONE_BUNA");?></td>
 								</tr>
-								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
-									<td>&nbsp;</td>
-								</tr>
+
 							</table>
 						</td>
 						<td width="20%" ></td>
@@ -82,8 +81,8 @@
   								<?php echo $this->row['donor_phone']?>
   							</td>
   						</tr>
-		  				<tr align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#22B424 !important;">
-	  					<td>
+		  				<tr>
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#22B424 !important;">
 	  						<?php echo $this->row['notes']?>
 						</td>
 	  				</tr>
@@ -93,7 +92,7 @@
 	  					</td>
 	  				</tr>
 	  				<tr>
-	  					<td align="left" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red !important;">
+	  					<td align="left" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#22B424 !important;">
 	  						ព័ត៌មានមានសព៖
 	  					</td>
 	  				</tr>
@@ -105,12 +104,12 @@
 	  					</td>
 	  				</tr>
 	  				<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#6A5ACD !important;">
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#black !important;">
 	  						 លំនៅដ្ឋានសព្វថ្ងៃ ៖ <?php echo $this->row['dead_address']?>
 	  					</td>
 	  				</tr>
 	  				<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#6A5ACD !important;">
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#black !important;">
 	  						 <?php echo date("d",strtotime($row['date_jenh']));?> ខែ <?php echo date("m",strtotime($row['date_jenh']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_jenh']));?>
 	  					</td>
 	  				</tr>

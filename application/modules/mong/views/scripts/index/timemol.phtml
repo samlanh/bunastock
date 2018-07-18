@@ -24,8 +24,8 @@
 	    		padding: 4px;
 			}
 			#borderimg1 { 
-			    border: 12px solid transparent;
-			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
+			    border: 90px dotted ;
+			    border-image: url("<?php echo $this->baseUrl()?>/images/coll.png") 120 stretch;
 			}
 	    </style>
 		<table cellpadding="0" cellspacing="0" width="100%">
@@ -38,10 +38,10 @@
 							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 							
 						</td>
-						<td width="60%">
-							<table   style="text-align:center;border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;color:red;">
-									<td>វេលាល្អ</td>
+						<td width="70%">
+							<table style="text-align:center;border:solid 1px #FFF;">
+								<tr>
+									<td style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;color:red !important;">វេលាល្អ</td>
 								</tr>	
 							</table>
 						</td>
@@ -53,21 +53,21 @@
 		  	<tr>
 		  		<td>
 	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:50px;font-weight: bold; list-style:none; color:#800080;">
-	  					<td>
-	  						<li>សែនឆ្លងម៉ុង</li>
+	  				<tr>
+	  					<td style="list-style:25px; font-family:  Khmer OS Muol; font-size:50px;font-weight: bold; list-style:none;">
+	  						<li style="color:#800080 !important;">សែនឆ្លងម៉ុង</li>
 	  					</td>
 	  				</tr>
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none; color:#009900;">
-	  					<td>
-	  						<li align="center">ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
-	  						<li align="center">​Tell: 012 455 660</li>
+	  				<tr>
+	  					<td style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none; ">
+	  						<li align="center" style="color:#009900 !important;">ទីតាំង៖ <?php echo $this->row['mong_address'];?></li>
+	  						<li align="center" style="color:#009900 !important;">​Tell: 012 455 660</li>
 	  					</td>
 	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none; color:#B22222;">
-	  					<td>
-	  						<li>ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
-	  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>
+	  				<tr>
+	  					<td align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none;">
+	  						<li style="color:#B22222 !important;">ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
+	  						<li style="color:#B22222 !important;">ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>
 	  					</td>
 	  				</tr>
 	  			</table>

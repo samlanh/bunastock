@@ -256,11 +256,10 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	
 	public function editMong($data,$mong_id)
 	{
-//		print_r($data); exit();
+		
 		try{
 			$db = $this->getAdapter();
-			$db->beginTransaction();
-				
+			$db->beginTransaction();				
 			$db_global = new Application_Model_DbTable_DbGlobal();
 			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
 			$receipt = $db_global->getReceiptNumber($this->getBranchId());
@@ -274,15 +273,14 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					'invoice_no'			=> $invoice,
 					'sale_date'				=> date("Y-m-d",strtotime($data['sale_date'])),
 					'sale_agent'			=> $data['sale_agent'],
-					'comission'				=> $data['comission'],
+			//		'comission'				=> $data['comission'],
 					'other_note'			=> $data['other_note'],
 					'sub_total'				=> $data['sub_total'],
 			//		'paid_before'			=> $data['paid_before'],
 					'paid'					=> $data['paid'],
 					'balance'				=> $data['balance'],
 					'balance_after'			=> $data['balance'],
-					'return_amount'			=> $data['return_amount'],
-						
+			//		'return_amount'			=> $data['return_amount'],		
 					'construct_type'		=> $data['construct_type'],
 					'mong_type'				=> $data['mong_type'],
 					'builder'				=> $data['builder'],
@@ -300,21 +298,18 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					'time_sen'				=> $data['time_sen'],
 					'date_chlong_mong'		=> date("Y-m-d",strtotime($data['date_chlong_mong'])),
 					'time_chlong_mong'		=> $data['time_chlong_mong'],
-			//		'photo'					=> $array_photo_name,
-						
-					'dead_id'				=> $data['dead_id'],
-						
+			//		'photo'					=> $array_photo_name,						
+					'dead_id'				=> $data['dead_id'],						
 					'constructor'			=> $data['constructor'],
 					'constructor_price'		=> $data['constructor_price'],
 					'constructor_paid'		=> 0,
 					'constructor_balance'	=> $data['constructor_price'],
-					'total_construct_item'	=> $data['total_construct_item'],
-						
+					'total_construct_item'	=> $data['total_construct_item'],						
 					'user_id'			=> $this->getUserId(),
 					'status'			=> 1,
 					'create_date'		=> date("Y-m-d H:i:s"),
 			);
-			$where=" id = ".$data['id'];
+			$where=" id = ".$mong_id;
 			$this->update($array, $where);
 				
 			if($data['paid']>0){
@@ -376,8 +371,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$this->_name="tb_mong_sale_item";
 					$this->insert($arr);
 				}
-			}
-				
+			}	
 			if(!empty($data['identity'])){
 				$iden = explode(",", $data['identity']);
 				foreach ($iden as $i){
@@ -418,6 +412,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$db->rollBack();
 			echo $e->getMessage();
 		}
+	//	print_r($data); exit();
 	}
 	
 	public function editConstructor($data,$id)

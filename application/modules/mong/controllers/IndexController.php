@@ -114,7 +114,7 @@ class Mong_IndexController extends Zend_Controller_Action
 					Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
-			  }
+			  }			 
 		}
 		$this->view->row = $db->getMongAll($id);
 		$this->view->row_detail = $db->getMongDetailById($id);

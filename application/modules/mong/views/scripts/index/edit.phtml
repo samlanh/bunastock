@@ -3,9 +3,9 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+//	print_r($this->mong_type); exit();
 ?>						 
 <title>បន្ថែមលក់ម៉ុងចេតិយ</title>
-
 <style>
 	.aligncenter{text-align: center;background:#4b8df8;color:#ececec;}
 </style>
@@ -940,12 +940,10 @@
 		}
 	}
 	function initializeConstructItem(){
-		index=0;
-		alert(1);
+		index=0;		
 		<?php if(!empty($this->row_price)){foreach ($this->row_price as $rs){?>
 			var item_names = "<?php echo $rs['name_s']?>";
 			var construct_item_id = "<?php echo $rs['item_id']?>";
-			
 			if(construct_item_id>0){
 				index++;
 				template='<tr align="center" id="row_construct_item_'+index+'">';
@@ -961,7 +959,7 @@
 					var identity = $('#identity').val();
 					$('#identity').val(identity+','+index);
 				} else {$('#identity').val(index);}
-
+				getItemPrice(index);
 				
 				$("#item_price_"+index).val("<?php echo $rs['item_price'];?>");
 				$("#item_qty_"+index).val("<?php echo $rs['item_qty'];?>");

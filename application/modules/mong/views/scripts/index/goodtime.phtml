@@ -24,8 +24,8 @@
 	    		padding: 4px;
 			}
 			#borderimg1 { 
-			    border: 12px solid transparent;
-			    border-image: url(/bunastock/trunk/public/images/kiifo.jpg) 35 round;
+			    border: 90px dotted ;
+			    border-image: url("<?php echo $this->baseUrl()?>/images/coll.png") 120 stretch;
 			}
 	    </style>
 		<table cellpadding="0" cellspacing="0" width="100%">
@@ -38,10 +38,10 @@
 							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 							
 						</td>
-						<td width="60%">
-							<table   style="text-align:center;border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;color:red;">								
-									<td>វេលាល្អ</td>							
+						<td width="70%">
+							<table   style="text-align:center;">
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:79px;font-weight: bold;">								
+									<td style="color:red !important;">វេលាល្អ</td>							
 								</tr>
 				
 							</table>
@@ -52,16 +52,16 @@
 				</td>
 			</tr>
 	  			<table style="font-size:15px;font-family: Khmer OS Battambang, Times New Roman;">  			
-	  				<tr style="list-style:25px; font-family:  Khmer OS Muol; font-size:65px;font-weight: bold; list-style:none; color:#60A0E0;">
-	  					<td>
-	  						<li>សែនបើកឆាក</li>
+	  				<tr>
+	  					<td style="list-style:25px; font-family:  Khmer OS Muol; font-size:65px;font-weight: bold; list-style:none;">
+	  						<li style="color:#60A0E0 !important;">សែនបើកឆាក</li>
 	  					</td>
 	  				</tr>
-	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:60px;font-weight: bold; list-style:none; color:#800080;">
+	  				<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:140px;; font-size:60px;font-weight: bold; list-style:none;">
 	  					<td>
-	  						<li>ថ្ងៃទីៈ <?php echo date("d",strtotime($row['date_sen']));?> ខែ <?php echo date("m",strtotime($row['date_sen']));?>
+	  						<li style="color:#800080 !important;">ថ្ងៃទីៈ <?php echo date("d",strtotime($row['date_sen']));?> ខែ <?php echo date("m",strtotime($row['date_sen']));?>
 	  						ឆ្នាំ 20<?php echo date("y",strtotime($row['date_sen']));?></li>
-	  						<li>ម៉ោងៈ <?php echo $this->row['time_chlong_mong']?> ព្រឹក</li>
+	  						<li style="color:#800080 !important;">ម៉ោងៈ <?php echo $this->row['time_chlong_mong']?> ព្រឹក</li>
 	  					</td>
 	  				</tr>
 	  			</table>	  			

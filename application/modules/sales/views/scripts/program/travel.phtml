@@ -1,12 +1,13 @@
 <?php 
 	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$row = $this->row;
 ?>
 <title>កែប្រែកម្មវិធីបុណ្យ</title>
 <div id="Printdonate">
-	<div class="wrapper" id="borderimg1" style="background: #fff;width:25cm;margin: 0 auto;min-height: 36cm;padding: 0.5cm;">
+	<div class="wrapper" id="borderimg1" style="background: #fff;width:26cm;margin: 0 auto;min-height: 37cm;padding: 0.5cm;">
 		<style>
 	    	.wrapper{
 	    		width: 100%;
@@ -26,13 +27,13 @@
 			}
 			
 	    </style>
-		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold; margin-top: -50px; white-space: nowrap">		 
+		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold; margin-top: -40px; white-space: nowrap">		 
 			<tr>
 				<td width="20%" align="center">
 					<img style="max-height:230px; width: 110%;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
 					<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 				</td>
-				<td align="center" width="60%" style="color:red !important;font-size: 65px;">
+				<td align="center" width="63%" style="color:red !important;font-size: 68px;">
 					ចៅ ប៊ុនណា
 				</td>
 				<td width="20%" >&nbsp;</td>
@@ -78,11 +79,11 @@
   					<u style="color:#22B424 !important;">កូនចៅកាន់ទុក្ខមិនឆុងទេ!</u>
   				</td>
   			</tr>
-  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 52px; color: #6A5ACD; font-size:30px;font-weight: bold; list-style:none;">
+  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 55px; color: #6A5ACD; font-size:30px;font-weight: bold; list-style:none;">
   				<td  colspan="3" align="center" style="color: #6A5ACD !important; ">
-  					<i class="fa fa-home" style="font-size: 38px;"></i> ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ១០០ <br>(ខាងជើងផ្សាររាត្រី)<br >
+  					<i class="fa fa-home" style="font-size: 38px;"></i> ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ១០០ <br>(មុខក្រសួងប្រៃសណីយ៍វត្តភ្នំ)<br >
   					<i class="fa fa-facebook-square" style="font-size: 35px;"></i> Chao Bunna 73 Funeral Service <br >
-  					<i class="fa fa-phone-square" style="font-size: 35px;"></i> 012/015 73 73 03 , 012 30 73 73
+  					<i class="fa fa-phone-square" style="font-size: 35px;"></i> <?php echo $tr->translate("PHONE_BUNA");?> , 012 30 73 73
   				</td>
   			</tr>	  								  	
 		</table>

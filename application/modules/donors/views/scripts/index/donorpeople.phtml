@@ -1,6 +1,7 @@
 
 <?php 
 	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$row = $this->row
@@ -54,7 +55,7 @@
 									</td>
 								</tr>
 								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
-									<td>Tel: 012/ 015 73 73 03</td>
+									<td><?php echo $tr->translate("PHONE_BUNA");?></td>
 								</tr>
 							</table>
 						</td>
