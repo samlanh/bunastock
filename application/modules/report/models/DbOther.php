@@ -181,11 +181,14 @@ function getAllDonors($search){
 			$s_where[] = " (SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['status']>-1){
-			$where .= " AND status = ".$search['status'];
+		if($search['customer_id']>-1){
+			$where .= " AND m.customer_id = ".$search['customer_id'];
 		}
-		if($search['branch']>0){
-			$where .= " AND branch_id = ".$search['branch'];
+		if($search['is_complete']==1){
+			$where .= " AND m.balance_after = 0 ";
+		}
+		if($search['is_complete']==2){
+			$where .= " AND m.balance_after > 0 ";
 		}
 		$order=" ORDER BY id DESC ";
 	//	echo $sql.$where.$order; exit();

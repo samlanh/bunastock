@@ -495,6 +495,19 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		}
 		return $pre.$new_acc_no;
 	}
+	public function getQuoteNumber(){
+		$db = $this->getAdapter();
+		$branch = $this->getAccessPermission("id");
+		$sql=" SELECT COUNT(id) FROM tb_quotation WHERE 1 $branch LIMIT 1 ";
+		$acc_no = $db->fetchOne($sql);
+		$new_acc_no= (int)$acc_no+1;
+		$acc_no= strlen((int)$acc_no+1);
+		$pre = "Q-";
+		for($i = $acc_no;$i<5;$i++){
+			$pre.='0';
+		}
+		return $pre.$new_acc_no;
+	}
 	
 	function getExchangeRate(){
 		$db = $this->getAdapter();

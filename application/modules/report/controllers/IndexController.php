@@ -112,11 +112,11 @@ class report_indexController extends Zend_Controller_Action
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
-    				'text_search'=>'',
-    				'start_date'=>date("Y-m-d"),
-    				'end_date'=>date("Y-m-d"),
-    				'customer_id'=>0,
-    				'branch_id'=>0,
+    				'ad_search'		=>'',
+    				'start_date'	=>date("Y-m-d"),
+    				'end_date'		=>date("Y-m-d"),
+    				'customer_id'	=>0,
+    				'is_complete'	=>'',
     		);
     	}
     	$this->view->rssearch = $data;
@@ -124,7 +124,8 @@ class report_indexController extends Zend_Controller_Action
     	$query = new report_Model_DbSale();
     	$this->view->repurchase =  $query->getAllSaleOrderReport($data);
     	
-		$formFilter = new Sales_Form_FrmSearch();
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
     	$this->view->form_purchase = $formFilter;
     	Application_Model_Decorator::removeAllDecorator($formFilter);
     }
@@ -156,15 +157,16 @@ class report_indexController extends Zend_Controller_Action
     		$data['end_date']	= date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
-    				'ad_search'	=>	'',
-    				'branch'	=>	'',
-    				'start_date'=>	date("Y-m-d"),
-    				'end_date'	=>	date("Y-m-d"),
-    				'status'	=>	-1,
+    				'ad_search'		=>	'',
+    				'is_complete'	=>	'',
+    				'start_date'	=>	date("Y-m-d"),
+    				'end_date'		=>	date("Y-m-d"),
+    				'customer_id'	=>0,
     		);
     	}
     	$this->view->rssearch = $data;
     	$this->view->other = $db->getAllsaleMong($data);
+    	
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	$this->view->form_salemong = $formFilter;

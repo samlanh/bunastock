@@ -58,6 +58,12 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		if($search['customer_id']>-1){
 			$where .= " AND customer_id = ".$search['customer_id'];
 		}
+		if($search['is_complete']==1){
+			$where .= " AND m.balance_after = 0 ";
+		}
+		if($search['is_complete']==2){
+			$where .= " AND m.balance_after > 0 ";
+		}
 		$order=" ORDER BY id DESC ";
 // 		echo $sql.$where.$order;exit();
 		return $db->fetchAll($sql.$where.$order);

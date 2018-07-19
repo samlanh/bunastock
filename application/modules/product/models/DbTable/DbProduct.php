@@ -439,7 +439,7 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     		$db->commit();
     	}catch (Exception $e){
     		$db->rollBack();
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		echo $e->getMessage();exit();
     	}
     }
     

@@ -26,10 +26,13 @@ class Mong_IndexController extends Zend_Controller_Action
     		$data = array(
     			'ad_search'		=>	'',
     			'customer_id'	=>	-1,
+    			'is_complete'	=>	'',
     			'start_date'	=>date("Y-m-d"),
 				'end_date'		=>date("Y-m-d"),
     		);
     	}
+    	$this->view->search = $data;
+    	
 		$rows = $db->getAllMong($data);
 		$columns=array("វិក័យបត្រ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដម៉ុង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","សម្គាល់","USER","STATUS");
 		$link=array(

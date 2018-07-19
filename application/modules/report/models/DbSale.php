@@ -32,20 +32,26 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
 		$where = " WHERE ".$from_date." AND ".$to_date;
 		
-		if(!empty($search['text_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
-			$s_where[] = " s.net_total LIKE '%{$s_search}%'";
+			$s_where[] = " s.all_total LIKE '%{$s_search}%'";
 			$s_where[] = " s.paid LIKE '%{$s_search}%'";
 			$s_where[] = " s.balance LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['customer_id']>0){
+		if($search['customer_id']>-1){
 			$where .= " AND s.customer_id = ".$search['customer_id'];
 		}
-		if($search['branch_id']>0){
-			$where .= " AND branch_id =".$search['branch_id'];
+// 		if($search['branch_id']>0){
+// 			$where .= " AND branch_id =".$search['branch_id'];
+// 		}
+		if($search['is_complete']==1){
+			$where .= " AND s.balance_after = 0 ";
+		}
+		if($search['is_complete']==2){
+			$where .= " AND s.balance_after > 0 ";
 		}
 		
 		$dbg = new Application_Model_DbTable_DbGlobal();

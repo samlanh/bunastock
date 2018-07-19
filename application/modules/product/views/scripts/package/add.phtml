@@ -77,6 +77,17 @@
 											</div>
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
+													ប្រភេទគិតប្រាក់
+												</label>
+												<div class="col-md-8">
+													<select name="is_package_cost" id="is_package_cost" class="form-control select2me">
+														<option value="1">គិតថ្លៃជាដុំ</option>
+														<option value="0">គិតថ្លៃជារាយ</option>
+									    			</select>
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
 													តម្លៃលក់សរុប
 												</label>
 												<div class="col-md-8">
@@ -96,13 +107,18 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-3"></div>
+										<div class="col-md-3">
+										</div>
 										<div class="col-md-6">
-											<div class="form-group" style=""></div>
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													<strong>ស្វែងរកមុខទំនិញ</strong>
-												</label>
+												<div class="col-md-4 ">
+													<select name="category_filter" id="category_filter" class="form-control select2me" onchange="getProductByCategory();">
+														<option value="-1">ជ្រើសរើសប្រភេទ</option>
+														<?php if(!empty($this->caters)){ foreach($this->caters as $rs){?>
+														<option value="<?php echo $rs['id']?>"><?php echo $rs['name'];?></option>
+														<?php }}?>
+									    			</select>
+												</div>
 												<div class="col-md-8">
 													<select name="product_id" id="product_id" onchange="addProductRow();" class="form-control select2me">
 														<option value="-1">សូមជ្រើសរើសទំនិញ-សេវាកម្ម</option>
@@ -252,4 +268,25 @@ function deleteRecord(index) {
 	$("#row_location_"+index).remove();
 	netTotal();
 }
+
+var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-productbycategory')); ?>';
+function getProductByCategory(){
+	$('#product_id').empty();
+	category = $("#category_filter").val();
+	if(category>0){
+		$.ajax({
+			url:url_getcategory,
+			type:"post",
+			data:{'category':category,'type':0},
+			success: function(data){
+				rs = $.parseJSON(data);
+				$('#product_id').append(rs); 
+			},
+			error:function(e){
+				alert(e);
+			}
+		});
+	}
+}
+
 </script>

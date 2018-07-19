@@ -20,13 +20,16 @@ class Sales_IndexController extends Zend_Controller_Action
 		}
 		else{
 			$search =array(
-					'ad_search'=>'',
-					'start_date'=>date("Y-m-d"),
-					'end_date'=>date("Y-m-d"),
-					'branch'=>-1,
-					'customer_id'=>-1,
+					'ad_search'		=>'',
+					'start_date'	=>date("Y-m-d"),
+					'end_date'		=>date("Y-m-d"),
+					'branch'		=>-1,
+					'customer_id'	=>-1,
+					'is_complete'	=>'',
 					);
 		}
+		$this->view->search = $search;
+		
 		$db = new Sales_Model_DbTable_DbSaleOrder();
 		$rows = $db->getAllSaleOrder($search);
 		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់","តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");

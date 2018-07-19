@@ -139,17 +139,9 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 	
 	
 	function getCustomerinfo($customer_id){
-// 		$db = $this->getAdapter();
-// 		$sql = "SELECT *,
-		             
-// 					(SELECT SUM(v.sub_total_after) FROM `tb_invoice` AS v ,`tb_sales_order` AS s WHERE v.sale_id=s.id 
-// 					AND v.status=1 AND v.balance_after>0 AND v.is_approved=1 AND 
-// 					customer_id= $customer_id LIMIT 1) AS total_credit,
-// 					(SELECT v.invoice_date FROM `tb_invoice` AS v ,`tb_sales_order` AS s WHERE v.sale_id=s.id 
-// 					AND v.status=1 AND v.balance_after>0 AND v.is_approved=1 AND 
-// 					customer_id= $customer_id ORDER BY v.invoice_date DESC LIMIT 1) AS current_creditterm
-// 				FROM `tb_customer` WHERE id=".$customer_id;
-// 		return $db->fetchRow($sql);
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM `tb_customer` WHERE id=".$customer_id;
+		return $db->fetchRow($sql);
 	}
 
 }

@@ -85,6 +85,7 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
     			'brand_id'		=>	1,
     			'color_id'		=>	0,
     			'is_package'	=>	1,
+    			'is_package_cost'=>	$data["is_package_cost"],
     			'is_service'	=>	$data["product_type"],
     			'selling_price'	=>	$data["total_cost"],
     			"price"			=>  0,
