@@ -131,7 +131,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												លេខវិក័យបត្រ
 											</label>
 											<div class="col-md-8">
-												<input type="text" class="form-control" readOnly name="sale_no" id="sale_no" />
+												<input type="text" style="color:red;" name="sale_no" id="sale_no" value="<?php echo $this->invoice;?>" class="form-control" readOnly />
 											</div>
 										</div>
 										<div class="form-group" style="">
@@ -523,24 +523,11 @@ dojo.ready(function(){
 
 function setValue(){
 	$('#customer_id').val('<?php echo $this->row['customer_id']?>').select2();
-	$('#program_id').val('<?php echo $this->row['program_id']?>').select2();
-	//$('#note').val('<?php echo $this->row['payment_note']?>');
-	$('#date_clearpayment').val('<?php echo $this->row['clear_paymentdate']?>');
-	$('#sale_no').val('<?php echo $this->row['sale_no']?>');
-	$('#sale_date').val('<?php echo $this->row['date_sold']?>');
-	$('#saleagent_id').val('<?php echo $this->row['saleagent_id']?>').select2();
-	$('#comission').val('<?php echo $this->row['comission']?>');
-	$('#receiver_name').val('<?php echo $this->row['receiver_name']?>').select2();
-	$('#other_note').val('<?php echo $this->row['other_note']?>');
+	$('#other_note').val('<?php echo $this->row['note']?>');
 	$('#place_bun').val('<?php echo $this->row['place_bun']?>');
 	$('#date_deleivery').val('<?php echo $this->row['date_deleivery']?>');
 	
-	$('#sub_total').val('<?php echo $this->row['all_total']?>').focus();
-	$('#paid_before').val('<?php echo $this->row['paid_before']?>').focus();
-	$('#paid').val('<?php echo $this->row['paid']?>').focus();
-	$('#balance').val('<?php echo $this->row['balance_after']?>').focus();
-	$('#total_partner_service').val('<?php echo $this->row['partner_service_total']?>').focus();
-	
+	$('#sub_total').val('<?php echo $this->row['total_payment']?>');
 }
 
 

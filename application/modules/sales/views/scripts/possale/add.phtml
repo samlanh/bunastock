@@ -651,7 +651,7 @@ col=0;
 no=0;
 title=0;
 temp='';
-function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,package_id=0){ // (pro_id,pro_name,qty,is_package,package_id)
+function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,package_id=0,is_package_cost=0){ // (pro_id,pro_name,qty,is_package,package_id)
 	if(product_id==null){
 		var product_name = $("#product_id");
 		var txt_product_name = $("option:selected",product_name).text();
@@ -662,7 +662,7 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	template='';
 	template+='<td width="3%"  style="text-align:center">'+col+'</td>';
 	template+='<td width="25%" style="font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'" class="form-control">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" class="form-control" /></td>';
-	template+='<td width="10%" style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
+	template+='<td width="10%" style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
 	template+='<td width="8%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="8%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="10%" style=""><input required="1" readonly name="qty_sold'+col+'" class="form-control" id="qty_sold'+col+'" placeholder=""/></td>';
@@ -681,7 +681,9 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	dojo.html.set(dojo.byId("row"+col),template , {
 		 parseContent: true,
 	});
-	getProductinfo(col,product_id,package_id);
+	//alert(package_id+" , "+is_package_cost)
+	getProductinfo(col,product_id,is_package,package_id,is_package_cost);
+	
 }
 
 function convertToDollar(index){
@@ -738,7 +740,7 @@ function calCualtepaid(){
 	}
 }
 var url_getproduct = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getproduct')); ?>';
-function getProductinfo(index,product_id,package_id=0){
+function getProductinfo(index,product_id,is_package=0,package_id=0,is_package_cost=0){
 	branch_id = $('#branch').val();
 	dojo.xhrPost({
 	    url: url_getproduct,
@@ -752,13 +754,25 @@ function getProductinfo(index,product_id,package_id=0){
 			$('#measur_name'+index).val(data.measue_name);
 			$('#unit_label'+index).val(data.unit_label);
 			
-			if(package_id>0){
-				$('#price_'+index).prop('readonly', true);
-				$('#price_reil_'+index).prop('readonly', true);
-			}else{
+			if(is_package==1 && package_id==0 && is_package_cost==1){
+				//alert(1);
 				$('#cost_price'+index).val(data.price);
 				$('#price_'+index).val(data.selling_price);
 				$('#price_reil_'+index).val(data.selling_price_khmer);
+			}else if(is_package==1 && package_id==0 && is_package_cost==0){
+				//alert(2);
+				$('#price_'+index).prop('readonly', true);
+				$('#price_reil_'+index).prop('readonly', true);
+			}else{
+				//alert(3);
+				if(package_id>0 && is_package_cost==1){
+					$('#price_'+index).prop('readonly', true);
+					$('#price_reil_'+index).prop('readonly', true);
+				}else{
+					$('#cost_price'+index).val(data.price);
+					$('#price_'+index).val(data.selling_price);
+					$('#price_reil_'+index).val(data.selling_price_khmer);
+				}
 			}
 			
 			qty = data.qty;
@@ -909,10 +923,10 @@ function getType(){
 		    handleAs:"json", 
 		    load: function(data) {
 				if(data.is_package==1){// product package
-					addProductRow(product_id,txt_product_name,1,1,0); // (pro_id,pro_name,qty,is_package,package_id)
-					getPackageProduct(product_id);
+					addProductRow(product_id,txt_product_name,1,1,0,data.is_package_cost); // (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
+					getPackageProduct(product_id,data.is_package_cost);
 				}else{
-					addProductRow(product_id,txt_product_name,1,0,0); // (pro_id,pro_name,qty,is_package,package_id)
+					addProductRow(product_id,txt_product_name,1,0,0,0); // (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
 					if(data.is_service==1){
 						$("#service_id").val(product_id).select2();
 						addServicePartner(1);
@@ -952,7 +966,7 @@ function getProductByCategory(){
 
 
 var url_getpackage = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-packageproduct')); ?>';
-function getPackageProduct(product_id){
+function getPackageProduct(product_id,is_package_cost){
 	dojo.xhrPost({
 		url: url_getpackage,
 		content : {
@@ -964,7 +978,7 @@ function getPackageProduct(product_id){
 				//alert(data);
 				for(i=0;i<data.length;i++){
 					//alert(data[i]['name']);
-					addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty'],0,product_id);// (pro_id,pro_name,qty,is_package,package_id)
+					addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty'],0,product_id,is_package_cost);// (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
 				}
 			}
 		},		

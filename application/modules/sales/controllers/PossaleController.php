@@ -136,6 +136,48 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_Dbexchangerate();
 		$this->view->rsrate= $db->getExchangeRate();
 	}
+	
+	public function convertAction()
+	{
+		$id = $this->getRequest()->getParam('id');
+		$db = new Sales_Model_DbTable_Dbpos();
+		if($this->getRequest()->isPost()) {
+			$data = $this->getRequest()->getPost();
+			try {
+				$db->addSaleOrder($data,$id);
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/sales/index/index');
+			}catch (Exception $e){
+				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				echo $e->getMessage();
+			}
+		}
+		$_db = new Sales_Model_DbTable_DbQuotation();
+		$this->view->row = $_db->getQuoteById($id);
+		$this->view->row_detail = $_db->getQuoteDetailById($id);
+		
+		$db = new Sales_Model_DbTable_Dbpos();
+		$this->view->rsproduct = $db->getAllProductName();
+		$this->view->rsservice = $db->getAllProductName(1);
+		$this->view->rscustomer = $db->getAllCustomerName();
+		$this->view->partner = $db->getAllPartnerService();
+		$this->view->receiver_name = $db->getAllReceiverName();
+		$this->view->category = $db->getAllProductCategory();
+	
+		$form = new Sales_Form_FrmCustomer(null);
+		$formpopup = $form->Formcustomer(null);
+		Application_Model_Decorator::removeAllDecorator($formpopup);
+		$this->view->form_customer = $formpopup;
+	
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->invoice = $db->getInvoiceNumber(1);
+		$this->view->saleagent = $db->getSaleAgent();
+		$this->view->diepeople = $db->getAllDiePeople();
+	
+		$db = new Sales_Model_DbTable_Dbexchangerate();
+		$this->view->rsrate= $db->getExchangeRate();
+	}
+	
+	
 	public function deleteAction(){
 		$id = $this->getRequest()->getParam("id");
 		$db = new Sales_Model_DbTable_Dbpos();
