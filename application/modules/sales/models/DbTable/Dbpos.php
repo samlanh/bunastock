@@ -70,12 +70,13 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					"sale_no"       => $invoice,
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
 					
-					"exchange_rate" => $data['exchange_rate'],
+					"exchange_rate" => $data['exchange_rate'],					
 					"all_total"     => $data['sub_total'],
 					"paid"          => $data['paid'],
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
 					'receiver_name' => $data['receiver_name'],
+			//		'sale_agent' 	=> $data['sale_agent'],
 					"user_id"       => $this->getUserId(),
 					
 					"saleagent_id"  => $data["saleagent_id"],
@@ -236,8 +237,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					//'paid_before'	=> $data['paid_before'],
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
-					//'return_amount' => $data['return_amount'],
-					'receiver_name' => $data['receiver_name'],					
+					'receiver_name' => $data['receiver_name'],	
 					"user_id"       => $this->getUserId(),
 					"saleagent_id"  => $data["saleagent_id"],					
 					'comission' 	=> $data['comission'],
@@ -264,7 +264,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"branch_id"   	=> $this->getBranchId(),
 						'invoice_id'    => $sale_id,
 						"customer_id"   => $data["customer_id"],
-						"payment_id"    => 1,	//payment by cash/paypal/cheque
+						"payment_id"    => 1,	//payment by cash/paypal/cheque						
 						"receipt_date"  => date("Y-m-d",strtotime($data['sale_date'])),
 						'begining_balance'=>$data['sub_total'],
 						//'paid_before'	=> $data['paid_before'],
@@ -272,7 +272,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 						"paid"          => $data["paid"],
 						"balance"       => $data['balance'],
 						
-						'receiver_name'	=> $data['receiver_name'],
+						'receiver_name'	=> $data['receiver_name'],						
 						
 						"user_id"       => $this->getUserId(),
 						'status'        => 1,
@@ -485,6 +485,11 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$sql=" SELECT DISTINCT(receiver_name) AS name FROM tb_receipt WHERE receiver_name!='' ";
 		return $db->fetchAll($sql);
 	}	
+	function getAllSaleagent(){
+		$db = $this->getAdapter();
+		$sql=" SELECT id,name_saleagent AS name FROM tb_sale_agent WHERE name_saleagent!='' ";
+		return $db->fetchAll($sql);
+	}
 	
 	function getServicePartnerPrice($partner_id , $service_id){
 		$db = $this->getAdapter();

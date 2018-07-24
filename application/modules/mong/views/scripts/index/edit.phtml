@@ -3,7 +3,7 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-//	print_r($this->mong_type); exit();
+	//print_r($this->row_detail); exit();
 ?>						 
 <title>បន្ថែមលក់ម៉ុងចេតិយ</title>
 <style>
@@ -124,12 +124,12 @@
 															<strong>អ្នកណែនាំ</strong>
 														</label>
 														<div class="col-md-8">
-															<select class="form-control validate[required] select2me" id="sale_agent" name="sale_agent">
+															<select class="form-control select2me" id="sale_agent" name="sale_agent" onchange="getPopupSaleagent();">
 																<option value="0">ជ្រើសរើស</option>
-																<?php if(!empty($this->saleagent)){foreach($this->saleagent as $rs){?>
-																	<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
-																<?php }}?>
 																<option value="-1">បន្ថែមថ្មី</option>
+																<?php if(!empty($this->sale_agent)){foreach($this->sale_agent as $rs){?>
+																	<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
+																<?php }}?>													
 															</select>
 														</div>
 													</div>
@@ -138,7 +138,7 @@
 															កំរៃជើងសា
 														</label>
 														<div class="col-md-8">
-															<input type="text" class="form-control validate[required,custom[number]]" name="" id="comission" value="0" />
+															<input type="text" class="form-control validate[required,custom[number]]" name="comission" id="comission" value="0" />
 														</div>
 													</div>
 													
@@ -328,7 +328,7 @@
 													អ្នកទទួលខុសត្រូរ
 												</label>
 												<div class="col-md-8">
-													<select class="form-control select2me" name="person_in_charge" id="person_in_charge" >
+													<select class="form-control select2me" name="person_in_charge" id="person_in_charge">
 														<option value="-1">អ្នកទទួលខុសត្រូរការងារ</option>
 														<?php if(!empty($this->person_in_charge)){foreach ($this->person_in_charge as $rs){?>
 														<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
@@ -917,7 +917,7 @@
 		}
 		
 	}
-
+	
 	function getConstructorDetail(){
 		var constructor  = $("#constructor").val();
 		if(constructor>0){
@@ -939,6 +939,7 @@
 			});
 		}
 	}
+	
 	function initializeConstructItem(){
 		index=0;		
 		<?php if(!empty($this->row_price)){foreach ($this->row_price as $rs){?>
@@ -967,6 +968,7 @@
 			}
 		<?php }}?>		
 	}
+	
 	index=0;
 	function addConstructItem(){
 		var construct_item = $("#construct_item");
@@ -993,6 +995,7 @@
 		}
 		
 	}
+	
 	function deleteRecord(index) {
 		var identity = $('#identity').val();
 		var arrays = identity.split(',');
@@ -1144,8 +1147,6 @@
 				$("#selling_price_"+index_sale).val("<?php echo $rs['price'];?>");
 				$("#sub_total_"+index_sale).val("<?php echo $rs['sub_total'];?>");
 			}
-			
-		
 		<?php }}?>		
 	}
 	index_sale=0;
@@ -1368,7 +1369,7 @@
 		}
 	}
 	
-	<?php $url_add_customer =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'add-customer')); ?>
+	<?php $url_add_customer =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-saleagent')); ?>
 	function addNewCustomer(){
 		txt_name = $("#txt_name").val();
 		if(txt_name==''){
@@ -1440,6 +1441,71 @@
 		$('#receiverpopup').modal('hide');
 		$('#save_receiver').attr("disabled", false);
 	}
+	
+	function getPopupSaleagent(){
+		val = $('#sale_agent').val();
+		if(val==-1){
+			$('#saleagentpopup').modal('show');
+		}
+	}
+	<?php $url_sale_agent =  $this->url(array('module'=>'mong','controller'=>'index','action'=>'add-mong')); ?>
+	function addNewSaleagent(){
+		name = $("#name").val();
+		if(name==''){
+			$("#name").focus();
+			return false;
+		}  		
+		$('#save_saleagent').attr("disabled", true);
+		
+		$.ajax({
+			url: "<?php echo $url_sale_agent;?>",
+			type: "post",
+			data: $('#frmsaleagent').serialize(),
+			success: function(data){
+				rs = $.parseJSON(data);
+				$('#sale_agent').append($("<option></option>").attr("value",rs['name']).attr("selected",true).text(name));                       
+				$("#sale_agent").select2();
+				$('#saleagentpopup').modal('hide');
+				$('#save_saleagent').attr("disabled", false);
+				//$("#frmcustomer")[0].reset();
+			},
+			error:function(err){
+				alert("faile insert");
+			}
+		});
+	}
+
+	function getPopupSaleagent(){
+		val = $('#sale_agent').val();
+		if(val==-1){
+			$('#saleagentpopup').modal('show');
+		}
+	}
+	<?php $url_sale_agent =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-saleagent')); ?>
+	function addNewsaleagent(){	
+		name_saleagent = $("#name_saleagent").val();
+		if(name_saleagent==''){
+			$("#name_saleagent").focus();
+			return false;
+		} 
+	//	alert(1);		
+		$('#save_saleagent').attr("disabled", true);		
+		$.ajax({			
+			url: "<?php echo $url_sale_agent;?>",
+			type: "post",
+			data: $('#frmsaleagent').serialize(),
+			success: function(data){
+				rs = $.parseJSON(data);
+				$('#sale_agent').append($("<option></option>").attr("value",rs['saleagent_id']).attr("selected",true).text(name_saleagent));                       
+				$("#sale_agent").select2();
+				$('#saleagentpopup').modal('hide');
+				$('#save_saleagent').attr("disabled", false);
+			},
+			error:function(err){
+				alert("faile insert");
+			}
+		});
+	}
 
 function isNumberKey(evt)
 {
@@ -1462,13 +1528,14 @@ $(document).ready(function() {
 
 	function setValue(){
 		$('#customer_id').val('<?php echo $this->row['customer_id']?>');
+		$('#sale_agent').val('<?php echo $this->row['sale_agent']?>');
 		$('#note').val('<?php echo $this->row['note']?>');
 		$('#date_clearpayment').val('<?php echo $this->row['date_clearpayment']?>');
 		$('#receiver_name').val('<?php echo $this->row['receiver_name']?>');
 		$('#sale_date').val('<?php echo $this->row['sale_date']?>');
 		$('#comission').val('<?php echo $this->row['comission']?>');
 		$('#other_note').val('<?php echo $this->row['other_note']?>');
-		$('#sale_agent').val('<?php echo $this->row['sale_agent']?>');
+		
 		$('#construct_type').val('<?php echo $this->row['construct_type']?>');
 		$('#mong_type').val('<?php echo $this->row['mong_type']?>');
 		$('#builder').val('<?php echo $this->row['builder']?>');
@@ -1612,6 +1679,98 @@ $(document).ready(function() {
         </div>
     </div>
  </div>
+ 
+  <div id="saleagentpopup" class="modal fade" tabindex="-1" data-width="1200">
+       <div class="modal-dialog">
+		      <div class="modal-content">
+		      <div class="modal-header">   
+				<div class="row">
+				<div class="col-md-12">
+					<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមអ្នកណែនាំ");?>
+						</div>
+						<div class="caption pull-right">
+							<a href="<?php //echo $url_new;?>" >
+								 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							</a>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form id="frmsaleagent" name="frmsaleagent" dojoType="dijit.form.Form" autoComplete="off" enctype="application/x-www-form-urlencoded" class="form-horizontal" enctype="multipart/form-data" method="post">
+							<div class="form-body">								
+								<div class="form-group">
+									<label class="control-label col-md-3"><?php echo $tr->translate("NAME");?><span class="required"></span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="name_saleagent" id="name_saleagent" class="form-control" placeholder="Add name customer"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+									<?php echo $tr->translate("PHONE_NUMBER");?><span class="required">
+										</span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="phone" id="phone" class="form-control" placeholder="Phone customer" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("ADDRESS");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="address" id="address" class="form-control"  placeholder="Address customer"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("EMAIL");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="email" id="email" class="form-control" placeholder="Email"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("NOTE");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="note" id="note" class="form-control" placeholder="Notes"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-md-12 center">
+										<button type="button" id="save_saleagent" name="save_saleagent" onclick="addNewsaleagent();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
+									</label>
+								</div>
+							</div>
+						 </form>
+					  </div>
+					</div>
+			   	 </div>
+			  </div>
+           </div>
+        </div>
+     </div>
+ </div>
+ 
 
 <div id="receiverpopup" class="modal fade" tabindex="-1" data-width="1000">
 	<div class="modal-dialog">

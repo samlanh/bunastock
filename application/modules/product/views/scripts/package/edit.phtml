@@ -202,6 +202,7 @@ function initilize(){
 		index++;
 		var txt_br = "<?php echo $rs['product_name']." - ".$rs['product_code'];?>";
 		var pro_id = '<?php echo $rs['product_id'];?>';
+		
 		if(pro_id<0){return false;}
 		template='<tr id="row_location_'+index+'">';
 		template+='<td>'+index+'</td>';

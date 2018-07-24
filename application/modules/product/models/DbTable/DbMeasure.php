@@ -45,6 +45,24 @@ class Product_Model_DbTable_DbMeasure extends Zend_Db_Table_Abstract
 		$this->_name = "tb_measure";
 		return $this->insert($arr);
 	}
+	public function addSaleagent($data){
+		$db = $this->getAdapter();
+		$arr1 = array(
+				'name_saleagent'	=>	$data["name_saleagent"],
+				'email'		=>	$data["email"],
+				'phone'		=>	$data["phone"],
+				'user_id'	=>	$this->getUserId(),
+				// 	'parent_id'		=>	$data["parent"],
+				'address'	=>	$data["address"],
+				'note'		=>	$data["note"],
+				'date'		=>	new Zend_Date(),
+				//'status'	=>	$data["status"],		
+		);
+		$this->_name = "tb_sale_agent";
+		return $this->insert($arr1);
+	//	print_r($this->$data); exit();
+	}
+	
 	public function getAllMeasure($data){
 		$db = $this->getAdapter();
 		$sql = "SELECT m.id,

@@ -12,30 +12,6 @@
 		#pageFooter {
 		    display: table-footer-group;
 		}
-		footer {
-				 font-size: 9px;
-				 color: black !important;
-				 text-align:center;
-				}
-				@page {
-				  size: A4;
-				  margin: 11mm 17mm 17mm 17mm;									
-				}
-				@media print {
-				  footer {
-				    position: fixed;
-  				    bottom: 0;
-				  	padding-left:16%; 
-				  	margin-bottom: -12px;
-				  }	
-				  .content-block, p {
-				    page-break-inside: avoid;
-				  }			
-				  html, body {
-				    width: 210mm;
-				    height: 297mm;
-				  }
-				}
 			#pageFooter:after {
 		    counter-increment: page;
 		    content:"Page " counter(page);
@@ -61,7 +37,7 @@
 									<div style="font-size: 32px;font-family:'Khmer OS Muol Light'; color:red !important;">ចៅ ប៊ុនណា 73</div>
 									<div style="font-size: 23px;font-family:'Khmer OS Muol Light'; color:black;">សេវាកម្មបុណ្យសពតាំងពីឆ្នាំ 1982</div>
 									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:red !important;">周德福棺木店</div>
-									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:blue !important;"><i class="fa fa-facebook-square" style="font-size: 32px; color:blue !important;"></i> Chao Bunna 73 Funeral Service</div>
+									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:blue !important;"><i class="fa fa-facebook-square" style="font-size: 32px; color:black !important;"></i> Chao Bunna 73 Funeral Service</div>
 									<div style="font-size: 23px;font-family:'Khmer OS Muol Light';">INVOICE</div>
 								</td>
 								<td width="28%" valign="top" align="center">
@@ -73,8 +49,8 @@
 					</td>
 				</tr>			
 				<tr height="80px">
-					<td colspan="6" width="60%" valign="top">
-						<table width="100%" style=" ;font-size: 16px;border: 1px solid #000;">
+					<td colspan="6"  valign="top">
+						<table width="100%" style="font-size: 16px;border: 1px solid #000;​">
 							<tbody>
 								<tr>
 									<td width="110px;">&nbsp;ឈ្មោះអតិថិជន</td>
@@ -91,12 +67,12 @@
 								<tr>
 									<td>&nbsp;អាសយដ្ឋាន </td>
 									<td> :</td>
-									<td><label id="lbl_address" class="one">&nbsp;&nbsp;<?php echo $rs['address']?></label></td>
+									<td style="white-space: nowrap;"><label id="lbl_address" class="one">&nbsp;&nbsp;<?php echo $rs['address']?></label></td>
 								</tr>
 							</tbody>
 						</table>
 					</td>
-					<td colspan="4" valign="top">
+					<td colspan="4" width="35%" valign="top">
 						<table width="100%" style="margin-left:5px;font-size: 16px;border: 1px solid #000;">
 							<tbody>
 								<tr>
@@ -206,9 +182,6 @@
 								</tr>
 							</tbody>
 						</table>
-						<footer style="padding-top: 150px;">
-						 <p><?php echo $tr->translate("FOOTER_BUNA");?></p>						
-						</footer>
 					</td>
 				</tr>
 			</tbody>

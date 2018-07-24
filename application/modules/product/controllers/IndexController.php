@@ -248,6 +248,23 @@ public function init()
 			}
 		}
 	}
+	public function addSaleagentAction(){
+		if($this->getRequest()->isPost()){
+			try {
+				$post=$this->getRequest()->getPost();
+				$db = new Product_Model_DbTable_DbMeasure();
+
+				$saleagent_id =$db->addSaleagent($post);
+				$result = array('saleagent_id'=>$saleagent_id);
+				echo Zend_Json::encode($result);
+				exit();
+			}catch (Exception $e){
+				$result = array('err'=>$e->getMessage());
+				echo Zend_Json::encode($result);
+				exit();
+			}
+		}
+	}
 	
 	public function addOtherAction(){
 		if($this->getRequest()->isPost()){

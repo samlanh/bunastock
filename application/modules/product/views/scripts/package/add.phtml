@@ -247,7 +247,7 @@ function netTotal(){//use
 	var netTotal=0;
 	$('#total_cost').val(0);
 	var rowId = $('#identity').val();
-	var rowIDArray = rowId.split(',');
+    var rowIDArray = rowId.split(',');
 	for(var n = 0; n < rowIDArray.length; n++) {
 		netTotal += Number($('#total_'+rowIDArray[n]).val());
 	}

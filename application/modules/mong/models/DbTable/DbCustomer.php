@@ -244,7 +244,7 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
     	$this->update($arr, $where);
     }
     //Insert Popup=====================================================================
-	
+ 
 	function addNewCustomerType($data){
     	$db = $this->getAdapter();
     	$key_code = $this->getLastKeycodeByType(6);
@@ -258,6 +258,7 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
     	$id = $this->insert($arr);
 		return $key_code;
     }
+    
 	function getCustomerLimit($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT v.`credit_limit`,v.`credit_term` FROM `tb_view` AS v WHERE v.`type`=6 AND v.`key_code`=$id";

@@ -117,7 +117,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'paid'					=> $data['paid'],
 				'balance'				=> $data['balance'],
 				'balance_after'			=> $data['balance'],
-				'return_amount'			=> $data['return_amount'],
+		//		'return_amount'			=> $data['return_amount'],
 					
 				'construct_type'		=> $data['construct_type'],
 				'mong_type'				=> $data['mong_type'],
@@ -278,7 +278,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					'invoice_no'			=> $invoice,
 					'sale_date'				=> date("Y-m-d",strtotime($data['sale_date'])),
 					'sale_agent'			=> $data['sale_agent'],
-			//		'comission'				=> $data['comission'],
+					'comission'				=> $data['comission'],
 					'other_note'			=> $data['other_note'],
 					'sub_total'				=> $data['sub_total'],
 			//		'paid_before'			=> $data['paid_before'],
@@ -344,6 +344,10 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				$this->insert($arr_receipt);
 			}
 	
+			$this->_name="tb_mong_sale_item";
+			$where1=" mong_id = $mong_id";
+			$this->delete($where1);
+			
 			if(!empty($data['identity_sale'])){
 				$iden = explode(",", $data['identity_sale']);
 				foreach ($iden as $i){
@@ -376,7 +380,12 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$this->_name="tb_mong_sale_item";
 					$this->insert($arr);
 				}
-			}	
+			}
+
+			$this->_name="tb_mong_construct_item";
+			$where2=" mong_id = $mong_id";
+			$this->delete($where2);
+			
 			if(!empty($data['identity'])){
 				$iden = explode(",", $data['identity']);
 				foreach ($iden as $i){

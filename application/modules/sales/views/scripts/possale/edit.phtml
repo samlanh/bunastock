@@ -150,12 +150,12 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												<strong>អ្នកណែនាំ</strong>
 											</label>
 											<div class="col-md-8">
-												<select class="form-control select2me" id="saleagent_id" name="saleagent_id">
+												<select class="form-control select2me" id="saleagent_id" name="saleagent_id" onchange="getPopupSaleagent()">
 													<option value="0">ជ្រើសរើសអ្នកណែនាំ</option>
-													<?php if(!empty($this->saleagent)){foreach($this->saleagent as $rs){?>
-														<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
-													<?php }}?>
 													<option value="-1">បន្ថែមថ្មី</option>
+													<?php if(!empty($this->sale_agent)){foreach($this->sale_agent as $rs){?>
+														<option value="<?php echo $rs['id'];?>"><?php echo $rs['name'];?></option>
+													<?php }}?>	
 												</select>
 											</div>
 										</div>
@@ -1067,6 +1067,37 @@ function getPackageProduct(product_id,is_package_cost){
 	});
 }
 
+function getPopupSaleagent(){
+	val = $('#saleagent_id').val();
+	if(val==-1){
+		$('#saleagentpopup').modal('show');
+	}
+}
+<?php $url_sale_agent =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-saleagent')); ?>
+	function addNewsaleagent(){	
+	name_saleagent = $("#name_saleagent").val();
+	if(name_saleagent==''){
+		$("#name_saleagent").focus();
+		return false;
+	} 		
+	$('#save_saleagent').attr("disabled", true);		
+	$.ajax({			
+		url: "<?php echo $url_sale_agent;?>",
+		type: "post",
+		data: $('#frmsaleagent').serialize(),
+		success: function(data){
+			rs = $.parseJSON(data);
+			$('#saleagent_id').append($("<option></option>").attr("value",rs['saleagent_id']).attr("selected",true).text(name_saleagent));                       
+			$("#saleagent_id").select2();
+			$('#saleagentpopup').modal('hide');
+			$('#save_saleagent').attr("disabled", false);
+		},
+		error:function(err){
+			alert("faile insert");
+		}
+	});
+}
+
 
 </script>
 
@@ -1189,6 +1220,97 @@ function getPackageProduct(product_id,is_package_cost){
           </div>
         </div>
     </div>
+ </div>
+ 
+ <div id="saleagentpopup" class="modal fade" tabindex="-1" data-width="1200">
+       <div class="modal-dialog">
+		      <div class="modal-content">
+		      <div class="modal-header">   
+				<div class="row">
+				<div class="col-md-12">
+					<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមអ្នកណែនាំ");?>
+						</div>
+						<div class="caption pull-right">
+							<a href="<?php //echo $url_new;?>" >
+								 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							</a>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form id="frmsaleagent" name="frmsaleagent" dojoType="dijit.form.Form" autoComplete="off" enctype="application/x-www-form-urlencoded" class="form-horizontal" enctype="multipart/form-data" method="post">
+							<div class="form-body">								
+								<div class="form-group">
+									<label class="control-label col-md-3"><?php echo $tr->translate("NAME");?><span class="required"></span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="name_saleagent" id="name_saleagent" class="form-control" placeholder="Add name customer"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+									<?php echo $tr->translate("PHONE_NUMBER");?><span class="required">
+										</span>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="phone" id="phone" class="form-control" placeholder="Phone customer" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("ADDRESS");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="address" id="address" class="form-control"  placeholder="Address customer"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("EMAIL");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="email" id="email" class="form-control" placeholder="Email"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">
+										<?php echo $tr->translate("NOTE");?>
+									</label>
+									<div class="col-md-9">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input name="note" id="note" class="form-control" placeholder="Notes"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="col-md-12 center">
+										<button type="button" id="save_saleagent" name="save_saleagent" onclick="addNewsaleagent();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
+									</label>
+								</div>
+							</div>
+						 </form>
+					  </div>
+					</div>
+			   	 </div>
+			  </div>
+           </div>
+        </div>
+     </div>
  </div>
 
  

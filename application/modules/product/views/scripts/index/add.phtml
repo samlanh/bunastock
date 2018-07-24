@@ -462,66 +462,66 @@ input.btn_borwse_image {
 <?php $frmOther = $this->frmOther; ?>
 <div id="otherpopup" class="modal fade" tabindex="-1" data-width="1200">
        <div class="modal-dialog">
-      <div class="modal-content">
-      <div class="modal-header">   
-		<div class="row">
-		<div class="col-md-12">
-			<div class="portlet box blue">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("ADD_NEW_COLOR");?>
-				</div>
-				<div class="caption pull-right">
-					<a href="<?php echo $url_new;?>" >
-						 <button type="button" class="close" data-dismiss="modal" ></button>
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body form">
-				<form id="frmOther" id="frmOther" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-				<script>
-						 $('#frmOther').submit(function() {
-							 $("#btnsavenew").attr("disabled", true);
-						});							
-				</script>
-				<div class="form-body">
-					<div class="form-group">
-									<label class="col-md-4 control-label"><?php echo $tr->translate("TITLE");?></label>
-									<div class="col-md-6">
-										<?php echo $frmOther->getElement('title_en');?>
-									</div>
-													
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label"><?php echo $tr->translate("TYPE");?></label>
-									<div class="col-md-6">
-										<?php echo $frmOther->getElement('type');?>
-									</div>
-													
-								</div>
-								<div class="form-group">
-													
-									<label class="col-md-4 control-label"><?php echo $tr->translate("STATUS");?></label>
-									<div class="col-md-6">
-										<?php echo $frmOther->getElement('status');?>
-									</div>
-								</div>
-					
-					<div class="form-group">
-						<label  class="col-md-5 ">
-						</label>
-						<label  class="col-md-2 ">
-							<button type="button" id="savecolor" id="btnsavenew" onclick="addNewColor();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
-						</label>
-						<label  class="col-md-5 ">
-						</label>
+     	 <div class="modal-content">
+	     	 <div class="modal-header">   
+				<div class="row">
+				<div class="col-md-12">
+					<div class="portlet box blue">
+					<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-home"></i><?php echo $tr->translate("ADD_NEW_COLOR");?>
+					</div>
+					<div class="caption pull-right">
+						<a href="<?php echo $url_new;?>" >
+							 <button type="button" class="close" data-dismiss="modal" ></button>
+						</a>
 					</div>
 				</div>
-				</form>
+				<div class="portlet-body form">
+					<form id="frmOther" id="frmOther" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+					<script>
+							 $('#frmOther').submit(function() {
+								 $("#btnsavenew").attr("disabled", true);
+							});							
+					</script>
+					<div class="form-body">
+						<div class="form-group">
+										<label class="col-md-4 control-label"><?php echo $tr->translate("TITLE");?></label>
+										<div class="col-md-6">
+											<?php echo $frmOther->getElement('title_en');?>
+										</div>
+														
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label"><?php echo $tr->translate("TYPE");?></label>
+										<div class="col-md-6">
+											<?php echo $frmOther->getElement('type');?>
+										</div>
+														
+									</div>
+									<div class="form-group">
+														
+										<label class="col-md-4 control-label"><?php echo $tr->translate("STATUS");?></label>
+										<div class="col-md-6">
+											<?php echo $frmOther->getElement('status');?>
+										</div>
+									</div>
+						
+						<div class="form-group">
+							<label  class="col-md-5 ">
+							</label>
+							<label  class="col-md-2 ">
+								<button type="button" id="savecolor" id="btnsavenew" onclick="addNewColor();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CLOSE")?> </button>
+							</label>
+							<label  class="col-md-5 ">
+							</label>
+						</div>
+					</div>
+					</form>
+					</div>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-</div>
           </div>
         </div>
     </div>

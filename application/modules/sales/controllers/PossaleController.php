@@ -70,7 +70,8 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->partner = $db->getAllPartnerService();
-	
+		
+		$this->view->sale_agent = $db->getAllSaleagent();
 		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$form = new Sales_Form_FrmCustomer(null);
@@ -80,7 +81,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getInvoiceNumber(1);
-		$this->view->saleagent = $db->getSaleAgent();
+//		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 	
 		$db = new Application_Model_DbTable_DbGlobal();
@@ -116,9 +117,12 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->row_detail = $db->getSaleDetailById($id);
 		$this->view->row_partner = $db->getPartnerServiceById($id);
 		
+		$this->view->sale_agent = $db->getAllSaleagent();
+		
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
+		
 		$this->view->partner = $db->getAllPartnerService();
 		$this->view->receiver_name = $db->getAllReceiverName();
 		$this->view->category = $db->getAllProductCategory();
@@ -130,7 +134,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getInvoiceNumber(1);
-		$this->view->saleagent = $db->getSaleAgent();
+//		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 	
 		$db = new Sales_Model_DbTable_Dbexchangerate();

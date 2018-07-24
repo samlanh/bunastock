@@ -187,7 +187,7 @@ class Sales_CustomerController extends Zend_Controller_Action
 				exit();
 			}
 		}
-	}
+	}	
 	public function deleteCustomerAction() {
 		$id = ($this->getRequest()->getParam('id'));
 		$sql = "DELETE FROM tb_customer WHERE customer_id IN ($id)";

@@ -89,11 +89,12 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->category = $db->getAllProductCategory();
 		
+		$this->view->sale_agent = $db->getAllSaleagent();	
 		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getInvoiceNumber(1);
-		$this->view->saleagent = $db->getSaleAgent();
+// 		$this->view->sale_agent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 		
 		$form = new Sales_Form_FrmCustomer(null);
@@ -103,13 +104,14 @@ class Mong_IndexController extends Zend_Controller_Action
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->exchange_rate = $db->getExchangeRate();
+	//	print_r($this->view->sale_agent); exit();
 	}
 	public function editAction()
 	{
 		$id = ($this->getRequest()->getParam('id'));
 		$db = new Mong_Model_DbTable_DbIndex();
 		if($this->getRequest()->isPost()){
-			$data["id"] = $id;
+		//	$data["id"] = $id;
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->editMong($data,$id);
@@ -122,7 +124,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->row = $db->getMongAll($id);
 		$this->view->row_detail = $db->getMongDetailById($id);
 		$this->view->row_price = $db->getItemCost($id);
-	 //	print_r($this->view->row_price); exit();
+	
 		
 		$this->view->branch_id = $db->getBranchId();
 		
@@ -141,11 +143,13 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->customer_id = $db->getAllCustomerName();
 		$this->view->category = $db->getAllProductCategory();
 		
+		$this->view->sale_agent = $db->getAllSaleagent();
 		$this->view->receiver_name = $db->getAllReceiverName();
+//		print_r($this->view->sale_agent); exit();
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->invoice = $db->getInvoiceNumber(1);
-		$this->view->saleagent = $db->getSaleAgent();
+//		$this->view->sale_agent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 		
 		$form = new Sales_Form_FrmCustomer(null);
