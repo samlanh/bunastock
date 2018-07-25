@@ -41,6 +41,7 @@
 				  display: table-header-group;
 				  page-break-inside:avoid; page-break-after:auto;
 				}
+				#printfooter{display: none !important;}
 				footer {
 				  font-size: 9px;
 				  color: black !important;
@@ -52,14 +53,14 @@
 				  margin: 11mm 17mm 17mm 17mm;				
 					
 				}
+
 				
 				@media print {
 				  footer {
-				    position: fixed;
-				    bottom: 0;
-				  	text-align:center; 
-				  	padding-left:16%; 
-				  	margin-bottom: -12px;
+				    position: absolute;
+				      bottom: 0;
+				      position: fixed;
+				      display: block ;
 				  }				
 				  html, body {
 				    width: 210mm;

@@ -112,10 +112,9 @@ function getAllDonors($search){
 		tel,
 		addresss,
 		(SELECT u.item_name FROM `tb_product` AS u WHERE id =`service_cate`) AS service_cate,
-		service_fee,
 		description,
 		(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
-		(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code= STATUS LIMIT 1) STATUS
+		(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
 		FROM
 		tb_partnerservice
 		WHERE
@@ -127,9 +126,6 @@ function getAllDonors($search){
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " partner_name LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
-		}
-		if($search['service']>0){
-			$where .= " AND service_cate = ".$search['service'];
 		}
 		if($search['status']>-1){
 			$where .= " AND status = ".$search['status'];

@@ -974,9 +974,11 @@ function getServicePartnerPrice(index){
 		    handleAs:"json", 
 		    load: function(data) {
 				if(data){
-					$("#price_service_"+index).val(data);
+					$("#price_service_"+index).val(data.prices);
+					$("#note_"+index).val(data.notes);
 				}else{
 					$("#price_service_"+index).val(0);
+					$("#note_"+index).val('');
 				}
 				netTotalPartner();
 		    },		

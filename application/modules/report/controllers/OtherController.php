@@ -82,7 +82,6 @@ class report_OtherController extends Zend_Controller_Action
     	}else{
     		$data = array(
     				'ad_search'	=>	'',
-    				'service'	=>	0,
     				'status'	=>	-1,
     		);
     	}

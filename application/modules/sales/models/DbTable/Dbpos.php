@@ -166,7 +166,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 							'qty_detail'  => $data['qtydetail_'.$i],
 							'qty_order'	  => $data['qty_sold'.$i],
 							
-							'cost_price'  => $data['cost_price'.$i],
+						//	'cost_price'  => $data['cost_price'.$i],
 							'price_reil'  => $data['price_reil_'.$i],
 							'price'		  => $data['price_'.$i],
 							
@@ -495,6 +495,12 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql=" SELECT service_fee FROM tb_partnerservice WHERE id=$partner_id and service_cate=$service_id ";
 		return $db->fetchOne($sql);
+	}
+	
+	function getServicePartnerPrices($partner_id , $service_id){
+		$db = $this->getAdapter();
+		$sql=" SELECT `prices`,notes FROM `tb_partner_cost` WHERE `service_id`=$partner_id AND `service_cate`=$service_id LIMIT 1 ";
+		return $db->fetchRow($sql);
 	}
 	
 	function getType($product_id){

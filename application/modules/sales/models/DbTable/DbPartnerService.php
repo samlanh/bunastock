@@ -17,10 +17,9 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
 		    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
 		    	tel,
 		    	addresss,
-		    	service_fee,
 		    	description,
 		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
-		    	(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code= STATUS LIMIT 1) STATUS 
+		    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
 		    	FROM
 		    	tb_partnerservice 
 		    	WHERE 
@@ -32,9 +31,6 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     		$s_search = trim(addslashes($search['ad_search']));
     		$s_where[] = " partner_name LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
-    	}
-    	if($search['service']>0){
-    		$where .= " AND service_cate = ".$search['service'];
     	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];
@@ -114,6 +110,7 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     			'service_cate'	 	=> $post['service_cate'],
     			'service_fee'	     => $post['service_fee'],
     			'description'	     => $post['description'],
+    			"status"			=>	$post["status"],
     	);
     	$where="id= $id";
 		$this->update($_arr, $where);

@@ -243,7 +243,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_Dbpos();
-			$fee =$db->getServicePartnerPrice($post['partner_id'],$post['service_id']);
+			$fee =$db->getServicePartnerPrices($post['partner_id'],$post['service_id']);
 			print_r(Zend_Json::encode($fee));
 			exit();
 		}

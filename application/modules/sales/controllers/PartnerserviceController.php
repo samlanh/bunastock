@@ -13,16 +13,15 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
-     			'service'	=>	0,
      			'status'	=>	-1,
     		);
     	}
 		$rows = $db->getAllPartnerService($data);
-		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","តម្លៃសេវាកម្មសរុប","ពណ៍នា","ប្រើប្រាស់","ស្ថានការ");
+		$columns=array("ឈ្មោះដៃគូ","ភេទ","លេខទូរស័ព្ទ","អាស័យដ្ឋាន","ពណ៍នា","ប្រើប្រាស់","ស្ថានការ");
 		$link=array('module'=>'sales','controller'=>'partnerservice','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('partner_name'=>$link,'descripn'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('partner_name'=>$link,'gender'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
@@ -64,5 +63,6 @@ class Sales_PartnerserviceController extends Zend_Controller_Action
 	 		$this->view->rsservice = $db->getAllService();
 
 	 		$this->view->partner_cost = $db->getPartnerCostById($id);
+	 		
 	}	
 }
