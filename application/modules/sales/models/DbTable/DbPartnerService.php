@@ -49,7 +49,7 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     			'tel' 				 => $post['tel'],
     			'addresss'	      	 => $post['addresss'],
     	//		'service_cate'	     => $post['service_cate'],
-    			'service_fee'	     => $post['service_fee'],
+    	//		'service_fee'	     => $post['service_fee'],
     			'description'	     => $post['description'],
     	);
     	$this->_name="tb_partnerservice";
@@ -107,8 +107,8 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     			'gender'			 => $post['gender'],
     			'tel' 				 => $post['tel'],
     			'addresss'	      	 => $post['addresss'],
-    			'service_cate'	 	=> $post['service_cate'],
-    			'service_fee'	     => $post['service_fee'],
+//     			'service_cate'	 	=> $post['service_cate'],
+//     			'service_fee'	     => $post['service_fee'],
     			'description'	     => $post['description'],
     			"status"			=>	$post["status"],
     	);

@@ -417,7 +417,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	function getPartnerServiceById($id){
 		$sql=" SELECT
 					ps.*,
-					(SELECT item_name FROM `tb_product` WHERE tb_product.id=ps.service_id) As service_name
+					(SELECT item_name FROM `tb_product` WHERE tb_product.id=ps.service_id) As service_name,
+					(SELECT item_code FROM `tb_product` WHERE tb_product.id=ps.service_id) As service_code
 				FROM
 					tb_sales_partner_service as ps
 				WHERE

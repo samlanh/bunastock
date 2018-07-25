@@ -845,7 +845,7 @@ temp='';
 
 function initializePartnerService(){
 	<?php if(!empty($this->row_partner)){foreach ($this->row_partner as $rs){?>
-		service_name = "<?php echo $rs['service_name']?>";
+		service_name = "<?php echo $rs['service_name']." - ".$rs['service_code']?>";
 		service_id = "<?php echo $rs['service_id']?>";
 		if(service_name=='' ){return false;}
 		
