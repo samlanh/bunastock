@@ -59,8 +59,8 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     		$iden = explode(",", $post['identity']);
     		foreach ($iden as $i){
     			$arra=array(
-    					'service_id'		=> $id,
-    					'service_cate'		=> $post['service_cate'.$i],
+    					'partner_id'		=> $id,
+    					'service_id'		=> $post['service_id'.$i],
     					'prices'			=> $post['prices_'.$i],
     					'notes'				=> $post['notes_'.$i],
     			);
@@ -80,11 +80,11 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql ="SELECT 
 				 p.*,
-				 (SELECT item_name FROM `tb_product` WHERE id=p.service_cate LIMIT 1) AS service_name,
-				 (SELECT barcode FROM `tb_product` WHERE id=p.service_cate LIMIT 1) AS service_barcode 
+				 (SELECT item_name FROM `tb_product` WHERE id=p.partner_id LIMIT 1) AS service_name,
+				 (SELECT barcode FROM `tb_product` WHERE id=p.partner_id LIMIT 1) AS service_barcode 
 				FROM
 				  `tb_partner_cost` AS p 
-				WHERE p.service_id = $id ";
+				WHERE p.partner_id = $id ";
     	return $db->fetchAll($sql);
     }
 //     function getServices($data){
@@ -116,15 +116,15 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
 		$this->update($_arr, $where);
 		
 		$this->_name="tb_partner_cost";
-		$where=" service_id = $id";
+		$where=" partner_id = $id";
 		$this->delete($where);
 		
 		if(!empty($post['identity'])){
 			$iden = explode(",", $post['identity']);
 			foreach ($iden as $i){
 				$arra=array(
-						'service_id'		=> $id,
-						'service_cate'		=> $post['service_cate'.$i],
+						'partner_id'		=> $id,
+						'service_id'		=> $post['service_id'.$i],
 						'prices'			=> $post['prices_'.$i],
 						'notes'				=> $post['notes_'.$i],
 				);

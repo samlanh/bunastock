@@ -500,7 +500,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 	function getServicePartnerPrices($partner_id , $service_id){
 		$db = $this->getAdapter();
-		$sql=" SELECT `prices`,notes FROM `tb_partner_cost` WHERE `service_id`=$partner_id AND `service_cate`=$service_id LIMIT 1 ";
+		$sql=" SELECT `prices`,notes FROM `tb_partner_cost` WHERE partner_id=$partner_id AND `service_id`=$service_id LIMIT 1 ";
 		return $db->fetchRow($sql);
 	}
 	

@@ -74,7 +74,7 @@
 											ប្រភេទសេវាកម្ម
 										</label>
 										<div class="col-md-8">
-											<select  name="service_cate" id="service_cate" onchange="addProductRow();"  class="form-control select2me" value="1">
+											<select  name="service_id" id="service_id" onchange="addProductRow();"  class="form-control select2me" value="1">
 												<option value="-1">សូមជ្រើសរើសសេវាកម្ម</option>
 												<?php if(!empty($this->rsservice)){foreach ($this->rsservice as $rs){?>
 													<option value="<?php echo $rs["id"];?>"><?php echo $rs["item_name"].' - '.$rs["barcode"];?></option>
@@ -163,14 +163,14 @@
 	temp='';
 	function addProductRow(){
 		index++;
-		var branch_text = $("#service_cate");
+		var branch_text = $("#service_id");
 		var txt_br = $("option:selected",branch_text).text();
-		var pro_id = $("#service_cate").val();
+		var pro_id = $("#service_id").val();
 		
 		if(pro_id<=0){return false;}
 		template='<tr id="row_location_'+index+'">';
 		template+='<td>'+index+'</td>';
-		template+='<td>'+txt_br+'<input type="hidden" id="service_cate'+index+'" name="service_cate'+index+'" value="'+pro_id+'" </td>';		
+		template+='<td>'+txt_br+'<input type="hidden" id="service_id'+index+'" name="service_id'+index+'" value="'+pro_id+'" </td>';		
 		template+='<td><input type="text" onkeyup="totalQty('+index+');" id="prices_'+index+'" name="prices_'+index+'" class=" form-control"></td>'; 
 		template+='<td><input type="text" id="notes_'+index+'" name="notes_'+index+'" class="form-control"></td>';
 		template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
@@ -182,7 +182,7 @@
 			$('#identity').val(identity+','+index);
 		} else {$('#identity').val(index);}
 		
-		$('#service_cate').val(-1).select2();
+		$('#service_id').val(-1).select2();
 		getServicePrice(index,pro_id);
 	}
 	function deleteRecord(index) {
