@@ -1041,10 +1041,10 @@
 					data = $.parseJSON(data);
 					if(data){
 						if(data.is_package==1){// product package
-							addProductRow(product_id,txt_product_name,1,1,0);
-							getPackageProduct(product_id);
+							addProductRow(product_id,txt_product_name,1,1,0,data.is_package_cost); // (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
+							getPackageProduct(product_id,data.is_package_cost);
 						}else{
-							addProductRow(product_id,txt_product_name,1,0,0);
+							addProductRow(product_id,txt_product_name,1,0,0,0); // (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
 							// if(data.is_service==1){
 								// $("#service_id").val(product_id).select2();
 								// addServicePartner(1);
@@ -1060,7 +1060,7 @@
 	}
 
 	var url_getpackage = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-packageproduct')); ?>';
-	function getPackageProduct(product_id){
+	function getPackageProduct(product_id,is_package_cost){
 		$.ajax({
 			url: url_getpackage,
 			type: "post",
@@ -1069,7 +1069,7 @@
 				data = $.parseJSON(data);
 				if(data){
 					for(i=0;i<data.length;i++){
-						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty'],0,product_id);
+						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty'],0,product_id,is_package_cost);// (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
 					}
 				}
 			},
@@ -1082,7 +1082,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	index_sale=0;
-	function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,package_id=0){
+	function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,package_id=0,is_package_cost=0){
 		if(product_id==null){
 			var product_name = $("#product_id");
 			var txt_product_name = $("option:selected",product_name).text();
@@ -1093,7 +1093,7 @@
 			template='<tr style="white-space:nowrap;" align="center" id="row'+index_sale+'">';
 			template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
 			template+='<td>&nbsp;&nbsp;&nbsp;'+txt_product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
-			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" name="is_package_'+index_sale+'" id="is_package_'+index_sale+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+index_sale+'" id="packageid_'+index_sale+'" value="'+package_id+'" class="form-control" /></td>';
+			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" name="is_package_cost_'+index_sale+'" id="is_package_cost_'+index_sale+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+index_sale+'" id="is_package_'+index_sale+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+index_sale+'" id="packageid_'+index_sale+'" value="'+package_id+'" class="form-control" /></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="'+qty+'" readonly class="form-control"></td>';
@@ -1109,10 +1109,8 @@
 				var identity = $("#identity_sale").val();
 				$("#identity_sale").val(identity+','+index_sale);
 			} else {$("#identity_sale").val(index_sale);}
-			getProductinfo(index_sale,product_id,package_id);
 			
-			//calCualteSalePrice(index_sale);
-			
+			getProductinfo(index_sale,product_id,is_package,package_id,is_package_cost);
 		}
 	}
 	
@@ -1137,7 +1135,7 @@
 		netTotal();
 	}
 
-	function getProductinfo(index_sale,product_id,package_id=0){
+	function getProductinfo(index_sale,product_id,is_package=0,package_id=0,is_package_cost=0){
 		if(product_id>0){
 			branch_id = $('#branch').val();
 			$.ajax({
@@ -1151,14 +1149,27 @@
 						$('#measur_name_'+index_sale).val(data.measue_name);
 						$('#unit_label_'+index_sale).val(data.unit_label);
 
-						if(package_id>0){
+						if(is_package==1 && package_id==0 && is_package_cost==1){
+							//alert(1);
+							$('#cost_price'+index_sale).val(data.price);
+							$('#selling_price_'+index_sale).val(data.selling_price);
+							$('#price_reil_'+index_sale).val(data.selling_price_khmer);
+						}else if(is_package==1 && package_id==0 && is_package_cost==0){
+							//alert(2);
 							$('#selling_price_'+index_sale).prop('readonly', true);
 							$('#price_reil_'+index_sale).prop('readonly', true);
 						}else{
-							$('#cost_price_'+index_sale).val(data.cost_price);
-							$('#price_reil_'+index_sale).val(data.selling_price_khmer);
-							$('#selling_price_'+index_sale).val(data.selling_price);
+							//alert(3);
+							if(package_id>0 && is_package_cost==1){
+								$('#selling_price_'+index_sale).prop('readonly', true);
+								$('#price_reil_'+index_sale).prop('readonly', true);
+							}else{
+								$('#cost_price'+index_sale).val(data.price);
+								$('#selling_price_'+index_sale).val(data.selling_price);
+								$('#price_reil_'+index_sale).val(data.selling_price_khmer);
+							}
 						}
+						
 						
 						qty = data.qty;
 						if(qty==null){qty=0;}
@@ -1168,12 +1179,6 @@
 						qty=parseInt(qty);
 			            measure_name = data.measue_name;
 						if(data.measue_name==null){measure_name='';}
-						
-						// if(qty_unitlable==''){
-							// qty_unitlable = "";
-						// }else{
-							// qty_unitlable = "និង"+qty_unitlable;
-						// }
 						
 						current_stock = qty+""+measure_name;//data.unit_label;
 						if(qty<=0){
@@ -1219,8 +1224,8 @@
 		for(var n = 0; n < rowIDArray.length; n++) {
 			netTotal += Number($("#sale_total_"+rowIDArray[n]).val());
 		}
-		$("#sub_total").val(netTotal.toFixed(3));
-		$("#paid").val(netTotal.toFixed(3));
+		$("#sub_total").val(netTotal.toFixed(0));
+		$("#paid").val(netTotal.toFixed(0));
 		
 		calCualtepaid();
 	}
@@ -1235,7 +1240,7 @@
 			$('#paid').val(total_dollar);
 			$('#balance').val(0);
 		}else{
-			$('#balance').val(balance);
+			$('#balance').val(balance.toFixed(2));
 		}
 	}
 	

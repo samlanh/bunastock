@@ -6,6 +6,10 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
 	}
+	function getBranchId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->branch_id;
+	}
 	
 	function getAllPurchaseOrder($search){//new
 		$db= $this->getAdapter();
@@ -84,7 +88,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			$info_purchase_order=array(
 					"vendor_id"      => $data['v_name'],
 					"branch_id"      => $data["LocationId"],
-					"order_number"   => $db_global->getPurchaseNumber(1),
+					"order_number"   => $db_global->getPurchaseNumber($data["LocationId"]),
 					
 					"date_order"     => date("Y-m-d",strtotime($data['order_date'])),
 					"remark"         => $data['remark'],
@@ -107,30 +111,31 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			$purchase_id = $this->insert($info_purchase_order);
 			unset($info_purchase_order);
 			
-			$info_purchase_order=array(
-					"branch_id"   	=> $data["LocationId"],
-					"purchase_id"   => $purchase_id,
-					"payment_type"  => "Cash", //payment by cash/paypal/cheque
-					"expense_date"  => date("Y-m-d",strtotime($data["order_date"])),
-					
-					"total"         => $data['all_totalpayment'],
-					"paid"          => $data['paid'],
-					"balance"       => $data['remain'],
-					
-					"remark"        => $data['remark'],
-					"user_id"       => $this->getUserId(),
-					'status'        => 1,
-					"create_date"   => date("Y-m-d H:i:s"),
-			);
-			$this->_name="tb_vendor_payment";
-			$reciept_id = $this->insert($info_purchase_order);
-			
+			if($data['paid']>0){
+				$info_purchase_order=array(
+						"branch_id"   	=> $data["LocationId"],
+						"purchase_id"   => $purchase_id,
+						"payment_type"  => "Cash", //payment by cash/paypal/cheque
+						"expense_date"  => date("Y-m-d",strtotime($data["order_date"])),
+						
+						"total"         => $data['all_totalpayment'],
+						"paid"          => $data['paid'],
+						"balance"       => $data['remain'],
+						
+						"remark"        => $data['remark'],
+						"user_id"       => $this->getUserId(),
+						'status'        => 1,
+						"create_date"   => date("Y-m-d H:i:s"),
+				);
+				$this->_name="tb_vendor_payment";
+				$reciept_id = $this->insert($info_purchase_order);
+			}
 
 			$ids=explode(',',$data['identity']);
 			$locationid=$data['LocationId'];
 			foreach ($ids as $i)
 			{
-				$rsproduct = $this->getProductCostAndQty($data['item_id_'.$i]); 
+				$rsproduct = $this->getProductCostAndQty($data['pro_'.$i]); 
 				$cost_avg = (($rsproduct['qty']*$rsproduct['price'])+($data['price'.$i]*$data['qty'.$i])) / ($rsproduct['qty']+$data['qty'.$i]);
 				$array=array(
 						'price'=>$cost_avg
@@ -141,10 +146,10 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 				
 				$data_item= array(
 						'purchase_id' => 	$purchase_id,
-						'pro_id'	  => 	$data['item_id_'.$i],
+						'pro_id'	  => 	$data['pro_'.$i],
                         'qty_unit' 	  => 	$data['qty_unit_'.$i],
-						'qty_order'	  => 	$data['qty'.$i],
 						'qty_detail'  => 	$data['qty_per_unit_'.$i],
+						'qty_order'	  => 	$data['qty'.$i],
 						'price'		  => 	$data['price'.$i],
 						'disc_value'  => 	$data['dis_value'.$i],
 						'sub_total'	  => 	$data['total'.$i],
@@ -153,7 +158,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 				$this->insert($data_item);
 	
 				if($data["status"]==5 OR $data["status"]==4){
-					$rows=$db_global->productLocationInventory($data['item_id_'.$i], $locationid);// action add //check stock product location  
+					$rows=$db_global->productLocationInventory($data['pro_'.$i], $locationid);// action add //check stock product location  
 					if($rows)
 					{
 						if($data["status"]==4 OR $data["status"]==5){
@@ -176,111 +181,86 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			echo $e->getMessage();exit();
 		}
 	}
-	public function updatePurchaseOrder($data)
+	public function updatePurchaseOrder($data,$id)
 	{
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$row_oldhistory = $this->getPurchaseById($data['id']);// get prev.item
-			if($row_oldhistory['status']==1 AND $row_oldhistory['purchase_status']==5){//usedi and paid
-				$po_item = $this->getPurchaseDetailById($data['id']);//get old item detail
-				if(!empty($po_item)){
-					foreach ($po_item as $rsitem){
-						$rows=$db_global->productLocationInventory($rsitem['pro_id'], $row_oldhistory['branch_id']);// action update //check stock product location
-						if($rows)
-						{
-							$datatostock   = array(
-									'qty'   		=> $rows["qty"]-$rsitem['qty_order'],
-									'last_mod_date'	=> date("Y-m-d"),
-							);
-							$this->_name="tb_prolocation";
-							$where=" id = ".$rows['id'];
-							$this->update($datatostock, $where);
-						}
+			$row_oldhistory = $this->getPurchaseById($id);// get prev.item
+			$po_item = $this->getPurchaseDetailById($id);//get old item detail
+			if(!empty($po_item)){
+				foreach ($po_item as $rsitem){
+					$rows=$db_global->productLocationInventory($rsitem['pro_id'], $row_oldhistory['branch_id']);// action update //check stock product location
+					if($rows)
+					{
+						$datatostock   = array(
+								'qty'   => $rows["qty"]-$rsitem['qty_order'],
+						);
+						$this->_name="tb_prolocation";
+						$where=" id = ".$rows['id'];
+						$this->update($datatostock, $where);
 					}
 				}
-			}elseif($row_oldhistory['status']==1 AND $row_oldhistory['purchase_status']==2){//activ and open
-			
-			}else{
-	
 			}
 				
 			$this->_name='tb_purchase_order_item';
-			$where =" purchase_id=".$data['id'];
+			$where =" purchase_id=".$id;
 			$this->delete($where);
 				
 			$session_user=new Zend_Session_Namespace('auth');
 			$userName=$session_user->user_name;
 			$GetUserId= $session_user->user_id;
 	
-			$idrecord=$data['v_name'];
-			$order_add=$data['txt_order'];
 			$info_purchase_order=array(
-					"vendor_id"      => 	$data['v_name'],
-					"branch_id"      => 	$data["LocationId"],
-					"order_number"   => 	$order_add,
-					"date_order"     => 	date("Y-m-d",strtotime($data['order_date'])),
-					"date_in"     	 => 	date("Y-m-d",strtotime($data['date_in'])),
-					"purchase_status"=> 	$data['status'],
-					"remark"         => 	$data['remark'],
-					"all_total"      => 	$data['totalAmoun'],
-					"invoice_no"	 =>     $data['invoice_no'],
-					"discount_value" => 	$data['dis_value'],
-					'discount_after' => 	$data['dis_value'],
-					"discount_real"  => 	$data['global_disc'],
-					"net_total"      => 	$data['all_totalpayment'],//$data['all_totalpayment'] which 1 choose .
-					"net_totalafter" =>     $data['all_totalpayment'],
-					"paid"           => 	$data['paid'],
-					"paid_after"     => 	$data['paid'],
-					"balance"        => 	$data['remain'],
-					"balance_after"  => 	$data['remain'],
-					"user_mod"       => 	$GetUserId,
-					"date"      => 	new Zend_Date(),
-					'invoice_no' => 	$data['invoice_no'],
-					//'date_issuecheque'=>date("Y-m-d",strtotime($data['date_issuecheque'])),
-					//"payment_method" =>     $data['payment_name'],
-					//"payment_number" =>     $data["payment_number"],
-					//"currency_id"    =>     $data['currency'],
-					'status'	    => $data['status_use'],
-					'commission'    => 	$data['commission'],
-					'commission_ensur'=> 	$data['commission_ensur'],
-					'bank_name'=> 	$data['bank_name'],
+					"vendor_id"      => $data['v_name'],
+					"branch_id"      => $data["LocationId"],
+					"order_number"   => $data["purchase_num"],
+					
+					"date_order"     => date("Y-m-d",strtotime($data['order_date'])),
+					"remark"         => $data['remark'],
+					"purchase_status"=> $data['status'],
+					
+					"net_total"      => $data['totalAmoun'],
+					"discount_value" => $data['dis_value'],
+					"total_payment"  => $data['all_totalpayment'],
+					"paid"           => $data['paid'],
+					"balance"        => $data['remain'],
+					
+					"user_id"        => $this->getUserId(),
+					"user_mod"       => $this->getUserId(),
+					"create_date"    => date("Y-m-d H:i:s"),
+					"status"         => 1,
 			);
 			
 			$this->_name="tb_purchase_order";
-			$where=" id=".$data['id'];
-			$purchase_id = $this->update($info_purchase_order, $where);
-			$purchase_id=$data['id'];
-			unset($info_purchase_order);
+			$where=" id=$id ";
+			$this->update($info_purchase_order, $where);
 				
 			$ids=explode(',',$data['identity']);
 			$locationid=$data['LocationId'];
 			if(!empty($data['identity']))foreach ($ids as $i)
 			{
 				$data_item= array(
-						'purchase_id' => $purchase_id,
-						'pro_id'	  => $data['item_id_'.$i],
-						'qty_order'	  => $data['qty'.$i],
-						'qty_unit'    => $data['qty_unit_'.$i],
-						'qty_detail'  => $data['qty_per_unit_'.$i],
-						'price'		  => $data['price'.$i],
-						'disc_value'  => $data['real-value'.$i],
-						'sub_total'	  => $data['total'.$i],
+						'purchase_id' => 	$id,
+						'pro_id'	  => 	$data['pro_'.$i],
+                        'qty_unit' 	  => 	$data['qty_unit_'.$i],
+						'qty_detail'  => 	$data['qty_per_unit_'.$i],
+						'qty_order'	  => 	$data['qty'.$i],
+						'price'		  => 	$data['price'.$i],
+						'disc_value'  => 	$data['dis_value'.$i],
+						'sub_total'	  => 	$data['total'.$i],
 				);
 				$this->_name='tb_purchase_order_item';
 				$this->insert($data_item);
 	
-				if(($data["status"]==5 OR $data["status"]==4) AND $data["status_use"]==1 ){
-					$rows=$db_global->productLocationInventory($data['item_id_'.$i], $locationid);//check stock product location
+				if($data["status"]==5 OR $data["status"]==4){
+					$rows=$db_global->productLocationInventory($data['pro_'.$i], $locationid);//check stock product location
 					if($rows)
 					{
 						if($data["status"]==4 OR $data["status"]==5){
 							$arr  = array(
-									'qty'   		  =>$rows["qty"]+$data['qty'.$i],
-									'last_mod_date'	  =>date("Y-m-d"),
-									'last_mod_userid' =>$GetUserId,
-									'user_id'=>$GetUserId,
+									'qty'   =>$rows["qty"]+$data['qty'.$i],
 							);
 							$this->_name="tb_prolocation";
 							$where=" id = ".$rows['id'];
@@ -310,13 +290,13 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 	
 	public function getPurchaseById($id){//just new 
 		$db=$this->getAdapter();
-		$sql = "SELECT p.*,(SELECT title FROM `tb_income_expense` WHERE po_id=p.`id` LIMIT 1)  AS po_x FROM `tb_purchase_order` AS p WHERE id=$id LIMIT 1 ";
+		$sql = "SELECT p.* FROM `tb_purchase_order` AS p WHERE id=$id LIMIT 1 ";
 		$rows=$db->fetchRow($sql);
 		return $rows;
 	}
 	public function getPurchaseDetailById($id){//just new
 		$db=$this->getAdapter();
-		$sql = "SELECT * FROM `tb_purchase_order_item` WHERE purchase_id=$id ";
+		$sql = "SELECT poi.*,p.item_name as pro_name,p.item_code FROM `tb_purchase_order_item` as poi,tb_product as p WHERE p.id=poi.pro_id and purchase_id=$id ";
 		$rows=$db->fetchAll($sql);
 		return $rows;
 	}

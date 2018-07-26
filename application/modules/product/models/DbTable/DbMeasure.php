@@ -4,9 +4,15 @@ class Product_Model_DbTable_DbMeasure extends Zend_Db_Table_Abstract
 {
 	protected $_name = "tb_measure";
 	
-	public function getUserId(){
-		return Application_Model_DbTable_DbGlobal::GlobalgetUserId();
+	function getUserId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->user_id;
 	}
+	function getBranchId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->branch_id;
+	}
+	
 	public function add($data){
 		$db = $this->getAdapter();
 		$arr = array(
@@ -48,19 +54,17 @@ class Product_Model_DbTable_DbMeasure extends Zend_Db_Table_Abstract
 	public function addSaleagent($data){
 		$db = $this->getAdapter();
 		$arr1 = array(
-				'name_saleagent'	=>	$data["name_saleagent"],
+				"branch_id" => $this->getBranchId(),
+				'name'		=>	$data["name_saleagent"],
 				'email'		=>	$data["email"],
 				'phone'		=>	$data["phone"],
 				'user_id'	=>	$this->getUserId(),
-				// 	'parent_id'		=>	$data["parent"],
 				'address'	=>	$data["address"],
 				'note'		=>	$data["note"],
-				'date'		=>	new Zend_Date(),
-				//'status'	=>	$data["status"],		
+				'date'		=>	date("Y-m-d"),
 		);
 		$this->_name = "tb_sale_agent";
 		return $this->insert($arr1);
-	//	print_r($this->$data); exit();
 	}
 	
 	public function getAllMeasure($data){

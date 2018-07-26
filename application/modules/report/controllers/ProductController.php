@@ -43,7 +43,7 @@ class report_ProductController extends Zend_Controller_Action
     				'ad_search'		=>	'',
     				'brand'			=>	'',
     				'category'		=>	'',
-    				'type'			=>	'',
+    				'type'			=>	-1,
     		);
     	}
     	$this->view->product = $db->getAllProduct($data);

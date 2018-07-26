@@ -179,14 +179,14 @@ class Application_Form_purchase extends Zend_Form
     	$date =new Zend_Date();
     	$date_inElement ->setAttribs(array('class'=>'validate[required] form-control form-control-inline date-picker',
 		'data-date-format'=>"dd-mm-yyyy"));
-    	$date_inElement ->setValue($date->get('MM/d/Y'));
+    	$date_inElement->setValue(date("d-m-Y"));
     	$this->addElement($date_inElement);
     	
     	$dateOrderElement = new Zend_Form_Element_Text('order_date');
     	$dateOrderElement ->setAttribs(array(
 		'data-date-format'=>"dd-mm-yyyy",
 		'class'=>'col-md-3 validate[required] form-control form-control-inline date-picker','placeholder' => 'Click to Choose Date'));
-    	$dateOrderElement ->setValue($date->get('M/d/Y'));
+    	$dateOrderElement->setValue(date("d-m-Y"));
     	$this->addElement($dateOrderElement);
     	 
     	$termElement = new Zend_Form_Element_Text('term');
@@ -208,9 +208,6 @@ class Application_Form_purchase extends Zend_Form
     	
     	$old_status = new Zend_Form_Element_Hidden('old_status');
     	$this->addElement($old_status);
-    	
-    	$old_location = new Zend_Form_Element_Hidden('old_location');
-    	$this->addElement($old_location);
     	
     	$status = new Zend_Form_Element_Select('status_use');
     	$opt_status = array(1=>'Active',0=>"Deative");
@@ -242,41 +239,24 @@ class Application_Form_purchase extends Zend_Form
     	$this->addElement($bank_name);
 		
     	Application_Form_DateTimePicker::addDateField(array('order_date','date_in','receiv_date'));
-    		if($data != null) {
-    			$old_location->setValue($data["branch_id"]);
-    			$status->setValue($data["status"]);
-    			$old_status->setValue($data["purchase_status"]);
-    			$idElement = new Zend_Form_Element_Hidden('id');
-    			$idElement->setValue($data["id"]);
-    			$this->addElement($idElement);    			
-    			$vendor_id->setValue($data["vendor_id"]);
-    			$locationID->setValue($data["branch_id"]);
-    			$dateOrderElement->setValue(date("m/d/Y",strtotime($data["date_order"])));
-    			$date_inElement->setValue(date("m/d/Y",strtotime($data["date_in"])));
-    			$statusElement->setValue($data["purchase_status"]);
-				$date_issuecheque->setValue(date("m/d/Y",strtotime($data["date_issuecheque"])));
-    			//$roder_element->setAttribs(array('readonly'=>'readonly'));
-    			$roder_element->setValue($data["invoice_no"]);
-    			$po_number->setValue($data["order_number"]);
-				$all_totalpayment->setValue($data["net_total"]);
-    			
-    			$descriptionElement->setValue($data["remark"]);
-    			$currencyElement->setValue($data['currency_id']);
-    			$paymentmethodElement->setValue($data['payment_method']);
-    			$paymentElement->setValue($data['payment_number']);
-    			$paidElement->setValue($data['paid']);
-    			$totalAmountElement->setValue($data['all_total']);//r
-    			$netTotalElement->setValue($data['all_total']);//r
-    			$allTotalElement->setValue($data['net_total']);//r
-    			$remainlElement->setValue($data['balance']);//r
-				$title->setvalue($data["po_x"]);
-				
-				$commission_ensur->setvalue($data["commission_ensur"]);
-				$bank_name->setvalue($data["bank_name"]);
-				$commission->setvalue($data["commission"]);
-				$all_totalpayment->setValue($data["net_total"]);
+    	if($data != null) {
+    		$status->setValue($data["status"]);
+    		$old_status->setValue($data["purchase_status"]);
+    		$vendor_id->setValue($data["vendor_id"]);
+    		$locationID->setValue($data["branch_id"]);
+    		$dateOrderElement->setValue(date("d-m-Y",strtotime($data["date_order"])));
+    		$statusElement->setValue($data["purchase_status"]);
+    		$po_number->setValue($data["order_number"]);
+    		$descriptionElement->setValue($data["remark"]);
     		
-    		} else {$discountTypeElement->setValue(1);
+			$totalAmountElement->setValue($data["net_total"]);
+			$dis_valueElement->setValue($data["discount_value"]);
+			$all_totalpayment->setValue($data["total_payment"]);
+    		$paidElement->setValue($data['paid']);
+    		$remainlElement->setValue($data['balance']);//r
+			
+    	} else {
+    		$discountTypeElement->setValue(1);
     	}
      	return $this;
  

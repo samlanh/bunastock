@@ -19,11 +19,12 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 				  INNER JOIN tb_sublocation AS l 
 					ON sg.branch_id = l.id 
 				WHERE 1 
-				  AND sg.name != '' AND sg.date>="."'".$start_date."' AND sg.date<="."'".$end_date."'";
-						$order=" ORDER BY sg.id DESC ";
+				  AND sg.name != ''
+			";
+		$order=" ORDER BY sg.id DESC ";
 		
-		$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " sg.date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " sg.date <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();
@@ -100,15 +101,15 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 		$GetUserId= $session_user->user_id;
 		try{
 			$datainfo=array(
-					"name"		 			=>	$data['name'],
-					"phone"      			=>	$data['phone'],
-					"email"      			=>	$data['email'],
-					"address"    			=>	$data['address'],
-					"branch_id"   			=>	$data['branch_id'],
+					"name"		 	=>	$data['name'],
+					"phone"      	=>	$data['phone'],
+					"email"      	=>	$data['email'],
+					"address"    	=>	$data['address'],
+					"branch_id"   	=>	$data['branch_id'],
 					"note"			=>	$data['description'],
-					'user_id'				=>	$GetUserId,
-					"date"					=>	date("Y-m-d"),
-					"status"			=>	$data["status"],
+					'user_id'		=>	$GetUserId,
+					"date"			=>	date("Y-m-d"),
+					"status"		=>	$data["status"],
 			);
 			$this->_name="tb_sale_agent";
 			$where=$this->getAdapter()->quoteInto('id=?',$data['id']);

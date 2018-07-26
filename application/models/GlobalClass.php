@@ -343,17 +343,12 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 			//AND pl.location_id =".$result['branch_id']." 
 			
 				$rows = $db->fetchAll($sql);
+				//print_r($rows);exit();
 				if($rows){
 					foreach($rows as $value){
 						
-						if($value['is_service'] == 1){
-							$measure = "";
-						}else{
-							$measure = ' '.htmlspecialchars($value['item_code'].' (1'.$value['measue_name'].'='.$value['qty_perunit'].$value['unit_label'].')', ENT_QUOTES);
-						}
-						
 						$option .= '<option value="'.$value['id'].'" >'.
-							htmlspecialchars($value['item_name']." ".$value['brand_name'], ENT_QUOTES).$measure   
+							htmlspecialchars($value['item_name']." - ".$value['item_code'], ENT_QUOTES)   
 						.'</option>';
 					}
 				}

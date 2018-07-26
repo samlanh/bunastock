@@ -200,7 +200,8 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$arr=array(
 						'mong_id'		=> $mong_id,
 						'pro_id'		=> $data['pro_'.$i],
-
+							
+						'is_package_cost'=> $data['is_package_cost_'.$i],
 						'is_package'	=> $data['is_package_'.$i],
 						'package_id'	=> $data['packageid_'.$i],
 							

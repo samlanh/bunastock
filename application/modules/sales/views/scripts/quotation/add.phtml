@@ -529,7 +529,7 @@ function netTotal() {//use
 			netTotal += Number($('#sub_total'+rowIDArray[n]).val());
 		}
 	}
-	$('#sub_total').val(netTotal);
+	$('#sub_total').val(netTotal.toFixed(0));
 }
 var url_getproduct = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getproduct')); ?>';
 function getProductinfo(index,product_id,is_package,package_id=0,is_package_cost=0){

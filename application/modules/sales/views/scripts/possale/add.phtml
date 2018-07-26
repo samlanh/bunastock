@@ -722,8 +722,8 @@ function netTotal() {//use
 			netTotal += Number($('#sub_total'+rowIDArray[n]).val());
 		}
 	}
-	$('#sub_total').val(netTotal);
-	$('#paid').val(netTotal);
+	$('#sub_total').val(netTotal.toFixed(0));
+	$('#paid').val(netTotal.toFixed(0));
 	calCualtepaid();
 }
 function calCualtepaid(){
@@ -737,7 +737,7 @@ function calCualtepaid(){
 		$('#paid').val(total_dollar);
 		$('#balance').val(0);
 	}else{
-		$('#balance').val(balance);
+		$('#balance').val(balance.toFixed(2));
 	}
 }
 var url_getproduct = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getproduct')); ?>';

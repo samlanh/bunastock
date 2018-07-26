@@ -150,13 +150,13 @@
 										<tbody>
 											<?php $index=0;
 											if(!empty($this->rsdetail)){foreach($this->rsdetail as $key => $item){ $index++;?>
-											<tr style=" font-size:15px !important; text-align:center;font-weight:bold;">
+											<tr class="hover" style=" font-size:15px !important; text-align:center;font-weight:bold;">
 												<td style="border:1px solid #000;"><?php echo $key+1;?></td>
 												<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['item_code'];?> </strong></td>
 												<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['pro_name'];?> </strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;"><?php echo number_format($item['qty_order'],0);if(/*$item['is_service']==0 && */ $item['is_package']==0){echo " ".$item['measure_name'];}?></strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['package_id']==0){if($item['price_reil']>0){echo number_format($item['price_reil'])." ៛";}else{echo "$ ".number_format($item['price'],3);}}?></strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['package_id']==0){echo "$ ".number_format($item['sub_total'],3);}?></strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['price']>0){if($item['price_reil']>0){echo number_format($item['price_reil'])." ៛";}else{echo "$ ".number_format($item['price'],3);}}?></strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['sub_total']>0){echo "$ ".number_format($item['sub_total'],3);}?></strong></td>
 											</tr>
 											<?php } }
 											for($index;$index<15;$index++){

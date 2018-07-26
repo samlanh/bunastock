@@ -5,7 +5,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	//print_r($this->row_detail); exit();
 ?>						 
-<title>បន្ថែមលក់ម៉ុងចេតិយ</title>
+<title>កែប្រែលក់ម៉ុងចេតិយ</title>
 <style>
 	.aligncenter{text-align: center;background:#4b8df8;color:#ececec;}
 </style>
@@ -16,7 +16,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>បន្ថែមលក់ម៉ុងចេតិយ</strong>
+					<i class="fa fa-gift"></i><strong>កែប្រែលក់ម៉ុងចេតិយ</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -1070,9 +1070,10 @@
 					data = $.parseJSON(data);
 					if(data){
 						if(data.is_package==1){// product package
-							getPackageProduct(product_id);
+							addProductRow(product_id,txt_product_name,1,1,0,data.is_package_cost); // (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
+							getPackageProduct(product_id,data.is_package_cost);
 						}else{
-							addProductRow(product_id,txt_product_name,1);
+							addProductRow(product_id,txt_product_name,1,0,0,0); // (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
 							// if(data.is_service==1){
 								// $("#service_id").val(product_id).select2();
 								// addServicePartner(1);
@@ -1088,7 +1089,7 @@
 	}
 
 	var url_getpackage = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-packageproduct')); ?>';
-	function getPackageProduct(product_id){
+	function getPackageProduct(product_id,is_package_cost){
 		$.ajax({
 			url: url_getpackage,
 			type: "post",
@@ -1097,7 +1098,7 @@
 				data = $.parseJSON(data);
 				if(data){
 					for(i=0;i<data.length;i++){
-						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty']);
+						addProductRow(data[i]['product_id'],data[i]['name']+" - "+data[i]['code'],data[i]['qty'],0,product_id,is_package_cost);// (pro_id,pro_name,qty,is_package,package_id,is_package_cost)
 					}
 				}
 			},
@@ -1118,9 +1119,9 @@
 				index_sale++;
 				template='<tr style="white-space:nowrap;" align="center" id="row'+index_sale+'">';
 				template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
-				template+='<td>&nbsp;&nbsp;&nbsp;'+product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
+				template+='<td>&nbsp;&nbsp;&nbsp;'+product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" /> </td>';
 				template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "></td>';
-				template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"></td>';
+				template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" name="is_package_cost_'+index_sale+'" id="is_package_cost_'+index_sale+'" class="form-control" /><input type="hidden" name="is_package_'+index_sale+'" id="is_package_'+index_sale+'" class="form-control" /><input type="hidden" name="packageid_'+index_sale+'" id="packageid_'+index_sale+'" class="form-control" /></td>';
 				template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 				template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="" readonly class="form-control"></td>';
 				template+='<td style="min-width:50px"><input style="text-align:center;" type="text" onkeyup="convertToDollar('+index_sale+');" name="price_reil_'+index_sale+'" id="price_reil_'+index_sale+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
@@ -1136,21 +1137,24 @@
 				}
 				 else {$("#identity_sale").val(index_sale);}
 				 				
-				getProductinfo(index_sale,product_id,"<?php echo $rs['price'];?>");
+				getProductinfo(index_sale,product_id,1,<?php echo $rs['is_package'];?>,<?php echo $rs['package_id'];?>,<?php echo $rs['is_package_cost'];?>);
 				
-				//$("#current_qty_"+index_sale).val("<?php echo $rs['qty_unit'];?>");
+				$("#is_package_cost_"+index_sale).val("<?php echo $rs['is_package_cost'];?>");
+				$("#is_package_"+index_sale).val("<?php echo $rs['is_package'];?>");
+				$("#packageid_"+index_sale).val("<?php echo $rs['package_id'];?>");
+		
 				$("#qtyunit_"+index_sale).val("<?php echo $rs['qty_unit'];?>");
 				$("#qtydetail_"+index_sale).val("<?php echo $rs['qty_detail'];?>");
 				$("#qty_sold_"+index_sale).val("<?php echo $rs['qty_order'];?>");
 				$("#cost_price_"+index_sale).val("<?php echo $rs['cost_price'];?>");
 				$("#price_reil_"+index_sale).val("<?php echo $rs['price_riel'];?>");
 				$("#selling_price_"+index_sale).val("<?php echo $rs['price'];?>");
-				$("#sub_total_"+index_sale).val("<?php echo $rs['sub_total'];?>");
+				$("#sale_total_"+index_sale).val("<?php echo $rs['sub_total'];?>");
 			}
 		<?php }}?>		
 	}
 	index_sale=0;
-	function addProductRow(product_id=null,txt_product_name=null,qty=1){
+	function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,package_id=0,is_package_cost=0){ // (pro_id,pro_name,qty,is_package,package_id)
 		if(product_id==null){
 			var product_name = $("#product_id");
 			var txt_product_name = $("option:selected",product_name).text();
@@ -1162,7 +1166,7 @@
 			template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
 			template+='<td>&nbsp;&nbsp;&nbsp;'+txt_product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
 			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "></td>';
-			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"></td>';
+			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" name="is_package_cost_'+index_sale+'" id="is_package_cost_'+index_sale+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+index_sale+'" id="is_package_'+index_sale+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+index_sale+'" id="packageid_'+index_sale+'" value="'+package_id+'" class="form-control" /></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="'+qty+'" readonly class="form-control"></td>';
 			template+='<td style="min-width:50px"><input style="text-align:center;" type="text" onkeyup="convertToDollar('+index_sale+');" name="price_reil_'+index_sale+'" id="price_reil_'+index_sale+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
@@ -1178,7 +1182,7 @@
 				$("#identity_sale").val(identity+','+index_sale);
 			} else {$("#identity_sale").val(index_sale);}
 			
-			getProductinfo(index_sale,product_id);
+			getProductinfo(index_sale,product_id,0,is_package,package_id,is_package_cost);
 			
 			//calCualteSalePrice(index_sale);				
 	}
@@ -1204,7 +1208,7 @@
 		netTotal();
 	}
 
-	function getProductinfo(index_sale,product_id,old_price=0){
+	function getProductinfo(index,product_id,old_price,is_package=0,package_id=0,is_package_cost=0){
 		if(product_id>0){
 			branch_id = $('#branch').val();
 			$.ajax({
@@ -1214,15 +1218,31 @@
 				success: function(data){
 					data = $.parseJSON(data);
 					if(data){
-						$('#current_qty_'+index_sale).val(data.qty);
-						$('#measur_name_'+index_sale).val(data.measue_name);
-						$('#unit_label_'+index_sale).val(data.unit_label);
+						$('#current_qty_'+index).val(data.qty);
+						$('#measur_name_'+index).val(data.measue_name);
+						$('#unit_label_'+index).val(data.unit_label);
 
-						if(old_price==0){
-							$('#cost_price_'+index_sale).val(data.cost_price);
-							$('#price_reil_'+index_sale).val(data.selling_price_khmer);
-							$('#selling_price_'+index_sale).val(data.selling_price);
+						if(is_package==1 && package_id==0 && is_package_cost==1){
+							//alert(1);
+							$('#cost_price_'+index).val(data.price);
+							$('#selling_price_'+index).val(data.selling_price);
+							$('#price_reil_'+index).val(data.selling_price_khmer);
+						}else if(is_package==1 && package_id==0 && is_package_cost==0){
+							//alert(2);
+							$('#selling_price_'+index).prop('readonly', true);
+							$('#price_reil_'+index).prop('readonly', true);
+						}else{
+							//alert(3);
+							if(package_id>0 && is_package_cost==1){
+								$('#selling_price_'+index).prop('readonly', true);
+								$('#price_reil_'+index).prop('readonly', true);
+							}else{
+								$('#cost_price_'+index).val(data.price);
+								$('#selling_price_'+index).val(data.selling_price);
+								$('#price_reil_'+index).val(data.selling_price_khmer);
+							}
 						}
+						
 
 						qty = data.qty;
 						if(qty==null){qty=0;}
@@ -1245,10 +1265,12 @@
 						}else if(qty>0 && qty_unitlable!=''){
 							current_stock = current_stock + " និង ";
 						}
-						$("#lblcurrent_qty_"+index_sale).val(current_stock+""+qty_unitlable);
+						$("#lblcurrent_qty_"+index).val(current_stock+""+qty_unitlable);
 						
-						$("#qty_perunit_"+index_sale).val(data.qty_perunit);
-						calCualteSalePrice(index_sale);
+						$("#qty_perunit_"+index).val(data.qty_perunit);
+						if(old_price<=0 ){
+							calCualteSalePrice(index);
+						}
 					}
 				},
 				error:function(err){
@@ -1283,8 +1305,8 @@
 		for(var n = 0; n < rowIDArray.length; n++) {
 			netTotal += Number($("#sale_total_"+rowIDArray[n]).val());
 		}
-		$("#sub_total").val(netTotal.toFixed(3));
-		$("#paid").val(netTotal.toFixed(3));
+		$("#sub_total").val(netTotal.toFixed(0));
+		$("#paid").val(netTotal.toFixed(0));
 		
 		calCualtepaid();
 	}
@@ -1299,7 +1321,7 @@
 			$('#paid').val(total_dollar);
 			$('#balance').val(0);
 		}else{
-			$('#balance').val(balance);
+			$('#balance').val(balance.toFixed(2));
 		}
 	}
 	
@@ -1519,45 +1541,49 @@ function isNumberKey(evt)
 
 
 $(document).ready(function() {
-	  setValue();
-	  initializeProduct();
-	  initializeConstructItem();
-	  getDeadPersonDetail();
-	  getConstructorDetail();
-	});
+  setValue();
+  initializeProduct();
+  initializeConstructItem();
+  getDeadPersonDetail();
+  getConstructorDetail();
+});
 
-	function setValue(){
-		$('#customer_id').val('<?php echo $this->row['customer_id']?>');
-		$('#sale_agent').val('<?php echo $this->row['sale_agent']?>');
-		$('#note').val('<?php echo $this->row['note']?>');
-		$('#date_clearpayment').val('<?php echo $this->row['date_clearpayment']?>');
-		$('#receiver_name').val('<?php echo $this->row['receiver_name']?>');
-		$('#sale_date').val('<?php echo $this->row['sale_date']?>');
-		$('#comission').val('<?php echo $this->row['comission']?>');
-		$('#other_note').val('<?php echo $this->row['other_note']?>');
-		
-		$('#construct_type').val('<?php echo $this->row['construct_type']?>');
-		$('#mong_type').val('<?php echo $this->row['mong_type']?>');
-		$('#builder').val('<?php echo $this->row['builder']?>');
-		$('#mong_code').val('<?php echo $this->row['mong_code']?>');
-		$('#mong_number').val('<?php echo $this->row['mong_number']?>');
-		$('#mong_address').val('<?php echo $this->row['mong_address']?>');
-		$('#person_in_charge').val('<?php echo $this->row['person_in_charge']?>');
-		$('#mong_note').val('<?php echo $this->row['mong_note']?>');
-		$('#land_longitude').val('<?php echo $this->row['land_longitude']?>');
-		$('#land_width').val('<?php echo $this->row['land_width']?>');
-		$('#mong_longitude').val('<?php echo $this->row['mong_longitude']?>');
-		$('#mong_width').val('<?php echo $this->row['mong_width']?>');
-		$('#date_finish').val('<?php echo $this->row['date_finish']?>');
-		$('#date_sen').val('<?php echo $this->row['date_sen']?>');
-		$('#time_sen').val('<?php echo $this->row['time_sen']?>');
-		$('#date_chlong_mong').val('<?php echo $this->row['date_chlong_mong']?>');
-		$('#time_chlong_mong').val('<?php echo $this->row['time_chlong_mong']?>');
-		$('#dead_id').val('<?php echo $this->row['dead_id']?>');
-		$('#constructor').val('<?php echo $this->row['constructor']?>');
-		$('#constructor_price').val('<?php echo $this->row['constructor_price']?>');
-		$('#constructor').val('<?php echo $this->row['constructor']?>');
-	}
+function setValue(){
+	$('#customer_id').val('<?php echo $this->row['customer_id']?>');
+	$('#sale_agent').val('<?php echo $this->row['sale_agent']?>');
+	$('#note').val('<?php echo $this->row['note']?>');
+	$('#date_clearpayment').val('<?php echo $this->row['date_clearpayment']?>');
+	$('#receiver_name').val('<?php echo $this->row['receiver_name']?>');
+	$('#sale_date').val('<?php echo $this->row['sale_date']?>');
+	$('#comission').val('<?php echo $this->row['comission']?>');
+	$('#other_note').val('<?php echo $this->row['other_note']?>');
+	
+	$('#construct_type').val('<?php echo $this->row['construct_type']?>');
+	$('#mong_type').val('<?php echo $this->row['mong_type']?>');
+	$('#builder').val('<?php echo $this->row['builder']?>');
+	$('#mong_code').val('<?php echo $this->row['mong_code']?>');
+	$('#mong_number').val('<?php echo $this->row['mong_number']?>');
+	$('#mong_address').val('<?php echo $this->row['mong_address']?>');
+	$('#person_in_charge').val('<?php echo $this->row['person_in_charge']?>');
+	$('#mong_note').val('<?php echo $this->row['mong_note']?>');
+	$('#land_longitude').val('<?php echo $this->row['land_longitude']?>');
+	$('#land_width').val('<?php echo $this->row['land_width']?>');
+	$('#mong_longitude').val('<?php echo $this->row['mong_longitude']?>');
+	$('#mong_width').val('<?php echo $this->row['mong_width']?>');
+	$('#date_finish').val('<?php echo $this->row['date_finish']?>');
+	$('#date_sen').val('<?php echo $this->row['date_sen']?>');
+	$('#time_sen').val('<?php echo $this->row['time_sen']?>');
+	$('#date_chlong_mong').val('<?php echo $this->row['date_chlong_mong']?>');
+	$('#time_chlong_mong').val('<?php echo $this->row['time_chlong_mong']?>');
+	$('#dead_id').val('<?php echo $this->row['dead_id']?>');
+	$('#constructor').val('<?php echo $this->row['constructor']?>');
+	$('#constructor_price').val('<?php echo $this->row['constructor_price']?>');
+	$('#constructor').val('<?php echo $this->row['constructor']?>');
+	
+	$('#sub_total').val('<?php echo $this->row['sub_total']?>');
+	$('#paid').val('<?php echo $this->row['paid']?>');
+	$('#balance').val('<?php echo $this->row['balance_after']?>');
+}
 	
 </script>	
 	

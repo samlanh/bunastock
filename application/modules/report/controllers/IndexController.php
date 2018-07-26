@@ -531,12 +531,33 @@ class report_indexController extends Zend_Controller_Action
 		$this->view->formFilter = $formFilter->productFilter();
 		$this->view->form_salemong = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
-		 
-		 
-		//     	$frm = new Application_Form_FrmReport();
-		//     	$form_search=$frm->productDetailReport($search);
-		//     	Application_Model_Decorator::removeAllDecorator($form_search);
-		//     	$this->view->form_search = $form_search;
+	}
+	
+	public function rptproductsoldAction()
+	{
+		$db = new report_Model_DbProduct();
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+			$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+		}else{
+			$data = array(
+					'ad_search'		=>	'',
+					'type'			=>	-1,
+					'category'		=>	'',
+					'start_date'	=>date("Y-m-d"),
+					'end_date'		=>date("Y-m-d"),
+			);
+		}
+		$this->view->product = $db->getAllProductSold($data);
+		$this->view->search = $data;
+		$formFilter = new Product_Form_FrmProduct();
+		$this->view->formFilter = $formFilter->productFilter();
+		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
 	
 }
+
+
+
+

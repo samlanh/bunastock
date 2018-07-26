@@ -488,7 +488,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}	
 	function getAllSaleagent(){
 		$db = $this->getAdapter();
-		$sql=" SELECT id,name_saleagent AS name FROM tb_sale_agent WHERE name_saleagent!='' ";
+		$sql=" SELECT id,name FROM tb_sale_agent WHERE name!='' ";
 		return $db->fetchAll($sql);
 	}
 	

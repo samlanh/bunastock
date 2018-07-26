@@ -46,13 +46,59 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		if($data["brand"]!=""){
 			$where.=' AND p.brand_id='.$data["brand"];
 		}
-		if($data["category"]!=""){
+		if(!empty($data["category"])){
 			$where.=' AND p.cate_id='.$data["category"];
 		}
-		if($data["type"]!=""){
+		if($data["type"]>-1){
 			$where.=' AND p.is_service='.$data["type"];
 		}
 		$group = " GROUP BY p.`id` ORDER BY p.`id`";
+		return $db->fetchAll($sql.$where.$group);
+	}
+	function getAllProductSold($data){
+		$db = $this->getAdapter();
+		
+		$from_date =(empty($data['start_date']))? '1': " s.date_sold >= '".$data['start_date']." 00:00:00'";
+		$to_date = (empty($data['end_date']))? '1': " s.date_sold <= '".$data['end_date']." 23:59:59'";
+		$sale = " AND ".$from_date." AND ".$to_date;
+		
+		$from_date =(empty($data['start_date']))? '1': " m.sale_date >= '".$data['start_date']." 00:00:00'";
+		$to_date = (empty($data['end_date']))? '1': " m.sale_date <= '".$data['end_date']." 23:59:59'";
+		$mong = " AND ".$from_date." AND ".$to_date;
+		
+		$sql ="SELECT 
+					p.*,
+					(SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
+					(SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
+					(SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
+					(SELECT SUM(si.qty_order) FROM `tb_salesorder_item` AS si,`tb_sales_order` AS s WHERE s.id = si.saleorder_id AND si.pro_id = p.id $sale ) AS from_sale,
+					(SELECT SUM(msi.qty_order) FROM `tb_mong_sale_item` AS msi,`tb_mong` AS m WHERE m.id = msi.mong_id AND msi.pro_id = p.id $mong) AS from_mong
+				FROM
+					`tb_product` AS p 
+				WHERE 
+					p.`status` = 1 		
+					and ((SELECT SUM(si.qty_order) FROM `tb_salesorder_item` AS si,`tb_sales_order` AS s WHERE s.id = si.saleorder_id AND si.pro_id = p.id $sale)>0
+					or (SELECT SUM(msi.qty_order) FROM `tb_mong_sale_item` AS msi,`tb_mong` AS m WHERE m.id = msi.mong_id AND msi.pro_id = p.id $mong)>0)
+			";
+		$where = '';
+	
+		if($data["ad_search"]!=""){
+			$s_where=array();
+			$s_search = addslashes(trim($data['ad_search']));
+			$s_where[]= " p.item_name LIKE '%{$s_search}%'";
+			$s_where[]= " p.barcode LIKE '%{$s_search}%'";
+			$s_where[]= " p.item_code LIKE '%{$s_search}%'";
+			$where.=' AND ('.implode(' OR ', $s_where).')';
+		}
+		if($data["type"]>-1){
+			$where.=' AND p.is_service='.$data["type"];
+		}
+		if(!empty($data["category"])){
+			$where.=' AND p.cate_id='.$data["category"];
+		}
+		
+		$group = " GROUP BY p.`id` ORDER BY p.`id`";
+		//echo $sql.$where;
 		return $db->fetchAll($sql.$where.$group);
 	}
 	function getAllcurrentstock($data){

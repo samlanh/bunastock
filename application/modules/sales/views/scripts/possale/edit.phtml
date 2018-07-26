@@ -535,11 +535,10 @@ function setValue(){
 	$('#place_bun').val('<?php echo $this->row['place_bun']?>');
 	$('#date_deleivery').val('<?php echo $this->row['date_deleivery']?>');
 	
-	$('#sub_total').val('<?php echo $this->row['all_total']?>').focus();
-	$('#paid_before').val('<?php echo $this->row['paid_before']?>').focus();
-	$('#paid').val('<?php echo $this->row['paid']?>').focus();
-	$('#balance').val('<?php echo $this->row['balance_after']?>').focus();
-	$('#total_partner_service').val('<?php echo $this->row['partner_service_total']?>').focus();
+	$('#sub_total').val('<?php echo $this->row['all_total']?>');
+	$('#paid').val('<?php echo $this->row['paid']?>');
+	$('#balance').val('<?php echo $this->row['balance_after']?>');
+	$('#total_partner_service').val('<?php echo $this->row['partner_service_total']?>');
 	
 }
 
@@ -656,7 +655,7 @@ function initializeProduct(){
 		dojo.html.set(dojo.byId("row"+col),template , {
 			 parseContent: true,
 		});
-		getProductinfo(col,product_id,"<?php echo $rs['price'];?>",<?php echo $rs['is_package'];?>,<?php echo $rs['package_id'];?>,<?php echo $rs['is_package_cost'];?>);
+		getProductinfo(col,product_id,1,<?php echo $rs['is_package'];?>,<?php echo $rs['package_id'];?>,<?php echo $rs['is_package_cost'];?>);
 		
 		$("#is_package_cost_"+col).val("<?php echo $rs['is_package_cost'];?>");
 		$("#is_package_"+col).val("<?php echo $rs['is_package'];?>");
@@ -742,8 +741,8 @@ function netTotal() {//use
 			netTotal += Number($('#sub_total'+rowIDArray[n]).val());
 		}
 	}
-	$('#sub_total').val(netTotal);
-	$('#paid').val(netTotal);
+	$('#sub_total').val(netTotal.toFixed(0));
+	$('#paid').val(netTotal.toFixed(0));
 	calCualtepaid();
 }
 function calCualtepaid(){
@@ -757,7 +756,7 @@ function calCualtepaid(){
 		$('#paid').val(total_dollar);
 		$('#balance').val(0);
 	}else{
-		$('#balance').val(balance);
+		$('#balance').val(balance.toFixed(2));
 	}
 }
 
@@ -771,36 +770,30 @@ function getProductinfo(index,product_id,old_price,is_package=0,package_id=0,is_
 	   handleAs:"json", 
 	   load: function(data) {
 			
-			if(old_price>0){
-				//$("#price_"+index).val(old_price);
+			if(is_package==1 && package_id==0 && is_package_cost==1){
+				//alert(1);
+				$('#cost_price'+index).val(data.price);
+				$('#price_'+index).val(data.selling_price);
+				$('#price_reil_'+index).val(data.selling_price_khmer);
+			}else if(is_package==1 && package_id==0 && is_package_cost==0){
+				//alert(2);
+				$('#price_'+index).prop('readonly', true);
+				$('#price_reil_'+index).prop('readonly', true);
 			}else{
-				$('#current_qty_'+index).val(data.qty);
-				$('#measur_name'+index).val(data.measue_name);
-				$('#unit_label'+index).val(data.unit_label);
-				if(is_package==1 && package_id==0 && is_package_cost==1){
-					//alert(1);
-					$('#cost_price'+index).val(data.price);
-					$('#price_'+index).val(data.selling_price);
-					$('#price_reil_'+index).val(data.selling_price_khmer);
-				}else if(is_package==1 && package_id==0 && is_package_cost==0){
-					//alert(2);
+				//alert(3);
+				if(package_id>0 && is_package_cost==1){
 					$('#price_'+index).prop('readonly', true);
 					$('#price_reil_'+index).prop('readonly', true);
 				}else{
-					//alert(3);
-					if(package_id>0 && is_package_cost==1){
-						$('#price_'+index).prop('readonly', true);
-						$('#price_reil_'+index).prop('readonly', true);
-					}else{
-						$('#cost_price'+index).val(data.price);
-						$('#price_'+index).val(data.selling_price);
-						$('#price_reil_'+index).val(data.selling_price_khmer);
-					}
+					$('#cost_price'+index).val(data.price);
+					$('#price_'+index).val(data.selling_price);
+					$('#price_reil_'+index).val(data.selling_price_khmer);
 				}
 			}
 			
-			$("#measur_name"+index).val(data.measue_name);
-			$("#unit_label"+index).val(data.unit_label);
+			$('#current_qty_'+index).val(data.qty);
+			$('#measur_name'+index).val(data.measue_name);
+			$('#unit_label'+index).val(data.unit_label);
 
 			qty = data.qty;
 			if(qty==null){qty=0;}
