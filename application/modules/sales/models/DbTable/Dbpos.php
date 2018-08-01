@@ -366,8 +366,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					);
 					$this->insert($array);
 				}
-			}
-			
+			}			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -499,7 +498,13 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}	
 	function getAllSaleagent(){
 		$db = $this->getAdapter();
+//<<<<<<< .mine
+		$sql=" SELECT id,CONCAT(name_saleagent,' - ',phone) AS name FROM tb_sale_agent WHERE name_saleagent!='' ";
+///||||||| .r140
+		$sql=" SELECT id,name_saleagent AS name FROM tb_sale_agent WHERE name_saleagent!='' ";
+//=======
 		$sql=" SELECT id,name FROM tb_sale_agent WHERE name!='' ";
+//>>>>>> .r141
 		return $db->fetchAll($sql);
 	}
 	
@@ -509,7 +514,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		return $db->fetchOne($sql);
 	}
 	
-	function getServicePartnerPrices($partner_id , $service_id){
+	function getServicePartnerPrices($partner_id, $service_id){
 		$db = $this->getAdapter();
 		$sql=" SELECT `prices`,notes FROM `tb_partner_cost` WHERE partner_id=$partner_id AND `service_id`=$service_id LIMIT 1 ";
 		return $db->fetchRow($sql);
