@@ -42,18 +42,77 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql.$where.$order);
     }
     public function addRepays($post){
-    	$_arr=array(
-    			'name_borrow' 		 => $post['name_borrow'],
-    			'gender'			 => $post['gender'],
-    			'phone' 			 => $post['phone'],
-    			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
-    			'qtys'	     	     => $post['qtys'],
-    			'notes'	     	     => $post['notes'],
-    			'status'	         => 1,
-    			'type'	      	     => 2,
-    	);
-    	return  $this->insert($_arr);
+    	$db = $this->getAdapter();
+    	$db->beginTransaction();
+		try{
+		$rows= $this->getRepayDetails($post['name_borrow']);
+		
+		
+		$repay=0;
+    	if(!empty($rows)) foreach($rows As $row){
+    		//print_r($row);exit();
+//     		$total=$post['qtys'];
+//     		$repay=$total-$row['total'];
+//     		if($repay<0 ){
+//     			$repay=$row['total']-$total;
+//     		}else if($repay <= 0){
+//     			$repay=$row['total']-$total;
+//     		}else{
+//     			$repay=$row['total']-$total;
+//     		}
+    		//print_r($repay);exit();
+    		$_arr=array(
+    				'qtys'=>$repay,
+    				);
+    		//$this->_name='tb_borrowers';
+    		$where=" id=".$row['id'];
+    		//print_r($where);exit();
+    		$this->update($_arr, $where);
+    	
+    	}
+//     	$_arr=array(
+//     			'name_borrow' 		 => $post['name_borrow'],
+//     			'gender'			 => $post['gender'],
+//     			'phone' 			 => $post['phone'],
+//     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
+//     			'qtys'	     	     => $post['qtys'],
+//     			'notes'	     	     => $post['notes'],
+//     			'status'	         => 1,
+//     			'type'	      	     => 2,
+//     	);
+//     	return  $this->insert($_arr);
+    	}catch(Exception $e){
+    		$db->rollBack();
+    		Application_Form_FrmMessage::message('INSERT_FAIL');
+    		echo $e->getMessage();
+    	}
     }
+    public function getRepayDetail($name_borrow){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT *,SUM(qtys)As total,
+						DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow	
+						FROM `tb_borrowers` 
+						WHERE
+						status=1
+					    AND name_borrow!='' 
+					    AND name_borrow='$name_borrow'				
+						AND type=1 LIMIT 1";
+    	return $db->fetchRow($sql);
+    }
+    
+    public function getRepayDetails($name_borrow){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT *,qtys As total,
+			    	DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow
+			    	FROM `tb_borrowers`
+			    	WHERE
+			    	status=1
+			    	AND name_borrow!=''
+			    	AND name_borrow='$name_borrow'
+			    	AND type=1 ";
+    	return $db->fetchAll($sql);
+    }
+    
     function getAllRepays(){
     	$db = $this->getAdapter();
     	$sql=" SELECT DISTINCT(name_borrow) AS name FROM tb_borrowers WHERE name_borrow!=''";
