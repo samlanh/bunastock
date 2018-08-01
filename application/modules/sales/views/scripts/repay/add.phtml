@@ -28,10 +28,10 @@
 										<h2 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានអ្នកសងប្រាក់</h2>
 									<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												ឈ្មោះសង
+												ឈ្មោះអ្នកសង
 											</label>
 											<div class="col-md-8">
-												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getPopupRepays()" value="1">
+												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getPopupRepays(); getRepayDetail()" value="1">
 													<option value="">ជ្រើសរើសឈ្មោះអ្នកសងប្រាក់</option>
 													<option value="-1">បន្ថែមឈ្មោះ</option>
 													<?php if(!empty($this->name_pay)){foreach($this->name_pay as $rs){?>
@@ -72,7 +72,7 @@
 									</div>																
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ចំនួនទឹកប្រាក់ខ្ចី
+											ចំនួនទឹកប្រាក់សង
 										</label>
 										<div class="col-md-8">
 											<input type="text" id="qtys" name="qtys" class="validate[required] form-control" />
@@ -159,6 +159,31 @@
 		$("#name_borrow").select2();	
 		$('#repaypopup').modal('hide');
 		$('#save_repays').attr("disabled", false);
+	}
+
+	function getRepayDetail(){
+		var name_borrow  = $("#name_borrow").val();
+		if(name_borrow!='' && name_borrow!=-1){
+			$.ajax({
+				url: "<?php echo $this->baseUrl()?>/sales/repay/get-repay-detail",
+				type: "post",
+				data: {name_borrow:name_borrow},
+				success: function(data){
+				//	alert(data);
+					rs = $.parseJSON(data);
+					if(rs){
+						$('#gender').val(rs.gender).select2();
+						$('#phone').val(rs.phone);
+						$('#date').val(rs.date);
+						$('#qtys').val(rs.total);
+						$('#notes').val(rs.notes);
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
 	}
 </script>
 <div id="repaypopup" class="modal fade" tabindex="-1" data-width="1000">

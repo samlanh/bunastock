@@ -31,7 +31,7 @@
 												ឈ្មោះអ្នកខ្ចី
 											</label>
 											<div class="col-md-8">
-												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getPopupBorrowers()" value="1">
+												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getBorrowers(); getPopupBorrowers(); " value="1">
 													<option value="">ជ្រើសរើសឈ្មោះអ្នកខ្ចី</option>
 													<option value="-1">បន្ថែមឈ្មោះ</option>
 													<?php if(!empty($this->name_borrow)){foreach($this->name_borrow as $rs){?>
@@ -75,7 +75,7 @@
 											ចំនួនទឹកប្រាក់ខ្ចី
 										</label>
 										<div class="col-md-8">
-											<input type="text" id="qtys" name="qtys" class="validate[required] form-control" />
+											<input type="text" id="qtys" name="qtys" class="validate[required] form-control" value="0"/>
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -146,6 +146,7 @@
 			$('#borrowpopup').modal('show');
 		}
 	}
+	
 	function addNewBorrowers(){
 		name = $("#name_borrowers").val();
 		if(name==''){
@@ -157,6 +158,30 @@
 		$("#name_borrow").select2();	
 		$('#borrowpopup').modal('hide');
 		$('#save_borrowers').attr("disabled", false);
+	}
+	
+	function getBorrowers(){
+		var name_borrow  = $("#name_borrow").val();	
+		if(name_borrow!='' && name_borrow!=-1){					
+			$.ajax({
+				url:  "<?php echo $this->baseUrl()?>/sales/borrowers/get-borrowers-detail",
+				type: "post",
+				data: {name_borrow:name_borrow},
+				success: function(data){
+				//	alert(1);		
+					rs = $.parseJSON(data);
+					if(rs){
+						$('#gender').val(rs.gender).select2();
+						$('#phone').val(rs.phone);
+					//	$('#date').val(rs.date);
+						$('#notes').val(rs.notes);
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
 	}
 </script>
 
