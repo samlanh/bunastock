@@ -53,9 +53,23 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     	);
     	return  $this->insert($_arr);
     }
+    
+    function getBorrowersDetail($name_borrow){
+    	$db=$this->getAdapter();
+    	$sql="SELECT *,
+						DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow		
+						FROM `tb_borrowers` 
+						WHERE
+						status=1
+					    AND name_borrow!='' 
+					    AND name_borrow='$name_borrow'					
+						AND type=1 LIMIT 1";
+    	return $db->fetchRow($sql);  
+    }
+    
     function getAllBorrowers(){
     	$db = $this->getAdapter();
-    	$sql=" SELECT DISTINCT(name_borrow) AS name FROM tb_borrowers WHERE name_borrow!=''";
+    	$sql=" SELECT DISTINCT(name_borrow) As name FROM tb_borrowers WHERE name_borrow!='' ";
     	return $db->fetchAll($sql);
     }
     public function updateBorrow($post, $id){
@@ -64,7 +78,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'name_borrow' 		 => $post['name_borrow'],
     			'gender'			 => $post['gender'],
     			'phone' 			 => $post['phone'],
-    			'date'	=> empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
+    			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
     			'notes'	     	     => $post['notes'],
     			'status'	         => $post['status'],
@@ -77,8 +91,6 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql = "SELECT * FROM tb_borrowers WHERE id = $id LIMIT 1";
     	return $db->fetchRow($sql);
-    }
- 
-   
+    }  
 }
 
