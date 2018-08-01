@@ -69,12 +69,20 @@
 									<div class="form-group" >
 										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
 										<div class="col-md-8">
-											<select type="text" class="validate[required] form-control select2me" name="donor_id" id="donor_id" onchange="getNote();" >
+											<select type="text" class="validate[required] form-control select2me" name="donor_id" id="donor_id" onchange="getDonors()" >
 												<option value="-1" >ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
-												<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['donor_id']){echo "selected='selected'";}?>><?php echo $rs['donor']?></option>
+												<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['donor_id']){echo "selected='selected'";}?>><?php echo $rs['name']?></option>
 												<?php }}?>
 											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											អាស័យដ្ឋាន
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control " name="donor_address" id="donor_address" value="<?php echo $this->row['donor_address']?>" />
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -186,6 +194,27 @@
 					if(rs){
 						$("#note").val(rs.detail_kh);
 						$('#notes').val(rs.detail_chi);
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
+	}
+
+	function getDonors(){
+		var donor_id  = $("#donor_id").val();	
+		if(donor_id!=-1){				
+			$.ajax({
+				url:  "<?php echo $this->baseUrl()?>/donors/donate/get-donate-detail",
+				type: "post",
+				data: {donor_id:donor_id},
+				success: function(data){
+				//	alert(1);		
+					rs = $.parseJSON(data);
+					if(rs){
+						$('#donor_address').val(rs.address);
 					}
 				},
 				error:function(err){

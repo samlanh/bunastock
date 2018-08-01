@@ -71,6 +71,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 				'donor_id'			=> $data['donor_id'],
 				'qty_donate'		=> 1,
 				'date_jenh'			=> date("Y-m-d",strtotime($data['date_jenh'])),
+				'donor_address'		=> $data['donor_address'],
 				'note'				=> $data['note'],
 				'notes'				=> $data['notes'],
 				
@@ -105,6 +106,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 				'donor_id'			=> $data['donor_id'],
 				'qty_donate'		=> 1,
 				'date_jenh'			=> date("Y-m-d",strtotime($data['date_jenh'])),
+				'donor_address'		=> $data['donor_address'],
 				'note'				=> $data['note'],
 				'notes'				=> $data['notes'],
 				
@@ -131,6 +133,12 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		}
 	}
 	
+	function getDonorDetail($id){
+		$db=$this->getAdapter();
+		$sql=" SELECT id,address  FROM `tb_donors` where id=$id LIMIT 1";
+		return $db->fetchRow($sql);
+	}
+	
 	function getDonorpeopleById($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT 
@@ -155,7 +163,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
     
     function getAllDonor(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,donor FROM tb_donors where status=1";
+    	$sql = "SELECT id,donor As name FROM tb_donors where status=1";
     	return $db->fetchAll($sql);
     }
 

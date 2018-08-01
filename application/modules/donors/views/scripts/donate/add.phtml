@@ -70,12 +70,20 @@
 									<div class="form-group" >
 										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
 										<div class="col-md-8">
-											<select type="text" class="form-control select2me" name="donor_id" id="donor_id" onchange="getNote();" >
+											<select type="text" class="form-control select2me" name="donor_id" id="donor_id" onchange="getDonors();">
 												<option value="-1">ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
-												<option value="<?php echo $rs['id']?>"><?php echo $rs['donor']?></option>
+												<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
 												<?php }}?>
 											</select>
+										</div>
+									</div>
+									<div class="form-group" style="">
+										<label class="col-md-4 control-label">
+											អាស័យដ្ឋាន
+										</label>
+										<div class="col-md-8">
+											<input type="text" class="form-control " name="donor_address" id="donor_address"/>
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -137,21 +145,21 @@
 <script>
 	$('#frm').submit(function() {
 		dead_name=$("#dead_name").val();
-		if(dead_name==''){
+		if(dead_name<=0){
 			alert("Please input dead name");
 			$('#dead_name').focus();
 			return false;	
 		}
 		dead_age=$("#dead_age").val();
-		if(dead_age==''){
+		if(dead_age<=0){
 			alert("Please input dead age");
 			$('#dead_age').focus();
 			return false;	
 		}
 		donor_id=$("#donor_id").val();
-		if(donor_id==-1){
-			alert("Please select donor !!! ");
-			$('#donor_id').select2('open');
+		if(donor_id==""){
+			alert("Please input name donor");
+			$('#donor_id').focus();
 			return false;	
 		}
 		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
@@ -162,20 +170,19 @@
 		   return false;	    
 		}
 	});
-	
-	
-	function getNote(){		
-		var donor_id  = $("#donor_id").val();
-		if(donor_id>0){
+
+	function getDonors(){
+		var donor_id  = $("#donor_id").val();	
+		if(donor_id!=-1){				
 			$.ajax({
-				url: "<?php echo $this->baseUrl()?>/donors/donate/get-note",
+				url:  "<?php echo $this->baseUrl()?>/donors/donate/get-donate-detail",
 				type: "post",
-				data: {'donor_id':donor_id},
+				data: {donor_id:donor_id},
 				success: function(data){
+				//	alert(1);		
 					rs = $.parseJSON(data);
 					if(rs){
-						$("#note").val(rs.detail_kh);
-						$('#notes').val(rs.detail_chi);
+						$('#donor_address').val(rs.address);
 					}
 				},
 				error:function(err){
@@ -184,6 +191,4 @@
 			});
 		}
 	}
-	
-	
 </script>
