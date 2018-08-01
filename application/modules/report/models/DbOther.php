@@ -104,36 +104,35 @@ function getAllDonors($search){
 		return $db->fetchAll($sql.$where.$order);
 	}
 	public function getAllPartnerService($search){
-		$db = $this->getAdapter();
-		$sql=" SELECT
-		id,
-		partner_name,
-		(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
-		tel,
-		addresss,
-		(SELECT u.item_name FROM `tb_product` AS u WHERE id =`service_cate`) AS service_cate,
-		description,
-		(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
-		(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
-		FROM
-		tb_partnerservice
-		WHERE
-		partner_name!=''
-		";
-		$where = '';
-		if(!empty($search['ad_search'])){
-			$s_where = array();
-			$s_search = trim(addslashes($search['ad_search']));
-			$s_where[] = " partner_name LIKE '%{$s_search}%'";
-			$where .=' AND ('.implode(' OR ',$s_where).')';
-		}
-		if($search['status']>-1){
-			$where .= " AND status = ".$search['status'];
-		}
-		$order=" ORDER BY id DESC ";
-		// 	echo $sql.$where.$order;
-		return $db->fetchAll($sql.$where.$order);
-	}
+    	$db = $this->getAdapter();
+    	$sql=" SELECT
+		    	id,
+		    	partner_name,
+		    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+		    	tel,
+		    	addresss,
+		    	description,
+		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
+		    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
+		    	FROM
+		    	tb_partnerservice 
+		    	WHERE 
+		    	partner_name!=''
+    		";
+    	$where = ''; 	
+    	if(!empty($search['ad_search'])){
+    		$s_where = array();
+    		$s_search = trim(addslashes($search['ad_search']));
+    		$s_where[] = " partner_name LIKE '%{$s_search}%'";
+    		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	if($search['status']>-1){
+    		$where .= " AND status = ".$search['status'];
+    	}
+    	$order=" ORDER BY id DESC ";
+   // 	echo $sql.$where.$order;
+    	return $db->fetchAll($sql.$where.$order);
+    }
 	
 	function getAllsaleMong($search){
 		$db = $this->getAdapter();	

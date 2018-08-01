@@ -56,7 +56,7 @@ $brach_name =  $this->branch;
 				font-family: 'Khmer OS Battambang';
 			}
 			ul{margin: 0;padding:0;}
-			table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
+			table tr td ul li{text-align: center;list-style: none;line-height: 30px; font-weight: bold;}
 			th{padding: 5px;}
 			.hover:hover{background: #ccc;}
 		table { page-break-inside:auto }
@@ -75,9 +75,9 @@ $brach_name =  $this->branch;
 		                	<td align="center" width="16%" valign="top"><img  height="95px" src="<?php echo $this->baseUrl();?>/images/logosbona.jpg"></td>
 		                	<td width="70%" >
 		                		<ul>
-		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-		                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("SALES_REPORT");?></li>
-		                			<li style="text-align:center; font-size:14px;"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
+		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+		                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("SALES_REPORT");?></li>
+		                			<li style="text-align:center; font-size:14px; color: #F31A1A  !important"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 		                		</ul>
 		                	</td>
 		                    <td width="20%" align="left"></td>
