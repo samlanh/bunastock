@@ -1,5 +1,5 @@
 <?php
-class Sales_QuotationController extends Zend_Controller_Action
+class Sales_DnController extends Zend_Controller_Action
 {	
     public function init()
     {
@@ -30,15 +30,15 @@ class Sales_QuotationController extends Zend_Controller_Action
 		}
 		$this->view->search = $search;
 		
-		$db = new Sales_Model_DbTable_DbQuotation();
-		$rows = $db->getAllQuote($search);
-		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខ Quote","ថ្ងៃចេញ Quote","តម្លៃសរុប","អ្នកប្រើប្រាស់");
+		$db = new Sales_Model_DbTable_DbDn();
+		$rows = $db->getAllDn($search);
+		$columns=array("ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខ DN","ថ្ងៃដឹកទំនិញ","អ្នកប្រើប្រាស់");
 		$link=array(
-			'module'=>'sales','controller'=>'quotation','action'=>'edit',
+			'module'=>'sales','controller'=>'dn','action'=>'edit',
 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link,'program_name'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'place_bun'=>$link,'customer_name'=>$link,'dn_num'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();
@@ -47,12 +47,12 @@ class Sales_QuotationController extends Zend_Controller_Action
 	
 	public function addAction()
 	{
-		$db = new Sales_Model_DbTable_DbQuotation();
+		$db = new Sales_Model_DbTable_DbDn();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			try {
 				if(!empty($data['identity'])){
-					$db->addQuote($data);
+					$db->addDn($data);
 				}
 				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ",'/sales/index');
 			}catch (Exception $e){
@@ -63,7 +63,7 @@ class Sales_QuotationController extends Zend_Controller_Action
 		
 		$this->view->branch_id = $db->getBranchId();
 		
-		$db = new Sales_Model_DbTable_DbQuotation();
+		$db = new Sales_Model_DbTable_DbDn();
 		$this->view->category = $db->getAllProductCategory();
 		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rscustomer = $db->getAllCustomerName();
@@ -74,9 +74,7 @@ class Sales_QuotationController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->quote_num = $db->getQuoteNumber();
-	
-		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->dn_num = $db->getDnNumber();
 		$this->view->exchange_rate = $db->getExchangeRate();
 		
 	}
@@ -84,12 +82,12 @@ class Sales_QuotationController extends Zend_Controller_Action
 	public function editAction()
 	{
 		$id = $this->getRequest()->getParam('id');
-		$db = new Sales_Model_DbTable_DbQuotation();
+		$db = new Sales_Model_DbTable_DbDn();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			try {
-				$db->editQuote($data,$id);
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/quotation/index');
+				$db->editDn($data,$id);
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/dn/index');
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
 				echo $e->getMessage();exit();
@@ -98,10 +96,10 @@ class Sales_QuotationController extends Zend_Controller_Action
 
 		$this->view->branch_id = $db->getBranchId();
 		
-		$db = new Sales_Model_DbTable_DbQuotation();
+		$db = new Sales_Model_DbTable_DbDn();
 		
-		$this->view->row = $db->getQuoteById($id);
-		$this->view->row_detail = $db->getQuoteDetailById($id);
+		$this->view->row = $db->getDnById($id);
+		$this->view->row_detail = $db->getDnDetailById($id);
 		
 		$this->view->category = $db->getAllProductCategory();
 		$this->view->rsproduct = $db->getAllProductName();
@@ -117,21 +115,53 @@ class Sales_QuotationController extends Zend_Controller_Action
 		$this->view->exchange_rate = $db->getExchangeRate();
 	}
 	
-	function quoteAction(){
+	public function convertAction()
+	{
+		$id = $this->getRequest()->getParam('id');
+		$db = new Sales_Model_DbTable_DbDn();
+		if($this->getRequest()->isPost()) {
+			$data = $this->getRequest()->getPost();
+			try {
+				$db->addDn($data);
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/dn/index');
+			}catch (Exception $e){
+				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				echo $e->getMessage();exit();
+			}
+		}
+	
+		$this->view->branch_id = $db->getBranchId();
+	
+		$db = new Sales_Model_DbTable_Dbpos();
+	
+		$this->view->row = $db->getSaleById($id);
+		$this->view->row_detail = $db->getSaleDetailById($id);
+	
+		$this->view->category = $db->getAllProductCategory();
+		$this->view->rsproduct = $db->getAllProductName();
+		$this->view->rscustomer = $db->getAllCustomerName();
+	
+		$form = new Sales_Form_FrmCustomer(null);
+		$formpopup = $form->Formcustomer(null);
+		Application_Model_Decorator::removeAllDecorator($formpopup);
+		$this->view->form_customer = $formpopup;
+	
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->dn_num = $db->getDnNumber();
+		$this->view->exchange_rate = $db->getExchangeRate();
+	}
+	
+	function dnAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		if(empty($id)){
-			$this->_redirect("/sales/quotation");
-		}
-		$query = new Sales_Model_DbTable_DbQuotation();
-		$rs = $query->getQuoteById($id);
-		$this->view->rs = $rs;
-		$this->view->rsdetail = $query->getQuoteDetailById($id);
-		if(empty($rs)){
-			$this->_redirect("/sales/quotation");
+			$this->_redirect("/sales/dn");
 		}
 		
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->exchange_rate = $db->getExchangeRateSell();
+		$db = new Sales_Model_DbTable_DbDn();
+		
+		$this->view->rs = $db->getDnById($id);
+		$this->view->rsdetail = $db->getDnDetailById($id);
+		
 	}
 	
 	function getproductAction(){

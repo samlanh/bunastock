@@ -90,8 +90,18 @@ class Donors_DonateController extends Zend_Controller_Action
 	function donorpeopleAction(){
 		$id = $this->getRequest()->getParam("id");
  		$db = new Donors_Model_DbTable_DbDonate();
- 		
  		$this->view->row = $db->getDonorpeopleById($id);
-		
 	}
+	
+	public function getNoteAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Donors_Model_DbTable_DbIndex();
+			$donor = $db->getdonorpeopleById($post['donor_id']);
+			echo Zend_Json::encode($donor);
+			exit();
+		}
+	}
+	
+	
 }

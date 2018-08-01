@@ -214,6 +214,8 @@ class Sales_PossaleController extends Zend_Controller_Action
 		if(empty($rs)){
 			$this->_redirect("/sales/");
 		}
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->exchange_rate = $db->getExchangeRateSell();
 	}
 	function comlistingAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';

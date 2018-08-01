@@ -54,7 +54,29 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 						<div class="tab-content">
 							<div class="tab-pane active" id="tab_1">
 								<div class="row">
-									<div class="col-md-4" style="text-align: left !important;">
+									<div class="col-md-6" style="text-align: left !important;">
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ទីតាំងបុណ្យ
+											</label>
+											<div class="col-md-8">
+												<input name="place_bun" id="place_bun" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-3 control-label">
+												ទីតាំង
+											</label>
+											<div class="col-md-3">
+												<select class="form-control select2me" id="type_pjos" name="type_pjos" onchange="popupProgram();">
+													<option value="1">បញ្ចុះ</option>
+													<option value="2">បូជា</option>
+												</select>
+											</div>
+											<div class="col-md-6">
+												<input name="place_pjos" id="place_pjos" class="form-control" />
+											</div>
+										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
 												<strong>ឈ្មោះអតិថិជន</strong>
@@ -79,18 +101,15 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												ថ្ងៃចេញQuote
+												អាស័យដ្ឋាន
 											</label>
 											<div class="col-md-8">
-												<div class="input-icon right">
-													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control date-picker" name="quote_date" id="quote_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-												</div>
+												<input name="address" id="address" class="form-control" />
 											</div>
 										</div>
 									</div>
 									<!-- end blog1 -->
-									<div class="col-md-4" style="text-align: left !important;">
+									<div class="col-md-5" style="text-align: left !important;">
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
 												លេខQuote
@@ -101,32 +120,20 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												ទីតាំងបុណ្យ
-											</label>
-											<div class="col-md-8">
-												<input name="place_bun" id="place_bun" class="form-control" />
-											</div>
-										</div>
-										
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ពេលវេលាចេញ
+												ថ្ងៃចេញQuote
 											</label>
 											<div class="col-md-8">
 												<div class="input-icon right">
 													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
+													<input type="text" class="form-control date-picker" name="quote_date" id="quote_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 												</div>
 											</div>
 										</div>
-										
-									</div>
-									<div class="col-md-4" style="text-align: left !important;">
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
 												សម្គាល់ផ្សេងៗ
 											</label>
-											<div class="col-md-7">
+											<div class="col-md-8">
 												<textarea name="note" id="note" class="form-control" rows="5"></textarea>
 											</div>
 										</div>																				
@@ -172,18 +179,20 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 											<thead>
 												<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;font-weight:bold">
 													<td width="3%" class="aligncenter">#</td>
-													<td width="25%" class="aligncenter">មុខទំនិញ/សេវាកម្ម</td>
-													<td width="10%" class="aligncenter">ស្តុក</td>
-													<td width="8%" class="aligncenter">បរិ.ដុំ</td>
-													<td width="8%" class="aligncenter">បរិ.រាយ</td>
+													<td width="20%" class="aligncenter">មុខទំនិញ/សេវាកម្ម</td>
+													<td width="7%"  class="aligncenter">ស្តុក</td>
+													<td width="7%" class="aligncenter">បរិ.ដុំ</td>
+													<td width="7%" class="aligncenter">បរិ.រាយ</td>
 													<td width="10%" class="aligncenter">បរិមាណសរុប</td>
-													<td width="10%" class="aligncenter">តម្លៃលក់(៛)</td>
-													<td width="10%" class="aligncenter">តម្លៃលក់($)</td>
-													<td width="10%" class="aligncenter">សរុប</td>
-													<td width="7%" class="aligncenter">លុប</td>
+													<td width="7%"  class="aligncenter">តម្លៃលក់(៛)</td>
+													<td width="7%"  class="aligncenter">តម្លៃលក់($)</td>
+													<td width="8%"  class="aligncenter">សរុប</td>
+													<td width="8%"  class="aligncenter">ប.តម្លៃ($)</td>
+													<td width="10%" class="aligncenter">តម្លៃសរុប</td>
+													<td width="6%" class="aligncenter">លុប</td>
 												</tr>
 												<tr>
-													<td colspan="10" id="lbl_product_item" align="center"></td>
+													<td colspan="12" id="lbl_product_item" align="center"></td>
 												</tr>
 											</thead>
 										</table>
@@ -406,6 +415,7 @@ function getCustomerInfo(){
 		   handleAs:"json", 
 		   load: function(data) {
 			   $("#phone").val(data.phone);
+			   $("#address").val(data.address);
 		   },		
 		    error: function(err) {
 				   alert(err);
@@ -469,15 +479,17 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	col++;no++;
 	template='';
 	template+='<td width="3%"  style="text-align:center">'+col+'</td>';
-	template+='<td width="25%" style="font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'" class="form-control">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" class="form-control" /></td>';
-	template+='<td width="10%" style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
-	template+='<td width="8%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
-	template+='<td width="8%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="20%" style="font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'" class="form-control">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" class="form-control" /></td>';
+	template+='<td width="7%"  style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
+	template+='<td width="7%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="7%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="10%" style=""><input required="1" readonly name="qty_sold'+col+'" class="form-control" id="qty_sold'+col+'" placeholder=""/></td>';
-	template+='<td width="10%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
-	template+='<td width="10%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="form-control" id="price_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" /></td>';
-	template+='<td width="10%" style=""><input type="text" name="sub_total'+col+'" class="form-control" id="sub_total'+col+'" readonly/></td>';
-	template+='<td width="7%"  ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
+	template+='<td width="7%"  style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="7%"  style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="form-control" id="price_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" /></td>';
+	template+='<td width="8%" style=""><input type="text" name="total_'+col+'" class="form-control" id="total_'+col+'" readonly/></td>';
+	template+='<td width="8%" style=""><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
+	template+='<td width="10%" style=""><input type="text" name="sub_total_'+col+'" class="form-control" id="sub_total_'+col+'" readonly/></td>';
+	template+='<td width="6%"  ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
 	dojo.query("#lbl_product_item").append(tmp);
@@ -516,7 +528,11 @@ function calCualtePrice(index){
 	price = $('#price_'+index).val();
 
 	total = (price*qty_sold);
-	$('#sub_total'+index).val(total);
+	$('#total_'+index).val(total);
+	
+	discount = $('#discount_'+index).val();
+	sub_total = total - discount;
+	$('#sub_total_'+index).val(sub_total);
 	
 	netTotal();
 }
@@ -526,7 +542,7 @@ function netTotal() {//use
 	if(rowId!=''){
 		var rowIDArray = rowId.split(',');
 		for(var n = 0; n < rowIDArray.length; n++) {
-			netTotal += Number($('#sub_total'+rowIDArray[n]).val());
+			netTotal += Number($('#sub_total_'+rowIDArray[n]).val());
 		}
 	}
 	$('#sub_total').val(netTotal.toFixed(0));

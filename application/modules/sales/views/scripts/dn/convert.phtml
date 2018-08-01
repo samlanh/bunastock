@@ -24,7 +24,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 .hover:hover{background: #eee;}
 .full_width{width:100%;}
 </style>
-<title>កែប្រែការចេញ Quote</title>
+<title>កែប្រែបញ្ជីដឹកទំនិញ</title>
 <script src="<?php echo $base_url;?>/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>/js/dojo-1.6.1/dijit/themes/soria/soria.css"/>
 <meta charset="utf-8" />
@@ -32,10 +32,10 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 <div class="portlet box blue">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-gift"></i><strong>កែប្រែការចេញ Quote</strong>
+			<i class="fa fa-gift"></i><strong>កែប្រែបញ្ជីដឹកទំនិញ</strong>
 		</div>
 		<div class="tools">
-			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"quotation",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"dn",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
 		</div>
 	</div>
 	<div class="portlet-body">
@@ -47,7 +47,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 							<ul class="nav nav-tabs ">
 								<li class="active">
 									<a href="#tab_1" data-toggle="tab">
-									<strong><i class="fa fa-money" aria-hidden="true"></i> ការចេញ Quote</strong></a>
+									<strong><i class="fa fa-money" aria-hidden="true"></i> បញ្ជីដឹកទំនិញ</strong></a>
 								</li>
 							</ul>
 						</div>
@@ -112,20 +112,20 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="col-md-5" style="text-align: left !important;">
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												លេខQuote
+												លេខDN
 											</label>
 											<div class="col-md-8">
-												<input type="text" class="form-control" name="quote_num" id="quote_num" readOnly style="color:red;" />
+												<input type="text" class="form-control" name="dn_num" id="dn_num" value="<?php echo $this->dn_num;?>" readOnly style="color:red;" />
 											</div>
 										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												ថ្ងៃចេញQuote
+												ថ្ងៃដឹកទំនិញ
 											</label>
 											<div class="col-md-8">
 												<div class="input-icon right">
 													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control date-picker" name="quote_date" id="quote_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y H:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
 												</div>
 											</div>
 										</div>
@@ -184,11 +184,6 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													<td width="7%" class="aligncenter">បរិ.ដុំ</td>
 													<td width="7%" class="aligncenter">បរិ.រាយ</td>
 													<td width="10%" class="aligncenter">បរិមាណសរុប</td>
-													<td width="7%"  class="aligncenter">តម្លៃលក់(៛)</td>
-													<td width="7%"  class="aligncenter">តម្លៃលក់($)</td>
-													<td width="8%"  class="aligncenter">សរុប</td>
-													<td width="8%"  class="aligncenter">ប.តម្លៃ($)</td>
-													<td width="10%" class="aligncenter">តម្លៃសរុប</td>
 													<td width="6%" class="aligncenter">លុប</td>
 												</tr>
 												<tr>
@@ -199,44 +194,11 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									</div>
 								</div>
 								<div class="form-group">
-									<div class="col-md-4">
-										<div class="col-md-12">
-											&nbsp;
-										</div>
-										<div class="col-md-12">
-											&nbsp;
-										</div>
-										<div class="form-group">
-											<label class="col-md-4 control-label"><?php echo $tr->translate("អត្រាប្តូរប្រាក់");?></label>
-											<div class="col-md-8">
-												<input name="label_exchange" id="label_exchange" readOnly value="<?php echo "1 ដុល្លា = ".$this->exchange_rate." រៀល";?>" class="form-control" />
-												<input type="hidden" name="exchange_rate" id="exchange_rate"  value="<?php echo $this->exchange_rate;?>" class="form-control" />
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
+									<div class="col-md-12">
 										&nbsp;
 									</div>
-									<div class="col-md-4" style="text-align: left !important;font-weight: bold;">
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-											</label>
-											<div class="col-md-8">
-											</div>
-										</div>
-										<div class="form-group" style="">
-											<div class="col-md-12">
-												&nbsp;
-											</div>
-											<label class="col-md-4 control-label">
-												<strong style="font-size: 16px;">តម្លៃសរុប</strong>
-											</label>
-											<div class="col-md-8">
-												<input type="text" class="form-control" name="sub_total" id="sub_total" readOnly />
-											</div>
-										</div>
-									</div>
 								</div>
+								<br>
 								<div class="form-group">
 									<div class="col-md-3"></div>
 									<div class="col-md-3">
@@ -359,6 +321,12 @@ require(["dojo/ready"], function(ready){
 	 initializeProduct();
 });
 
+$(function () {
+	$('#date_deleivery').datetimepicker({
+		inline: true,
+		sideBySide: true
+	});
+});
 
 function setValue(){
 	$("#place_bun").val("<?php echo $this->row['place_bun']?>");
@@ -368,11 +336,8 @@ function setValue(){
 	$("#phone").val("<?php echo $this->row['phone']?>");
 	$("#address").val("<?php echo $this->row['address']?>");
 	
-	$("#quote_date").val("<?php echo $this->row['quote_date']?>");
-	$("#quote_num").val("<?php echo $this->row['quote_num']?>");
-	$("#note").val("<?php echo $this->row['note']?>");
+	$("#note").val("<?php echo $this->row['other_note']?>");
 	
-	$("#sub_total").val("<?php echo $this->row['total_payment']?>");
 }
 
 <?php $url_add_customer =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'add-customer')); ?>
@@ -418,8 +383,8 @@ function getCustomerInfo(){
 			},				    
 		   handleAs:"json", 
 		   load: function(data) {
-			   $("#phone").val(data.phone)
-			   $("#address").val(data.address);;
+			   $("#phone").val(data.phone);
+			   $("#address").val(data.address);
 		   },		
 		    error: function(err) {
 				   alert(err);
@@ -461,7 +426,6 @@ function deleteRecord(index) {
 		var strings = arrays.join(',');
 		$('#identity').val(strings);
 		dojo.query("#row"+index).forEach(dojo.destroy);
-		netTotal();
 	// }
 }
 
@@ -476,22 +440,17 @@ function initializeProduct(){
 		if(product_name=='' ){return false;}
 		col++;no++;
 		template='';
-		
-		template+='<td width="3%" >'+col+'</td>';
+		//alert(no);
+		template+='<td width="3%" align="center">'+no+'</td>';
 		template+='<td width="20%"  style="font-size:13px;"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
 		template+='<td width="7%" ><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
 		template+='<td width="7%" ><input type="hidden" class="form-control" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control" placeholder=""/></td>';
 		template+='<td width="7%" ><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control" /></td>';
 		template+='<td width="10%"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control" placeholder=""/></td>';
-		template+='<td width="7%" ><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" placeholder=""/></td>';
-		template+='<td width="7%" ><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control" /></td>';
-		template+='<td width="8%" style=""><input type="text" name="total_'+col+'" class="form-control" id="total_'+col+'" readonly/></td>';
-		template+='<td width="8%" style=""><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
-		template+='<td width="10%" style=""><input type="text" name="sub_total_'+col+'" class="form-control" id="sub_total_'+col+'" readonly/></td>';
 		template+='<td width="6%" ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 		tmp='<tr id="row'+col+'" class="hover">';
 		tmp+="</tr>";
-		dojo.query("#lbl_product_item").append(tmp);
+		dojo.query("#table_row").append(tmp);
 
 		if($("#identity").val()!="") {
 			var identity = $("#identity").val();
@@ -500,7 +459,7 @@ function initializeProduct(){
 		dojo.html.set(dojo.byId("row"+col),template , {
 			 parseContent: true,
 		});
-		//getProductinfo(col,product_id,"<?php echo $rs['price'];?>",<?php echo $rs['is_package'];?>,<?php echo $rs['package_id'];?>,<?php echo $rs['is_package_cost'];?>);
+		//getProductinfo(col,product_id,"1",<?php echo $rs['is_package'];?>,<?php echo $rs['package_id'];?>,<?php echo $rs['is_package_cost'];?>);
 		
 		$("#is_package_cost_"+col).val("<?php echo $rs['is_package_cost'];?>");
 		$("#is_package_"+col).val("<?php echo $rs['is_package'];?>");
@@ -509,12 +468,6 @@ function initializeProduct(){
 		$("#qty_"+col).val("<?php echo $rs['qty_unit'];?>");
 		$("#qtydetail_"+col).val("<?php echo $rs['qty_detail'];?>");
 		$("#qty_sold"+col).val("<?php echo $rs['qty_order'];?>");
-		$("#cost_price"+col).val("<?php echo $rs['cost_price'];?>");
-		$("#price_reil_"+col).val("<?php echo $rs['price_reil'];?>");
-		$("#price_"+col).val("<?php echo $rs['price'];?>");
-		$("#total_"+col).val("<?php echo $rs['total'];?>");
-		$("#discount_"+col).val("<?php echo $rs['discount'];?>");
-		$("#sub_total_"+col).val("<?php echo $rs['sub_total'];?>");
 	
 	<?php }}?>
 	
@@ -536,15 +489,10 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	template+='<td width="7%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="7%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="10%" style=""><input required="1" readonly name="qty_sold'+col+'" class="form-control" id="qty_sold'+col+'" placeholder=""/></td>';
-	template+='<td width="7%"  style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
-	template+='<td width="7%"  style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="form-control" id="price_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" /></td>';
-	template+='<td width="8%" style=""><input type="text" name="total_'+col+'" class="form-control" id="total_'+col+'" readonly/></td>';
-	template+='<td width="8%" style=""><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
-	template+='<td width="10%" style=""><input type="text" name="sub_total_'+col+'" class="form-control" id="sub_total_'+col+'" readonly/></td>';
 	template+='<td width="6%"  ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
-	dojo.query("#lbl_product_item").append(tmp);
+	dojo.query("#table_row").append(tmp);
 
 	if($("#identity").val()!="") {
 		var identity = $("#identity").val();
@@ -557,15 +505,6 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	getProductinfo(col,product_id,0,is_package,package_id,is_package_cost);
 	
 }
-
-function convertToDollar(index){
-	var price_reil= $("#price_reil_"+index).val();
-	var exchange_rate  = $("#exchange_rate").val();
-	dollar = (price_reil / exchange_rate).toFixed(3);
-	$("#price_"+index).val(dollar);
-	calCualtePrice(index);
-}
-
 
 function calCualtePrice(index){
 	main_qty= $("#qty_"+index).val();
@@ -580,28 +519,8 @@ function calCualtePrice(index){
 	
 	qty_sold = parseFloat(main_qty) + parseFloat(sub_qty);
 	$('#qty_sold'+index).val(qty_sold);
-	price = $('#price_'+index).val();
+}
 
-	total = (price*qty_sold);
-	$('#total_'+index).val(total);
-	
-	discount = $('#discount_'+index).val();
-	sub_total = total - discount;
-	$('#sub_total_'+index).val(sub_total);
-	
-	netTotal();
-}
-function netTotal() {//use
-	var netTotal=0;
-	var rowId = $('#identity').val();
-	if(rowId!=''){
-		var rowIDArray = rowId.split(',');
-		for(var n = 0; n < rowIDArray.length; n++) {
-			netTotal += Number($('#sub_total_'+rowIDArray[n]).val());
-		}
-	}
-	$('#sub_total').val(netTotal.toFixed(0));
-}
 var url_getproduct = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'getproduct')); ?>';
 function getProductinfo(index,product_id,old_price,is_package,package_id=0,is_package_cost=0){
 	branch_id = $('#branch').val();
@@ -614,35 +533,7 @@ function getProductinfo(index,product_id,old_price,is_package,package_id=0,is_pa
 		},				    
 	    success: function(data){
 			data = $.parseJSON(data);
-			
-			if(old_price>0){
-				//$("#price_"+index).val(old_price);
-			}else{
-				$('#current_qty_'+index).val(data.qty);
-				$('#measur_name'+index).val(data.measue_name);
-				$('#unit_label'+index).val(data.unit_label);
-				if(is_package==1 && package_id==0 && is_package_cost==1){
-					//alert(1);
-					$('#cost_price'+index).val(data.price);
-					$('#price_'+index).val(data.selling_price);
-					$('#price_reil_'+index).val(data.selling_price_khmer);
-				}else if(is_package==1 && package_id==0 && is_package_cost==0){
-					//alert(2);
-					$('#price_'+index).prop('readonly', true);
-					$('#price_reil_'+index).prop('readonly', true);
-				}else{
-					//alert(3);
-					if(package_id>0 && is_package_cost==1){
-						$('#price_'+index).prop('readonly', true);
-						$('#price_reil_'+index).prop('readonly', true);
-					}else{
-						$('#cost_price'+index).val(data.price);
-						$('#price_'+index).val(data.selling_price);
-						$('#price_reil_'+index).val(data.selling_price_khmer);
-					}
-				}
-			}
-			
+			//alert(1);
 			$("#measur_name"+index).val(data.measue_name);
 			$("#unit_label"+index).val(data.unit_label);
 
@@ -673,9 +564,7 @@ function getProductinfo(index,product_id,old_price,is_package,package_id=0,is_pa
 			$("#lblcurrent_qty"+index).val(current_stock+""+qty_unitlable);
 			$("#qty_perunit"+index).val(data.qty_perunit);
 			
-			if(old_price<=0 ){
-				calCualtePrice(index);
-			}
+			calCualtePrice(index);
 			
 		},
 	    error: function(err) {

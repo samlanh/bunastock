@@ -61,6 +61,28 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="col-md-4" style="text-align: left !important;">
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
+												ទីតាំងបុណ្យ
+											</label>
+											<div class="col-md-8">
+												<input name="place_bun" id="place_bun" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-3 control-label">
+												ទីតាំង
+											</label>
+											<div class="col-md-3">
+												<select class="form-control select2me" id="type_pjos" name="type_pjos" onchange="popupProgram();">
+													<option value="1">បញ្ចុះ</option>
+													<option value="2">បូជា</option>
+												</select>
+											</div>
+											<div class="col-md-6">
+												<input name="place_pjos" id="place_pjos" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
 												<strong>ឈ្មោះអតិថិជន</strong>
 											</label>
 											<div class="col-md-8">
@@ -73,7 +95,22 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												</select>
 											</div>
 										</div>
-										
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ទូរស័ព្ទ
+											</label>
+											<div class="col-md-8">
+												<input name="phone" id="phone" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												អាស័យដ្ឋាន
+											</label>
+											<div class="col-md-8">
+												<input name="address" id="address" class="form-control" />
+											</div>
+										</div>
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
 												កម្មវិធីបុណ្យ
@@ -83,7 +120,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													<option value="0">ជ្រើសរើសកម្មវិធីបុណ្យ</option>
 													<option value="-1">បន្ថែមកម្មវិធីបុណ្យ</option>
 													<?php if(!empty($this->diepeople)){foreach($this->diepeople as $rs){?>
-														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].' - '.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'];?></option>
+														<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].' - '.$rs['dead_name_chinese'].' - '.$rs['membersone'];?></option>
 													<?php }}?>
 												</select>
 											</div>
@@ -91,37 +128,6 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												<button type="button" class="btn red delete col-md-12 left" onclick="getRefreshProgram();" >
 													<i class="fa fa-refresh"></i>
 												</button>
-											</div>
-										</div>
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ថ្ងៃគិតប្រាក់
-											</label>
-											<div class="col-md-8">
-												<div class="input-icon right">
-													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control date-picker" name="date_clearpayment" id="date_clearpayment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-												</div>
-											</div>
-										</div>
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ទីតាំងបុណ្យ
-											</label>
-											<div class="col-md-8">
-												<input name="place_bun" id="place_bun" class="form-control" />
-											</div>
-										</div>
-										
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ពេលវេលាចេញ
-											</label>
-											<div class="col-md-8">
-												<div class="input-icon right">
-													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
-												</div>
 											</div>
 										</div>
 									</div>
@@ -232,22 +238,24 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
+										<table width="100%" id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
 											<thead>
 												<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;font-weight:bold">
 													<td width="3%" class="aligncenter">#</td>
-													<td width="25%" class="aligncenter">មុខទំនិញ/សេវាកម្ម</td>
-													<td width="10%" class="aligncenter">ស្តុក</td>
-													<td width="8%" class="aligncenter">បរិ.ដុំ</td>
-													<td width="8%" class="aligncenter">បរិ.រាយ</td>
+													<td width="20%" class="aligncenter">មុខទំនិញ/សេវាកម្ម</td>
+													<td width="7%"  class="aligncenter">ស្តុក</td>
+													<td width="7%" class="aligncenter">បរិ.ដុំ</td>
+													<td width="7%" class="aligncenter">បរិ.រាយ</td>
 													<td width="10%" class="aligncenter">បរិមាណសរុប</td>
-													<td width="10%" class="aligncenter">តម្លៃលក់(៛)</td>
-													<td width="10%" class="aligncenter">តម្លៃលក់($)</td>
-													<td width="10%" class="aligncenter">សរុប</td>
-													<td width="7%" class="aligncenter">លុប</td>
+													<td width="7%"  class="aligncenter">តម្លៃលក់(៛)</td>
+													<td width="7%"  class="aligncenter">តម្លៃលក់($)</td>
+													<td width="8%"  class="aligncenter">សរុប</td>
+													<td width="8%"  class="aligncenter">ប.តម្លៃ($)</td>
+													<td width="10%" class="aligncenter">តម្លៃសរុប</td>
+													<td width="6%" class="aligncenter">លុប</td>
 												</tr>
 												<tr>
-													<td colspan="10" id="lbl_product_item" align="center"></td>
+													<td colspan="12" id="lbl_product_item" align="center"></td>
 												</tr>
 											</thead>
 										</table>
@@ -347,7 +355,9 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												<th class="aligncenter">#</th>
 												<th class="aligncenter">សេវាកម្ម</th>
 												<th class="aligncenter">អ្នកផ្គត់ផ្គង់</th>
+												<?php /*?>
 												<th class="aligncenter">តម្លៃជួល</th>
+												<?php */?>
 												<th class="aligncenter">សម្គាល់</th>
 												<th class="aligncenter">លុប</th>
 											</tr>
@@ -367,10 +377,10 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 								<label class="col-md-6 control-label">
 								</label>
 								<label class="col-md-2 control-label">
-									<strong style="font-size: 16px;">តម្លៃសរុប</strong>
+									<strong style="font-size: 16px;"></strong>
 								</label>
 								<div class="col-md-4">
-									<input type="text" class="form-control" name="total_partner_service" id="total_partner_service" readOnly />
+									<input type="hidden" class="form-control" name="total_partner_service" id="total_partner_service" readOnly />
 								</div>
 							</div>
 						</div>
@@ -431,6 +441,8 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		val = $('#customer_id').val();
 		if(val==-1){
 			$('#customerpopup').modal('show');
+		}else{
+			getCustomerInfo();
 		}
 	}
 
@@ -584,28 +596,6 @@ function addNewReceiver(){
 	$('#save_receiver').attr("disabled", false);
 }
 
-<?php $url_getcustomerinfo =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'get-customerinfo')); ?>
-function getCustomerInfo(){
-	customer_id = dijit.byId("customer_id").get("value");
-	if(customer_id==-1){
-	}else{
-		dojo.xhrPost({
-		    url: "<?php echo $url_getcustomerinfo;?>",
-		    content : { 
-		    	'customer_id':customer_id,
-			},				    
-		   handleAs:"json", 
-		   load: function(data) {
-			   dojo.byId("lbl_customer").innerHTML=data.cust_name;
-			   dojo.byId("lbl_phone").innerHTML=data.contact_phone+'/'+data.phone;
-			   dojo.byId("lbl_address").innerHTML=data.address;
-		   },		
-		    error: function(err) {
-				   alert(err);
-			}
-		});
-	}
-}
 function deleteRecord(index) {
 	// is_package = $("#is_package_"+index).val();
 	// if(is_package==1){
@@ -662,15 +652,17 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	col++;no++;
 	template='';
 	template+='<td width="3%"  style="text-align:center">'+col+'</td>';
-	template+='<td width="25%" style="font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'" class="form-control">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" class="form-control" /></td>';
-	template+='<td width="10%" style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
-	template+='<td width="8%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
-	template+='<td width="8%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="20%" style="font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'" class="form-control">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" class="form-control" /></td>';
+	template+='<td width="7%" style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
+	template+='<td width="7%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="7%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="10%" style=""><input required="1" readonly name="qty_sold'+col+'" class="form-control" id="qty_sold'+col+'" placeholder=""/></td>';
-	template+='<td width="10%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
-	template+='<td width="10%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="form-control" id="price_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/><input type="hidden" name="'+col+'" id="cost_price'+col+'" /></td>';
-	template+='<td width="10%" style=""><input type="text" name="sub_total'+col+'" class="form-control" id="sub_total'+col+'" readonly/></td>';
-	template+='<td width="7%"  ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
+	template+='<td width="7%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="7%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="form-control" id="price_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/><input type="hidden" name="'+col+'" id="cost_price'+col+'" /></td>';
+	template+='<td width="8%" style=""><input type="text" name="total_'+col+'" class="form-control" id="total_'+col+'" readonly/></td>';
+	template+='<td width="8%" style=""><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
+	template+='<td width="10%" style=""><input type="text" name="sub_total_'+col+'" class="form-control" id="sub_total_'+col+'" readonly/></td>';
+	template+='<td width="6%"  ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
 	dojo.query("#lbl_product_item").append(tmp);
@@ -709,7 +701,11 @@ function calCualtePrice(index){
 	price = $('#price_'+index).val();
 
 	total = (price*qty_sold);
-	$('#sub_total'+index).val(total);
+	$('#total_'+index).val(total);
+	
+	discount = $('#discount_'+index).val();
+	sub_total = total - discount;
+	$('#sub_total_'+index).val(sub_total);
 	
 	netTotal();
 }
@@ -719,7 +715,7 @@ function netTotal() {//use
 	if(rowId!=''){
 		var rowIDArray = rowId.split(',');
 		for(var n = 0; n < rowIDArray.length; n++) {
-			netTotal += Number($('#sub_total'+rowIDArray[n]).val());
+			netTotal += Number($('#sub_total_'+rowIDArray[n]).val());
 		}
 	}
 	$('#sub_total').val(netTotal.toFixed(0));
@@ -841,8 +837,7 @@ function addServicePartner(from_type){
 	template+='</select></td>';
 	
 	
-	template+='<td style="min-width:60px"><input type="text" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="form-control" onkeypress="return isNumberKey(event);" /></td>';
-	template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" class="form-control" id="note_'+col1+'" /></td>';
+	template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" class="form-control" id="note_'+col1+'" /> <input type="hidden" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="form-control" onkeypress="return isNumberKey(event);" /></td>';
 	template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecordPartner('+col1+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row_partner_'+col1+'" class="hover">';
 	tmp+="</tr>";
@@ -1034,6 +1029,28 @@ function isNumberKey(evt)
 	}
 }
 
+
+<?php $url_getcustomerinfo =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'get-customerinfo')); ?>
+function getCustomerInfo(){
+	customer_id = $("#customer_id").val();
+	if(customer_id==-1){
+	}else{
+		dojo.xhrPost({
+		    url: "<?php echo $url_getcustomerinfo;?>",
+		    content : { 
+		    	'customer_id':customer_id,
+			},				    
+		   handleAs:"json", 
+		   load: function(data) {
+			   $("#phone").val(data.phone);
+			   $("#address").val(data.address);
+		   },		
+		    error: function(err) {
+				   alert(err);
+			}
+		});
+	}
+}
 </script>
 
 

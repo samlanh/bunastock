@@ -19,7 +19,7 @@ class Rsvacl_ExchangerateController extends Zend_Controller_Action
 				echo $e->getMessage();
 			}
 		}
-		$this->view->row = $db->getExchangeRate();
+		$rs = $this->view->rs = $db->getExchangeRate();
 	}		 
     
 }

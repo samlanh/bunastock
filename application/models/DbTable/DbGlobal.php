@@ -508,8 +508,27 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		}
 		return $pre.$new_acc_no;
 	}
+	public function getDnNumber(){
+		$db = $this->getAdapter();
+		$branch = $this->getAccessPermission("id");
+		$sql=" SELECT COUNT(id) FROM tb_dn WHERE 1 $branch LIMIT 1 ";
+		$acc_no = $db->fetchOne($sql);
+		$new_acc_no= (int)$acc_no+1;
+		$acc_no= strlen((int)$acc_no+1);
+		$pre = "DN-";
+		for($i = $acc_no;$i<5;$i++){
+			$pre.='0';
+		}
+		return $pre.$new_acc_no;
+	}
 	
 	function getExchangeRate(){
+		$db = $this->getAdapter();
+		$sql="SELECT reil from tb_exchange_rate WHERE active=1 ORDER BY id ASC LIMIT 1";
+		return $db->fetchOne($sql);
+	}
+	
+	function getExchangeRateSell(){
 		$db = $this->getAdapter();
 		$sql="SELECT reil from tb_exchange_rate WHERE active=1 ORDER BY id DESC LIMIT 1";
 		return $db->fetchOne($sql);

@@ -9,8 +9,7 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 						s.id,
 						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
-						(SELECT phone FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS phone,	
-						
+						s.phone,
 						(SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) as program_name,
 						
 						s.sale_no,

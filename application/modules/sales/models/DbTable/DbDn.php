@@ -1,6 +1,6 @@
 <?php
 
-class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
+class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 {
 	protected $_name="tb_sales_order";
 	
@@ -13,35 +13,34 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 		return $session_user->branch_id;
 	}
 	
-	function getAllQuote($search=null){
+	function getAllDn($search=null){
 			$db= $this->getAdapter();
 			$sql=" SELECT 
-						s.id,
-						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
-						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
+						dn.id,
+						place_bun,
+						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=dn.customer_id LIMIT 1 ) AS customer_name,
 						phone,	
 						
-						s.quote_num,
-						s.quote_date,
-						s.total_payment,
+						dn.dn_num,
+						DATE_FORMAT(dn.date_deleivery, '%d-%m-%Y %H:%i:%s') AS date_deleivery,
 						(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id = user_id LIMIT 1) AS user_name
 					FROM 
-						`tb_quotation` AS s 
+						`tb_dn` AS dn 
 				";
 			
-			$from_date =(empty($search['start_date']))? '1': " s.quote_date >= '".$search['start_date']." 00:00:00'";
-			$to_date = (empty($search['end_date']))? '1': " s.quote_date <= '".$search['end_date']." 23:59:59'";
+			$from_date =(empty($search['start_date']))? '1': " dn.create_date >= '".$search['start_date']." 00:00:00'";
+			$to_date = (empty($search['end_date']))? '1': " dn.create_date <= '".$search['end_date']." 23:59:59'";
 			$where = " WHERE ".$from_date." AND ".$to_date;
 			if(!empty($search['ad_search'])){
 				$s_where = array();
 				$s_search = trim(addslashes($search['ad_search']));
-				$s_where[] = " s.quote_num LIKE '%{$s_search}%'";
-				$s_where[] = " s.total_payment LIKE '%{$s_search}%'";
-				$s_where[] = " (SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) LIKE '%{$s_search}%'";
+				$s_where[] = " dn.dn_num LIKE '%{$s_search}%'";
+				$s_where[] = " dn.phone LIKE '%{$s_search}%'";
+				$s_where[] = " (SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=dn.customer_id LIMIT 1 ) LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['customer_id']>=0){
-				$where .= " AND s.customer_id =".$search['customer_id'];
+				$where .= " AND dn.customer_id =".$search['customer_id'];
 			}
 			
 			$dbg = new Application_Model_DbTable_DbGlobal();
@@ -85,13 +84,13 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 		return $this->getAdapter()->fetchRow($sql);
 	}
 
-	public function addQuote($data)
+	public function addDn($data)
 	{
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$quote_num = $db_global->getQuoteNumber();
+			$dn_num = $db_global->getDnNumber();
 			$info_purchase_order=array(
 					"branch_id"   	=> $this->getBranchId(),
 					
@@ -102,25 +101,23 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 					"phone" 		=> $data['phone'],
 					"address"   	=> $data['address'],
 					
-					"quote_num" 	=> $quote_num,
-					"quote_date"    => date("Y-m-d",strtotime($data['quote_date'])),
+					"dn_num" 		=> $dn_num,
+					"date_deleivery"=> date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
 					'note'			=> $data['note'],
 					
-					"exchange_rate" => $data['exchange_rate'],
-					"total_payment" => $data['sub_total'],
 					"user_id"       => $this->getUserId(),
 					"create_date" 	=> date("Y-m-d H:i:s"),
 			);
-			$this->_name="tb_quotation";
-			$quote_id = $this->insert($info_purchase_order);
+			$this->_name="tb_dn";
+			$dn_id = $this->insert($info_purchase_order);
 			
 			if(!empty($data['identity'])){
 				$ids=explode(',',$data['identity']);
 				foreach ($ids as $i)
 				{
 					$data_item = array(
-							'quoat_id'	=> $quote_id,
-							'pro_id'	=> $data['product_id'.$i],
+							'dn_id'			=> $dn_id,
+							'pro_id'		=> $data['product_id'.$i],
 							
 							'is_package_cost'=> $data['is_package_cost_'.$i],
 							'is_package'	=> $data['is_package_'.$i],
@@ -129,16 +126,8 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 							'qty_unit'	  => $data['qty_'.$i],
 							'qty_detail'  => $data['qtydetail_'.$i],
 							'qty_order'	  => $data['qty_sold'.$i],
-							
-							'cost_price'  => $data['cost_price'.$i],
-							'price_reil'  => $data['price_reil_'.$i],
-							'price'		  => $data['price_'.$i],
-							
-							'total'	  	  => $data['total_'.$i],
-							'discount'	  => $data['discount_'.$i],
-							'sub_total'	  => $data['sub_total_'.$i],
 					);
-					$this->_name='tb_quotation_item';
+					$this->_name='tb_dn_item';
 					$this->insert($data_item);
 				}
 			}
@@ -149,7 +138,7 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 			echo $e->getMessage();exit();
 		}
 	}
-	function editQuote($data,$id){
+	function editDn($data,$id){
 		//print_r($data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
@@ -164,22 +153,20 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 					"phone" 		=> $data['phone'],
 					"address"   	=> $data['address'],
 					
-					"quote_num" 	=> $data['quote_num'],
-					"quote_date"    => date("Y-m-d",strtotime($data['quote_date'])),
+					"dn_num" 		=> $data['dn_num'],
+					"date_deleivery"=> date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
 					'note'			=> $data['note'],
 						
-					"exchange_rate" => $data['exchange_rate'],
-					"total_payment" => $data['sub_total'],
 					"user_id"       => $this->getUserId(),
 					//"create_date" 	=> date("Y-m-d H:i:s"),
 						
 			);
-			$this->_name="tb_quotation";
+			$this->_name="tb_dn";
 			$where = " id = $id ";
 			$this->update($info_purchase_order, $where);
 			
-			$this->_name='tb_quotation_item';
-			$where1 = " quoat_id = $id";
+			$this->_name='tb_dn_item';
+			$where1 = " dn_id = $id";
 			$this->delete($where1);
 			
 			if(!empty($data['identity'])){
@@ -187,7 +174,7 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 				foreach ($ids as $i)
 				{
 					$data_item = array(
-							'quoat_id'	=> $id,
+							'dn_id'		=> $id,
 							'pro_id'	=> $data['product_id'.$i],
 								
 							'is_package_cost'=> $data['is_package_cost_'.$i],
@@ -197,43 +184,33 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 							'qty_unit'	  => $data['qty_'.$i],
 							'qty_detail'  => $data['qtydetail_'.$i],
 							'qty_order'	  => $data['qty_sold'.$i],
-								
-							'cost_price'  => $data['cost_price'.$i],
-							'price_reil'  => $data['price_reil_'.$i],
-							'price'		  => $data['price_'.$i],
-								
-							'total'	  	  => $data['total_'.$i],
-							'discount'	  => $data['discount_'.$i],
-							'sub_total'	  => $data['sub_total_'.$i],
 					);
-					$this->_name='tb_quotation_item';
+					$this->_name='tb_dn_item';
 					$this->insert($data_item);
 				}
 			}
-			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
 			echo $e->getMessage();exit();
 		}
 	}
-	function getQuoteById($id){
+	function getDnById($id){
 		$sql=" SELECT 
 					s.*,
-					total_payment,
 					(SELECT (cust_name) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
 					(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id =s.user_id LIMIT 1) AS user_name,
 					(select name_kh from tb_view where type=17 and key_code=type_pjos) as type_pjos_name,
-					DATE_FORMAT(quote_date, '%d-%m-%Y') AS quote_date
+					DATE_FORMAT(s.date_deleivery, '%d-%m-%Y %H:%i:%s') AS date_deleivery
 				FROM 
-					tb_quotation AS s 
+					tb_dn AS s 
 				WHERE 
 					s.id = $id
 				limit 1	
 			";
 		return $this->getAdapter()->fetchRow($sql);
 	}
-	function getQuoteDetailById($id){
+	function getDnDetailById($id){
 		$sql=" SELECT 
 					si.*,
 					p.item_name As pro_name,
@@ -242,11 +219,11 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 					p.is_package,
 					(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name
 				FROM 
-					tb_quotation_item as si,
+					tb_dn_item as si,
 					tb_product as p 
 				WHERE 
 					p.id = si.pro_id
-					and si.quoat_id = $id
+					and si.dn_id = $id
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}

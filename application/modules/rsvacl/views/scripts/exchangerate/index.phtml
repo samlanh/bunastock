@@ -28,18 +28,29 @@
 								<div class="col-md-10">
 									<table width="100%" border="1" style="font-weight: bold;border:1px solid #000; border-collapse: collapse;text-align: center;">
 										<tr height="40px" style="font-size: 18px;background: #65879a;color: #FFFFFF; " >
-											<td width="34%">ប្រភេទប្តូរ</td>
+											<td width="34%">ប្រភេទប្តូរ (ដុល្លារ ->រៀល )</td>
 											<td width="33%">ដុល្លារ</td>
 											<td width="33%">រៀល</td>
 										</tr>
 										<tr height="40px" style="font-size: 16px;">
-											<td width="34%">ពីដុល្លារ ទៅ រៀល</td>
+											<td width="34%">ទិញចូល</td>
 											<td width="33%">
-												<?php echo $this->row['dollar']?>
+												<?php echo $this->rs[0]['dollar']?>
 											</td>
 											<td width="33%">
-												<input name="reil" id="reil" class="form-control" value="<?php echo $this->row['reil']?>"/> 
-												<input type="hidden" name="id" id="id" class="form-control" value="<?php echo $this->row['id']?>"/> 
+												<input name="reil1" id="reil1" class="form-control" value="<?php echo $this->rs[0]['reil']?>"/> 
+												<input type="hidden" name="id1" id="id1" class="form-control" value="<?php echo $this->rs[0]['id']?>"/> 
+											</td>
+										</tr>
+										
+										<tr height="40px" style="font-size: 16px;">
+											<td width="34%">លក់ចេញ</td>
+											<td width="33%">
+												<?php echo $this->rs[1]['dollar']?>
+											</td>
+											<td width="33%">
+												<input name="reil2" id="reil2" class="form-control" value="<?php echo $this->rs[1]['reil']?>"/> 
+												<input type="hidden" name="id2" id="id2" class="form-control" value="<?php echo $this->rs[1]['id']?>"/> 
 											</td>
 										</tr>
 									</table>

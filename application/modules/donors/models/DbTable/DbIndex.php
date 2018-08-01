@@ -65,10 +65,8 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	}
 	public function addDonor($data)
 	{
-		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$receipt = $_db->getReceiptNumber();
-		
 		$arr=array(
 				'branch_id'			=> 1,
  				'donor'				=> $data['donor'],
@@ -92,13 +90,12 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'create_date'		=> date("Y-m-d H:i:s"),
 				'status'			=> 1,
 		);
-		
 		$this->insert($arr);
 	}
 	public function editDonor($data,$id){
 		$arr=array(
 				'branch_id'			=> 1,
- 				'donor'		=> $data['donor'],
+ 				'donor'				=> $data['donor'],
 				'tel'				=> $data['tel'],
 				'address'			=> $data['address'],
 				'required_using'	=> $data['required_using'],
@@ -119,7 +116,6 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'modify_date'		=> date("Y-m-d H:i:s"),
 				'status'			=> $data['status'],
 		);
-		
 		$where=" id = $id ";
 		$this->_name="tb_donors";
 		$this->update($arr,$where);

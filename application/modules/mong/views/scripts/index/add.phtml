@@ -47,9 +47,31 @@
 								<div class="tab-content" >
 									<div class="tab-pane active" id="tab_1">
 										<div class="form-body">
-										
+											
 											<div class="row">
 												<div class="col-md-4" style="text-align: left !important;">
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															ទីតាំងបុណ្យ
+														</label>
+														<div class="col-md-8">
+															<input name="place_bun" id="place_bun" class="form-control" />
+														</div>
+													</div>
+													<div class="form-group" style="">
+														<label class="col-md-3 control-label">
+															ទីតាំង
+														</label>
+														<div class="col-md-3">
+															<select class="form-control select2me" id="type_pjos" name="type_pjos" onchange="popupProgram();">
+																<option value="1">បញ្ចុះ</option>
+																<option value="2">បូជា</option>
+															</select>
+														</div>
+														<div class="col-md-6">
+															<input name="place_pjos" id="place_pjos" class="form-control" />
+														</div>
+													</div>
 													<div class="form-group" style="">
 														<label class="col-md-4 control-label">
 															<strong>ឈ្មោះអតិថិជន</strong>
@@ -66,35 +88,18 @@
 													</div>
 													<div class="form-group" style="">
 														<label class="col-md-4 control-label">
-															សម្គាល់ផ្សេងៗ
+															ទូរស័ព្ទ
 														</label>
 														<div class="col-md-8">
-															<textarea name="note" id="note" style="height: 35px;" class="form-control"></textarea>
+															<input name="phone" id="phone" class="form-control" />
 														</div>
 													</div>
 													<div class="form-group" style="">
 														<label class="col-md-4 control-label">
-															ថ្ងៃគិតប្រាក់
+															អាស័យដ្ឋាន
 														</label>
 														<div class="col-md-8">
-															<div class="input-icon right">
-																<i class="fa fa-calendar"></i>
-																<input type="text" class="form-control date-picker" name="date_clearpayment" id="date_clearpayment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-															</div>
-														</div>
-													</div>
-													<div class="form-group" style="">
-														<label class="col-md-4 control-label">
-															អ្នកទទួលប្រាក់
-														</label>
-														<div class="col-md-8">
-															<select class="form-control select2me" id="receiver_name" name="receiver_name" onchange="getPopupReceiver()" >
-																<option value="">ជ្រើសរើសអ្នកទទួលប្រាក់</option>
-																<option value="-1">បន្ថែមថ្មី</option>
-																<?php if(!empty($this->receiver_name)){foreach($this->receiver_name as $rs){?>
-																	<option value="<?php echo $rs['name'];?>"><?php echo $rs['name'];?></option>
-																<?php }}?>
-															</select>
+															<input name="address" id="address" class="form-control" />
 														</div>
 													</div>
 												</div>
@@ -141,7 +146,20 @@
 															<input type="text" class="form-control validate[required,custom[number]]" name="comission" id="comission" value="0" />
 														</div>
 													</div>
-													
+													<div class="form-group" style="">
+														<label class="col-md-4 control-label">
+															អ្នកទទួលប្រាក់
+														</label>
+														<div class="col-md-8">
+															<select class="form-control select2me" id="receiver_name" name="receiver_name" onchange="getPopupReceiver()" >
+																<option value="">ជ្រើសរើសអ្នកទទួលប្រាក់</option>
+																<option value="-1">បន្ថែមថ្មី</option>
+																<?php if(!empty($this->receiver_name)){foreach($this->receiver_name as $rs){?>
+																	<option value="<?php echo $rs['name'];?>"><?php echo $rs['name'];?></option>
+																<?php }}?>
+															</select>
+														</div>
+													</div>
 												</div>
 												<div class="col-md-4" style="text-align: left !important;">
 													<div class="form-group" style="">
@@ -204,6 +222,8 @@
 																<th class="aligncenter">តម្លៃលក់(៛)</th>
 																<th class="aligncenter">តម្លៃលក់($)</th>
 																<th class="aligncenter">សរុប</th>
+																<th class="aligncenter">ប.តម្លៃ($)</th>
+																<th class="aligncenter">តម្លៃសរុប</th>
 																<th class="aligncenter">លុប</th>
 															</tr>
 														</thead>
@@ -1092,13 +1112,15 @@
 			index_sale++;
 			template='<tr style="white-space:nowrap;" align="center" id="row'+index_sale+'">';
 			template+='<td>&nbsp;&nbsp;'+index_sale+'&nbsp;&nbsp;</td>';
-			template+='<td>&nbsp;&nbsp;&nbsp;'+txt_product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
+			template+='<td style="font-size:13px;">&nbsp;&nbsp;&nbsp;'+txt_product_name+'&nbsp;&nbsp;&nbsp;<input type="hidden" id="pro_'+index_sale+'" name="pro_'+index_sale+'" value="'+product_id+'" </td>';
 			template+='<td><input style="text-align:center;" id="lblcurrent_qty_'+index_sale+'" name="lblcurrent_qty_'+index_sale+'" readonly class="form-control " /><input type="hidden" id="current_qty_'+index_sale+'" name="current_qty_'+index_sale+'" value="" class="form-control "><input type="hidden" id="qty_perunit_'+index_sale+'" name="qty_perunit'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="measur_name_'+index_sale+'" name="measur_name_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" id="unit_label_'+index_sale+'" name="unit_label_'+index_sale+'" onkeyup="" class="form-control"><input type="hidden" name="is_package_cost_'+index_sale+'" id="is_package_cost_'+index_sale+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+index_sale+'" id="is_package_'+index_sale+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+index_sale+'" id="packageid_'+index_sale+'" value="'+package_id+'" class="form-control" /></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qtyunit_'+index_sale+'" name="qtyunit_'+index_sale+'" value="'+qty+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qtydetail_'+index_sale+'" name="qtydetail_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="qty_sold_'+index_sale+'" name="qty_sold_'+index_sale+'" value="'+qty+'" readonly class="form-control"></td>';
 			template+='<td style="min-width:50px"><input style="text-align:center;" type="text" onkeyup="convertToDollar('+index_sale+');" name="price_reil_'+index_sale+'" id="price_reil_'+index_sale+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 			template+='<td><input style="text-align:center;" type="text" id="selling_price_'+index_sale+'" name="selling_price_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" onkeypress="return isNumberKey(event);" class="form-control"><input style="text-align:center;" type="hidden" id="cost_price_'+index_sale+'" name="cost_price_'+index_sale+'" readonly class="form-control"></td>';
+			template+='<td><input style="text-align:center;" type="text" id="total_'+index_sale+'" name="total_'+index_sale+'" readonly class="form-control"></td>';
+			template+='<td><input style="text-align:center;" type="text" id="discount_'+index_sale+'" name="discount_'+index_sale+'" onkeyup="calCualteSalePrice('+index_sale+');" class="form-control"></td>';
 			template+='<td><input style="text-align:center;" type="text" id="sale_total_'+index_sale+'" name="sale_total_'+index_sale+'" readonly class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteSaleRecord('+index_sale+')" name="deleteSale" class="btn default red">លុប</button></td>';
 			template+='</tr>';
@@ -1213,7 +1235,12 @@
 		price = $("#selling_price_"+index_sale).val();
 
 		total = (price*qty_sold);
-		$("#sale_total_"+index_sale).val(total.toFixed(3));
+		$("#total_"+index_sale).val(total.toFixed(3));
+		
+		discount = $('#discount_'+index_sale).val();
+		sub_total = total - discount;
+		$('#sale_total_'+index_sale).val(sub_total);
+		
 		netTotal();
 	}
 	
@@ -1307,6 +1334,8 @@
 		val = $('#customer_id').val();
 		if(val==-1){
 			$('#customerpopup').modal('show');
+		}else{
+			getCustomerInfo();
 		}
 	}
 	
@@ -1424,6 +1453,32 @@ function isNumberKey(evt)
 		return true;
 	}
 }
+
+<?php $url_getcustomerinfo =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'get-customerinfo')); ?>
+function getCustomerInfo(){
+	customer_id = $("#customer_id").val();
+	if(customer_id==-1){
+	}else{
+		$.ajax({
+		    url: "<?php echo $url_getcustomerinfo;?>",
+		    type: "post",
+			data: { 
+		    	'customer_id':customer_id,
+			},				    
+		   handleAs:"json", 
+		   success: function(data) {
+			   rs = $.parseJSON(data);
+			   $("#phone").val(rs.phone);
+			   $("#address").val(rs.address);
+		   },		
+		    error: function(err) {
+				   alert(err);
+			}
+		});
+	}
+}
+
+
 </script>
 
 <?php $form = $this->form_customer; ?>

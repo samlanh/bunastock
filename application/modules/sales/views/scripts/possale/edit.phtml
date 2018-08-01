@@ -61,6 +61,28 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="col-md-4" style="text-align: left !important;">
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
+												ទីតាំងបុណ្យ
+											</label>
+											<div class="col-md-8">
+												<input name="place_bun" id="place_bun" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-3 control-label">
+												ទីតាំង
+											</label>
+											<div class="col-md-3">
+												<select class="form-control select2me" id="type_pjos" name="type_pjos" onchange="popupProgram();">
+													<option value="1">បញ្ចុះ</option>
+													<option value="2">បូជា</option>
+												</select>
+											</div>
+											<div class="col-md-6">
+												<input name="place_pjos" id="place_pjos" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
 												<strong>ឈ្មោះអតិថិជន</strong>
 											</label>
 											<div class="col-md-8">
@@ -71,6 +93,22 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 														<option value="<?php echo $rs['id'];?>"><?php echo $rs['name']." - ".$rs['phone'];?></option>
 													<?php }}?>
 												</select>
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												ទូរស័ព្ទ
+											</label>
+											<div class="col-md-8">
+												<input name="phone" id="phone" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
+												អាស័យដ្ឋាន
+											</label>
+											<div class="col-md-8">
+												<input name="address" id="address" class="form-control" />
 											</div>
 										</div>
 										<div class="form-group" style="">
@@ -92,37 +130,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												</button>
 											</div>
 										</div>
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ថ្ងៃគិតប្រាក់
-											</label>
-											<div class="col-md-8">
-												<div class="input-icon right">
-													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control date-picker" name="date_clearpayment" id="date_clearpayment" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
-												</div>
-											</div>
-										</div>
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ទីតាំងបុណ្យ
-											</label>
-											<div class="col-md-8">
-												<input name="place_bun" id="place_bun" class="form-control" />
-											</div>
-										</div>
 										
-										<div class="form-group" style="">
-											<label class="col-md-4 control-label">
-												ពេលវេលាចេញ
-											</label>
-											<div class="col-md-8">
-												<div class="input-icon right">
-													<i class="fa fa-calendar"></i>
-													<input type="text" class="form-control" name="date_deleivery" id="date_deleivery" value="<?php echo date("d-m-Y h:i")?>" data-date-format="dd-mm-yyyy  hh:ii" />
-												</div>
-											</div>
-										</div>
 									</div>
 									<!-- end blog1 -->
 									<div class="col-md-4" style="text-align: left !important;">
@@ -131,7 +139,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												លេខវិក័យបត្រ
 											</label>
 											<div class="col-md-8">
-												<input type="text" class="form-control" readOnly name="sale_no" id="sale_no" />
+												<input type="text" style="color:red;" class="form-control" readOnly name="sale_no" id="sale_no" />
 											</div>
 										</div>
 										<div class="form-group" style="">
@@ -243,6 +251,8 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													<th class="aligncenter">តម្លៃលក់(៛)</th>
 													<th class="aligncenter">តម្លៃលក់($)</th>
 													<th class="aligncenter">សរុប</th>
+													<th class="aligncenter">ប.តម្លៃ($)</th>
+													<th class="aligncenter">តម្លៃសរុប</th>
 													<th class="aligncenter">លុប</th>
 												</tr>
 												<tr>
@@ -344,7 +354,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													<th class="aligncenter">#</th>
 													<th class="aligncenter">សេវាកម្ម</th>
 													<th class="aligncenter">អ្នកផ្គត់ផ្គង់</th>
-													<th class="aligncenter">តម្លៃជួល</th>
+													<?php /*?><th class="aligncenter">តម្លៃជួល</th><?php */?>
 													<th class="aligncenter">សម្គាល់</th>
 													<th class="aligncenter">លុប</th>
 												</tr>
@@ -364,10 +374,10 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<label class="col-md-7 control-label">
 									</label>
 									<label class="col-md-2 control-label">
-										<strong style="font-size: 16px;">តម្លៃសរុប</strong>
+										<strong style="font-size: 16px;"></strong>
 									</label>
 									<div class="col-md-3">
-										<input type="text" class="form-control"  name="total_partner_service" id="total_partner_service" readOnly />
+										<input type="hidden" class="form-control"  name="total_partner_service" id="total_partner_service" readOnly />
 									</div>
 								</div>
 							</div>
@@ -414,6 +424,8 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		val = $('#customer_id').val();
 		if(val==-1){
 			$('#customerpopup').modal('show');
+		}else{
+			getCustomerInfo();
 		}
 	}
 
@@ -524,8 +536,6 @@ dojo.ready(function(){
 function setValue(){
 	$('#customer_id').val('<?php echo $this->row['customer_id']?>').select2();
 	$('#program_id').val('<?php echo $this->row['program_id']?>').select2();
-	//$('#note').val('<?php echo $this->row['payment_note']?>');
-	$('#date_clearpayment').val('<?php echo $this->row['clear_paymentdate']?>');
 	$('#sale_no').val('<?php echo $this->row['sale_no']?>');
 	$('#sale_date').val('<?php echo $this->row['date_sold']?>');
 	$('#saleagent_id').val('<?php echo $this->row['saleagent_id']?>').select2();
@@ -533,7 +543,12 @@ function setValue(){
 	$('#receiver_name').val('<?php echo $this->row['receiver_name']?>').select2();
 	$('#other_note').val('<?php echo $this->row['other_note']?>');
 	$('#place_bun').val('<?php echo $this->row['place_bun']?>');
-	$('#date_deleivery').val('<?php echo $this->row['date_deleivery']?>');
+	
+	$('#type_pjos').val('<?php echo $this->row['type_pjos']?>').select2();
+	$('#place_pjos').val('<?php echo $this->row['place_pjos']?>');
+	$('#phone').val('<?php echo $this->row['phone']?>');
+	$('#address').val('<?php echo $this->row['address']?>');
+	
 	
 	$('#sub_total').val('<?php echo $this->row['all_total']?>');
 	$('#paid').val('<?php echo $this->row['paid']?>');
@@ -584,7 +599,7 @@ function addNewReceiver(){
 
 <?php $url_getcustomerinfo =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'get-customerinfo')); ?>
 function getCustomerInfo(){
-	customer_id = dijit.byId("customer_id").get("value");
+	customer_id = $("#customer_id").val();
 	if(customer_id==-1){
 	}else{
 		dojo.xhrPost({
@@ -594,9 +609,8 @@ function getCustomerInfo(){
 			},				    
 		   handleAs:"json", 
 		   load: function(data) {
-			   dojo.byId("lbl_customer").innerHTML=data.cust_name;
-			   dojo.byId("lbl_phone").innerHTML=data.contact_phone+'/'+data.phone;
-			   dojo.byId("lbl_address").innerHTML=data.address;
+			   $("#phone").val(data.phone);
+			   $("#address").val(data.address);
 		   },		
 		    error: function(err) {
 				   alert(err);
@@ -604,6 +618,7 @@ function getCustomerInfo(){
 		});
 	}
 }
+
 function deleteRecord(index) {	
 	var identity = $('#identity').val();
 	var arrays = identity.split(',');
@@ -636,13 +651,15 @@ function initializeProduct(){
 		
 		template+='<td style="min-width:20px;text-align:center">'+col+'</td>';
 		template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-		template+='<td style="min-width:170px"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
+		template+='<td style="min-width:100px"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
 		template+='<td style="min-width:50px"><input type="hidden" class="form-control" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control" placeholder=""/></td>';
 		template+='<td style="min-width:50px"><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control" /></td>';
 		template+='<td style="min-width:50px"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control" placeholder=""/></td>';
 		template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" placeholder=""/></td>';
 		template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control" /></td>';
-		template+='<td style="min-width:60px"><input type="text" name="sub_total'+col+'" id="sub_total'+col+'" class="form-control" readonly/></td>';
+		template+='<td style="min-width:60px"><input type="text" name="total_'+col+'" id="total_'+col+'" class="form-control" readonly/></td>';
+		template+='<td style="min-width:60px"><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
+		template+='<td style="min-width:60px"><input type="text" name="sub_total_'+col+'" id="sub_total_'+col+'" class="form-control" readonly/></td>';
 		template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 		tmp='<tr id="row'+col+'" class="hover">';
 		tmp+="</tr>";
@@ -667,7 +684,9 @@ function initializeProduct(){
 		$("#cost_price"+col).val("<?php echo $rs['cost_price'];?>");
 		$("#price_reil_"+col).val("<?php echo $rs['price_reil'];?>");
 		$("#price_"+col).val("<?php echo $rs['price'];?>");
-		$("#sub_total"+col).val("<?php echo $rs['sub_total'];?>");
+		$("#total_"+col).val("<?php echo $rs['total'];?>");
+		$("#discount_"+col).val("<?php echo $rs['discount'];?>");
+		$("#sub_total_"+col).val("<?php echo $rs['sub_total'];?>");
 	
 	<?php }}?>
 	
@@ -685,13 +704,15 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	
 	template+='<td style="min-width:20px;text-align:center">'+col+'</td>';
 	template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-	template+='<td style="min-width:170px"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control " /><input type="hidden" readonly class="form-control " id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" class="form-control " name="measur_name'+col+'" id="measur_name'+col+'"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
+	template+='<td style="min-width:100px"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control " /><input type="hidden" readonly class="form-control " id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" class="form-control " name="measur_name'+col+'" id="measur_name'+col+'"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
 	template+='<td style="min-width:50px"><input type="hidden" class="form-control " name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control " placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control " placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control " placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control " placeholder=""/></td>';
 	template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control " placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control " /></td>';
-	template+='<td style="min-width:60px"><input type="text" name="sub_total'+col+'" id="sub_total'+col+'" class="form-control " readonly/></td>';
+	template+='<td style="min-width:60px"><input type="text" name="total_'+col+'" id="total_'+col+'" class="form-control" readonly/></td>';
+	template+='<td style="min-width:60px"><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
+	template+='<td style="min-width:60px"><input type="text" name="sub_total_'+col+'" id="sub_total_'+col+'" class="form-control" readonly/></td>';
 	template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
@@ -728,7 +749,11 @@ function calCualtePrice(index){
 	price = $('#price_'+index).val();
 
 	total = (price*qty_sold);
-	$('#sub_total'+index).val(total);
+	$('#total_'+index).val(total);
+	
+	discount = $('#discount_'+index).val();
+	sub_total = total - discount;
+	$('#sub_total_'+index).val(sub_total);
 	
 	netTotal();
 }
@@ -738,7 +763,7 @@ function netTotal() {//use
 	if(rowId!=''){
 		var rowIDArray = rowId.split(',');
 		for(var n = 0; n < rowIDArray.length; n++) {
-			netTotal += Number($('#sub_total'+rowIDArray[n]).val());
+			netTotal += Number($('#sub_total_'+rowIDArray[n]).val());
 		}
 	}
 	$('#sub_total').val(netTotal.toFixed(0));
@@ -859,8 +884,7 @@ function initializePartnerService(){
 		template+='</select></td>';
 		
 		
-		template+='<td style="min-width:60px"><input type="text" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="form-control" /></td>';
-		template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" id="note_'+col1+'" class="form-control" /></td>';
+		template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" id="note_'+col1+'" class="form-control" /><input type="hidden" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="form-control" /></td>';
 		template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecordPartner('+col1+')" name="save_close" class="btn default red">លុប</button></td>';
 		tmp='<tr id="row_partner_'+col1+'" class="hover">';
 		tmp+="</tr>";
@@ -912,8 +936,7 @@ function addServicePartner(from_type){
 	template+='</select></td>';
 	
 	
-	template+='<td style="min-width:60px"><input type="text" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="form-control" /></td>';
-	template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" class="form-control" id="note_'+col1+'" /></td>';
+	template+='<td style="min-width:60px"><input type="text" name="note_'+col1+'" class="form-control" id="note_'+col1+'" /><input type="hidden" id="price_service_'+col1+'" name="price_service_'+col1+'" onkeyup="netTotalPartner();" class="form-control" /></td>';
 	template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecordPartner('+col1+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row_partner_'+col1+'" class="hover">';
 	tmp+="</tr>";

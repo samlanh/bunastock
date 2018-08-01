@@ -70,7 +70,7 @@
 									<div class="form-group" >
 										<label class="col-md-4 control-label">ឈ្មោះសប្បុរសជន</label>
 										<div class="col-md-8">
-											<select type="text" class="form-control select2me" name="donor_id" id="donor_id" >
+											<select type="text" class="form-control select2me" name="donor_id" id="donor_id" onchange="getNote();" >
 												<option value="-1">ជ្រើសរើសសប្បុរសជន</option>
 												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
 												<option value="<?php echo $rs['id']?>"><?php echo $rs['donor']?></option>
@@ -137,21 +137,21 @@
 <script>
 	$('#frm').submit(function() {
 		dead_name=$("#dead_name").val();
-		if(dead_name<=0){
+		if(dead_name==''){
 			alert("Please input dead name");
 			$('#dead_name').focus();
 			return false;	
 		}
 		dead_age=$("#dead_age").val();
-		if(dead_age<=0){
+		if(dead_age==''){
 			alert("Please input dead age");
 			$('#dead_age').focus();
 			return false;	
 		}
 		donor_id=$("#donor_id").val();
-		if(donor_id==""){
-			alert("Please input name donor");
-			$('#donor_id').focus();
+		if(donor_id==-1){
+			alert("Please select donor !!! ");
+			$('#donor_id').select2('open');
 			return false;	
 		}
 		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\nតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
@@ -162,4 +162,28 @@
 		   return false;	    
 		}
 	});
+	
+	
+	function getNote(){		
+		var donor_id  = $("#donor_id").val();
+		if(donor_id>0){
+			$.ajax({
+				url: "<?php echo $this->baseUrl()?>/donors/donate/get-note",
+				type: "post",
+				data: {'donor_id':donor_id},
+				success: function(data){
+					rs = $.parseJSON(data);
+					if(rs){
+						$("#note").val(rs.detail_kh);
+						$('#notes').val(rs.detail_chi);
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
+	}
+	
+	
 </script>

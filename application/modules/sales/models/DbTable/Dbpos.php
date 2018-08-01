@@ -64,30 +64,33 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$receipt = $db_global->getReceiptNumber($this->getBranchId());
 			
 			$info_purchase_order=array(
-					"customer_id"   => $data['customer_id'],
-					'program_id'	=> $data['program_id'],
 					"branch_id"     => $this->getBranchId(),
+					
+					'place_bun'		=> $data['place_bun'],
+					'type_pjos'		=> $data['type_pjos'],
+					'place_pjos'	=> $data['place_pjos'],
+					"customer_id"   => $data['customer_id'],
+					"phone"   		=> $data['phone'],
+					"address"   	=> $data['address'],
+					'program_id'	=> $data['program_id'],
+					
 					"sale_no"       => $invoice,
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
+					"saleagent_id"  => $data["saleagent_id"],
+					'comission' 	=> $data['comission'],
+					'receiver_name' => $data['receiver_name'],
+					
+					'other_note'	=> $data['other_note'],
 					
 					"exchange_rate" => $data['exchange_rate'],					
 					"all_total"     => $data['sub_total'],
 					"paid"          => $data['paid'],
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
-					'receiver_name' => $data['receiver_name'],
-			//		'sale_agent' 	=> $data['sale_agent'],
+					
+					'status'		=> 1,
 					"user_id"       => $this->getUserId(),
-					
-					"saleagent_id"  => $data["saleagent_id"],
-					
-					'comission' 	=> $data['comission'],
-					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
-					//'payment_note' 	=> $data['note'],
-					'other_note'	=> $data['other_note'],
-					'place_bun'		=> $data['place_bun'],
-					'date_deleivery'	=> empty($data['date_deleivery'])?null:date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
-					"date"          => date("Y-m-d"),
+					"create_date"	=> date("Y-m-d H:i:s"),
 			
 					'partner_service_total'  	=> $data['total_partner_service'],
 					'partner_service_balance'  	=> $data['total_partner_service'],
@@ -170,7 +173,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 							'price_reil'  => $data['price_reil_'.$i],
 							'price'		  => $data['price_'.$i],
 							
-							'sub_total'	  => $data['sub_total'.$i],
+							'total'	  	  => $data['total_'.$i],
+							'discount'	  => $data['discount_'.$i],
+							'sub_total'	  => $data['sub_total_'.$i],
 					);
 					$this->_name='tb_salesorder_item';
 					$this->insert($data_item);
@@ -225,29 +230,35 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			}
 	
 			$info_purchase_order=array(
-					"customer_id"   => $data['customer_id'],
-					'program_id'	=> $data['program_id'],
+				/////////////////////////////////////////////////////////////////	
 					"branch_id"     => $this->getBranchId(),
+						
+					'place_bun'		=> $data['place_bun'],
+					'type_pjos'		=> $data['type_pjos'],
+					'place_pjos'	=> $data['place_pjos'],
+					"customer_id"   => $data['customer_id'],
+					"phone"   		=> $data['phone'],
+					"address"   	=> $data['address'],
+					'program_id'	=> $data['program_id'],
+						
 					"sale_no"       => $data["sale_no"],
 					"date_sold"     => date("Y-m-d",strtotime($data['sale_date'])),
-					
+					"saleagent_id"  => $data["saleagent_id"],
+					'comission' 	=> $data['comission'],
+					'receiver_name' => $data['receiver_name'],
+						
+					'other_note'	=> $data['other_note'],
+						
 					"exchange_rate" => $data['exchange_rate'],
 					"all_total"     => $data['sub_total'],
 					"paid"          => $data['paid'],
-					//'paid_before'	=> $data['paid_before'],
 					'balance'		=> $data['balance'],
 					"balance_after" => $data['balance'],
-					'receiver_name' => $data['receiver_name'],	
+						
+					'status'		=> 1,
 					"user_id"       => $this->getUserId(),
-					"saleagent_id"  => $data["saleagent_id"],					
-					'comission' 	=> $data['comission'],
-					'clear_paymentdate' => date("Y-m-d",strtotime($data['date_clearpayment'])),
-					//'payment_note' 	=> $data['note'],
-					'other_note'	=> $data['other_note'],
-					'place_bun'		=> $data['place_bun'],
-					'date_deleivery'=> empty($data['date_deleivery'])?null:date("Y-m-d H:i:s",strtotime($data['date_deleivery'])),
-					//"date"          => date("Y-m-d"),
-			
+					//"create_date"	=> date("Y-m-d H:i:s"),
+						
 					'partner_service_total'  	=> $data['total_partner_service'],
 					'partner_service_balance'  	=> $data['total_partner_service'],
 			);
@@ -330,7 +341,9 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 							'price_reil'  => $data['price_reil_'.$i],
 							'price'		  => $data['price_'.$i],
 							
-							'sub_total'	  => $data['sub_total'.$i],
+							'total'	  	  => $data['total_'.$i],
+							'discount'	  => $data['discount_'.$i],
+							'sub_total'	  => $data['sub_total_'.$i],
 					);
 					$this->_name='tb_salesorder_item';
 					$this->insert($data_item);
@@ -366,10 +379,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					s.*,
 					(all_total) AS net_total,
 					(SELECT (cust_name) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
-					(SELECT (phone) FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS phone,
-					(SELECT address FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS address,	
 					(SELECT u.fullname FROM tb_acl_user AS u WHERE u.user_id =s.user_id LIMIT 1) AS user_name,
-					DATE_FORMAT(clear_paymentdate, '%d-%m-%Y') AS clear_paymentdate,
+					(select name_kh from tb_view where type=17 and key_code=type_pjos) as type_pjos_name,
 					DATE_FORMAT(date_sold, '%d-%m-%Y') AS date_sold
 				FROM 
 					tb_sales_order AS s 
