@@ -895,6 +895,7 @@
 		var dead_id  = $("#dead_id").val();
 
 		if(dead_id>0){
+		//	alert(1);
 			$.ajax({
 				url: "<?php echo $this->baseUrl()?>/mong/index/get-dead-detail",
 				type: "post",

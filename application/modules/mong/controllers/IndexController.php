@@ -181,8 +181,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$id = $this->getRequest()->getParam("id");
 		$db = new Mong_Model_DbTable_DbIndex();
 		$row = $this->view->row = $db->getInvoiceById($id);
-		$row_detail = $this->view->row_detail = $db->getInvoiceDetailById($id);
-		
+		$row_detail = $this->view->row_detail = $db->getInvoiceDetailById($id);	
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->exchange_rate = $db->getExchangeRateSell();
 	}
