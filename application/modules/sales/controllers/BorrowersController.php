@@ -71,5 +71,15 @@ class Sales_BorrowersController extends Zend_Controller_Action
 			$formpopup = $form->Formcustomer(null);
 			Application_Model_Decorator::removeAllDecorator($formpopup);
 //	 		$this->view->rsservice = $db->getAllService();		 
+	}
+	
+	function getBorrowersDetailAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_DbBorrowers();
+			$detail = $db->getBorrowersDetail($data['name_borrow']);
+			print_r(Zend_Json::encode($detail));
+			exit();
+		}
 	}	
 }

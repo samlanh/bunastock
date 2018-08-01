@@ -70,7 +70,17 @@ class Sales_RepayController extends Zend_Controller_Action
 			$this->view->name_pay = $db->getAllRepays();
 			$form = new Sales_Form_FrmCustomer(null);
 			$formpopup = $form->Formcustomer(null);
-			Application_Model_Decorator::removeAllDecorator($formpopup);
-//	 		$this->view->rsservice = $db->getAllService();		 
-	}	
+			Application_Model_Decorator::removeAllDecorator($formpopup);		 
+	}
+
+	function getRepayDetailAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_DbRepay();
+			$detail = $db->getRepayDetail($data['name_borrow']);
+			print_r(Zend_Json::encode($detail));
+			exit();
+		}
+	}
+	
 }
