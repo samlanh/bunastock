@@ -308,12 +308,54 @@
 												</div>
 											</div>
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													វេលាម៉ោង
-												</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" name="lerk_sop_time" id="lerk_sop_time" value="<?php echo $this->row['lerk_sop_time']?>" />
+												<label class="col-md-4 control-label">វេលាម៉ោង</label>
+												<div class="col-md-3">
+													<select id="lerk_sop_time" name="lerk_sop_time" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
 												</div>
+												<label class="col-md-2 control-label">ដល់</label>
+												<div class="col-md-3">
+													<select id="lerk_sop_time_to" name="lerk_sop_time_to" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
+												</div>																						
+											</div>	
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">ពេល​</label>												
+												<div class="col-md-8">
+													<select class="form-control select2me" id="lerk_sop_time_mail" name="lerk_sop_time_mail" >
+														<option value="">ជ្រើសរើសពេល</option>
+														<option value="ព្រឹក">ពេលព្រឹក</option>
+														<option value="ថ្ងៃត្រង់">ពេលថ្ងៃត្រង់</option>
+														<option value="ល្ងាច">ពេលល្ងាច</option>
+														<option value="យប់">ពេលយប់</option>
+													</select>
+												</div>																						
 											</div>
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
@@ -342,13 +384,55 @@
 												</div>
 											</div>
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													វេលាម៉ោង
-												</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" name="hae_sop_time" id="hae_sop_time" value="<?php echo $this->row['hae_sop_time']?>" />
+												<label class="col-md-4 control-label">វេលាម៉ោង</label>
+												<div class="col-md-3">
+													<select id="hae_sop_time" name="hae_sop_time" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
 												</div>
+												<label class="col-md-2 control-label">ដល់</label>
+												<div class="col-md-3">
+													<select id="hae_sop_time_to" name="hae_sop_time_to" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
+												</div>																					
 											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">ពេល​</label>												
+												<div class="col-md-8">
+													<select class="form-control select2me" id="hae_sop_mail" name="hae_sop_mail" >
+														<option value="">ជ្រើសរើសពេល</option>
+														<option value="ព្រឹក">ពេលព្រឹក</option>
+														<option value="ថ្ងៃត្រង់">ពេលថ្ងៃត្រង់</option>
+														<option value="ល្ងាច">ពេលល្ងាច</option>
+														<option value="យប់">ពេលយប់</option>
+													</select>
+												</div>																						
+											</div>						
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
 													ឆ្នាំឆុង
@@ -376,13 +460,55 @@
 												</div>
 											</div>
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													វេលាម៉ោង
-												</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control" name="pjos_sop_time" id="pjos_sop_time" value="<?php echo $this->row['pjos_sop_time']?>" />
+												<label class="col-md-4 control-label">វេលាម៉ោង</label>
+												<div class="col-md-3">
+													<select id="pjos_sop_time" name="pjos_sop_time" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
 												</div>
-											</div>
+												<label class="col-md-2 control-label">ដល់</label>
+												<div class="col-md-3">
+													<select id="pjos_sop_time_to" name="pjos_sop_time_to" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
+												</div>																						
+											</div>		
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">ពេល​</label>												
+												<div class="col-md-8">
+													<select class="form-control select2me" id="pjos_sop_mail" name="pjos_sop_mail" >
+														<option value="">ជ្រើសរើសពេល</option>
+														<option value="ព្រឹក">ពេលព្រឹក</option>
+														<option value="ថ្ងៃត្រង់">ពេលថ្ងៃត្រង់</option>
+														<option value="ល្ងាច">ពេលល្ងាច</option>
+														<option value="យប់">ពេលយប់</option>
+													</select>
+												</div>																						
+											</div>				
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
 													ឆ្នាំឆុង
@@ -728,7 +854,24 @@
 		$("#partner_status").val(dead_status).select2();
 		$("#date_time_female").val(date_time_dead);
 		$("#partner_pob").val(dead_pob);
-	}	
-	
+	}
+
+	$(document).ready(function() {
+		  setValue();
+		});	
+
+	function setValue(){
+		$('#lerk_sop_time').val('<?php echo $this->row['lerk_sop_time']?>');
+		$('#lerk_sop_time_to').val('<?php echo $this->row['lerk_sop_time_to']?>');
+		$('#lerk_sop_time_mail').val('<?php echo $this->row['lerk_sop_time_mail']?>');
+		
+		$('#hae_sop_time').val('<?php echo $this->row['hae_sop_time']?>');
+		$('#hae_sop_time_to').val('<?php echo $this->row['hae_sop_time_to']?>');
+		$('#hae_sop_mail').val('<?php echo $this->row['hae_sop_mail']?>');
+		
+		$('#pjos_sop_time').val('<?php echo $this->row['pjos_sop_time']?>');
+		$('#pjos_sop_time_to').val('<?php echo $this->row['pjos_sop_time_to']?>');
+		$('#pjos_sop_mail').val('<?php echo $this->row['pjos_sop_mail']?>');
+	}
 </script>
 

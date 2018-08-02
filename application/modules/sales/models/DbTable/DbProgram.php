@@ -119,19 +119,25 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'type_romleay_sop'      => $data['type_romleay_sop'],
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
 	    			'membersone'           	=> $data['membersone'],
-	    			//'memberstwo'           	=> $data['memberstwo'],
+	    			'memberstwo'           	=> $data['memberstwo'],
 	    			'note'           		=> $data['note'],
 	    			
 	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),
 	    			'lerk_sop_time'     	=> $data['lerk_sop_time'],
+	    			'lerk_sop_time_to'     	=> $data['lerk_sop_time_to'],
+	    			'lerk_sop_time_mail'    => $data['lerk_sop_time_mail'],
 	    			'lerk_sop_opposite_year'=> $data['lerk_sop_opposite_year'],
 	    			
 	    			'hae_sop_date'      	=> empty($data['hae_sop_date'])?null:date("Y-m-d",strtotime($data['hae_sop_date'])),
 	    			'hae_sop_time'      	=> $data['hae_sop_time'],
+	    			'hae_sop_time_to'      	=> $data['hae_sop_time_to'],
+	    			'hae_sop_mail'      	=> $data['hae_sop_mail'],
 	    			'hae_sop_opposite_year'	=> $data['hae_sop_opposite_year'],
 	    			
 	    			'pjos_sop_date'      	=> empty($data['pjos_sop_date'])?null:date("Y-m-d",strtotime($data['pjos_sop_date'])),
 	    			'pjos_sop_time'      	=> $data['pjos_sop_time'],
+	    			'pjos_sop_time_to'      => $data['pjos_sop_time_to'],
+	    			'pjos_sop_mail'      	=> $data['pjos_sop_mail'],
 	    			'pjos_sop_opposite_year'=> $data['pjos_sop_opposite_year'],
 	    			
 	    			'photo'      			=> $array_photo_name,
@@ -211,19 +217,25 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'type_romleay_sop'      => $data['type_romleay_sop'],
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
 	    			'membersone'           	=> $data['membersone'],
-	    			//'memberstwo'           	=> $data['memberstwo'],
+	    			'memberstwo'           	=> $data['memberstwo'],
 	    			'note'           		=> $data['note'],
 	    			
 	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),
 	    			'lerk_sop_time'     	=> $data['lerk_sop_time'],
+	    			'lerk_sop_time_to'     	=> $data['lerk_sop_time_to'],
+	    			'lerk_sop_time_mail'    => $data['lerk_sop_time_mail'],
 	    			'lerk_sop_opposite_year'=> $data['lerk_sop_opposite_year'],
 	    			
 	    			'hae_sop_date'      	=> empty($data['hae_sop_date'])?null:date("Y-m-d",strtotime($data['hae_sop_date'])),
 	    			'hae_sop_time'      	=> $data['hae_sop_time'],
+	    			'hae_sop_time_to'      	=> $data['hae_sop_time_to'],
+	    			'hae_sop_mail'      	=> $data['hae_sop_mail'],
 	    			'hae_sop_opposite_year'	=> $data['hae_sop_opposite_year'],
 	    			
 	    			'pjos_sop_date'      	=> empty($data['pjos_sop_date'])?null:date("Y-m-d",strtotime($data['pjos_sop_date'])),
 	    			'pjos_sop_time'      	=> $data['pjos_sop_time'],
+	    			'pjos_sop_time_to'      => $data['pjos_sop_time_to'],
+	    			'pjos_sop_mail'      	=> $data['pjos_sop_mail'],
 	    			'pjos_sop_opposite_year'=> $data['pjos_sop_opposite_year'],
 	    			
 	    			'status'      			=> $data['status'],
@@ -284,6 +296,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     public function getTravelById($id){
     	$db = $this->getAdapter();
     	$sql = "SELECT *,
+    				(SELECT name_kh FROM tb_view WHERE TYPE=17 AND key_code = type_romleay_sop) AS type_romleay,
     				(select name from tb_year_khmer where tb_year_khmer.id = tb_program.lerk_sop_opposite_year limit 1) as hae_sop_jol_mchhos,
 					(select name from tb_year_khmer where tb_year_khmer.id = tb_program.hae_sop_opposite_year limit 1) as hae_sop_jenh,
 					(select name from tb_year_khmer where tb_year_khmer.id = tb_program.pjos_sop_opposite_year limit 1) as pjos_sop

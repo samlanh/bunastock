@@ -423,12 +423,51 @@
 											</div>
 											
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													ម៉ោង
-												</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control " name="time_sen" id="time_sen"/>
+												<label class="col-md-4 control-label"><label>ម៉ោងសែន</label></label>
+												<div class="col-md-2">
+													<select id="time_sen" name="time_sen" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
 												</div>
+												<label class="col-md-1 control-label"><label>ដល់</label></label>
+												<div class="col-md-2">
+													<select id="time_sen_to" name="time_sen_to" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
+												</div>
+												<div class="col-md-3">
+													<select class="form-control select2me" id="time_mas" name="time_mas" onchange="popupProgram();">
+														<option value="">ពេល</option>
+														<option value="ព្រឹក">ព្រឹក</option>
+														<option value="ថ្ងៃត្រង់">ថ្ងៃត្រង់</option>
+														<option value="ល្ងាច">ល្ងាច</option>
+														<option value="យប់">យប់</option>
+													</select>
+												</div>																						
 											</div>
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
@@ -442,13 +481,52 @@
 												</div>
 											</div>
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">
-													ម៉ោង
-												</label>
-												<div class="col-md-8">
-													<input type="text" class="form-control " name="time_chlong_mong" id="time_chlong_mong" />
+												<label class="col-md-4 control-label"><label>ម៉ោងឆ្លង</label></label>
+												<div class="col-md-2">
+													<select id="time_chlong_mong" name="time_chlong_mong" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
 												</div>
-											</div>
+												<label class="col-md-1 control-label"><label>ដល់</label></label>
+												<div class="col-md-2">
+													<select id="time_chlong_mong_to" name="time_chlong_mong_to" class="form-control">
+														<option value="">ម៉ោង</option>
+														<option value="១">១</option>
+														<option value="២">២</option>
+														<option value="៣">៣</option>
+														<option value="៤">៤</option>
+														<option value="៥">៥</option>
+														<option value="៦">៦</option>
+														<option value="៧">៧</option>
+														<option value="៨">៨</option>
+														<option value="៩">៩</option>
+														<option value="១០">១០</option>
+														<option value="១១">១១</option>
+														<option value="១២">១២</option>
+													</select>
+												</div>
+												<div class="col-md-3">
+													<select class="form-control select2me" id="time_mole" name="time_mole" onchange="popupProgram();">
+														<option value="">ពេល</option>
+														<option value="ព្រឹក">ព្រឹក</option>
+														<option value="ថ្ងៃត្រង់">ថ្ងៃត្រង់</option>
+														<option value="ល្ងាច">ល្ងាច</option>
+														<option value="យប់">យប់</option>
+													</select>
+												</div>																						
+											</div>						
 										</div>
 										<div class="col-md-4">
 											<h4 style="border-bottom: 1px solid #ccc;" class="center">រូបភាពផ្សេងៗ</h4>
@@ -1608,6 +1686,11 @@ function setValue(){
 	$('#constructor').val('<?php echo $this->row['constructor']?>');
 	$('#constructor_price').val('<?php echo $this->row['constructor_price']?>');
 	$('#constructor').val('<?php echo $this->row['constructor']?>');
+
+	$('#time_mole').val('<?php echo $this->row['time_mole']?>');
+	$('#time_chlong_mong_to').val('<?php echo $this->row['time_chlong_mong_to']?>');
+	$('#time_mas').val('<?php echo $this->row['time_mas']?>');
+	$('#time_sen_to').val('<?php echo $this->row['time_sen_to']?>');
 	
 	$('#sub_total').val('<?php echo $this->row['sub_total']?>');
 	$('#paid').val('<?php echo $this->row['paid']?>');

@@ -63,7 +63,7 @@ $formFilter = $this->formFilter;
 				font-family: 'Khmer OS Battambang';
 			}
 			ul{margin: 0;padding:0;}
-			table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
+			table tr td ul li{text-align: center;list-style: none;line-height: 29px; font-weight: bold;}
 			th{padding: 5px;}
 			.hover:hover{background: #ccc;}
 			table { page-break-inside:auto }
@@ -83,9 +83,9 @@ $formFilter = $this->formFilter;
 			                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logosbona.jpg" height="95px" ></td>
 			                	<td width="60%" >
 			                		<ul>
-			                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
-			                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'">របាយការណ៏លក់ផលិតផល</li>
-			                			<li style="text-align:center; font-size:14px;"><?php if(!empty($this->search['start_date'])){?><?php echo date("d/m/Y",strtotime($this->search['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->search['end_date']));}?></li>
+			                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
+			                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important">របាយការណ៏លក់ផលិតផល</li>
+			                			<li style="text-align:center; font-size:14px; color: #F31A1A  !important"><?php if(!empty($this->search['start_date'])){?><?php echo date("d/m/Y",strtotime($this->search['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->search['end_date']));}?></li>
 			                		</ul>
 			                	</td>
 			                    <td width="20%"></td>

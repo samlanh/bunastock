@@ -7,7 +7,7 @@
 ?>
 <title>កែប្រែកម្មវិធីបុណ្យ</title>
 <div id="Printdonate">
-	<div class="wrapper" id="borderimg1" style="background: #fff;width:26cm;margin: 0 auto;min-height: 37cm;padding: 0.5cm;">
+	<div class="wrapper" id="borderimg1" style="background: #fff;width:27cm;margin: 0 auto;min-height: 39cm;padding: -0.4cm;">
 		<style>
 	    	.wrapper{
 	    		width: 100%;
@@ -22,12 +22,12 @@
 	    		padding: 4px;
 			}
 			#borderimg1 { 
-			    border: 85px dotted ;
+			    border: 80px dotted ;
 			    border-image: url("<?php echo $this->baseUrl()?>/images/ifrmas.jpg") 125 stretch;
 			}
 			
 	    </style>
-		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold; margin-top: -40px; white-space: nowrap">		 
+		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold; margin-top: -10px; ">		 
 			<tr>
 				<td width="20%" align="center">
 					<img style="max-height:230px; width: 110%;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
@@ -39,14 +39,14 @@
 				<td width="20%" >&nbsp;</td>
 			</tr>
 		  	<tr>
-		  		<td colspan="3" align="center" style="color:blue !important;font-size: 45px;">
+		  		<td colspan="3" align="center" style="color: blue !important;font-size: 45px;">
 	  				លើកសពចូលម្ឈូស
 	  			</td>
 	  		</tr>		
   			<tr >
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
   					ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
-  					វេលាម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?> <br />
+  					ម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?> ដល់  <?php echo $this->row['lerk_sop_time_to']?> <?php echo $this->row['lerk_sop_time_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?>
   				</td>
   			</tr>
@@ -58,19 +58,21 @@
   			<tr >
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
   					ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
-  					វេលាម៉ោងៈ  <?php echo $this->row['hae_sop_time']?> <br />
+  					ម៉ោងៈ  <?php echo $this->row['hae_sop_time']?> ដល់ <?php echo $this->row['hae_sop_time_to']?>  <?php echo $this->row['hae_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?>
   				</td>
 	  		</tr>
   			<tr>
-  				<td colspan="3" align="center" style="color:red !important;font-size: 45px;">
-  					បញ្ចុះ/បូជា
+  				<td colspan="3" align="center">
+  					<i style="font-size: 38px; color:red !important; "><?php echo $this->row['type_romleay']?> </i>
+  					<i style="font-size: 38px; color:blue !important; ">នៅទីតាំង </i>
+  					<i style="font-size: 35px; color:red !important; "><?php echo $this->row['place_pjos_sop']?> </i>
   				</td>
   			</tr>
   			<tr>
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
   					ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
-  					វេលាម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?> <br />
+  					ម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?> ដល់ <?php echo $this->row['pjos_sop_time_to']?> <?php echo $this->row['pjos_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?>
   				</td>
   			</tr>
@@ -79,8 +81,8 @@
   					<u style="color:#22B424 !important;">កូនចៅកាន់ទុក្ខមិនឆុងទេ!</u>
   				</td>
   			</tr>
-  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 55px; color: #000; font-size:30px;font-weight: bold; list-style:none;">
-  				<td  colspan="3" align="center" style="color: #black !important; ">
+  			<tr align="center" style="list-style:25px; font-family:  Khmer OS Muol; line-height: 60px; color: #000; font-size:30px;font-weight: bold; list-style:none;">
+  				<td  colspan="3" align="center" style="color:blue !important; ">
   					<i class="fa fa-home" style="font-size: 38px;"></i> ផ្ទះលេខ ៧៣ ផ្លូវមាត់ទន្លេកែងផ្លូវលេខ១០០ <br>(មុខក្រសួងប្រៃសណីយ៍វត្តភ្នំ)<br >
   					<i class="fa fa-facebook-square" style="font-size: 35px;"></i> Chao Bunna 73 Funeral Service <br >
   					<i class="fa fa-phone-square" style="font-size: 35px;"></i> <?php echo $tr->translate("PHONE_BUNA");?> , 012 31 73 73
