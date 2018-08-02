@@ -563,7 +563,7 @@
 													<select class="form-control select2me" name="dead_id" id="dead_id" onChange="getDeadPersonDetail();">
 														<option value="0">ជ្រើសរើសសព-កម្មវិធីបុណ្យ</option>
 														<?php if(!empty($this->all_dead)){foreach($this->all_dead as $rs){?>
-															<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['membersone'].' - '.$rs['memberstwo'] ; ?></option>
+															<option value="<?php echo $rs['id'];?>"><?php echo $rs['dead_name'].'-'.$rs['dead_name_chinese'].' - '.$rs['membersone']; ?></option>
 														<?php }}?>
 													</select>
 												</div>
@@ -783,18 +783,10 @@
 
 												<div class="form-group" style="">
 													<label class="col-md-4 control-label">
-														ទូរស័ទ្ទសមាជិកទី១
+														ទូរស័ព្ទសមាជិក
 													</label>
 													<div class="col-md-8">
 														<input type="text" class="form-control" name="membersone" id="membersone" readonly>
-													</div>
-												</div>
-												<div class="form-group" style="">
-													<label class="col-md-4 control-label">
-														ទូរស័ទ្ទសមាជិកទី១
-													</label>
-													<div class="col-md-8">
-														<input type="text" class="form-control" name="memberstwo" id="memberstwo" readonly>
 													</div>
 												</div>
 												<div class="form-group" style="">
@@ -1005,7 +997,6 @@
 						$('#type_romleay_sop').val(rs.type_romleay_sop).select2();
 						$('#place_pjos_sop').val(rs.place_pjos_sop);
 						$('#membersone').val(rs.membersone);
-						$('#memberstwo').val(rs.memberstwo);
 						$('#dead_note').val(rs.note);
 					}
 				},

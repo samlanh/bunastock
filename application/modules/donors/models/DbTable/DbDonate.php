@@ -145,6 +145,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					*,
 					(select name_kh from tb_view where type=19 and key_code = dead_sex) as dead_sex,
 					(select tel from tb_donors where tb_donors.id = donor_id) as donor_phone,
+					(select address from tb_donors where tb_donors.id = donor_id) as donor_address,
 					(select donor from tb_donors where tb_donors.id = donor_id) as donor  
 				FROM 
 					tb_donor_donate 

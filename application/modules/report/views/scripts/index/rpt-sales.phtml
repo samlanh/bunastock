@@ -48,6 +48,10 @@ $brach_name =  $this->branch;
 					<div style="clear:both;"></div>	
 				</form> 
 			</div>	
+			
+	<style>
+		.displaynone{display:table-cell !important;}
+	</style>		
 	<div style=" min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm">
 	<div id="divPrint" style="width: 100%;">
 		<style>
@@ -65,6 +69,7 @@ $brach_name =  $this->branch;
 		  display: table-header-group;
 		  page-break-inside:avoid; page-break-after:auto;
 		}
+		.displaynone{display:none;}
 		</style>
 		<table style="font-family: 'Khmer OS Content'; width:100%;">
 			<tbody>
@@ -100,8 +105,7 @@ $brach_name =  $this->branch;
 								<td>&nbsp;<?php echo $tr->translate("BALANCE");?></td>
 								<td>&nbsp;<?php echo $tr->translate("BY_USER");?></td>
 								<td><?php echo $tr->translate("ស្ថានភាព");?></td>
-								<td colspan="2">&nbsp;<?php echo $tr->translate("បោះពុម្ភ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("ប្រវត្តិ");?></td>
+								<td class="displaynone" colspan="2">&nbsp;<?php echo $tr->translate("បោះពុម្ភ");?></td>
 			                </tr>
 		                </thead>
 		                <tbody>
@@ -123,9 +127,8 @@ $brach_name =  $this->branch;
 						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["balance"],2);?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
 						   <td>&nbsp;<?php echo $rs["status_name"];?></td>
-						   <td align="center" style="white-space: nowrap;"><a style="color:#0c1cdc;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">វិក័យបត្រ</a></td>
-						   <td align="center" style="white-space: nowrap;"><a style="color:#0c1cdc;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/comlisting/id/".$rs["id"];?>">បញ្ជីទំនិញ</a></td>
-						   <td align="center"><a style="text-decoration: none;color:#0c1cdc;" href="<?php echo $this->baseUrl()."/report/index/rpt-sales-payment/id/".$rs["id"];?>" target="_blank">បង់ប្រាក់</a></td>
+						   <td class="displaynone" align="center" style="white-space: nowrap;"><a style="color:#0c1cdc;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">វិក័យបត្រ</a></td>
+						   <td class="displaynone" align="center"><a style="text-decoration: none;color:#0c1cdc;" href="<?php echo $this->baseUrl()."/report/index/rpt-sales-payment/id/".$rs["id"];?>" target="_blank">ប្រវត្តិបង់ប្រាក់</a></td>
 						</tr>
 						   <?php 
 						   		if($rs["status"]==1){
@@ -173,5 +176,11 @@ $brach_name =  $this->branch;
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
-function doPrint() {var divToPrint = document.getElementById('divPrint');var htmlToPrint = '' +'<style type="text/css">' +'</style>';htmlToPrint += divToPrint.outerHTML;window.document.write(htmlToPrint);window.print();window.close();}
+function doPrint() {
+	var divToPrint = document.getElementById('divPrint');
+	var htmlToPrint = '' +'<style type="text/css">' +'</style>';
+	htmlToPrint += divToPrint.outerHTML;
+	window.document.write(htmlToPrint);
+	window.print();
+	window.close();}
 </script>
