@@ -394,6 +394,8 @@ function getAllworker($search){
 					phone,
 					date,
 					qtys,
+					qtys_after,
+					is_complete,
 					notes,
 					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS status
 					FROM `tb_borrowers`

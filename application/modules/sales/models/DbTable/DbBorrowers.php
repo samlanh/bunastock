@@ -47,6 +47,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'phone' 			 => $post['phone'],
     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
+    			'qtys_after'	     => $post['qtys'],
     			'notes'	     	     => $post['notes'],
     			'status'	         => 1,
     			'type'	         	 => 1,
@@ -56,14 +57,17 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     
     function getBorrowersDetail($name_borrow){
     	$db=$this->getAdapter();
-    	$sql="SELECT *,
-						DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow		
-						FROM `tb_borrowers` 
-						WHERE
-						status=1
-					    AND name_borrow!='' 
-					    AND name_borrow='$name_borrow'					
-						AND type=1 LIMIT 1";
+    	$sql="SELECT 
+    				*,
+					DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow		
+				FROM 
+					`tb_borrowers` 
+				WHERE
+					status=1
+				    AND name_borrow!='' 
+				    AND name_borrow='$name_borrow'					
+					AND type=1 LIMIT 1
+    		";
     	return $db->fetchRow($sql);  
     }
     
@@ -80,6 +84,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     			'phone' 			 => $post['phone'],
     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
     			'qtys'	     	     => $post['qtys'],
+    			'qtys_after'	     => $post['qtys'],
     			'notes'	     	     => $post['notes'],
     			'status'	         => $post['status'],
     			'type'	        	 => 1,

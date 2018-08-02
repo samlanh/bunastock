@@ -54,7 +54,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			font-family: 'Khmer OS Battambang';
 		}
 		ul{margin: 0;padding:0;}
-		table tr td ul li{text-align: center;list-style: none;line-height: 29px; font-weight: bold;}
+		table tr td ul li{text-align: center;list-style: none;line-height: 29px; }
 		th{padding: 5px;}
 		.hover:hover{background: #ccc;}
 	</style>
@@ -87,38 +87,51 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			                    <td style="font-size:18px;font-weight: bold;">បញ្ជីឈ្មោះអ្នកខ្ចីប្រាក់</td>
 			                </tr>
 			            </table>
-			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
+			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;white-space: nowrap;" width="100%" cellspacing="0">
 			                 <tbody>
-			                 <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+			                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 30px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
 								<td width="15%"><?php echo $tr->translate("ឈ្នោះអ្នកខ្ចី");?></td>					
 								<td width="10%">&nbsp;<?php echo $tr->translate("ភេទ");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("ទូរសព័្ទ");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("ថ្ងៃខ្ចីប្រាក់");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("ចំនួនទឹកប្រាក់ខ្ចី");?></td>
+								<td width="10%">&nbsp;<?php echo $tr->translate("ចំនួនទឹកប្រាក់នៅខ្វះ");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("កំណត់សម្គាល់");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("ស្ថានការ");?></td>
 			                </tr>
-			                <?php $num=1; $purchase_balance=0; $d_balance = 0;
+			                <?php $num=1; $total = 0;$total_balance=0;
 			                foreach ($this->borrowers_payment AS $index => $rs){?>
-							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;font-size: 13px;">
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
 							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["name_borrow"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["gender"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["phone"];?></td>
 							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["date"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo "$ ".number_format($rs["qtys"],2);?></td>
+							    <td align="center" style="border:1px solid #000;">&nbsp;<?php if($rs['is_complete']==0){echo "$ ".number_format($rs["qtys_after"],2);}else{echo "បង់រួច";}?></td>
 							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["notes"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["status"];?></td>
 							</tr>
 							<?php 
-							$d_balance = $d_balance+$rs["qtys"];
-			                }?>
-			                <tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
-								<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="6"></td>
-								<td bgcolor="#ccc" style="border: 1px solid #000;white-space: nowrap;">ចំនួនទឹកប្រាក់សរុប</td>
-								<td bgcolor="#ccc" style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>
-							</tr>
+								$total = $total+$rs["qtys"];
+								$total_balance = $total_balance + $rs["qtys_after"];
+			                }
+			                ?>
+						</table>
+						<table width="40%" align="right" style="margin-top: 5px;border-collapse: collapse;">
+							<tbody>
+				                <tr  style="font-size:14px; height: 30px;border: 1px solid #000;font-weight: bold;" align="center" >
+									<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="7"></td>
+									<td bgcolor="#b0bdfd" style="border: 1px solid #000;white-space: nowrap;">ចំនួនទឹកប្រាក់សរុប</td>
+									<td bgcolor="#b0bdfd" style="border: 1px solid #000;white-space: nowrap;">ចំនួនទឹកប្រាក់នៅខ្វះសរុប</td>
+									
+								</tr>
+								<tr  style="font-size:14px; height: 30px;border: 1px solid #000;font-weight: bold;" align="center" >
+									<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="7"></td>
+									<td style="border: 1px solid #000;"><?php echo "$ ".number_format($total,2);?></td>
+									<td style="border: 1px solid #000;color: red;"><?php echo "$ ".number_format($total_balance,2);?></td>
+								</tr>
 			                </tbody>
 			           </table>
 			           <?php }?>
@@ -132,9 +145,9 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			                </tr>
 			           </table>
 			            
-			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 0px;" width="100%" cellspacing="0">
+			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;white-space: nowrap;" width="100%" >
 			                 <tbody>
-			                  <tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+			                  <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 30px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
 								<td width="15%"><?php echo $tr->translate("ឈ្នោះអ្នកសង");?></td>					
 								<td width="10%">&nbsp;<?php echo $tr->translate("ភេទ");?></td>
@@ -146,7 +159,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			                </tr>
 			                <?php $num=1; $partner_service_balance=0;$d_balance = 0;
 			                foreach ($this->mepay_payment AS $index => $rs){?>
-							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;font-size: 13px;">
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
 							   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["name_borrow"];?></td>
 							   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $rs["gender"];?></td>
@@ -159,11 +172,17 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 							<?php 
 								$d_balance = $d_balance+$rs["qtys"];
 			                }?>
-			                <tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
-								<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="6"></td>
-								<td bgcolor="#ccc" style="border: 1px solid #000;white-space: nowrap;">ចំនួនទឹកប្រាក់សរុប</td>
-								<td bgcolor="#ccc" style="border: 1px solid #000;"><?php echo  number_format($d_balance,2);?></td>
-							</tr>
+						</table>
+						<table width="20%" align="right" style="margin-top: 5px;border-collapse: collapse;">
+							<tbody>			                
+				                <tr style="font-size:14px; height: 30px;border: 1px solid #000;font-weight: bold;" align="center" >
+									<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="6"></td>
+									<td bgcolor="#b0bdfd" style="border: 1px solid #000;white-space: nowrap;">ចំនួនទឹកប្រាក់សរុប</td>
+								</tr>
+								<tr style="font-size:14px; height: 30px;border: 1px solid #000;font-weight: bold;" align="center" >
+									<td style="border: 1px solid #fff;border-right: 1px solid #000;" colspan="6"></td>
+									<td style="border: 1px solid #000;"><?php echo "$ ".number_format($d_balance,2);?></td>
+								</tr>
 			                </tbody>
 			           </table>
 			           <?php }?>
@@ -171,7 +190,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			           <br>
 			           <table align="center" width="100%">
 							<tbody>
-							   <tr style="font-size: 11px;">
+							   <tr style="font-size: 14px;">
 							        <th style="width:20%;text-align:center;  font-family:'Khmer MEF2'">យល់ព្រមដោយ</th>
 							        <th></th>
 							        <th style="width:20%;text-align:center; font-family:'Khmer MEF2'">ត្រួតពិនិត្យដោយ</th>

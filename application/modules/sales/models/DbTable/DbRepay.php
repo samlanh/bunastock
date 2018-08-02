@@ -41,75 +41,84 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
   //  	echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
-    public function addRepays($post){
+    public function addRepays($data){
     	$db = $this->getAdapter();
     	$db->beginTransaction();
 		try{
-		$rows= $this->getRepayDetails($post['name_borrow']);
-		
-		
-		$repay=0;
-    	if(!empty($rows)) foreach($rows As $row){
-    		//print_r($row);exit();
-//     		$total=$post['qtys'];
-//     		$repay=$total-$row['total'];
-//     		if($repay<0 ){
-//     			$repay=$row['total']-$total;
-//     		}else if($repay <= 0){
-//     			$repay=$row['total']-$total;
-//     		}else{
-//     			$repay=$row['total']-$total;
-//     		}
-    		//print_r($repay);exit();
-    		$_arr=array(
-    				'qtys'=>$repay,
-    				);
-    		//$this->_name='tb_borrowers';
-    		$where=" id=".$row['id'];
-    		//print_r($where);exit();
-    		$this->update($_arr, $where);
-    	
-    	}
-//     	$_arr=array(
-//     			'name_borrow' 		 => $post['name_borrow'],
-//     			'gender'			 => $post['gender'],
-//     			'phone' 			 => $post['phone'],
-//     			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
-//     			'qtys'	     	     => $post['qtys'],
-//     			'notes'	     	     => $post['notes'],
-//     			'status'	         => 1,
-//     			'type'	      	     => 2,
-//     	);
-//     	return  $this->insert($_arr);
+			$rs= $this->getRepayDetails($data['name_borrow']);
+			//print_r($rows);exit();
+			$total=$data['qtys'];
+			$repay=0;
+	    	if(!empty($rs)) foreach($rs As $row){
+	    		if($total>0){
+	    			$total = $total - $row['qtys_after'];
+	    			if($total<0){
+	    				$arr = array(
+	    					'qtys_after'=>abs($total)
+	    				);
+	    			}else{
+	    				$arr=array(
+	    					'is_complete'=>1,
+	    					'qtys_after'=>0
+	    				);
+	    			}
+	    			$this->_name='tb_borrowers';
+	    			$where=" id=".$row['id'];
+	    			$this->update($arr, $where);
+	    		}
+	    	}
+	    	$_arr=array(
+	    			'name_borrow' 		 => $data['name_borrow'],
+	    			'gender'			 => $data['gender'],
+	    			'phone' 			 => $data['phone'],
+	    			'date'				 => empty($data['date'])?null:date("Y-m-d H:i:s",strtotime($data['date'])),
+	    			'qtys'	     	     => $data['qtys'],
+	    			'notes'	     	     => $data['notes'],
+	    			'status'	         => 1,
+	    			'type'	      	     => 2,
+	    	);
+	    	$this->insert($_arr);
+			$db->commit();
     	}catch(Exception $e){
     		$db->rollBack();
     		Application_Form_FrmMessage::message('INSERT_FAIL');
-    		echo $e->getMessage();
+    		echo $e->getMessage();exit();
     	}
     }
     public function getRepayDetail($name_borrow){
     	$db = $this->getAdapter();
-    	$sql = "SELECT *,SUM(qtys)As total,
-						DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow	
-						FROM `tb_borrowers` 
-						WHERE
-						status=1
-					    AND name_borrow!='' 
-					    AND name_borrow='$name_borrow'				
-						AND type=1 LIMIT 1";
+    	$sql = "SELECT 
+    				*,
+    				SUM(qtys_after)As total,
+					DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow	
+				FROM 
+					`tb_borrowers` 
+				WHERE
+					status=1
+				    AND name_borrow!='' 
+				    AND name_borrow='$name_borrow'				
+					AND type=1 LIMIT 1
+    		";
     	return $db->fetchRow($sql);
     }
     
     public function getRepayDetails($name_borrow){
     	$db = $this->getAdapter();
-    	$sql = "SELECT *,qtys As total,
+    	$sql = "SELECT 
+    				*,
+    				qtys As total,
 			    	DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow
-			    	FROM `tb_borrowers`
-			    	WHERE
+			    FROM 
+			    	`tb_borrowers`
+			    WHERE
 			    	status=1
 			    	AND name_borrow!=''
 			    	AND name_borrow='$name_borrow'
-			    	AND type=1 ";
+			    	AND type=1 
+			    	and is_complete=0
+			    order by 
+			    	id ASC	
+    		";
     	return $db->fetchAll($sql);
     }
     
@@ -118,20 +127,58 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     	$sql=" SELECT DISTINCT(name_borrow) AS name FROM tb_borrowers WHERE name_borrow!=''";
     	return $db->fetchAll($sql);
     }
-    public function updateRepay($post, $id){
-    //	print_r($post);exit();
-    	$_arr=array(
-    			'name_borrow' 		 => $post['name_borrow'],
-    			'gender'			 => $post['gender'],
-    			'phone' 			 => $post['phone'],
-    			'date'				 => empty($post['date'])?null:date("Y-m-d H:i:s",strtotime($post['date'])),
-    			'qtys'	     	     => $post['qtys'],
-    			'notes'	     	     => $post['notes'],
-    			'status'	         => $post['status'],
-    			'type'	      	     => 2,
-    	);
-    	$where="id= $id";
-		$this->update($_arr, $where);
+    public function updateRepay($data, $id){
+    	$db = $this->getAdapter();
+    	try{
+    	////////////////////// update old payment back ////////////////////////////////////////////////////////
+	    	$old_row = $this->getRepayById($id);
+	    	$sql = "select * from tb_borrowers where name_borrow = '".$old_row['name_borrow']."' and type=1 and status=1 order by id DESC limit 1";
+	    	$row = $db->fetchRow($sql);
+	    	$arr=array(
+		    			'qtys_after'	=> $row['qtys_after'] + $old_row['qtys'],
+		    			'is_complete'	=>0,
+	    			);
+	    	$where = " id = ".$row['id'];
+	    	$this->update($arr, $where);
+	    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+	    	
+	    	
+	    	$rs= $this->getRepayDetails($data['name_borrow']);
+	    	$total=$data['qtys'];
+	    	if(!empty($rs)) foreach($rs As $row){
+	    		if($total>0){
+	    			$total = $total - $row['qtys_after'];
+	    			if($total<0){
+	    				$arr = array(
+	    						'qtys_after'=>abs($total)
+	    				);
+	    			}else{
+	    				$arr=array(
+	    						'is_complete'=>1,
+	    						'qtys_after'=>0
+	    				);
+	    			}
+	    			$this->_name='tb_borrowers';
+	    			$where=" id=".$row['id'];
+	    			$this->update($arr, $where);
+	    		}
+	    	}
+	    	
+	    	$_arr=array(
+	    			'name_borrow' 		 => $data['name_borrow'],
+	    			'gender'			 => $data['gender'],
+	    			'phone' 			 => $data['phone'],
+	    			'date'				 => empty($data['date'])?null:date("Y-m-d H:i:s",strtotime($data['date'])),
+	    			'qtys'	     	     => $data['qtys'],
+	    			'notes'	     	     => $data['notes'],
+	    			'status'	         => $data['status'],
+	    			'type'	      	     => 2,
+	    	);
+	    	$where="id= $id";
+			$this->update($_arr, $where);
+    	}catch (Exception $e){
+    		echo $e->getMessage();exit();
+    	}
     }
     public function getRepayById($id){
     	$db = $this->getAdapter();
