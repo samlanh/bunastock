@@ -142,8 +142,12 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				'date_finish'			=> date("Y-m-d",strtotime($data['date_finish'])),
 				'date_sen'				=> date("Y-m-d",strtotime($data['date_sen'])),
 				'time_sen'				=> $data['time_sen'],
+				'time_sen_to'			=> $data['time_sen_to'],
+				'time_mas'				=> $data['time_mas'],
 				'date_chlong_mong'		=> date("Y-m-d",strtotime($data['date_chlong_mong'])),
 				'time_chlong_mong'		=> $data['time_chlong_mong'],
+				'time_chlong_mong_to'	=> $data['time_chlong_mong_to'],
+				'time_mole'				=> $data['time_mole'],
 				'photo'					=> $array_photo_name,
 					
 				'dead_id'				=> $data['dead_id'],

@@ -67,7 +67,8 @@
 	  				<tr>
 	  					<td align="center" style="list-style:25px; font-family:  Khmer OS Muol;line-height:100px;; font-size:45px;font-weight: bold; list-style:none;">
 	  						<li style="color:#B22222 !important;">ថ្ងៃទី <?php echo date("d",strtotime($row['date_chlong_mong']));?> ខែ <?php echo date("m",strtotime($row['date_chlong_mong']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['date_chlong_mong']));?></li>
-	  						<li style="color:#B22222 !important;">ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ព្រឹក</li>
+	  						<li style="color:#B22222 !important;">ម៉ោងៈ <?php echo $this->row['time_chlong_mong'];?> ដល់ៈ ​<?php echo $this->row['time_chlong_mong_to'];?></li>
+	  						<li style="color:#B22222 !important;">ពេលៈ <?php echo $this->row['time_mole'];?></li>
 	  					</td>
 	  				</tr>
 	  			</table>
