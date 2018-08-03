@@ -4,6 +4,8 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$row = $this->row;
+	//print_r($this->row); exit();
+	//echo $row["lerk_sop_time_mail"]; exit();
 ?>
 <title>កែប្រែកម្មវិធីបុណ្យ</title>
 <div id="Printdonate">
@@ -46,7 +48,7 @@
   			<tr >
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
   					ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
-  					ម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?> ដល់  <?php echo $this->row['lerk_sop_time_to']?> <?php echo $this->row['lerk_sop_time_mail']?><br />
+  					ម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?>&nbsp;<?php if(!empty($this->row['lerk_sop_time_to'])){?> ដល់ <?php echo $this->row['lerk_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['lerk_sop_time_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?>
   				</td>
   			</tr>
@@ -58,7 +60,7 @@
   			<tr >
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
   					ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
-  					ម៉ោងៈ  <?php echo $this->row['hae_sop_time']?> ដល់ <?php echo $this->row['hae_sop_time_to']?>  <?php echo $this->row['hae_sop_mail']?><br />
+  					ម៉ោងៈ  <?php echo $this->row['hae_sop_time']?><?php if(!empty($this->row['hae_sop_time_to'])){?> ដល់ <?php echo $this->row['hae_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['hae_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?>
   				</td>
 	  		</tr>
@@ -72,7 +74,7 @@
   			<tr>
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
   					ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
-  					ម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?> ដល់ <?php echo $this->row['pjos_sop_time_to']?> <?php echo $this->row['pjos_sop_mail']?><br />
+  					ម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?><?php if(!empty($this->row['pjos_sop_time_to'])){?> ដល់ <?php echo $this->row['pjos_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['pjos_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?>
   				</td>
   			</tr>
