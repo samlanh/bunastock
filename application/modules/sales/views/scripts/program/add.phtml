@@ -335,8 +335,8 @@
 													<select class="form-control select2me" id="lerk_sop_time_mail" name="lerk_sop_time_mail" >
 														<option value="">ពេល</option>
 														<option value="ព្រឹក">ព្រឹក</option>
-														<option value="ថ្ងៃរសៀល">ថ្ងៃរសៀល</option>
 														<option value="ថ្ងៃត្រង់">ថ្ងៃត្រង់</option>
+														<option value="រសៀល">រសៀល</option>
 														<option value="ល្ងាច">ល្ងាច</option>
 														<option value="យប់">យប់</option>
 													</select>
@@ -408,9 +408,9 @@
 												<div class="col-md-3">
 													<select class="form-control select2me" id="hae_sop_mail" name="hae_sop_mail" >
 														<option value="">ពេល</option>
-														<option value="ព្រឹក">ព្រឹក</option>
-														<option value="ថ្ងៃរសៀល">ថ្ងៃរសៀល</option>
+														<option value="ព្រឹក">ព្រឹក</option>												
 														<option value="ថ្ងៃត្រង់">ថ្ងៃត្រង់</option>
+														<option value="រសៀល">រសៀល</option>
 														<option value="ល្ងាច">ល្ងាច</option>
 														<option value="យប់">យប់</option>
 													</select>
@@ -438,12 +438,12 @@
 												<div class="col-md-8">
 													<div class="input-icon right">
 														<i class="fa fa-calendar"></i>
-														<input type="text" class=" form-control date-picker" name="pjos_sop_date" id="pjos_sop_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+														<input type="text" class="form-control date-picker" name="pjos_sop_date" id="pjos_sop_date" value="<?php echo date("d-m-Y",strtotime($this->row['pjos_sop_date']))?>" data-date-format="dd-mm-yyyy" />
 													</div>
 												</div>
 											</div>
 											<div class="form-group" style="">
-												<label class="col-md-4 control-label">​វេលាម៉ោង​</label>
+												<label class="col-md-4 control-label">វេលាម៉ោង</label>
 												<div class="col-md-2">
 													<select id="pjos_sop_time" name="pjos_sop_time" class="form-control">
 														<option value="">ម៉ោង</option>
@@ -461,7 +461,7 @@
 														<option value="១២">១២</option>
 													</select>
 												</div>
-												<label class="col-md-1 control-label">​ដល់​</label>
+												<label class="col-md-1 control-label">ដល់</label>
 												<div class="col-md-2">
 													<select id="pjos_sop_time_to" name="pjos_sop_time_to" class="form-control">
 														<option value="">ម៉ោង</option>
@@ -483,13 +483,13 @@
 													<select class="form-control select2me" id="pjos_sop_mail" name="pjos_sop_mail" >
 														<option value="">ពេល</option>
 														<option value="ព្រឹក">ព្រឹក</option>
-														<option value="ថ្ងៃរសៀល">ថ្ងៃរសៀល</option>
 														<option value="ថ្ងៃត្រង់">ថ្ងៃត្រង់</option>
+														<option value="រសៀល">រសៀល</option>
 														<option value="ល្ងាច">ល្ងាច</option>
 														<option value="យប់">យប់</option>
 													</select>
 												</div>																							
-											</div>												
+											</div>						
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">
 													ឆ្នាំឆុង
