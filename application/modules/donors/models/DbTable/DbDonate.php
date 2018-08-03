@@ -135,7 +135,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 	
 	function getDonorDetail($id){
 		$db=$this->getAdapter();
-		$sql=" SELECT id,address  FROM `tb_donors` where id=$id LIMIT 1";
+		$sql=" SELECT id,address,detail_kh,detail_chi  FROM `tb_donors` where id=$id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
 	

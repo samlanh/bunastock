@@ -141,8 +141,7 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
 	    	$where = " id = ".$row['id'];
 	    	$this->update($arr, $where);
 	    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-	    	
-	    	
+	    		    	
 	    	$rs= $this->getRepayDetails($data['name_borrow']);
 	    	$total=$data['qtys'];
 	    	if(!empty($rs)) foreach($rs As $row){

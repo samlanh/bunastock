@@ -183,6 +183,8 @@
 					rs = $.parseJSON(data);
 					if(rs){
 						$('#donor_address').val(rs.address);
+						$('#note').val(rs.detail_kh);
+						$('#notes').val(rs.detail_chi);
 					}
 				},
 				error:function(err){
