@@ -584,6 +584,19 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 			";
 		return $db->fetchAll($sql);
 	}
+	function getNumberInkhmer($number){
+		$khmernumber = array("០","១","២","៣","៤","៥","៦","៧","៨","៩");
+		$spp = str_split($number);
+		$num="";
+		foreach ($spp as $ss){
+			if (!empty($khmernumber[$ss])){
+				$num.=$khmernumber[$ss];
+			}else{
+				$num.=$ss;
+			}
+		}
+		return $num;
+	}
 	
 }
 ?>

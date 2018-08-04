@@ -1,5 +1,6 @@
 <?php 
 	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$db_global = new Application_Model_DbTable_DbGlobal();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 	$row = $this->row;
@@ -41,7 +42,7 @@
 						</td>
 						<td width="34%" valign="top" align="center">
 							<table   style="text-align:center;border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:45px;font-weight: bold;">
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:48px;font-weight: bold;">
 									<td style="color:red !important;">ព័ត៌មានផ្លាកម៉ុង</td>
 								</tr>	
 							</table>
@@ -57,7 +58,7 @@
 	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:68px; font-size:35px; font-weight: bold; list-style:none;">
 	  					<td>
 	  						<li style="color:#800080 !important;">ទីតាំង៖ &nbsp; <?php echo $this->row['place_of_program']?></li>
-	  						<li style="color:#800080 !important;">ទូរស័ទ្ទ៖ &nbsp; <?php echo $this->row['membersone']?></li>
+	  						<li style="color:#800080 !important;">ទូរស័ទ្ទ៖ &nbsp; <?php echo $db_global->getNumberInkhmer($this->row['membersone'])?></li>
 	  					</td>
 	  				</tr>
 	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none;">
@@ -76,8 +77,8 @@
 	  				</tr>
 	  				<tr style="list-style:25px; font-family:  Khmer OS Muol;line-height:65px; font-size:30px;font-weight: bold; list-style:none; color:#B22222;">			
 	  					<td>
-	  						<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃកើត៖  <?php echo $this->row['dead_dob']?> </li>
-	  						<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃស្លាប់៖   <?php echo $this->row['date_time_dead']?></li>
+	  						<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃកើត៖   <?php echo $db_global->getNumberInkhmer($this->row['dead_dob'])?> </li>
+	  						<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ថ្ងៃស្លាប់៖   <?php echo $db_global->getNumberInkhmer($this->row['date_time_dead'])?></li>
 	  					<li style="color:#B22222 !important;"><i class="fa fa-chevron-circle-right" style="font-size:30px;"></i>ឆ្នាំកូនប្រុស៖
 	  					<?php     
 		              		  if(!empty($this->khmer_year_boy))foreach ($this->khmer_year_boy AS $index => $rs){?><?php if ($index>0)echo '-';?>
@@ -99,6 +100,7 @@
 		</table>
 	</div>
 </div>
+
 <div style="padding-left:14%; margin: 0 auto;"> 
     	<lable class="col-md-3" style=""></lable>
     	<div class="col-md-2">

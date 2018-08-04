@@ -3,9 +3,12 @@
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
+	$db_global = new Application_Model_DbTable_DbGlobal();
 	$row = $this->row;
 	//print_r($this->row); exit();
-	//echo $row["lerk_sop_time_mail"]; exit();
+	//echo $row["lerk_sop_time_mail"]; exit();	
+// 	$db_global = new Application_Model_DbTable_DbGlobal();
+// 	echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['lerk_sop_date'])));//exit();
 ?>
 <title>ព័ត៌មានកម្មវិធីបុណ្យ</title>
 <div id="Printdonate">
@@ -22,6 +25,9 @@
 			}
 			th, td {
 	    		padding: 4px;
+			}
+			th, td, label {
+	    		font-size: 32px;
 			}
 			#borderimg1 { 
 			    border: 80px dotted ;
@@ -41,8 +47,8 @@
 						</td>
 						<td width="34%" valign="top" align="center">
 							<table   style="text-align:center;border:solid 1px #FFF;">
-								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-size:65px;font-weight: bold;">
-									<td style="color:red !important;">ចៅ ប៊ុនណា </td>
+								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-weight: bold;">
+									<td style="color:red !important; font-size:65px;">ចៅ ប៊ុនណា </td>
 								</tr>	
 							</table>
 						</td>
@@ -56,12 +62,12 @@
 	 				លើកសពចូលម្ឈូស
 	  			</td>
 	  		</tr>		
-  			<tr >
+  			<tr>
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
-  					ថ្ងៃទី <?php echo date("d",strtotime($row['lerk_sop_date']));?> ខែ <?php echo date("m",strtotime($row['lerk_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['lerk_sop_date']));?> 
+  					ថ្ងៃទី <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['lerk_sop_date'])));?> ខែ  <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['lerk_sop_date'])));?> ឆ្នាំ  ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['lerk_sop_date'])));?> 
   					ម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?>&nbsp;<?php if(!empty($this->row['lerk_sop_time_to'])){?> ដល់ <?php echo $this->row['lerk_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['lerk_sop_time_mail']?><br />
-  					ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?>
-  				</td>
+  					ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?> 					
+  				</td>	
   			</tr>
   			<tr>
   				<td colspan="3" align="center" style="color:blue !important;font-size: 45px;"> 
@@ -70,7 +76,7 @@
   			</tr>
   			<tr >
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
-  					ថ្ងៃទី <?php echo date("d",strtotime($row['hae_sop_date']));?> ខែ <?php echo date("m",strtotime($row['hae_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['hae_sop_date']));?> 
+  					ថ្ងៃទី <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['hae_sop_date'])));?> ខែ <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['hae_sop_date'])));?> ឆ្នាំ ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['hae_sop_date'])));?> 
   					ម៉ោងៈ  <?php echo $this->row['hae_sop_time']?><?php if(!empty($this->row['hae_sop_time_to'])){?> ដល់ <?php echo $this->row['hae_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['hae_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?>
   				</td>
@@ -84,7 +90,7 @@
   			</tr>
   			<tr>
   				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
-  					ថ្ងៃទី <?php echo date("d",strtotime($row['pjos_sop_date']));?> ខែ <?php echo date("m",strtotime($row['pjos_sop_date']));?> ឆ្នាំ 20<?php echo date("y",strtotime($row['pjos_sop_date']));?> 
+  					ថ្ងៃទី  <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['pjos_sop_date'])));?> ខែ <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['pjos_sop_date'])));?> ឆ្នាំ ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['pjos_sop_date'])));?>
   					ម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?><?php if(!empty($this->row['pjos_sop_time_to'])){?> ដល់ <?php echo $this->row['pjos_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['pjos_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?>
   				</td>
@@ -114,7 +120,6 @@
 	</lable>
 	<lable class="col-md-3" style=""></lable>
 </div>
-
 <script>
 function printinvoice(){
 	var printContents = document.getElementById('Printdonate').innerHTML;
