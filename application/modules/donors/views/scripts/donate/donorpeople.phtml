@@ -94,7 +94,8 @@
 	  				</tr>
 	  				<tr>
 	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color: #black !important;">
-	  						 លំនៅដ្ឋាន៖ <?php echo $this->row['donor_address']?>
+	  						<i style="color: red !important;">លំនៅដ្ឋាន៖ </i>
+	  						<i style="color: #6A5ACD !important;"> <?php echo $this->row['donor_address']?></i>
 	  					</td>
 	  				</tr>
 	  				<tr>
@@ -106,16 +107,17 @@
 	  					<td style="font-family:  Khmer OS Muol; font-size:30px;font-weight: bold;  line-height:50px; list-style:none;">
 	  						<li style="color: #6A5ACD !important;">ឈ្មោះសព ៖  <?php echo $this->row['dead_name']?></li>
 	  						<li  style="color: #6A5ACD !important;">ភេទ  ៖  <?php echo $this->row['dead_sex']?></li>
-	  						<li  style="color: #6A5ACD !important;">អាយុ ៖ <?php echo $db_global->getNumberInkhmer($this->row['dead_age'])?>&nbsp;&nbsp;ឆ្នាំ</li>	  			
+	  						<li  style="color: #6A5ACD !important;">អាយុ ៖ <?php echo $db_global->getNumberInkhmer($this->row['dead_age'])?>&nbsp;ឆ្នាំ</li>	  			
 	  					</td>
 	  				</tr>
 	  				<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#black !important;">
-	  						 លំនៅដ្ឋានសព ៖ <?php echo $this->row['dead_address']?>
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#black !important;">
+	  						 <i style="color: red !important;">លំនៅដ្ឋានព៖ </i>
+	  						<i style="color: #6A5ACD !important;"> <?php echo $this->row['dead_address']?></i>
 	  					</td>
 	  				</tr>
 	  				<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#black !important;">
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:27px;font-weight: bold; color:#6A5ACD !important;">
 	  						 ថ្ងៃ <?php echo $db_global->getNumberInkhmer(date("d",strtotime($row['date_jenh'])));?> ខែ <?php echo $db_global->getNumberInkhmer(date("m",strtotime($row['date_jenh'])));?> ឆ្នាំ ២០<?php echo $db_global->getNumberInkhmer(date("y",strtotime($row['date_jenh'])));?>
 	  					</td>
 	  				</tr>

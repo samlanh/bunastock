@@ -83,21 +83,26 @@
 		        </td>
 		    </tr>
 		    <tr>
-		    	<td class="table2excel" id="exportExcel"> 		    	
-		            <tr style="padding:1px 0px;">		           		
+		    	<td class="table2excel" id="exportExcel"> 	
+		    		<table width="48%" style=" ;font-size: 16px;border: 1px solid #000;">	    		           		
 		           		<?php                 
 		                if(!empty($this->donor)){?>
 		                <tr style="line-height: 27px; font-size:18px; color: #000080;  font-family:'Khmer OS Muol Light';">
-		           		<td>ឈ្មោះសប្បុរសជនៈ  <?php echo $this->donor['donor']?></td>
+		           		<td>&nbsp;ឈ្មោះសប្បុរសជនៈ  <u><?php echo $this->donor['donor']?></u></td>
 		           		</tr>
 		           		<tr style="line-height: 27px; font-size:18px; color: #000080;  font-family:'Khmer OS Battambang';">
-		           		<td>អាស័យដ្ឋានៈ <?php echo $this->donor['address']?></td>
+		           		<td>&nbsp;អាស័យដ្ឋានៈ <?php echo $this->donor['address']?></td>
 		           		</tr>
 		           		<tr style="line-height: 27px; font-size:18px; color: #000080;  font-family:'Khmer OS Battambang';">
-		           		<td>លេខទូរស័ព្ទៈ <?php echo $this->donor['tel']?></td>
+		           		<td>&nbsp;លេខទូរស័ព្ទៈ <?php echo $this->donor['tel']?></td>
 		           		</tr>
 		           		<?php }?>
-		           	</tr>
+		           	</table>
+		          	<tr>
+					    <td colspan="10">
+					    	&nbsp;
+					    </td>
+					</tr>
 		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">		               
 		                 <thead>
 		                 	<tr bgcolor="#b0bdfd" style="font-weight:bold; text-align:center; line-height: 25px; font-size:13px; padding:1px 0px;">
@@ -124,7 +129,7 @@
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["dead_address"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["create_date"];?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-						   <td style="white-space: nowrap;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">លិខិតជំនួយ</a></td>
+						   <td style="white-space: nowrap; color:#000080;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/donors/donate/donorpeople/id/".$rs["id"];?>">លិខិតជំនួយ</a></td>
 						</tr>
 						   <?php }?>
 						<!--<tr style="font-size:12px; height: 30px;border: 1px solid #000;" align="center" >
