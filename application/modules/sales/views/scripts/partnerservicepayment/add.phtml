@@ -18,15 +18,15 @@
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
 							
-							<label class="control-label col-md-2"><?php echo $tr->translate("លេខវិក័យបត្រ");?><span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("ដៃគូរសេវាកម្ម");?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<select name="sale_order_id" id="sale_order_id" class="form-control select2me" onchange="getReceipt();" >
-										<option value="-1">ជ្រើសរើសវិក័យបត្រ</option>
-										<?php if(!empty($this->invoice)){foreach($this->invoice as $invoice){?>
-										<option value="<?php echo $invoice['id']?>"><?php echo $invoice['name']?></option>
+									<select name="partner_id" id="partner_id" class="form-control select2me" onchange="getAllPartnerService();" >
+										<option value="-1">ជ្រើសរើសដៃគូរ</option>
+										<?php if(!empty($this->partner)){foreach($this->partner as $partner){?>
+										<option value="<?php echo $partner['id']?>"><?php echo $partner['name']." - ".$partner['tel']?></option>
 										<?php }}?>
 									</select>
 								</div>
@@ -89,6 +89,7 @@
 								</tr>
 							</table>
 						 	<input type="hidden" id="identity" name="identity" />
+							<input type="hidden" id="array_sale_partner_id" name="array_sale_partner_id" />
 						</div>
 						
 						<div class="form-group">
@@ -96,35 +97,13 @@
 								 </span>
 							</label>
 							<label class="control-label col-md-2">
-								<?php echo $tr->translate("ជំពាក់សរុប​ :");?>Total
+								<?php echo $tr->translate("ប្រាក់ត្រូវបង់ :");?>Total Payment
 							</label>
 							<div class="col-md-3">
 								<input type="text" class="form-control" name="total_payment" id="total_payment" readonly />
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<label class="control-label col-md-7">
-							</label>
-							<label class="control-label col-md-2">
-								<?php echo $tr->translate("ប្រាក់បានបង់");?> (Paid)
-							</label>
-							<div class="col-md-3">
-								<input type="text" class="form-control" name="paid" id="paid" onkeyup="doRemain();" />
-							</div>	
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-7">
-							</label>
-							
-							<label class="control-label col-md-2">
-								ប្រាក់នៅសល់ (Balance)​ :<span class="required">*</span>
-							
-							</label>
-							<div class="col-md-3">
-								<input type="text" class="form-control" name="balance" id="balance" readonly />
-							</div>
-						</div>
 						<div class="form-group">
 							<div class="col-md-4"></div>
 							<div class="col-md-2">
@@ -248,6 +227,104 @@
 			$('#paid').val(0);
 		}
 	}
+	
+	<?php $urlpartner =  $this->url(array('module'=>'sales','controller'=>'partnerservicepayment','action'=>'get-allservice')); ?>
+	function getAllPartnerService(){
+		partner_id=$("#partner_id").val();
+		if(partner_id>0){
+			$.ajax({
+				url:"<?php echo $urlpartner;?>",
+				type:"post",
+				data:{'partner_id':partner_id,'action':"add"},
+				success: function(data){	
+					$("#table_order").html("");
+					template='<tr height="33px" align="center" style="font-weight: bold;white-space:nowrap;">';
+						template+='<td><label>All <input type="checkbox" id="checkall" name="checkall" onclick="checkAll('+data.length+')" checked/></label></td>';
+						template+='<td><?php echo $tr->translate("ល.រ");?></td>';
+						template+='<td><?php echo $tr->translate("លេខវិក័យបត្រ");?></td>';
+						template+='<td><?php echo $tr->translate("ទីតាំងបុណ្យ");?></td>';
+						template+='<td><?php echo $tr->translate("សេវាកម្ម");?></td>';
+						template+='<td><?php echo $tr->translate("តម្លៃ");?></td>';
+						template+='<td><?php echo $tr->translate("សម្គាល់");?></td>';
+					template+='</tr>';
+					
+					$('#identity').val("");
+					data = $.parseJSON(data);
+					
+					for(i=0;i<data.length;i++){
+						index=i+1;
+						template+='<tr style="height:30px;" align="center">';
+							template+='<td ><input type="checkbox" onclick="getValue('+data.length+');calculateTotal('+data.length+')" checked id="sales_partner_service_id_'+index+'" name="sales_partner_service_id_'+index+'" value="'+data[i].id+'" /></td>';
+							template+='<td >'+index+'</td>';
+							template+='<td >'+data[i].invoice_no+'</td>';
+							template+='<td align="left">'+data[i].place_bun+'</td>';
+							template+='<td align="left">'+data[i].service_name+'</td>';
+							template+='<td >'+"$ "+data[i].price+'<input type="hidden" value='+data[i].price+' id="price_'+index+'" name="price_'+index+'"/></td>';
+							template+='<td >'+data[i].note+'</td>';
+						template+="</tr>";
+						
+						if($('#identity').val()!="") {
+							var identity = $('#identity').val();
+							$('#identity').val(identity+','+index);
+						} else {$('#identity').val(index);}
+					}
+					$('#table_order').append(template);
+					
+					getValue(data.length);
+					calculateTotal(data.length);
+				},
+				error:function(e){
+					alert("error"+e);
+				}
+			});	
+		}
+	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	function getValue(length){
+		$('#array_sale_partner_id').val('');
+		for(var j=1;j<=length;j++){
+			if($('#sales_partner_service_id_'+j).attr('checked')){
+				
+				id = $("#sales_partner_service_id_"+j).val();
+
+				if($("#array_sale_partner_id").val()!="") {
+					var sale_partner_id = $("#array_sale_partner_id").val();
+					$("#array_sale_partner_id").val(sale_partner_id+','+id);
+				} else{
+					$("#array_sale_partner_id").val(id);
+				}
+				
+			}
+		}
+	}
+	
+	function checkAll(length){
+		if($('#checkall').attr('checked')){
+			for(var j=1;j<=length;j++){
+				$("#sales_partner_service_id_"+j).attr('checked', 'checked');
+			}
+		}else{
+			for(var j=1;j<=length;j++){
+				$("#sales_partner_service_id_"+j).removeAttr("checked");
+			}
+		}
+		getValue(length);
+		calculateTotal(length);
+	}
+	
+	function calculateTotal(length){
+		var netTotal=0;
+		for(var j=1;j<=length;j++){
+			if($('#sales_partner_service_id_'+j).attr('checked')){
+				netTotal += Number($('#price_'+j).val());
+			}
+		}
+		$("#total_payment").val(netTotal);
+	}
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	function deleteRecord(index) {
 		var identity = $('#identity').val();

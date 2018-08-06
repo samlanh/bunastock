@@ -9,18 +9,20 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
 	}
+	function getBranchId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->branch_id;
+	}
 	
 	function getAllPartnerPayment($search){
 			$db= $this->getAdapter();
 			$sql=" SELECT 
 						pp.id,
 						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = pp.`branch_id` AND status=1 AND name!='' LIMIT 1) AS branch_name,
-						(SELECT sale_no FROM `tb_sales_order` WHERE id=pp.sale_order_id) AS invoice_no,
+						(SELECT partner_name FROM `tb_partnerservice` as p WHERE p.id=pp.partner_id) AS partner_name,
 						pp.`date_payment`,
 						pp.`payment_type`,
 						pp.`total_payment`,
-						pp.`paid`,
-						pp.`balance`,
 						pp.note,
 						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = pp.`user_id`) AS user_name,
 						(select name_kh from tb_view where type=5 and key_code = pp.status) as status_name 
@@ -62,18 +64,17 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 			$array=array(
-					'branch_id'			=> 1,
-					'sale_order_id'		=> $data['sale_order_id'],
+					'branch_id'			=> $this->getBranchId(),
+					'partner_id'		=> $data['partner_id'],
 					'payment_type'		=> $data['payment_type'],
 					'cheque_number'		=> $data['cheque_number'],
 					'bank_name'			=> $data['bank_name'],
 					'note'				=> $data['note'],
 					
 					'date_payment'		=> date("Y-m-d",strtotime($data['date_payment'])),
-						
 					'total_payment'		=> $data['total_payment'],
-					'paid'				=> $data['paid'],
-					'balance'			=> $data['balance'],
+					
+					'array_sale_partner_id'	=> $data['array_sale_partner_id'],
 					
 					'status'			=> 1,
 					'create_date'		=> date("Y-m-d H:i:s"),
@@ -82,23 +83,18 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 			$this->_name="tb_partnerservice_payment";
 			$this->insert($array); 
 			
-			
-			$sql="select * from tb_sales_order where id = ".$data['sale_order_id'];
-			$row_sale = $db->fetchRow($sql);
-			
-			if(!empty($row_sale)){
-				$balance = $row_sale['partner_service_balance'] - $data['paid'];
-				$paid = $row_sale['partner_service_paid'] + $data['paid'];
+			if(!empty($data['array_sale_partner_id'])){
+				$ids=explode(',',$data['array_sale_partner_id']);
+				foreach ($ids as $i)
+				{
+					$array= array(
+							'is_paid'	=> 1,
+					);
+					$this->_name='tb_sales_partner_service';
+					$where = " id = $i and partner_id = ".$data['partner_id'];
+					$this->update($array, $where);
+				}
 			}
-			
-			$arr = array(
-					'partner_service_balance'	=> $balance,
-					'partner_service_paid'		=> $paid,
-			);
-			$where = " id = ".$row_sale['id'];
-			$this->_name="tb_sales_order";
-			$this->update($arr, $where);
-			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -110,19 +106,18 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			
-			if($data['status']==0){
+			if(!empty($data['status'])){
 				$rs = $this->getPartnerSerivcePaymentById($id);
-				if(!empty($rs)){
-					$rssale = $this->getSaleById($rs['sale_order_id']);
-					if(!empty($rssale)){
-						$arr= array(
-								'partner_service_balance'	=>$rssale['partner_service_balance']+$rs['paid'],
-								'partner_service_paid'		=>$rssale['partner_service_paid']-$rs['paid'],
+				if(!empty($rs['array_sale_partner_id'])){
+					$ids=explode(',',$rs['array_sale_partner_id']);
+					foreach ($ids as $i)
+					{
+						$array= array(
+								'is_paid'	=> 0,
 						);
-						$this->_name="tb_sales_order";
-						$where = " id = ".$rs['sale_order_id'];
-						$this->update($arr, $where);
+						$this->_name='tb_sales_partner_service';
+						$where = " id = $i and partner_id = ".$data['partner_id'];
+						$this->update($array, $where);
 					}
 				}
 				$this->_name="tb_partnerservice_payment";
@@ -132,14 +127,11 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 				$where1 = "id = $id ";
 				$this->update($array,$where1);
 			}
-			
-			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
-			$err =$e->getMessage();
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();exit();
 		}
 	}
 	function getBranchByInvoice($invoice_id){
@@ -243,6 +235,12 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	}
 	
+	function getAllPartner(){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,partner_name as name,tel FROM tb_partnerservice where status=1 ";
+		return $db->fetchAll($sql);
+	}
+	
 	function getPartnerPaymentBalance(){
 		$db = $this->getAdapter();
 		$sql = "SELECT id,sale_no as name FROM tb_sales_order where 1 ";
@@ -254,5 +252,41 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		$sql = "SELECT * FROM tb_partnerservice_payment where id = $id limit 1";
 		return $db->fetchRow($sql);
 	}
+	
+	function getAllService($partner_id,$action){
+		$db = $this->getAdapter();
+		$sql = "SELECT 
+					sps.*,
+					(select item_name from tb_product as p where p.id = sps.service_id ) as service_name,
+					s.sale_no as invoice_no,
+					s.place_bun 
+				FROM 
+					tb_sales_partner_service as sps,
+					tb_sales_order as s 
+				where 
+					s.id = sps.saleorder_id 
+					and partner_id = $partner_id 
+					and is_paid=0 
+			";
+		return $db->fetchAll($sql);
+	}
+	function getPaidService($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT
+					sps.*,
+					(select item_name from tb_product as p where p.id = sps.service_id ) as service_name,
+					s.sale_no as invoice_no,
+					s.place_bun
+				FROM
+					tb_sales_partner_service as sps,
+					tb_sales_order as s
+				where
+					s.id = sps.saleorder_id
+					and sps.id = $id
+				limit 1	
+			";
+		return $db->fetchRow($sql);
+	}
+	
 	
 }

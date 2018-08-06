@@ -26,7 +26,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_DbPartnerServicepayment();
 		$rows = $db->getAllPartnerPayment($search);
-		$columns=array("សាខា","វិក័យបត្រ","កាលបរិច្ឋេទ","បង់ជា","តម្លៃសរុប","ប្រាក់បានបង់","នៅខ្វះ","សម្គាល់","អ្នកប្រើប្រាស់","ស្ថានភាព");
+		$columns=array("សាខា","ដៃគូរសេវាកម្ម","កាលបរិច្ឋេទ","បង់ជា","តម្លៃសរុប","សម្គាល់","អ្នកប្រើប្រាស់","ស្ថានភាព");
 		$link=array(
 			'module'=>'sales','controller'=>'partnerservicepayment','action'=>'edit',
 		);
@@ -61,6 +61,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		}
 		
 		$this->view->invoice = $db->getSaleInvoice();
+		$this->view->partner = $db->getAllPartner();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->receipt = $_db->getReceiptNumber(1);
@@ -85,6 +86,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		$this->view->row = $db->getPartnerSerivcePaymentById($id);
 		
 		$this->view->invoice = $db->getSaleInvoice();
+		$this->view->partner = $db->getAllPartner();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->receipt = $_db->getReceiptNumber(1);
@@ -140,6 +142,27 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_DbPartnerServicepayment();
 			$rs = $db->getPartnerSerivcePayment($post['sale_order_id'],$post['action']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	
+	public function getAllserviceAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_DbPartnerServicepayment();
+			$rs = $db->getAllService($post['partner_id'],$post['action']);
+			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	public function getPaidserviceAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Sales_Model_DbTable_DbPartnerServicepayment();
+			$rs = $db->getPaidService($post['id']);
 			echo Zend_Json::encode($rs);
 			exit();
 		}
