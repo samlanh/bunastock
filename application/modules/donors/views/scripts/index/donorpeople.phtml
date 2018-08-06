@@ -80,7 +80,7 @@
   						</tr>
   						<tr>
 	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:#C70039 !important;">
-	  						<?php echo $db_global->getNumberInkhmer($this->row['tel'])?>
+	  						<?php echo $this->row['tel']?>
 	  					</td>
 	  					</tr>			  			
 		  				<tr>
@@ -109,7 +109,7 @@
 	  					 ?>
 	  					<td>
 	  						<li style="color: #6A5ACD !important;">លេខបង្កាន់ដៃ  (<?php echo $db_global->getNumberInkhmer($row['receipt_no'])?>)</li>	
-	  						<li style="color: #6A5ACD !important;">ចំនួន:&nbsp;<?php echo $db_global->getNumberInkhmer(number_format($row['qtys'],0))?>&nbsp;x&nbsp;<?php echo $db_global->getNumberInkhmer(number_format($row['unit_price'],0))?>&nbsp;=&nbsp;<?php echo $db_global->getNumberInkhmer(number_format($row['total_amount'],0))?> $</li>						
+	  						<li style="color: #6A5ACD !important;">ចំនួន:&nbsp;<?php echo $db_global->getNumberInkhmer(number_format($row['qtys'],0))?>&nbsp;x&nbsp;<?php echo $db_global->getNumberInkhmer(number_format($row['unit_price'],0))?>&nbsp;=&nbsp;<?php echo $db_global->getNumberInkhmer(number_format($row['total_amount'],0))?> ដុល្លា</li>						
 	  						<li style="color: #6A5ACD !important;">ថ្ងៃទី <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['paid_date'])));?> ខែ <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['paid_date'])));?> ឆ្នាំ ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['paid_date'])));?></li>
 	  						<li align="center"></li>
 	  					</td>

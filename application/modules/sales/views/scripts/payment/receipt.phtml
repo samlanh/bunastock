@@ -67,7 +67,7 @@
 				footer {
 				  font-size: 9px;
 				  color: black !important;
-				 text-align:center;
+				  text-align:center;
 				}
 				
 				@page {
@@ -82,25 +82,20 @@
 				    bottom: 0;
 				  	text-align:center; 
 				  	padding-left:16%; 
-				  	margin-bottom: -12px;
+				  	margin-bottom: -9px;
 				  }				
 				  html, body {
 				    width: 210mm;
 				    height: 297mm;
 				  }
-				}
-				@page {
-				       @bottom-left {
-				            content: counter(page) "/" counter(pages);
-				        }
-				     }
+				}				
 				@media print {
 				    footer {page-break-after: always;}
 				}
 			</style>			
 			<tr height="80px">
 				<td colspan="6" width="65%" valign="top">
-					<table width="100%" style=" ;font-size: 16px;border: 1px solid #000;">
+					<table width="100%" style=" ;font-size: 17px;border: 1px solid #000;">
 						<tr>
 							<td width="110px;">&nbsp;ឈ្មោះអតិថិជន</td>
 							<td width="1px"> :&nbsp;</td>
@@ -121,7 +116,7 @@
 					</table>
 				</td>
 				<td colspan="4" width="35%" valign="top">
-					<table width="100%" style="margin-left:5px;font-size: 16px;border: 1px solid #000;white-space: nowrap;">
+					<table width="100%" style="margin-left:5px;font-size: 17px;border: 1px solid #000;white-space: nowrap;">
 						<tr>
 							<td width="95px;">&nbsp;លេខបង្កាន់ដៃ</td>
 							<td width="1px" style=""> :&nbsp;</td>
@@ -181,7 +176,7 @@
 											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo number_format($this->rs['balance'],3);?></strong></td>
 										</tr>
 										<?php }
-										for($index;$index<=4;$index++){
+										for($index;$index<=44;$index++){
 										?>
 										<tr style=" font-size:15px !important; text-align:center;font-weight:bold;height: 30px;">
 											<td style="border:1px solid #000;"><?php echo $index+1;?></td>

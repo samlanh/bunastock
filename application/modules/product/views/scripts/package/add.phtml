@@ -276,7 +276,6 @@ var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller
 function getProductByCategory(){
 	$('#product_id').empty();
 	category = $("#category_filter").val();
-	if(category>0){
 		$.ajax({
 			url:url_getcategory,
 			type:"post",
@@ -289,7 +288,6 @@ function getProductByCategory(){
 				alert(e);
 			}
 		});
-	}
 }
 
 </script>

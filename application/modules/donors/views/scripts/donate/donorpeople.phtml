@@ -55,15 +55,12 @@
 								</tr>
 								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
 									<td><?php echo $tr->translate("PHONE_BUNA");?></td>
-								</tr>
-
-							</table>
-						</td>
+								</tr>	
+								</table>
+							</td>
 						<td width="20%" ></td>
 					</tr>				
-				</td>
-			</tr>
-		</table>
+			</table>
 	  	<tr>
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
@@ -78,8 +75,8 @@
   								</td> 											
   						</tr>
   						<tr>
-  							<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red !important;">
-  								<?php echo $db_global->getNumberInkhmer($this->row['donor_phone'])?>
+  							<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#C70039 !important;">
+  								<?php echo $this->row['donor_phone']?>
   							</td>
   						</tr>
 		  				<tr>
@@ -88,7 +85,7 @@
 						</td>
 	  				</tr>
 		  			<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:red !important;">
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#22B424 !important;">
 	  						<?php echo $this->row['note']?>
 	  					</td>
 	  				</tr>

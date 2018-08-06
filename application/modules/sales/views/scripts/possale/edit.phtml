@@ -1042,7 +1042,6 @@ var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller
 function getProductByCategory(){
 	$('#product_id').empty();
 	category = $("#category").val();
-	if(category>0){
 		dojo.xhrPost({
 			url: url_getcategory,
 			content : {
@@ -1058,7 +1057,6 @@ function getProductByCategory(){
 				   alert(err);
 			}
 		});
-	}
 }
 
 

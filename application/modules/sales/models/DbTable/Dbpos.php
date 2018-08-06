@@ -541,13 +541,16 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}
 	
 	function getProductByCategoryId($category,$type=0){
+		$where="";
+		if ($category>-1){
+			$where="and cate_id=$category ";
+		}
 		$sql="SELECT
 					*
 				FROM
 					tb_product
 				WHERE
-					cate_id=$category
-					and status=1
+					status=1 $where
 			";
 		if($type==1){
 			$sql .= " and is_service=0 ";
