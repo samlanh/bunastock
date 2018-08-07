@@ -67,6 +67,10 @@
 	$url_report_purchase = array($this->url(array('module'=>'report','controller'=>'index','action'=>'rptpurchase'),null, true), "MENU_REPORT_PURCHASE_INDEX");
 	$url_report_transfer = array($this->url(array('module'=>'report','controller'=>'index','action'=>'rpt-transfer'),null, true), "MENU_REPORT_INDEX_RPT-TRANSFER");
 	$url_report_all_in_one = array($this->url(array('module'=>'report','controller'=>'index','action'=>'index'),null, true), "MENU_PO_SO_REPORT");
+	
+	$url_report_income = array($this->url(array('module'=>'report','controller'=>'income','action'=>'index'),null, true), "MENU_PO_SO_REPORT");
+	$url_report_expense = array($this->url(array('module'=>'report','controller'=>'expense','action'=>'index'),null, true), "MENU_PO_SO_REPORT");
+	
 	$url_report_product = array($this->url(array('module'=>'report','controller'=>'product','action'=>'index'),null, true), "MENU_REPORT_PRODUCT");
 	$url_chart_po =  array($this->url(array('module'=>'report','controller'=>'index','action'=>'pochart'),null, true), "MENU_REPORT_INDEX_POCHART");
 	$url_chart_so =  array($this->url(array('module'=>'report','controller'=>'index','action'=>'sochart'),null, true), "MENU_REPORT_INDEX_SOCHART");
@@ -347,13 +351,16 @@
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
-						<?php if($level!=4 AND $level!=9){//admin and stock mg?> 
 	            		<li>
-	            			<a href="<?php echo $url_report_all_in_one[0];?>">
-		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("របាយការណ៍ ចំនាយ-ទិញ-លក់");?>
+	            			<a href="<?php echo $url_report_income[0];?>">
+		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("របាយការណ៍ ចំណូល");?>
 		            		</a>
 	            		</li>
-            			<?php }?>
+	            		<li>
+	            			<a href="<?php echo $url_report_expense[0];?>">
+		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("របាយការណ៍ ចំណាយ");?>
+		            		</a>
+	            		</li>
             			<li>
 	            			<a href="<?php echo $url_report_product[0];?>">
 		            			<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate("របាយការណ៍ ទំនិញ");?>
