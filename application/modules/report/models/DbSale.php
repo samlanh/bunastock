@@ -227,6 +227,69 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 		$order="  GROUP BY so.pro_id ORDER BY v.branch_id ,qty_order DESC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
+	
+	function totalSale($search){
+		$db = $this->getAdapter();
+		$sql="SELECT 
+				  SUM(s.all_total) AS total,
+				  SUM(s.`paid`) AS paid,
+				  SUM(s.`balance_after`) AS balance
+				FROM
+				  `tb_sales_order` AS s 
+				WHERE 
+				  s.status = 1 
+			";
+		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		
+		return $db->fetchRow($sql.$where);
+	}
+	
+	function totalMong($search){
+		$db = $this->getAdapter();
+		$sql="SELECT 
+				  SUM(m.`sub_total`) AS total,
+				  SUM(m.`paid`) AS paid,
+				  SUM(m.`balance_after`) AS balance
+				FROM
+				  `tb_mong` AS m 
+				WHERE 
+				  m.status = 1 
+			";
+		$from_date =(empty($search['start_date']))? '1': " m.sale_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+	
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+	
+		return $db->fetchRow($sql.$where);
+	}
+	function totalDonor($search){
+		$db = $this->getAdapter();
+		$sql="SELECT 
+				  SUM(d.`total_amount`) AS total 
+				FROM
+				  `tb_donors` AS d 
+				WHERE 
+				  d.status = 1 
+		";
+		$from_date =(empty($search['start_date']))? '1': " d.paid_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " d.paid_date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+	
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+	
+		return $db->fetchRow($sql.$where);
+	}
+	
+	
+	
 }
 
 ?>

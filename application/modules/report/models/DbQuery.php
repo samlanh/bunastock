@@ -1126,31 +1126,35 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 	public function getPartnerServiceBalance($search){//1
 		$db= $this->getAdapter();
 		$sql=" SELECT
-					id,
-					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
-					sale_no,
-					date_sold,
-					partner_service_total,
-					partner_service_paid,
-					partner_service_balance,
+					ps.id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
+					s.sale_no,
+					p.partner_name,
+					p.tel,
+					(select item_name from tb_product as p where p.id = ps.service_id) as service_name,
+					ps.price,
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = s.user_id LIMIT 1 ) AS user_name
 				FROM
-					tb_sales_order as s
+					tb_sales_partner_service as ps,
+					tb_sales_order as s,
+					tb_partnerservice as p
 				WHERE
-					partner_service_balance>0
-					AND status=1
+					ps.saleorder_id = s.id
+					and ps.partner_id = p.id
+					AND s.status=1
+					and ps.is_paid = 0
 			";
 	
-		$from_date =(empty($search['start_date']))? '1': " date_sold >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " date_sold <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));
-			$s_where[] = " sale_no LIKE '%{$s_search}%'";
-			$s_where[] = " partner_service_total LIKE '%{$s_search}%'";
-			$s_where[] = " partner_service_paid LIKE '%{$s_search}%'";
-			$s_where[] = " partner_service_balance LIKE '%{$s_search}%'";
+			$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
+			$s_where[] = " p.partner_name LIKE '%{$s_search}%'";
+			$s_where[] = " p.tel LIKE '%{$s_search}%'";
+			$s_where[] = " (select item_name from tb_product as p where p.id = ps.service_id) LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch_id']>0){
@@ -1168,6 +1172,8 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 		$sql=" SELECT
 					id,
 					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
+					(select name from tb_constructor as c where c.id = m.constructor) as constructor_name,
+					(select phone from tb_constructor as c where c.id = m.constructor) as constructor_tel,
 					invoice_no,
 					sale_date,
 					constructor_price,

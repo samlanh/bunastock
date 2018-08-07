@@ -6,6 +6,7 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		$sql="SELECT
 					(SELECT name FROM `tb_sublocation` WHERE id=p.branch_id) AS branch_name,
 					(SELECT v_name FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS vendor_name,
+					(SELECT v_phone FROM `tb_vendor` WHERE tb_vendor.vendor_id=p.vendor_id LIMIT 1 ) AS vendor_tel,
 					p.order_number,
 					v.remark,
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = v.user_id LIMIT 1 ) AS user_name,
@@ -45,8 +46,9 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 	function getPartnerServicePayment($search){
 		$db=$this->getAdapter();
 		$sql = "SELECT
-					(SELECT name FROM `tb_sublocation` WHERE id=s.branch_id) AS branch_name,
-					s.sale_no,
+					(SELECT name FROM `tb_sublocation` WHERE id=pp.branch_id) AS branch_name,
+					p.partner_name,
+					p.tel,
 					pp.date_payment,
 					pp.payment_type,
 					pp.note,
@@ -56,11 +58,11 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = pp.user_id LIMIT 1 ) AS user_name,
 					(SELECT name_kh FROM `tb_view` WHERE key_code = pp.status AND `type`=5 LIMIT 1) As status
 				FROM
-					`tb_sales_order` AS s,
+					`tb_partnerservice` AS p,
 					`tb_partnerservice_payment` AS pp
 				WHERE
-					s.id=pp.sale_order_id
-					AND s.status=1
+					p.id=pp.partner_id
+					AND pp.status=1
 			";
 //		$where= ' ';
 		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".$search['start_date']." 00:00:00'";
@@ -69,8 +71,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		if(!empty($search['ad_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['ad_search']));
-			$s_where[] = " (SELECT name FROM `tb_sublocation` WHERE id=s.branch_id) LIKE '%{$s_search}%'";
-			$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
+			$s_where[] = " partner_name LIKE '%{$s_search}%'";
+			$s_where[] = " tel LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['branch']>0){
@@ -78,7 +80,7 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
-		$order=" ORDER BY s.id ASC ";
+		$order=" ORDER BY pp.id ASC ";
 	//	echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
@@ -87,6 +89,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		$db=$this->getAdapter();
 		$sql = "SELECT
 					(SELECT name FROM `tb_sublocation` WHERE id=m.branch_id) AS branch_name,
+					(select name from tb_constructor as c where c.id = m.constructor) as constructor_name,
+					(select phone from tb_constructor as c where c.id = m.constructor) as constructor_tel,
 					m.invoice_no,
 					mp.date_payment,
 					mp.payment_type,

@@ -195,4 +195,86 @@ class report_ProductController extends Zend_Controller_Action
     	 
     }
     
+    
+    public function rptReturnStockAction()//purchase report
+    {
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+    	}else{
+    		$data = array(
+    				'ad_search'=>'',
+    				'start_date'=>date("Y-m-d"),
+    				'end_date'=>date("Y-m-d"),
+    				'status'=>-1,
+    		);
+    	}
+    	$this->view->rssearch = $data;
+    		
+    	$query = new report_Model_DbReturnStock();
+    	$this->view->return_stock =  $query->getAllReturnStock($data);
+    		
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	$this->view->form_salemong = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    function returnDetailAction(){
+    	$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+    	if(empty($id)){
+    		$this->_redirect("/report/index/rpt-purchase");
+    	}
+    	$query = new report_Model_DbReturnStock();
+    	$this->view->return_detail =  $query->returnDetailById($id);
+    
+    }
+    function rptReturnStockDetailAction(){
+    	if($this->getRequest()->isPost()){
+    		$search = $this->getRequest()->getPost();
+    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+    	}else{
+    		$search = array(
+    				'ad_search'=>'',
+    				'start_date'=>date("Y-m-d"),
+    				'end_date'=>date("Y-m-d"),
+    				'product_id'=>'',
+    				'branch'=>0,
+    		);
+    	}
+    	$this->view->rssearch=$search;
+    	$query = new report_Model_DbReturnStock();
+    	$this->view->return_detail =  $query->getReturnStockDetail($search);
+    	$this->view->product =  $query->getAllProduct();
+    		
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	$this->view->form_salemong = $formFilter;
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    
+    public function rptproductsoldAction()
+    {
+    	$db = new report_Model_DbProduct();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+    	}else{
+    		$data = array(
+    				'ad_search'		=>	'',
+    				'type'			=>	-1,
+    				'category'		=>	'',
+    				'start_date'	=>date("Y-m-d"),
+    				'end_date'		=>date("Y-m-d"),
+    		);
+    	}
+    	$this->view->product = $db->getAllProductSold($data);
+    	$this->view->search = $data;
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    
+    
 }

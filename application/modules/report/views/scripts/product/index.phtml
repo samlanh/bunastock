@@ -19,7 +19,7 @@
 <title>របាយការណ៍ ទំនិញ</title>  
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat blue-madison">
+		<div class="dashboard-stat purple-plum">
 			<a class="more" href="<?php echo $rpt_product_list;?>">
 			<div class="visual">
 				<i class="fa fa-comments"></i>
@@ -77,7 +77,7 @@
 		</div>
 	</div>
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat green-haze">
+		<div class="dashboard-stat red-intense">
 			<a class="more" href="<?php echo $rpt_ajust_detail;?>">
 			<div class="visual">
 				<i class="fa fa-shopping-cart"></i>
@@ -97,7 +97,7 @@
 	</div>
 	
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat red-intense">
+		<div class="dashboard-stat green-haze">
 			<a class="more" href="<?php echo $rpt_transfer_stock;?>">
 			<div class="visual">
 				<i class="fa fa-shopping-cart"></i>
@@ -126,6 +126,66 @@
 				</div>
 				<div class="desc">
 					 របាយការណ៍ផ្ទេរទំនិញលម្អិត
+				</div>
+			</div>
+			</a>
+			<a class="more" href="javascript:;">
+			View more <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat blue-madison">
+			<a class="more" href="<?php echo $this->url(array('module'=>'report','controller'=>'product','action'=>'rpt-return-stock'), null, true);?>">
+			<div class="visual">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+				</div>
+				<div class="desc">
+					<?php echo $tr->translate("របាយការណ៍ផ្ទេរទំនិញចូលស្តុកវិញ");?>
+				</div>
+			</div>
+			</a>
+			<a class="more" href="javascript:;">
+			View more <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<a class="more" href="<?php echo $this->url(array('module'=>'report','controller'=>'product','action'=>'rpt-return-stock-detail'), null, true);?>">
+			<div class="visual">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+				</div>
+				<div class="desc">
+					<?php echo $tr->translate("របាយការណ៍ផ្ទេរទំនិញចូលស្តុកលម្អិត");?>
+				</div>
+			</div>
+			</a>
+			<a class="more" href="javascript:;">
+			View more <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat purple-plum">
+			<a class="more" href="<?php echo $this->url(array('module'=>'report','controller'=>'product','action'=>'rptproductsold'), null, true);?>">
+			<div class="visual">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+				</div>
+				<div class="desc">
+					<?php echo $tr->translate("របាយការណ៏លក់ផលិតផល");?>
 				</div>
 			</div>
 			</a>
