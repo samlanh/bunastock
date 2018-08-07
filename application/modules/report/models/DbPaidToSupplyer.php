@@ -125,10 +125,93 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY mp.id ASC  ";	
-	//	echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
+	
+	function getPurchaseExpense($search){
+		$db= $this->getAdapter();
+		$sql="SELECT
+					SUM(paid) AS total_paid
+				FROM
+					`tb_vendor_payment` AS v
+				WHERE
+					v.status = 1
+			";
+		$from_date =(empty($search['start_date']))? '1': " v.expense_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " v.expense_date <= '".$search['end_date']." 23:59:59'";
+		$where = " and ".$from_date." AND ".$to_date;
+		if($search['branch_id']>0){
+			$where .= " AND v.branch_id =".$search['branch_id'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY v.id ASC ";
+		return $db->fetchRow($sql.$where.$order);
+	}
+	
+	function getPartnerServiceExpense($search){
+		$db=$this->getAdapter();
+		$sql="SELECT
+					SUM(pp.paid) AS total_paid
+				FROM
+					`tb_partnerservice_payment` AS pp
+				WHERE
+					pp.status = 1
+			";
+		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " pp.date_payment <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		if($search['branch_id']>0){
+			$where .= " AND pp.branch_id =".$search['branch_id'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY pp.id ASC";
+		return $db->fetchRow($sql.$where.$order);
+	}
+	
+	function getConstructorExpense($search){
+		$db=$this->getAdapter();
+		$sql="SELECT 
+				  SUM(paid) AS total_paid
+				FROM
+				  `tb_mong_constructor_payment` AS m 
+				WHERE 
+				  m.status = 1
+			";
+		$from_date =(empty($search['start_date']))? '1': " m.date_payment >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " m.date_payment <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		if($search['branch_id']>0){
+			$where .= " AND m.branch_id =".$search['branch_id'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY m.id ASC ";
+		return $db->fetchRow($sql.$where.$order);
+	}
+	
+	function getOtherExpense($search){
+		$db=$this->getAdapter();
+		$sql="SELECT 
+				  SUM(total_amount) AS total_paid
+				FROM
+				  `tb_expense` AS e 
+				WHERE 
+				  e.status = 1
+		";
+		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		if($search['branch_id']>0){
+			$where .= " AND e.branch_id =".$search['branch_id'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY e.id ASC ";
+		return $db->fetchRow($sql.$where.$order);
+	}
 }
 
 ?>

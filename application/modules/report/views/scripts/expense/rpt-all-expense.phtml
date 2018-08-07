@@ -30,14 +30,14 @@ $brach_name =  $this->branch;
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<?php $formFilter = $this->formFilter; ?>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>					
 						<label class="control-label col-md-2">
-							<select name="suppliyer_id" id="suppliyer_id" class="form-control select2me" >
-								<option value="0" <?php if($this->rssearch['suppliyer_id']==0){echo "selected='selected'";}?>>ជ្រើសរើសប្រភេទ</option>
-								<option value="1" <?php if($this->rssearch['suppliyer_id']==1){echo "selected='selected'";}?>>ជំពាក់ថ្លៃទិញទំនិញ</option>
-								<option value="2" <?php if($this->rssearch['suppliyer_id']==2){echo "selected='selected'";}?>>ជំពាក់ថ្លៃជួលសេវាកម្ម</option>
-								<option value="3" <?php if($this->rssearch['suppliyer_id']==3){echo "selected='selected'";}?>>ជំពាក់ថ្លៃជាង</option>
+							<select name="type" id="type" class="form-control select2me" >
+								<option value="0" <?php if($this->rssearch['type']==0){echo "selected='selected'";}?>>ជ្រើសរើសប្រភេទ</option>
+								<option value="1" <?php if($this->rssearch['type']==1){echo "selected='selected'";}?>>ចំណាយថ្លៃបញ្ជាទិញ</option>
+								<option value="2" <?php if($this->rssearch['type']==2){echo "selected='selected'";}?>>ចំណាយថ្លៃជួលសេវាកម្ម</option>
+								<option value="3" <?php if($this->rssearch['type']==3){echo "selected='selected'";}?>>ចំណាយថ្លៃជាង</option>
+								<option value="4" <?php if($this->rssearch['type']==4){echo "selected='selected'";}?>>ចំណាយផ្សេងៗ</option>
 							</select>
 						</label>
 						<label class="control-label col-md-2"><div class="input-icon right"><i class="icon-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
@@ -80,169 +80,42 @@ $brach_name =  $this->branch;
 			            </table>
 			        </td>
 			    </tr>
+				<tr>
+			    	<td>
+						&nbsp;
+					</td>
+				</tr>	
 			    <tr>
 			    	<td class="table2excel" id="exportExcel">
-			            <?php if(!empty($this->purchase_balance)){?>
-			            <table style="border-collapse:collapse;" width="100%"  cellspacing="0">
-			                <tr>
-			                    <td style="font-size:14px;font-weight: bold;">ជំពាក់ថ្លៃទិញទំនិញ</td>
-			                </tr>
-			            </table>
 			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 			                 <tbody>
-			                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 26px; font-size:14px !important;white-space: nowrap; ">
-			                    <td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
-								<td><?php echo $tr->translate("សាខា");?></td>
-								<td>&nbsp;<?php echo $tr->translate("លេខបញ្ជាទិញ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("អ្នកផ្គត់ផ្គង់");?></td>
-								<td width="10%">&nbsp;<?php echo $tr->translate("ថ្ងៃបញ្ជាទិញ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>
-								<td>&nbsp;<?php echo $tr->translate("ប្រាក់បានបង់");?></td>
-								<td >&nbsp;<?php echo $tr->translate("ប្រាក់នៅខ្វះ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("អ្នកប្រើប្រាស់");?></td>
-								<td><?php echo $tr->translate("ប្រវត្តិ");?></td>
-			                </tr>
-			                <?php $num=1; $purchase_balance=0;
-			                foreach ($this->purchase_balance AS $index => $rs){?>
-							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="font-size:13px;border:1px solid #000; white-space: nowrap;">
-							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-							   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/expense/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["branch_name"];?></a></td>
-							   <td align="center" style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/expense/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["order_number"];?></a></td>
-							   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/expense/purproductdetail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["vendor_name"];?></a></td>
-							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_order"]));?></td>
-							   <td style="white-space: nowrap;font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["total_payment"],2);?></td>
-							   <td style="white-space: nowrap;font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?></td>
-							   <td style="white-space: nowrap;font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["balance"],2);?></td>
-							   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-							   <td align="center"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/expense/rpt-purchase-payment/id/".$rs["id"];?>">បង់ប្រាក់</a></td>
-							</tr>
-							<?php 
-								$purchase_balance = $purchase_balance+$rs["balance"];
-	                    	}?>
+								<tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 26px; font-size:14px !important;white-space: nowrap; ">
+									<td>&nbsp;<?php echo $tr->translate("ចំណាយថ្លៃបញ្ជាទិញ");?></td>
+									<td>&nbsp;<?php echo $tr->translate("ចំណាយថ្លៃជួលសេវាកម្ម");?></td>
+									<td>&nbsp;<?php echo $tr->translate("ចំណាយថ្លៃជាង");?></td>
+									<td>&nbsp;<?php echo $tr->translate("ចំណាយផ្សេងៗ");?></td>
+								</tr>
+								<?php $total_expense=0;?>
+								<tr class='hover' align="center" style="font-size:13px;border:1px solid #000; white-space: nowrap;">
+								   <td width="25%" style="white-space: nowrap;">&nbsp;<?php if(!empty($this->purchase_expense)){echo "$ ".number_format($this->purchase_expense["total_paid"],2); $total_expense = $total_expense + $this->purchase_expense["total_paid"];}?></td>
+								   <td width="25%" style="white-space: nowrap;">&nbsp;<?php if(!empty($this->partner_service_expense)){echo "$ ".number_format($this->partner_service_expense["total_paid"],2); $total_expense = $total_expense + $this->partner_service_expense["total_paid"];}?></td>
+								   <td width="25%" style="white-space: nowrap;">&nbsp;<?php if(!empty($this->constructor_expense)){echo "$ ".number_format($this->constructor_expense["total_paid"],2); $total_expense = $total_expense + $this->constructor_expense["total_paid"];}?></td>
+								   <td width="25%" style="white-space: nowrap;">&nbsp;<?php if(!empty($this->other_expense)){echo "$ ".number_format($this->other_expense["total_paid"],2); $total_expense = $total_expense + $this->other_expense["total_paid"];}?></td>
+								</tr>
 			                </tbody>
 			           </table>
-			           <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 5px;" width="20%" align="right" cellspacing="0">
+					   <br>
+			           <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 5px;" width="30%" align="center" cellspacing="0">
 			           		<tbody>
 				                <tr height="30px;" bgcolor="#d4dbff" class="style" align="center" style="">
-				                    <td><strong style="font-size: 14px;"><?php echo $tr->translate("នៅខ្វះសរុប");?></strong></td>
+				                    <td><strong style="font-size: 14px;"><?php echo $tr->translate("ចំណាយសរុប");?></strong></td>
 				                </tr>
 				                 <tr class="style" style=" line-height: 24px; font-size:13px;">
-				                    <td align="center" style="font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo number_format($purchase_balance,2);?>&nbsp;$</td>
+				                    <td align="center" style="font-family:'Open Sans', sans-serif;font-size: 14px; font-weight: bold;">&nbsp;<?php echo number_format($total_expense,2);?>&nbsp;$</td>
 				                 </tr>
 			               	</tbody>
 			           </table>
-					   <br />
-					   <br />
-			           <?php }?>
-			           
-			           
-			           <?php if(!empty($this->partner_service_balance)){?>
-			           
-			           <table style="border-collapse:collapse;font-size:12px;" width="100%"  cellspacing="0">
-			                <tr>
-			                    <td style="font-size:14px;font-weight: bold;">ជំពាក់ថ្លៃជួលសេវាកម្ម</td>
-			                </tr>
-			           </table>
-			            
-			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 0px;" width="100%" cellspacing="0">
-			                 <tbody>
-			                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 26px; font-size:14px !important;white-space: nowrap; ">
-			                    <td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
-								<td><?php echo $tr->translate("សាខា");?></td>
-								<td>&nbsp;<?php echo $tr->translate("លេខលក់");?></td>
-								<td>&nbsp;<?php echo $tr->translate("ដៃគូរសេវាកម្ម");?></td>
-								<td>&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("សេវាកម្ម");?></td>
-								<td >&nbsp;<?php echo $tr->translate("តម្លៃ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("អ្នកប្រើប្រាស់");?></td>
-			                </tr>
-			                <?php $num=1; $partner_service_balance=0;
-			                foreach ($this->partner_service_balance AS $index => $rs){?>
-							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="font-size:13px;border:1px solid #000; white-space: nowrap;">
-							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["branch_name"];?></td>
-							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $rs["sale_no"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["partner_name"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["tel"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["service_name"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo "$ ".number_format($rs["price"],2);?></td>
-							   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-							</tr>
-							<?php 
-								$partner_service_balance = $partner_service_balance+$rs["price"];
-	                    	}?>
-			                </tbody>
-			           </table>
-			           <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 5px;" width="20%" align="right" cellspacing="0">
-			           		<tbody>
-				                <tr height="30px;" bgcolor="#d4dbff" class="style" align="center" style="">
-				                    <td><strong style="font-size: 14px;"><?php echo $tr->translate("នៅខ្វះសរុប");?></strong></td>
-				                </tr>
-				                 <tr class="style" style=" line-height: 24px; font-size:13px;">
-				                    <td align="center" style="font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo number_format($partner_service_balance,2);?>&nbsp;$</td>
-				                 </tr>
-			               	</tbody>
-			           </table>
-					   <br />
-					   <br />
-			           <?php }?>
-			           
-			           
-			           <?php if(!empty($this->constructor_balance)){?>
-			           
-			           <table style="border-collapse:collapse;font-size:12px;" width="100%"  cellspacing="0">
-			                <tr>
-			                    <td style="font-size:14px;font-weight: bold;">ជំពាក់ថ្លៃជាង</td>
-			                </tr>
-			           </table>
-			            
-			            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 0px;" width="100%" cellspacing="0">
-			                 <tbody>
-			                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 26px; font-size:14px !important;white-space: nowrap; ">
-			                    <td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
-								<td><?php echo $tr->translate("សាខា");?></td>
-								<td>&nbsp;<?php echo $tr->translate("លេខលក់");?></td>
-								<td>&nbsp;<?php echo $tr->translate("ជាងសាងសង");?></td>
-								<td>&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("ថ្ងៃលក់");?></td>
-								<td>&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>
-								<td>&nbsp;<?php echo $tr->translate("ប្រាក់បានបង់");?></td>
-								<td >&nbsp;<?php echo $tr->translate("ប្រាក់នៅខ្វះ");?></td>
-								<td>&nbsp;<?php echo $tr->translate("អ្នកប្រើប្រាស់");?></td>
-								<td><?php echo $tr->translate("ប្រវត្តិ");?></td>
-			                </tr>
-			                <?php $num=1; $constructor_balance=0;
-			                foreach ($this->constructor_balance AS $index => $rs){?>
-							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="font-size:13px;border:1px solid #000; white-space: nowrap;">
-							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["branch_name"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["invoice_no"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["constructor_name"];?></td>
-							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["constructor_tel"];?></td>
-							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $rs["sale_date"];?></td>
-							   <td style="white-space: nowrap;font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["constructor_price"],2);?></td>
-							   <td style="white-space: nowrap;font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["constructor_paid"],2);?></td>
-							   <td style="white-space: nowrap;font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["constructor_balance"],2);?></td>
-							   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-							   <td align="center"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/expense/rpt-constructor-payment/id/".$rs["id"];?>">បង់ប្រាក់</a></td>
-							</tr>
-							<?php 
-								$constructor_balance = $constructor_balance+$rs["constructor_balance"];
-	                    	}?>
-			                </tbody>
-			           </table>
-			           <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;margin-top: 5px;" width="20%" align="right" cellspacing="0">
-			           		<tbody>
-				                <tr height="30px;" bgcolor="#d4dbff" class="style" align="center" style="">
-				                    <td><strong style="font-size: 14px;"><?php echo $tr->translate("នៅខ្វះសរុប");?></strong></td>
-				                </tr>
-				                 <tr class="style" style=" line-height: 24px; font-size:13px;">
-				                    <td align="center" style="font-family:'Open Sans', sans-serif;font-size: 12px; font-weight: bold;">&nbsp;<?php echo number_format($constructor_balance,2);?>&nbsp;$</td>
-				                 </tr>
-			               	</tbody>
-			           </table>
-			           <?php }?>
-			           <br>
+					   
 			           <br>
 			           <br>
 			           <table align="center" width="100%">
