@@ -176,7 +176,7 @@
 											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo number_format($this->rs['balance'],3);?></strong></td>
 										</tr>
 										<?php }
-										for($index;$index<=44;$index++){
+										for($index;$index<=4;$index++){
 										?>
 										<tr style=" font-size:15px !important; text-align:center;font-weight:bold;height: 30px;">
 											<td style="border:1px solid #000;"><?php echo $index+1;?></td>
@@ -236,7 +236,7 @@
 		<a href="<?php echo $this->baseUrl();?>/sales/payment/"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a>
 	</div>
     <lable class="col-md-2" style="">
-    	<button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i>បោះ ពុម្ភ </button>
+    	<button type="button" onclick="printinvoice(); printelem();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i>បោះ ពុម្ភ </button>
 	</lable>
 	<lable class="col-md-4" style=""></lable>
 	</div>

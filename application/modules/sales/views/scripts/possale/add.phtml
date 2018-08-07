@@ -938,7 +938,7 @@ function getType(){
 	}
 }
 
-var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-productbycategory')); ?>';
+var url_getcategory = '<?php echo $this->url(array('module'=>'sales','controller'=>'possale','action'=>'get-productbycategory'));?>';
 function getProductByCategory(){
 	$('#product_id').empty();
 	category = $("#category").val();

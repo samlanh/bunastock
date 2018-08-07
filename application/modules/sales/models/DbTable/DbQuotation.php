@@ -18,6 +18,7 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 			$sql=" SELECT 
 						s.id,
 						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
+						place_bun,
 						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
 						phone,	
 						

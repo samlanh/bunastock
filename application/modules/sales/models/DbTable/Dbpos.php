@@ -561,7 +561,5 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['item_name']." - ".$rs['item_code'], ENT_QUOTES).'</option>';
 		}}
 		return $option;
-	}
-	
-	
+	}	
 }

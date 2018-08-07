@@ -32,13 +32,13 @@ class Sales_QuotationController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbQuotation();
 		$rows = $db->getAllQuote($search);
-		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខ Quote","ថ្ងៃចេញ Quote","តម្លៃសរុប","អ្នកប្រើប្រាស់");
+		$columns=array("BRANCH_NAME","ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខ Quote","ថ្ងៃចេញ Quote","តម្លៃសរុប","អ្នកប្រើប្រាស់");
 		$link=array(
 			'module'=>'sales','controller'=>'quotation','action'=>'edit',
 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link,'program_name'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link,'program_name'=>$link,'place_bun'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();

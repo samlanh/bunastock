@@ -32,13 +32,13 @@ class Sales_IndexController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbSaleOrder();
 		$rows = $db->getAllSaleOrder($search);
-		$columns=array("BRANCH_NAME","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់","តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");
+		$columns=array("BRANCH_NAME","ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់","តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");
 		$link=array(
 			'module'=>'sales','controller'=>'possale','action'=>'edit',
 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link,'program_name'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'program_name'=>$link,'place_bun'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();

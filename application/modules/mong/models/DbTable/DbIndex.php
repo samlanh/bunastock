@@ -19,6 +19,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$sql=" SELECT 
 					id,
 					invoice_no,
+					place_bun,
 					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
 					
 					(select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) as dead_id,

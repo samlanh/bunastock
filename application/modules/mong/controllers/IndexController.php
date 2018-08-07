@@ -34,13 +34,13 @@ class Mong_IndexController extends Zend_Controller_Action
     	$this->view->search = $data;
     	
 		$rows = $db->getAllMong($data);
-		$columns=array("វិក័យបត្រ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដម៉ុង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","សម្គាល់","USER","STATUS");
+		$columns=array("វិក័យបត្រ","ទីតាំងបុណ្យ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដម៉ុង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","សម្គាល់","USER","STATUS");
 		$link=array(
 				'module'=>'mong','controller'=>'index','action'=>'edit',
 		);
 
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows,array('invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'place_bun'=>$link));
     	
 		$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();

@@ -183,8 +183,6 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql = "SELECT * FROM tb_borrowers WHERE id = $id LIMIT 1";
     	return $db->fetchRow($sql);
-    }
- 
-   
+    } 
 }
 
