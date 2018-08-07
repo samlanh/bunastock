@@ -75,23 +75,6 @@
 				  margin: 11mm 17mm 17mm 17mm;				
 					
 				}
-				
-				@media print {
-				  footer {
-				    position: fixed;
-				    bottom: 0;
-				  	text-align:center; 
-				  	padding-left:16%; 
-				  	margin-bottom: -9px;
-				  }				
-				  html, body {
-				    width: 210mm;
-				    height: 297mm;
-				  }
-				}				
-				@media print {
-				    footer {page-break-after: always;}
-				}
 			</style>			
 			<tr height="80px">
 				<td colspan="6" width="65%" valign="top">
@@ -115,7 +98,7 @@
 						</tr>
 					</table>
 				</td>
-				<td colspan="4" width="35%" valign="top">
+				<td colspan="4" width="33%" valign="top">
 					<table width="100%" style="margin-left:5px;font-size: 17px;border: 1px solid #000;white-space: nowrap;">
 						<tr>
 							<td width="95px;">&nbsp;លេខបង្កាន់ដៃ</td>
@@ -221,11 +204,7 @@
 								</table>
 							</td>
 						</tr>
-					</table>
-					<footer style="margin-top: 20%;">
-						 <p><?php echo $tr->translate("FOOTER_BUNA");?></p>						
-					</footer>
-					<div id="Grid">deswefwfefefw</div>  				
+					</table>			
 				</td>
 			</tr>
 		</tbody>	
@@ -237,7 +216,7 @@
 		<a href="<?php echo $this->baseUrl();?>/sales/payment/"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a>
 	</div>
     <lable class="col-md-2" style="">
-    	<button type="button" onclick="printinvoice(); printelem();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i>បោះ ពុម្ភ </button>
+    	<button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i>បោះ ពុម្ភ </button>
 	</lable>
 	<lable class="col-md-4" style=""></lable>
 	</div>
@@ -252,20 +231,4 @@ function printinvoice(){
 	//document.getElementById("office_receipt").submit();
 }
 </script>
-<script>
-    $(function printelem() {
-        $("#Grid").ejGrid({
-            dataSource: window.gridData,
-            allowPaging: true,
-            toolbarSettings: { showToolbar: true, toolbarItems: [ej.Grid.ToolBarItems.PrintGrid] },
-            columns: [
-                     { field: "OrderID", headerText: "Order ID", textAlign: ej.TextAlign.Right, width: 75 },
-                     { field: "CustomerID", headerText: "Customer ID", width: 90 },
-                     { field: "EmployeeID", headerText: "Employee ID", textAlign: ej.TextAlign.Right },
-                     { field: "ShipCity", headerText: "Ship City", width: 90 }
-            ],
-            beforePrint: "beforeprint"
-        });
-    });
-    </script>
    
