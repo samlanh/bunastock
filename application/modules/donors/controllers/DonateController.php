@@ -30,7 +30,7 @@ class Donors_DonateController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllDonate($data);
-		$columns=array("ឈ្មោះសព","ភេទ","អាយុ","ថ្ងៃជំនួយ","អាស័យដ្ឋាន","ឈ្មោះសប្បុរសជន","ថ្ងៃចេញម្ឈូស","សម្គាល់(ភាសាខ្មែរ)","សម្គាល់(ភាសាចិន)","ថ្ងៃបង្កើត","USER","STATUS");
+		$columns=array("ឈ្មោះសព","ភេទ","អាយុ","ថ្ងៃស្លាប់","អាស័យដ្ឋាន","ឈ្មោះសប្បុរសជន","ថ្ងៃឧបត្ថម","ថ្ងៃបង្កើត","USER","STATUS");
 		$link=array(
 				'module'=>'donors','controller'=>'donate','action'=>'edit',
 		);

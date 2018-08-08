@@ -267,6 +267,7 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 					s.id = sps.saleorder_id 
 					and partner_id = $partner_id 
 					and is_paid=0 
+					and price>0
 			";
 		return $db->fetchAll($sql);
 	}

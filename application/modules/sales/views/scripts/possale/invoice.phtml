@@ -4,8 +4,11 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>វិក្កយបត្រលក់</title>
-<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 0px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 26cm; ">
+<style>
+	#print-footer{display: none !important;}
+</style>
 
+<div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 0px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 26cm; ">
 	<table class="print" cellspacing="0" cellpadding="0" style="width:99%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top: 10px; white-space:nowrap; margin-top: 6px;">
 		<tbody>
 			<tr height="40px;">
@@ -39,7 +42,7 @@
 				.tablesorter td{font-family:'khmer os battambang' !important;}
 				.one{line-height: 15px;font-weight: bold;font-size: 16px;}
 				table { page-break-inside:auto }
-				  tr{ page-break-inside:avoid; page-break-after:auto; }
+				  tr{ page-break-inside:avoid; page-break-after:auto;}
 				#header {
 				  display: table-header-group;
 				  page-break-inside:avoid; page-break-after:auto;
@@ -48,11 +51,20 @@
 				footer {
 				  font-size: 9px;
 				  color: black !important;
-				 text-align:center;
+				  text-align:center;
+				}
+				
+				#print-footer {
+					display: block;
+					position: fixed;
+					bottom:0;
+					left:15%;
+				}
+				
 			</style>						
 			<tr height="80px">
 				<td colspan="6" width="65%" valign="top">
-					<table width="100%" style=" ;font-size: 17px;border: 1px solid #000;">
+					<table width="100%" height="100%" style=" ;font-size: 17px;border: 1px solid #000;">
 						<tbody>
 							<tr>
 								<td>&nbsp;ទីតាំងបុណ្យ</td>
@@ -146,7 +158,7 @@
 												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['discount']>0){echo "$ ".$item['discount'];}?></strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['sub_total']>0){echo "$ ".number_format($item['sub_total'],3);}?></strong></td>
 											</tr>
-											<?php } }
+											<?php } } 
 											for($index;$index<15;$index++){
 											?>
 											<tr style=" font-size:15px !important; text-align:center;font-weight:bold;">
@@ -199,6 +211,13 @@
 				</td>
 			</tr>
 		</tbody>
+		<tfoot>
+			<tr height="20px">
+				<td colspan="10">
+					<div id="print-footer" style="font-size:15px;color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
+				</td>
+			</tr>
+		</tfoot>
 	</table>	
 </div>
 

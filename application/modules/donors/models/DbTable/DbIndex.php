@@ -8,7 +8,10 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
 	}
-	
+	function getBranchId(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->branch_id;
+	}
 	function getAllDonor($search){
 		$db = $this->getAdapter();
 		$sql=" SELECT 
@@ -16,13 +19,8 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					donor,
 					tel,
 					address,
-					required_using,
 					invalid_date,					
-					detail_kh,
-					detail_chi,
-
 					receipt_no,
-					paid_date,
 					qtys,
 					qty,
 					unit_price,
@@ -68,7 +66,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$receipt = $_db->getReceiptNumber();
 		$arr=array(
-				'branch_id'			=> 1,
+				'branch_id'			=> $this->getBranchId(),
  				'donor'				=> $data['donor'],
 				'tel'				=> $data['tel'],
 				'address'			=> $data['address'],
@@ -80,8 +78,8 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				
 				'receipt_no'		=> $receipt,
 				'paid_date'			=> date("Y-m-d",strtotime($data['paid_date'])),
-				'qty'				=> $data['qty'],
 				'qtys'				=> $data['qtys'],
+				'qty'				=> $data['qtys'],
 				'unit_price'		=> $data['unit_price'],
 				'total_amount'		=> $data['total_amount'],
 				'payment_note'		=> $data['payment_note'],
@@ -94,7 +92,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	}
 	public function editDonor($data,$id){
 		$arr=array(
-				'branch_id'			=> 1,
+				'branch_id'			=> $this->getBranchId(),
  				'donor'				=> $data['donor'],
 				'tel'				=> $data['tel'],
 				'address'			=> $data['address'],
@@ -106,8 +104,8 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				
 				'receipt_no'		=> $data['receipt_no'],
 				'paid_date'			=> date("Y-m-d",strtotime($data['paid_date'])),
-				'qty'				=> $data['qty'],
 				'qtys'				=> $data['qtys'],
+				'qty'				=> $data['qtys'],
 				'unit_price'		=> $data['unit_price'],
 				'total_amount'		=> $data['total_amount'],
 				'payment_note'		=> $data['payment_note'],

@@ -15,11 +15,11 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 					id,
 					dead_name,
 					(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
-					dead_age,date_jom,
+					dead_age,
+					date_jom,
 					dead_address,
 					(select donor from tb_donors where tb_donors.id = donor_id) as donor,
 					date_jenh,
-					note,notes,
 					create_date,
 					(SELECT fullname FROM `tb_acl_user` as u WHERE u.user_id=d.user_id LIMIT 1) AS user_name,
 					(SELECT name_en FROM `tb_view` WHERE TYPE=5 AND key_code=STATUS LIMIT 1) STATUS
