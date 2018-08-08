@@ -4,6 +4,9 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>បោះពុម្ភ Quote</title>
+<style>
+	#print-footer{display: none !important;}
+</style>
 <div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 1px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 26cm; ">
 
 	<table class="print" cellspacing="0" cellpadding="0" style="width:99%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top:10px;white-space:nowrap;">
@@ -45,6 +48,12 @@
 				  font-size: 9px;
 				  color: black !important;
 				 text-align:center;
+				}
+				#print-footer {
+					display: block;
+					position: fixed;
+					bottom:0;
+					left:13%;
 				}
 				
 			</style>			
@@ -198,6 +207,13 @@
 				</td>
 			</tr>
 		</tbody>
+		<tfoot>
+			<tr height="20px">
+				<td colspan="10">
+					<div id="print-footer" style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
+				</td>
+			</tr>
+		</tfoot>	
 	</table>
 </div>
     <div style="padding-left:16%; margin: 0 auto;"> 

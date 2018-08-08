@@ -3,6 +3,9 @@
 	$rs = $this->row;
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
+<style>
+	#print-footer{display: none !important;}
+</style>
 <title>វិក្កយបត្រលក់ម៉ុង</title>
 <div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 0px; margin-bottom:30px;">
 	<style>
@@ -12,6 +15,12 @@
 		#pageFooter {
 		    display: table-footer-group;
 		}
+		#print-footer {
+					display: block;
+					position: fixed;
+					bottom:0;
+					left:13%;
+				}
 		#pageFooter:after {
 		    counter-increment: page;
 		    content:"Page " counter(page);
@@ -204,6 +213,13 @@
 					</td>
 				</tr>
 			</tbody>
+			<tfoot>
+			<tr height="20px">
+				<td colspan="10">
+					<div id="print-footer" style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
+				</td>
+			</tr>
+		</tfoot>
 		</table>
     </div>
     <div style="padding-left:15%; margin: 0 auto;"> 

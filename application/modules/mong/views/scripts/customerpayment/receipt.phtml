@@ -5,6 +5,9 @@
 	$rs = $this->rs;
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
+<style>
+	#print-footer{display: none !important;}
+</style>
 <div id="PrintReceipt" style="border:1px dashed #ccc;width:22cm !important; padding: 0px; margin-bottom:30px; ">
 	<style>
 		.hearder_table{height:25px !important;}
@@ -23,6 +26,12 @@
 				  size: A4;
 				  margin: 11mm 17mm 17mm 17mm;				
 					
+				}
+				#print-footer {
+					display: block;
+					position: fixed;
+					bottom:0;
+					left:13%;
 				}
 		#pageFooter:after {
 		    counter-increment: page;
@@ -219,8 +228,14 @@
 			</td>
 		</tr>
 	</table>
+	<tfoot>
+			<tr height="20px">
+				<td colspan="10">
+					<div id="print-footer" style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
+				</td>
+			</tr>
+		</tfoot>
 </div>
-
 <div style="text-align: center;margin: 0 auto;clear:both;"> 
 	<lable class="col-md-4" style=""></lable>
 	<div class="col-md-2">
