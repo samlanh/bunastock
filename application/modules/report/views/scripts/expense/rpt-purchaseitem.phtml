@@ -1,6 +1,6 @@
 <?php 
-$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-$frm_sales_report = $this->form_salemong;
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$frm_sales_report = $this->form_salemong;
 ?>
 <title><?php echo $tr->translate("RPT_PURCHASE_DETAIL");?></title>
 <div class="row">
@@ -85,7 +85,8 @@ $frm_sales_report = $this->form_salemong;
 		    <tr>
 		    	<td class="table2excel" id="exportExcel">
 		            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:13px;" width="100%" cellspacing="0">
-		                 <tbody><tr bgcolor="#abd5ff" align="center" style="font-weight:bold; line-height: 205x; font-size:14px; padding:1px 0px; white-space: nowrap; ">
+		                 <tbody>
+						 <tr align="center" style="background:#b0bdfd !important;font-weight:bold; line-height: 205x; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 		                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
 		                    <td><?php echo $tr->translate("BRANCH_NAME");?></td>
 							<td>&nbsp;<?php echo $tr->translate("VENDOR_NAME");?></td>
@@ -124,7 +125,7 @@ $frm_sales_report = $this->form_salemong;
 		            <br>
 		             <table border="1" align="center" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="30%" cellspacing="0">
 		                <tbody>
-			                <tr height="30px;" bgcolor="#abd5ff" class="style" align="center" style=" padding:2px 0px; ">
+			                <tr height="30px;" class="style" align="center" style=" padding:2px 0px;background:#b0bdfd !important; ">
 			                    <td><strong style="font-size:15px;"><?php echo $tr->translate("PURCHASE_AMOUNT");?></strong></td>
 			                </tr>
 			                <tr class="style" style=" line-height: 24px;">

@@ -237,6 +237,22 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			$where=" id=$id ";
 			$this->update($info_purchase_order, $where);
 				
+			$sql1="select id from tb_vendor_payment where purchase_id = $id order by id ASC limit 1 ";
+			$result = $db->fetchOne($sql1);
+			if(!empty($result)){
+				$vendor_payment=array(
+						"total"         => $data['all_totalpayment'],
+						"paid"          => $data['paid'],
+						"balance"       => $data['remain'],
+						"user_id"       => $this->getUserId(),
+				);
+				$this->_name="tb_vendor_payment";
+				$where1 = " id = $result ";
+				$this->update($vendor_payment, $where1);
+			}
+			
+			
+			
 			$ids=explode(',',$data['identity']);
 			$locationid=$data['LocationId'];
 			if(!empty($data['identity']))foreach ($ids as $i)
@@ -258,14 +274,12 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 					$rows=$db_global->productLocationInventory($data['pro_'.$i], $locationid);//check stock product location
 					if($rows)
 					{
-						if($data["status"]==4 OR $data["status"]==5){
-							$arr  = array(
-									'qty'   =>$rows["qty"]+$data['qty'.$i],
-							);
-							$this->_name="tb_prolocation";
-							$where=" id = ".$rows['id'];
-							$this->update($arr, $where);
-						}
+						$arr  = array(
+								'qty'   =>$rows["qty"]+$data['qty'.$i],
+						);
+						$this->_name="tb_prolocation";
+						$where=" id = ".$rows['id'];
+						$this->update($arr, $where);
 					}
 						
 				}
@@ -274,8 +288,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
-			$err =$e->getMessage();
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();exit();
 		}
 	}
 	public function getPurchaseID($id){

@@ -34,47 +34,47 @@
 			    border-image: url("<?php echo $this->baseUrl()?>/images/ifrmas.jpg") 120 stretch;
 			}			
 	    </style>
-		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold; margin-top: -8px; ">		 
+		<table cellpadding="0" cellspacing="0" width="100%" style="font-family:  Khmer OS Muol; font-weight: bold; margin-top: 0px; ">		 
 			<tr class="no-boder">
 				<td>
 				<table width="100%" >
 					<tr>
-						<td width="17%" align="center">
-							<img style="width: 75%; height: 130px;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
+						<td width="25%" align="center">
+							<img style="width: 80%; height: 130px;" alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br>
 							<span style="font-family: Freestyle Script;font-size: 20px;"></span>
 							
 						</td>
-						<td width="34%" valign="top" align="center">
-							<table   style="text-align:center;border:solid 1px #FFF;">
+						<td width="70%" valign="top" align="center">
+							<table style="text-align:left;border:solid 1px #FFF;">
 								<tr style="list-style:12px; font-family:  Khmer OS Muol; font-weight: bold;">
-									<td style="color:red !important; font-size:65px; padding-right: 67px;">ចៅ ប៊ុនណា </td>
+									<td style="color:red !important; font-size:85px; ">ចៅ ប៊ុនណា </td>
 								</tr>	
 							</table>
 						</td>
-						<td width="10%" >&nbsp;</td>
+						<td width="5%" >&nbsp;</td>
 					</tr>
 				</table>
 				</td>
 			</tr>
 		  	<tr>
-		  		<td colspan="3" align="center" style="color: blue !important;font-size: 45px;">
+		  		<td colspan="3" align="center" style="color: blue !important;font-size: 48px;">
 	 				លើកសពចូលម្ឈូស
 	  			</td>
 	  		</tr>		
   			<tr>
-  				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
+  				<td colspan="3" align="center" style="color: #000;font-size: 33px;line-height:65px;">
   					ថ្ងៃទី <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['lerk_sop_date'])));?> ខែ  <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['lerk_sop_date'])));?> ឆ្នាំ  ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['lerk_sop_date'])));?> 
   					ម៉ោងៈ  <?php echo $this->row['lerk_sop_time']?>&nbsp;<?php if(!empty($this->row['lerk_sop_time_to'])){?> ដល់ <?php echo $this->row['lerk_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['lerk_sop_time_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ <?php echo $this->row['hae_sop_jol_mchhos']?> 					
   				</td>	
   			</tr>
   			<tr>
-  				<td colspan="3" align="center" style="color:blue !important;font-size: 45px;"> 
+  				<td colspan="3" align="center" style="color:blue !important;font-size: 48px;"> 
   					ហែរសពចេញ
   				</td>
   			</tr>
   			<tr >
-  				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
+  				<td colspan="3" align="center" style="color: #000;font-size: 33px;line-height:65px;">
   					ថ្ងៃទី <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['hae_sop_date'])));?> ខែ <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['hae_sop_date'])));?> ឆ្នាំ ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['hae_sop_date'])));?> 
   					ម៉ោងៈ  <?php echo $this->row['hae_sop_time']?><?php if(!empty($this->row['hae_sop_time_to'])){?> ដល់ <?php echo $this->row['hae_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['hae_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['hae_sop_jenh']?>
@@ -82,13 +82,13 @@
 	  		</tr>
   			<tr>
   				<td colspan="3" align="center">
-  					<i style="font-size: 38px; color:red !important; "><?php echo $this->row['type_romleay']?> </i>
-  					<i style="font-size: 38px; color:blue !important; ">នៅទីតាំង </i>
-  					<i style="font-size: 35px; color:red !important; "><?php echo $this->row['place_pjos_sop']?> </i>
+  					<span style="font-size: 40px; color:red !important; "><?php echo $this->row['type_romleay']?> </span>
+  					<span style="font-size: 40px; color:blue !important; ">នៅ </span>
+  					<span style="font-size: 40px; color:red !important; "><?php echo $this->row['place_pjos_sop']?> </span>
   				</td>
   			</tr>
   			<tr>
-  				<td colspan="3" align="center" style="color: #000;font-size: 32px;">
+  				<td colspan="3" align="center" style="color: #000;font-size: 33px;line-height:65px;">
   					ថ្ងៃទី  <?php echo $db_global->getNumberInkhmer(date('d',strtotime($this->row['pjos_sop_date'])));?> ខែ <?php echo $db_global->getNumberInkhmer(date('m',strtotime($this->row['pjos_sop_date'])));?> ឆ្នាំ ២០<?php echo $db_global->getNumberInkhmer(date('y',strtotime($this->row['pjos_sop_date'])));?>
   					ម៉ោងៈ  <?php echo $this->row['pjos_sop_time']?><?php if(!empty($this->row['pjos_sop_time_to'])){?> ដល់ <?php echo $this->row['pjos_sop_time_to']?><?php }?>&nbsp;<?php echo $this->row['pjos_sop_mail']?><br />
   					ឆុងនឹងឆ្នាំៈ  <?php echo $this->row['pjos_sop']?>

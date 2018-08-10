@@ -162,14 +162,19 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 					r.*,
 					(select sale_no from tb_sales_order where tb_sales_order.id = r.invoice_id) as invoice,
 					c.cust_name AS customer_name,
-					c.phone contact_phone,
-					c.address AS address,
-					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name
+					s.phone as contact_phone,
+					s.address AS address,
+					s.place_bun,
+					s.place_pjos,
+					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name,
+					(select name_kh from tb_view where tb_view.type=17 and key_code=s.type_pjos) as type_pjos_name
 				FROM 
 					tb_receipt as r,
-					tb_customer as c
+					tb_customer as c,
+					tb_sales_order as s
 				WHERE 
 					c.id = r.customer_id
+					and s.id = r.invoice_id
 					and r.type=1
 					and r.id = $id 
 				LIMIT 1 

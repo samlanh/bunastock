@@ -543,15 +543,14 @@ function sumincludeTransfer(){
 }
 
 function doRemain() {
-	var all_total = parseFloat($('#all_total').val());
-	all_total = Number(all_total);
+	var all_total = $('#all_totalpayment').val();
 	var paid = parseFloat($('#paid').val());
-	paid = Number(paid);
 	if(isNaN(paid)){paid=0;}
 	
 	if(paid>all_total){
-		alert("Paid Value can not biger then total amount !");
-		$('#remain').val(all_total.toFixed(2));
+		alert("Can not paid more than total amount !");
+		$('#paid').val(all_total);
+		$('#remain').val(0);
    }else{
 	   remain = parseFloat(all_total)-parseFloat(paid);
 	   $('#remain').val(remain.toFixed(2));

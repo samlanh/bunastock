@@ -35,7 +35,7 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
  				'module'=>'sales','controller'=>'partnerservicepayment','action'=>'deleteitem',);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('total_payment'=>$link,'partner_name'=>$link,'branch_name'=>$link,
 				'date_input'=>$link));
 		
 		$this->view->sale_invoice = $db->getPartnerPaymentBalance();
@@ -92,49 +92,10 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		$this->view->receipt = $_db->getReceiptNumber(1);
 	}	
 	
-	public function getinvoiceAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$rs = $db->getAllInvoicePayment($post['post_id'], $post['type_id']);
-			echo Zend_Json::encode($rs);
-			exit();
-		}
-	}
-	function receiptAction(){
+	function printAction(){
 		$dbq = new Sales_Model_DbTable_DbPartnerServicepayment();
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		$this->view->rs = $dbq->getRecieptById($id);
-	}
-	public function deleteAction(){
-		$id = $this->getRequest()->getParam("id");
-		$db = new Sales_Model_DbTable_Dbpos();
-		echo "<script language='javascript'>
-		var r = confirm('តើលោកអ្នកពិតចង់លុបប្រតិបត្តិការណ៍នេះឫ!')​​;
-		if (r == true) {";
-		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/partnerservicepayment/deleteitem/id/".$id."'";
-		echo"}else {";
-		echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/partnerservicepayment/'";
-		echo"}
-		</script>";
-	
-	}
-	function deleteitemAction(){
-		$id = $this->getRequest()->getParam("id");
-		//echo $id;exit();
-		$db = new Sales_Model_DbTable_DbPartnerServicepayment();
-		$db->delettePayment($id);
-		$this->_redirect("sales/payment");
-	}
-	
-	public function getCustomerInfoAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Sales_Model_DbTable_DbPartnerServicepayment();
-			$rs = $db->getCustomerInfo($post['id']);
-			echo Zend_Json::encode($rs);
-			exit();
-		}
+		$this->view->rs = $dbq->getPartnerPaymentById($id);
 	}
 	
 	public function getPartnerServicePaymentAction(){

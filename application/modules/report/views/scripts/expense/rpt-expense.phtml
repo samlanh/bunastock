@@ -70,7 +70,7 @@
 						<tr>
 							<td colspan="3">
 								<table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
-			            			<tr style="font-size:14px; height: 20px;border: 1px solid #000;white-space: nowrap;background-color: #b0bdfd;line-height:30px;font-weight: bold;" align="center" >
+			            			<tr style="font-size:14px; height: 20px;border: 1px solid #000;white-space: nowrap;background-color: #b0bdfd !important;line-height:30px;font-weight: bold;" align="center" >
 										<td style="border: 1px solid #000;"><?php echo $tr->translate('NUM')?></td>
 										<td style="border: 1px solid #000;"><?php echo $tr->translate('BRANCH_NAME')?></td>
 										<td style="border: 1px solid #000;"><?php echo $tr->translate('ពណ៌នាចំនាយ')?></td>
@@ -112,17 +112,11 @@
 								&nbsp;
 							</td>
 						</tr>
-						<tr >
-							<td align="center" width="25%">
-								<span style=" font-size: 14px;"><?php echo $tr->translate("VERIFIED_BY"); ?></span>
-							</td>
-							<td  width="50%">
-								&nbsp;
-							</td>
-							<td align="center"  width="25%">
-								<span style=" font-size: 14px;text-align: right;"><?php echo $tr->translate("PREPARED_BY"); ?></span>
-							</td>
-						</tr>
+						<tr style="font-size: 13px;">
+							<th style="width:20%;text-align:center;  font-family:'Khmer MEF2'">យល់ព្រមដោយ</th>
+							<th style="width:60%;text-align:center; font-family:'Khmer MEF2'">ត្រួតពិនិត្យដោយ</th>
+							<th style="width:20%;text-align:center;font-family:'Khmer MEF2'">រៀបចំដោយ</th>
+					   </tr>
 					</table>
 				</div>	
 			</div>

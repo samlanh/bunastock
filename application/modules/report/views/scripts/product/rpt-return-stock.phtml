@@ -95,7 +95,7 @@
 		    	<td class="table2excel" id="exportExcel">
 		            <table  border="1" style="border-collapse:collapse;border:1px solid #000; font-size:14px;" width="100%" cellspacing="0">
 		                 <thead>
-		                 	<tr bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
+		                 	<tr class="style" align="center" style="background: #b0bdfd !important;font-weight:bold; line-height: 25px; font-size:12px; padding:1px 0px; white-space: nowrap; ">
 			                    <td><?php echo $tr->translate("ល.រ");?></td>
 								<td><?php echo $tr->translate("លេខកូដ");?></td>
 								<td><?php echo $tr->translate("ចំណងជើង");?></td>
@@ -114,9 +114,9 @@
 		                
 						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000; ">
 						   <td align="center">&nbsp;<?php echo $index+1?></td>
-						   <td><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/return-detail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["return_code"];?></a></td>
-						   <td align="center"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/return-detail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["title"];?></a></td>
-						   <td><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/return-detail/id/".$rs["id"];?>">&nbsp;<?php echo "$ ".number_format($rs["total_amount"],2);?></a></td>
+						   <td><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/product/return-detail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["return_code"];?></a></td>
+						   <td align="center"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/product/return-detail/id/".$rs["id"];?>">&nbsp;<?php echo $rs["title"];?></a></td>
+						   <td><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/product/return-detail/id/".$rs["id"];?>">&nbsp;<?php echo "$ ".number_format($rs["total_amount"],2);?></a></td>
 						   <td>&nbsp;<?php echo $rs["note"];?></td>
 						   <td>&nbsp;<?php echo date("d-m-Y",strtotime($rs["create_date"]));?></td>
 						   <td>&nbsp;<?php echo $rs["status"];?></td>
@@ -130,7 +130,7 @@
 		            <br>
 		             <table border="1" align="center" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="30%" cellspacing="0">
 		                <tbody>
-			                <tr height="30px;" bgcolor="#b0bdfd" class="style" align="center" style="font-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
+			                <tr height="30px;" align="center" style="background: #b0bdfd !important;font-weight:bold; line-height: 14px; font-size:12px; padding:2px 0px; ">
 			                    <td><strong><?php echo $tr->translate("ទឹកប្រាក់សរុប");?></strong></td>
 			                </tr>
 			                 <tr align="center" class="style" style=" line-height: 24px; font-size:11px;">

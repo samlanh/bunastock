@@ -43,3 +43,60 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+var row=0;
+var url="";
+$(function(){
+	$.contextMenu({
+		selector: '.context-menu-one', 
+		callback: function(key, options) {		
+			var m = "clicked: " + key;
+			if(key=="edit"){
+				url='<?php echo $this->baseUrl()."/sales/partnerservicepayment/edit/id/";?>';
+			}else if(key=="print"){
+				url='<?php echo $this->baseUrl()."/sales/partnerservicepayment/print/id/";?>';
+			}
+			gotoAction();
+		},
+		items: {
+			"edit": {name: "កែប្រែ", icon: "edit", accesskey: "e"},
+			"print": {name: "បោះពុម្ភ", icon: "fa-newspaper-o", accesskey: "e"},
+		}
+	});
+});
+function setrowdata(index){
+	row = index;
+}
+var recordid ='';
+function gotoAction(){
+	window.open(url+row, '_blank');
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

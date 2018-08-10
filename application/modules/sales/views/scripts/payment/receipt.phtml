@@ -9,7 +9,7 @@
 </style>
 <div id="PrintReceipt" style="border:1px dashed #ccc;width:22cm !important; padding: 0px; margin-bottom:30px; ">
 		<style>
-			.hearder_table{height:25px !important;}
+			.hearder_table{height:32px !important;}
 			.defaulheight{line-height: 22px !important;}
 			#PrintReceipt{display: table;}
 			#pageFooter {
@@ -84,10 +84,20 @@
 				  margin: 11mm 17mm 17mm 17mm;				
 					
 				}
-			</style>			
+			</style>	
 			<tr height="80px">
 				<td colspan="6" width="65%" valign="top">
-					<table width="100%" style=" ;font-size: 17px;border: 1px solid #000;">
+					<table width="100%" style=" ;font-size: 17px;border: 1px solid #000;margin-top:10px;">
+						<tr>
+							<td>&nbsp;ទីតាំងបុណ្យ</td>
+							<td> :</td>
+							<td><label class="one">&nbsp;&nbsp;<?php echo $rs['place_bun']?></label></td>
+						</tr>
+						<tr>
+							<td>&nbsp;ទីតាំង<?php echo $rs['type_pjos_name']?></td>
+							<td> :</td>
+							<td><label class="one">&nbsp;&nbsp;<?php echo $rs['place_pjos']?></label></td>
+						</tr>
 						<tr>
 							<td width="110px;">&nbsp;ឈ្មោះអតិថិជន</td>
 							<td width="1px"> :&nbsp;</td>
@@ -96,19 +106,19 @@
 							</td>
 						</tr>
 						<tr>
-							<td>&nbsp;ទូរសព្ទ</td>
+							<td>&nbsp;ទូរស័ព្ទ</td>
 							<td colspan="1"> :&nbsp;</td>
 							<td><label id="lbl_phone" class="one"><?php echo $rs['contact_phone']?></label></td>
 						</tr>
 						<tr>
-							<td>&nbsp;អាសយដ្ឋាន </td>
+							<td>&nbsp;អាស័យដ្ឋាន </td>
 							<td> :&nbsp;</td>
 							<td><label id="lbl_address" class="one"><?php echo $rs['address']?></label></td>
 						</tr>
 					</table>
 				</td>
 				<td colspan="4" width="33%" valign="top">
-					<table width="100%" style="margin-left:5px;font-size: 17px;border: 1px solid #000;white-space: nowrap;">
+					<table width="100%" style="margin-left:5px;font-size: 17px;border: 1px solid #000;white-space: nowrap;margin-top:10px;">
 						<tr>
 							<td width="95px;">&nbsp;លេខបង្កាន់ដៃ</td>
 							<td width="1px" style=""> :&nbsp;</td>
@@ -145,7 +155,7 @@
 							<td colspan="6" valign="top">
 								<table class="tablesorter" style=" width: 100%; padding: 0px; margin-top: 3px !important; border-collapse: collapse; border: 1px solid #000; font-size:14px;font-family:Khmer OS Battambang !important;  " id="table">
 									<thead>
-										<tr class="hearder_table" style="font-size:15px;font-family:khmer os battambang;text-align:center;background:#b0bdfd !important;font-weight:bold;">
+										<tr class="hearder_table" style="font-size:16px;font-family:khmer os battambang;text-align:center;background:#b0bdfd !important;font-weight:bold;">
 											<td style="border:1px solid #000; color:#000;">លរ</td>
 											<td style="border:1px solid #000;"><strong style="color:#000;">ពណ៌នា</strong></td>
 											<td style="border:1px solid #000;"><strong style="color:#000;">ប្រាក់សរុប</strong></td>
@@ -160,7 +170,7 @@
 										$all_paid = 0;
 										$all_balance = 0;
 										if(!empty($this->rs)){ ?>
-										<tr style=" font-size:15px !important; text-align:center;font-weight:bold;">
+										<tr style=" font-size:16px !important; text-align:center;font-weight:bold;">
 											<td style="border:1px solid #000;"><?php echo $index;?></td>
 											<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php echo "បង់លើ វិក្កយបត្រលេខ  # ".$this->rs['invoice'];?> </strong></td>
 											<td style="border:1px solid #000;"><strong style="color:#000;">$ <?php echo number_format($this->rs['total'],3);?></strong></td>
@@ -170,7 +180,7 @@
 										<?php }
 										for($index;$index<=4;$index++){
 										?>
-										<tr style=" font-size:15px !important; text-align:center;font-weight:bold;height: 30px;">
+										<tr style=" font-size:16px !important; text-align:center;font-weight:bold;height: 30px;">
 											<td style="border:1px solid #000;"><?php echo $index+1;?></td>
 											<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;</strong></td>
 											<td style="border:1px solid #000;"><strong style="color:#000;"></strong></td>
@@ -178,23 +188,33 @@
 											<td style="border:1px solid #000;"><strong style="color:#000;"></strong></td>
 										</tr>
 										<?php }?>
-										<tr style=" font-size:15px; text-align:right;font-weight:bold;height: 30px;">
+										<tr style=" font-size:17px; text-align:right;font-weight:bold;height: 30px;">
 											<td style="border:1px solid #fff;border-right:1px solid #000" colspan="2"></td>
 											<td style="border:1px solid #000;" colspan="2"><strong style=" color:#000;">ប្រាក់សរុប</strong>&nbsp;</td>
 											<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($this->rs['total'],3)?></strong>&nbsp;</td>
 										</tr>
-										<tr style=" font-size:15px; text-align:right;font-weight:bold;height: 30px;">
+										<tr style=" font-size:17px; text-align:right;font-weight:bold;height: 30px;">
 											<td style="border:1px solid #fff;border-right:1px solid #000" colspan="2"></td>
 											<td style="border:1px solid #000;" colspan="2"><strong style=" color:#000;">ប្រាក់បានបង់</strong>&nbsp;</td>
 											<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($this->rs['paid'],3)?></strong>&nbsp;</td>
 										</tr>
-										<tr style=" font-size:15px; text-align:right;font-weight:bold;">
+										<tr style=" font-size:17px; text-align:right;font-weight:bold;">
 											<td style="border:1px solid #fff;border-right:1px solid #000" colspan="2"></td>
 											<td style="border:1px solid #000;" colspan="2"><strong style="color:#000;">នៅខ្វះ&nbsp;</strong></td>
 											<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($this->rs['balance'],3)?></strong>&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								&nbsp;
 							</td>
 						</tr>
 						<tr>

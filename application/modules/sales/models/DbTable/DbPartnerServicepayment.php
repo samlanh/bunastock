@@ -145,22 +145,41 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		return $db->fetchRow($sql);
 	}
 	
-	function getRecieptById($id){
+	function getPartnerPaymentById($id){
 		$db = $this->getAdapter();
 		$sql="SELECT 
-					r.*,
-					(select invoice_no from tb_mong where tb_mong.id = r.invoice_id) as invoice,
-					c.cust_name AS customer_name,
-					c.phone contact_phone,
-					c.address AS address,
-					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name
+					pp.*,
+					p.partner_name,
+					p.tel as phone,
+					p.addresss as address,
+					(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = pp.`user_id`) AS user_name
 				FROM 
-					tb_receipt as r,
-					tb_customer as c
+					tb_partnerservice as p,
+					tb_partnerservice_payment as pp
 				WHERE 
-					c.id = r.customer_id
-					and r.id = $id 
+					p.id = pp.partner_id
+					and pp.id = $id 
 				LIMIT 1 
+			";
+		return $db->fetchRow($sql);
+	}
+	
+	function getSalePartnerServiceById($id){
+		$db = $this->getAdapter();
+		$sql="SELECT
+					sps.id,
+					s.sale_no,
+					s.place_bun,
+					(select item_name from tb_product as p where p.id = sps.service_id ) as service_name,
+					sps.price,
+					sps.note
+				FROM
+					tb_sales_partner_service as sps,
+					tb_sales_order as s
+				WHERE
+					s.id = sps.saleorder_id
+					and sps.id = $id
+				LIMIT 1
 			";
 		return $db->fetchRow($sql);
 	}

@@ -7,6 +7,7 @@
 	$controller=$request->getControllerName();	
 	$row = $this->row
 ?>	
+<title>សប្បុរសជនជួយជំនួយ</title>
 <div id="Printdonate">
 	<div  class="wrapper">
 		<style>
@@ -44,7 +45,7 @@
 						</td>
 						<td width="60%">
 							<table   style="text-align:center; border:solid 1px #FFF; line-height: 49px;">
-								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold;">
+								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold;">
 									<td>ព្រះរាជាណាចក្រកម្ពុជា</td>
 								</tr>
 								<tr style="list-style:11px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold;">
@@ -52,10 +53,10 @@
 								</tr>
 								<tr style="list-style:11px;font-weight: bold;font-size:13px;" class="img-size">
 									<td>
-										<img style="width: 43%; height: 123px;"  alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
+										<img style="width: 43%; height: 135px;"  alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br>
 									</td>
 								</tr>
-								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:25px;font-weight: bold;">
+								<tr style="list-style:15px;font-family: Times New Roman, cursive;font-size:30px;font-weight: bold;">
 									<td><?php echo $tr->translate("PHONE_BUNA");?></td>
 								</tr>
 							</table>
@@ -79,7 +80,7 @@
   							</td>
   						</tr>
   						<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:28px;font-weight: bold; color:#C70039 !important;">
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:#C70039 !important;">
 	  						<?php echo $this->row['tel']?>
 	  					</td>
 	  					</tr>			  			
@@ -94,8 +95,8 @@
   						</tr>
   						<tr>
 	  					<td align="center" style="list-style:20px; font-family:  Khmer OS Muol; font-weight: bold; color: red !important;">
-	  						<i style="color: #6A5ACD !important; font-size: 34px;">លំនៅដ្ឋាន៖ </i>
-	  						<i style="color: red !important; font-size:28px;"> <?php echo $this->row['address']?></i>
+	  						<span style="color: #6A5ACD !important; font-size: 34px;">លំនៅដ្ឋាន៖ </span>
+	  						<span style="color: red !important; font-size:34px;"> <?php echo $this->row['address']?></span>
 	  					</td>
 	  				</tr>	
 	  				</tr>	  				
@@ -104,7 +105,7 @@
 	  						ព័ត៌មានមានការបង់ប្រាក់៖
 	  					</td>
 	  				</tr>	  				
-	  				<tr style="font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; line-height:47px; list-style:none;">
+	  				<tr style="font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; line-height:50px; list-style:none;">
 	  					 <?php 
 	  					 ?>
 	  					<td>
