@@ -236,18 +236,20 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 	}
 	function getQuoteDetailById($id){
 		$sql=" SELECT 
-					si.*,
+					qi.*,
 					p.item_name As pro_name,
 					p.item_code,
 					p.is_service,
 					p.is_package,
 					(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name
 				FROM 
-					tb_quotation_item as si,
+					tb_quotation_item as qi,
 					tb_product as p 
 				WHERE 
-					p.id = si.pro_id
-					and si.quoat_id = $id
+					p.id = qi.pro_id
+					and qi.quoat_id = $id
+				order by
+					qi.id ASC	
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
@@ -256,20 +258,6 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql=" SELECT * FROM tb_product WHERE id=$product_id ";
 		return $db->fetchRow($sql);
-	}
-	
-	function getPackageProduct($product_id){
-		$db = $this->getAdapter();
-		$sql=" SELECT 
-					*,
-					(SELECT item_name FROM `tb_product` WHERE tb_product.id=tb_product_package.product_id) As name ,
-					(SELECT item_code FROM `tb_product` WHERE tb_product.id=tb_product_package.product_id) As code 
-				FROM 
-					tb_product_package 
-				WHERE 
-					package_id=$product_id 
-			";
-		return $db->fetchAll($sql);
 	}
 	
 	function getProductByCategoryId($category,$type=0){

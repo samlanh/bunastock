@@ -483,20 +483,22 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	
 	function getMongDetailById($id){
 		$sql=" SELECT
-					si.*,
+					msi.*,
 					p.item_name AS pro_name,
 					p.item_code,
 					p.is_service,
 					p.is_package,
 					(SELECT NAME FROM tb_measure WHERE tb_measure.id = p.measure_id) AS measure_name
 				FROM
-					tb_mong_sale_item AS si,
+					tb_mong_sale_item AS msi,
 					tb_product AS p
 				WHERE
-					p.id = si.pro_id
-					AND si.mong_id = $id
-				";
-			return $this->getAdapter()->fetchAll($sql);
+					p.id = msi.pro_id
+					AND msi.mong_id = $id
+				order by
+					msi.id ASC		
+			";
+		return $this->getAdapter()->fetchAll($sql);
 	}
 	function getItemCost($id){
 		$sql="SELECT  

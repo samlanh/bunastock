@@ -403,6 +403,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				WHERE 
 					p.id = si.pro_id
 					and si.saleorder_id = $id
+				order by 
+					si.id ASC
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}
@@ -536,6 +538,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					tb_product_package 
 				WHERE 
 					package_id=$product_id 
+				order by 
+					ID ASC	
 			";
 		return $db->fetchAll($sql);
 	}

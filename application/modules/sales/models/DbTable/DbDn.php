@@ -212,18 +212,20 @@ class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 	}
 	function getDnDetailById($id){
 		$sql=" SELECT 
-					si.*,
+					di.*,
 					p.item_name As pro_name,
 					p.item_code,
 					p.is_service,
 					p.is_package,
 					(select name from tb_measure where tb_measure.id = p.measure_id) as measure_name
 				FROM 
-					tb_dn_item as si,
+					tb_dn_item as di,
 					tb_product as p 
 				WHERE 
-					p.id = si.pro_id
-					and si.dn_id = $id
+					p.id = di.pro_id
+					and di.dn_id = $id
+				order by
+					di.id ASC	
 			";
 		return $this->getAdapter()->fetchAll($sql);
 	}

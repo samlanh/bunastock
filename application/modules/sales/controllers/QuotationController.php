@@ -169,7 +169,7 @@ class Sales_QuotationController extends Zend_Controller_Action
 	function getPackageproductAction(){
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
-			$db = new Sales_Model_DbTable_DbQuotation();
+			$db = new Sales_Model_DbTable_Dbpos();
 			$package =$db->getPackageProduct($post['product_id']);
 			print_r(Zend_Json::encode($package));
 			exit();
