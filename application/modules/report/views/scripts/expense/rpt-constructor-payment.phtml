@@ -1,13 +1,13 @@
 <?php 
 $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
-<title>ប្រវត្តិបង់ប្រាក់ថ្លៃជួលសេវាកម្ម</title>
+<title>ប្រវត្តិបង់ប្រាក់ថ្លៃជាង</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("ប្រវត្តិបង់ប្រាក់ថ្លៃជួលសេវាកម្ម");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ប្រវត្តិបង់ប្រាក់ថ្លៃជាង");?>
 				</div>
 				<div class="btn-group pull-right">
 					 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
@@ -52,7 +52,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			                	<td width="20%" valign="top"><img  height="95px" src="<?php echo $this->baseUrl();?>/images/logosbona.jpg"></td>
 			                	<td width="60%" >
 			                		<ul>
-			                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'">ប្រវត្តិបង់ប្រាក់ថ្លៃជួលសេវាកម្ម</li>
+			                			<li style="text-align:center; font-size:18px; font-family:'Khmer MEF2'">ប្រវត្តិបង់ប្រាក់ថ្លៃជាង</li>
 			                		</ul>
 			                	</td>
 			                    <td width="20%"></td>
@@ -68,6 +68,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 			                 <tr align="center" style="background: #b0bdfd !important;font-weight:bold; line-height: 28px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td width="5%">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
 								<td width="15%"><?php echo $tr->translate("លេខវិក័យបត្រ");?></td>
+								<td width="15%"><?php echo $tr->translate("ជាងសាងសង");?></td>
 								<td width="15%">&nbsp;<?php echo $tr->translate("ថ្ងៃចំណាយ");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("ចំណាយជា");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></td>
@@ -82,6 +83,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;font-size:13px;">
 							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
 							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["invoice_no"];?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["constructor_name"];?></td>
 							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["date_payment"]));?></td>
 							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["payment_type"];?></td>
 							   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["total_payment"],2);?></td>

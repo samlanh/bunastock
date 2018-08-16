@@ -1,9 +1,7 @@
 <?php
 
-class Rsvacl_UserAccessController extends Zend_Controller_Action
+class Rsvacl_UseraccessController extends Zend_Controller_Action
 {
-
-	
     public function init()
     {
         /* Initialize action controller here */
@@ -37,7 +35,7 @@ class Rsvacl_UserAccessController extends Zend_Controller_Action
         	$links = array('user_type'=>$link);
         	
         	$list=new Application_Form_Frmlist();        	
-        	$columns=array($tr->translate('USER_TYPE_CAP'), strtoupper($tr->translate('STATUS_CAP')));        	
+        	$columns=array('ប្រភេទអ្នកប្រើប្រាស់', 'ស្ថានការ');        	
         	$this->view->form=$list->getCheckList('radio', $columns, $rows,$links);
         	
         }else $this->view->form = $tr->translate('NO_RECORD_FOUND');
@@ -261,7 +259,9 @@ public function copyOfViewAction()
     			INNER JOIN tb_acl_acl AS acl ON (acl.acl_id = ua.acl_id) WHERE ut.user_type_id =".$id . $where;
     		}
     
-    		$order = " order by acl.module ASC, acl.rank ASC,acl.controller ASC,acl.is_menu DESC ";
+    		//$order = " order by acl.module ASC, acl.rank ASC,acl.controller ASC,acl.is_menu DESC ";
+    		
+    		$order = " order by acl.ordering ASC, acl.rank ASC, acl.is_menu DESC  ";
     
     		//echo $sql.$order; exit;
     		$acl=$db_acl->getGlobalDb($sql.$order);
@@ -339,7 +339,6 @@ public function copyOfViewAction()
     		$columns=array("Label",$tr->translate('URL'), $tr->translate('STATUS'));
     		$this->view->list = $list->getCheckList('radio', $columns, $rows);
     		 
-    		//$this->view->acl_name=$acl_name;
     		 
     	}
     }

@@ -11,38 +11,48 @@ class Sales_PossaleController extends Zend_Controller_Action
     	$result = $user_info->getUserInfo();
     	return $result;
     }
-   	public function indexAction()
+	
+	public function indexAction()
 	{
-		$db = new Sales_Model_DbTable_Dbpos();
-		if($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost();
-			try {
-				if(!empty($data['identity'])){
-					$db->addSaleOrder($data);
-				}
-				Application_Form_FrmMessage::message("INSERT_SUCESS");
-			}catch (Exception $e){
-				Application_Form_FrmMessage::message('INSERT_FAIL');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			}
+		if($this->getRequest()->isPost()){
+			$search = $this->getRequest()->getPost();
+			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
 		}
- 		$db = new Sales_Model_DbTable_Dbpos();
-		$this->view->rsproduct = $db->getAllProductName();
-		$this->view->rscustomer = $db->getAllCustomerName();
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->term_opt = $db->getAllTermCondition();
+		else{
+			$search =array(
+					'ad_search'		=>'',
+					'start_date'	=>date("Y-m-d"),
+					'end_date'		=>date("Y-m-d"),
+					'branch'		=>-1,
+					'customer_id'	=>-1,
+					'is_complete'	=>'',
+					);
+		}
+		$this->view->search = $search;
 		
-		$formpopup = new Sales_Form_FrmCustomer(null);
-		$formpopup = $formpopup->Formcustomer(null);
-		Application_Model_Decorator::removeAllDecorator($formpopup);
-		$this->view->form_customer = $formpopup;
+		$db = new Sales_Model_DbTable_DbSaleOrder();
+		$rows = $db->getAllSaleOrder($search);
+		$columns=array("BRANCH_NAME","ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់","តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");
+		$link=array(
+			'module'=>'sales','controller'=>'possale','action'=>'edit',
+		);
 		
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getSalesNumber(1);
+		$list = new Application_Form_Frmlist();
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'program_name'=>$link,'place_bun'=>$link));
 		
-		$db = new Sales_Model_DbTable_Dbexchangerate();
-		$this->view->rsrate= $db->getExchangeRate();
+	    $formFilter = new Product_Form_FrmProduct();
+	    $this->view->formFilter = $formFilter->productFilter();
+	    Application_Model_Decorator::removeAllDecorator($formFilter);
+	}	
+	
+	function lastreceiptAction(){
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		$db = new Sales_Model_DbTable_DbSaleOrder();
+		$last_receipt_id = $db->getLastReceipt($id,1);  // 1=sale receipt
+		if(!empty($last_receipt_id)){
+			$this->_redirect("/sales/payment/receipt/id/".$last_receipt_id);
+		}
 	}
 	
 	public function addAction()
@@ -88,7 +98,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->exchange_rate = $db->getExchangeRate();
 		
 	}
-	
+
 	public function editAction()
 	{
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';

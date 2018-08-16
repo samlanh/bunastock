@@ -66,7 +66,7 @@ class Rsvacl_UserController extends Zend_Controller_Action
         	$links = array('username'=>$link,'fullname'=>$link);
         	
         	$list=new Application_Form_Frmlist();
-        	$columns=array("FULL_NAME",$tr->translate('USER_NAME_CAP'),"USER_TYPE","BRANCH_NAME",$tr->translate('CREATED_DATE'),$tr->translate('MODIFIED_DATE'),$tr->translate('STATUS_CAP'));
+        	$columns=array("ឈ្មោះ",$tr->translate('User Name'),"USER_TYPE","BRANCH_NAME",$tr->translate('ថ្ងៃបង្កើត'),$tr->translate('ថ្ងៃកែប្រែ'),$tr->translate('ស្ថានភាព'));
         	$this->view->form=$list->getCheckList('radio', $columns, $rows, $links);
         	
         }else $this->view->form = $tr->translate('NO_RECORD_FOUND');

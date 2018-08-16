@@ -12,18 +12,18 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     public function getAllPartnerService($search){
     	$db = $this->getAdapter();
     	$sql=" SELECT
-		    	id,
-		    	partner_name,
-		    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
-		    	tel,
-		    	addresss,
-		    	description,
-		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
-		    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
+			    	id,
+			    	partner_name,
+			    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+			    	tel,
+			    	addresss,
+			    	description,
+			    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = tb_partnerservice.`user_id`) AS user_name,
+			    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
 		    	FROM
-		    	tb_partnerservice 
+		    		tb_partnerservice 
 		    	WHERE 
-		    	partner_name!=''
+		    		partner_name!=''
     		";
     	$where = ''; 	
     	if(!empty($search['ad_search'])){
@@ -80,11 +80,12 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql ="SELECT 
 				 p.*,
-				 (SELECT item_name FROM `tb_product` WHERE id=p.partner_id LIMIT 1) AS service_name,
-				 (SELECT barcode FROM `tb_product` WHERE id=p.partner_id LIMIT 1) AS service_barcode 
+				 (SELECT item_name FROM `tb_product` WHERE id=p.service_id LIMIT 1) AS service_name,
+				 (SELECT item_code FROM `tb_product` WHERE id=p.service_id LIMIT 1) AS service_code 
 				FROM
 				  `tb_partner_cost` AS p 
-				WHERE p.partner_id = $id ";
+				WHERE p.partner_id = $id 
+    		";
     	return $db->fetchAll($sql);
     }
 //     function getServices($data){

@@ -31,6 +31,7 @@ class report_IncomeController extends Zend_Controller_Action
     				'end_date'		=>date("Y-m-d"),
     				'customer_id'	=>0,
     				'type'			=>0,
+    				'branch_id'		=>'',
     		);
     	}
     	$this->view->rssearch = $data;
@@ -48,10 +49,9 @@ class report_IncomeController extends Zend_Controller_Action
     		$this->view->donor_payment = $db->totalDonor($data);
     	}
     	
-    	$formFilter = new Product_Form_FrmProduct();
-    	$this->view->formFilter = $formFilter->productFilter();
-    	$this->view->form_purchase = $formFilter;
-    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    	$formFilter1 = new Application_Form_Frmsearch();
+		$this->view->formFilter1 = $formFilter1;
+		Application_Model_Decorator::removeAllDecorator($formFilter1);
     }
     
     public function rptSalesAction()//purchase report
@@ -166,7 +166,55 @@ class report_IncomeController extends Zend_Controller_Action
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
 	
-	
+	public function rptBalancesheetAction()//purchase report
+	{
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+			$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+		}else{
+			$data = array(
+					'start_date'	=>date("Y-m-d"),
+					'end_date'		=>date("Y-m-d"),
+					'type'			=>0,
+					'branch_id'		=>0,
+			);
+		}
+		$this->view->rssearch = $data;
+		 
+		$db = new report_Model_DbSale();
+		$query = new report_Model_DbPaidToSupplyer();
+		if($data['type']==0){
+			
+			$this->view->sale_payment = $db->totalSale($data);
+			$this->view->mong_payment = $db->totalMong($data);
+			$this->view->donor_payment = $db->totalDonor($data);
+			
+			
+			$this->view->purchase_expense =  $query->getPurchaseExpense($data);
+			$this->view->partner_service_expense =  $query->getPartnerServiceExpense($data);
+			$this->view->constructor_expense =  $query->getConstructorExpense($data);
+			$this->view->other_expense =  $query->getOtherExpense($data);
+			
+		}else if($data['type']==1){
+			
+			$this->view->sale_payment = $db->totalSale($data);
+			$this->view->mong_payment = $db->totalMong($data);
+			$this->view->donor_payment = $db->totalDonor($data);
+			
+		}else if($data['type']==2){
+			
+			$this->view->purchase_expense =  $query->getPurchaseExpense($data);
+			$this->view->partner_service_expense =  $query->getPartnerServiceExpense($data);
+			$this->view->constructor_expense =  $query->getConstructorExpense($data);
+			$this->view->other_expense =  $query->getOtherExpense($data);
+			
+		}
+		 
+		$formFilter1 = new Application_Form_Frmsearch();
+		$this->view->formFilter = $formFilter1;
+		Application_Model_Decorator::removeAllDecorator($formFilter1);
+	}
 }
 
 

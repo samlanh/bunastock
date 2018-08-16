@@ -1,4 +1,4 @@
-<title>Edit User Type </title>
+<title>កែប្រែប្រភេទអ្នកប្រើប្រាស់</title>
 <script type="text/javascript">
 $(document).ready(function() { 
 		jQuery('#frm').validationEngine('attach', {promptPosition : "centerRight"});		
@@ -28,7 +28,7 @@ $url_cancel = $this->url(array('module'=>'rsvacl','controller'=>'usertype','acti
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("ADD_USER")?>
+					<i class="icon-home"></i><?php echo $tr->translate("កែប្រែប្រភេទអ្នកប្រើប្រាស់")?>
 				</div>
 				<div class="tools" >
 					<a href="<?php echo $url_cancel;?>" class="btn btn-sm pull-right" style="color:white;">
@@ -41,7 +41,7 @@ $url_cancel = $this->url(array('module'=>'rsvacl','controller'=>'usertype','acti
 				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo strtoupper($tr->translate('USER_TYPE')) ." ".$tr->translate('NAME');?><span class="required">
+							<label class="control-label col-md-2"><?php echo strtoupper($tr->translate('ប្រភេទអ្នកប្រើប្រាស់'));?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
@@ -50,7 +50,7 @@ $url_cancel = $this->url(array('module'=>'rsvacl','controller'=>'usertype','acti
 									<?php echo $form->getElement('user_type');?>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate('PARENT_TYPE') ." ". $tr->translate('NAME');?><span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate('ប្រភេទមេ');?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
@@ -60,13 +60,15 @@ $url_cancel = $this->url(array('module'=>'rsvacl','controller'=>'usertype','acti
 								</div>
 							</div>
 						</div>
+						<br>
+						<br>
 						<div class="form-group">
 							<div class="col-md-4">
 								<div class="input-icon right">
 								</div>
 							</div>
 							<div class="col-md-4">
-								<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+								<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
 							</div>
 							<div class="col-md-4">
 							</div>

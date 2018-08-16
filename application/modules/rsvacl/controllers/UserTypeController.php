@@ -20,7 +20,7 @@ class Rsvacl_UsertypeController extends Zend_Controller_Action
         	$link = array("rsvacl","usertype","edit");
         	$links = array('user_type'=>$link);
         	$list=new Application_Form_Frmlist();
-        	$columns=array($tr->translate('USER_TYPE_CAP'), $tr->translate('TYPE_OF_CAP'));
+        	$columns=array('ប្រភេទអ្នកប្រើប្រាស់', 'ប្រភេទមេ');
         	$this->view->form=$list->getCheckList('radio', $columns, $rows, $links);
         }else $this->view->form = $tr->translate('NO_RECORD_FOUND');
     }

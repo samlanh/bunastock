@@ -1,4 +1,4 @@
-<?php 
+<?php /*
 	$user_info = new Application_Model_DbTable_DbGetUserInfo();
 	$result = $user_info->getUserInfo();
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage(); 
@@ -113,12 +113,6 @@
 							<a href="<?php echo $this->url(array('module'=>'product','controller'=>'transferstock','action'=>'index'),null, true); ?>">
 							<i class="icon-arrow-right"></i>&nbsp;ផ្ទេរទំនិញ</a>
 						</li>
-						<?php /*?>
-						<li>
-							<a href="<?php echo $url_damagedstock[0]; ?>">
-							<i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_damagedstock[1])?></a>
-						</li>
-						<?php */?>
 	            		<li>
 	            			<a href="<?php echo $url_adj[0]; ?>">
 							    <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_adj[1])?>
@@ -328,20 +322,6 @@
 		            		</a>
             			</li>
             			
-            			
-            			
-            			<?php /*?>
-            			<li>
-	            			<a href="<?php echo $this->url(array('module'=>'mong','controller'=>'payment','action'=>'index'),null, true); ?>">
-		            			<i class="icon-arrow-right"></i>&nbsp;បង់ប្រាក់ផ្នែកជាង
-		            		</a>
-            			</li>
-            			<li>
-	            			<a href="<?php //echo $url_report_product[0];?>">
-		            			<i class="icon-arrow-right"></i>&nbsp;អ្នកទទួលខុសត្រូវការងារ
-		            		</a>
-            			</li>
-            			<?php */?>
 					</ul>
 				</li>
 				<li class="<?php if($module=='report'){echo $class_active;}?>">
@@ -417,3 +397,222 @@
 			</ul>
 		</div>
 	</div>
+	
+<?php */?>	
+	
+<?php 	
+	
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$action = $request->getActionName();
+	$moduless = $request->getModuleName();
+	$controllersss=$request->getControllerName();
+	$baseurl  = $this->baseUrl();
+	
+	$dbuser = new Application_Model_DbTable_DbUsers();
+	
+	$session_user=new Zend_Session_Namespace('auth');
+	$arr_module = $session_user->arr_acl;
+	$username = $session_user->first_name;
+
+	$menu = array();
+	$module = '';
+	$controller=array();
+	$newarray=array();
+	
+// 	print_r($arr_module);exit();
+	
+	
+	if(!empty($arr_module)){
+		foreach ($arr_module as $key => $rs){
+			$lblcontroller = $rs['controller'];
+// 			if($rs['module']=='report' AND $rs['controller']!='index'){
+// 				$lblcontroller='REPORT';
+// 				continue;
+// 			}
+			if($rs['controller']=='index' AND $rs['module']=='employee' ){
+				$lblcontroller='employee';
+			}
+			if($module!=$rs['module']){
+				$newarray= array($rs['controller']=>$tr->translate(strtoupper($lblcontroller)));
+				$menu[$rs['module']]= $newarray;
+				$old_module=$rs['module'];
+			}else{
+				$newarray= array_merge($newarray,array($rs['controller']=>$tr->translate(strtoupper($lblcontroller))));
+			    $menu[$rs['module']] = $newarray;
+			}
+			$module=$rs['module'];
+		}
+	}
+	$arr_param_menu = $menu;
+	
+	//print_r($arr_param_menu);exit();
+	
+	$array_icon = array(
+			'product'=>'<i class="fa fa-cubes" aria-hidden="true"></i>',
+			'purchase'=>'<i class="fa fa-ambulance"></i>',
+			'sales'=>'<i class="fa fa-money"></i>',
+			'donors'=>'<i class="fa fa-users"></i>',
+			'mong'=>'<i class="fa fa-university"></i>',
+			'report'=>'<i class="fa fa-newspaper-o"></i>',
+			'rsvacl'=>'<i class="fa fa-cogs"></i>',
+	);
+	
+	$array_label = array(
+			'product'=>'ស្តុក',
+			'purchase'=>'គ្រប់គ្រងការបញ្ជាទិញ',
+			'sales'=>'គ្រប់គ្រងការលក់',
+			'donors'=>'ផ្នែកសប្បុរសជន',
+			'mong'=>'ផ្នែកម៉ុង/ចេតិយ',
+			'report'=>'របាយការណ៍',
+			'rsvacl'=>'អ្នកប្រើប្រាស់/កំណត់សិទ្ទ',
+	);
+	
+	
+	$arr_module = $session_user->arr_module;
+	//print_r($arr_module);exit();
+	$arr_acl = $session_user->arr_acl;
+	
+	$class_active='start active open';
+	
+// 	echo $moduless;exit();
+	
+	?>
+	
+	<div class="page-sidebar-wrapper">
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+		<div class="page-sidebar navbar-collapse collapse">
+			<style>
+				.page-sidebar ul li a i{color:white !important; }
+			</style>
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+				<li class="sidebar-toggler-wrapper">
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler">
+					</div>
+					<!-- END SIDEBAR TOGGLER BUTTON -->
+				</li>
+				
+				<?php 
+				$old_module='';
+				$old_controller='';
+
+				if(!empty($arr_acl))foreach($arr_acl as $key=> $rs){
+				
+				if($rs['module']!=$old_module){
+					if($key>0){
+				?>
+				</ul>
+				</li>
+				<?php }?>
+				<li class="<?php if($rs['module']==$moduless){echo $class_active;}?>">
+					<a href="javascript:;">
+						<?php echo $array_icon[$rs['module']];?>
+						<span class="title"><?php echo $tr->translate($array_label[$rs['module']]);?></span>
+						<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+				<?php }?>
+				
+						<?php if($rs['controller']!=$old_controller){?>
+						<li >
+							<a href="<?php echo $this->url(array('module'=>$rs['module'],'controller'=>$rs['controller'],'action'=>$rs['action']), null, true);?>">
+							<i class="icon-arrow-right" ></i> <?php echo $tr->translate($rs['label']);?></a>
+						</li>
+						<?php }?>
+				<?php 
+					$old_module=$rs['module'];
+					$old_controller = $rs['controller'];
+				}?>	
+				<?php if(!empty($arr_module)){?>
+					</ul>
+					</li>
+				<?php }?>
+			</ul>			
+		</div>
+	</div>
+	
+	
+<?php /*?>	
+		<div class="page-sidebar navbar-collapse collapse">
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<li class="sidebar-toggler-wrapper">
+					<div class="sidebar-toggler">
+					</div>
+				</li>
+				<li class="<?php if($module=='product'){echo $class_active;}?>">
+					<a href="javascript:;">
+					<i class="fa fa-cubes"></i>
+					<span class="title"><?php echo $tr->translate("ស្តុក")?></span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="<?php echo $url_pro_list[0]; ?>">
+							<i class="icon-arrow-right" ></i>&nbsp;<?php echo $tr->translate("តារាងទំនិញ")?></a>
+						</li>
+						<li>
+							<a href="<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'index'),null, true); ?>">
+							<i class="icon-arrow-right"></i>&nbsp;កញ្ចប់ទំនិញ/សេវាកម្ម</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->url(array('module'=>'product','controller'=>'transferstock','action'=>'index'),null, true); ?>">
+							<i class="icon-arrow-right"></i>&nbsp;ផ្ទេរទំនិញ</a>
+						</li>
+	            		<li>
+	            			<a href="<?php echo $url_adj[0]; ?>">
+							    <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_adj[1])?>
+		            		</a>
+	            		</li>
+						
+	            		<li>
+	            			<a href="<?php echo $url_category[0]; ?>">
+							      <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_category[1]);?>
+		            		</a>
+	            		</li>
+	            		<li>
+	            			<a href="<?php echo $url_brand[0]; ?>">
+							   <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_brand[1]);?>
+		            		</a>
+	            		</li>
+	            		<li>
+	            			<a href="<?php echo $url_other[0]; ?>">
+							    <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_other[1]);?>
+		            		</a>
+	            		</li>
+            			<li>
+	            			<a href="<?php echo $url_measure[0]; ?>">
+							 <i class="icon-arrow-right"></i>&nbsp;<?php echo $tr->translate($url_measure[1])?></a>
+	            		<li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	
+<?php */?>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

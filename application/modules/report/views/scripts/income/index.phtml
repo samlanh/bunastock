@@ -8,7 +8,7 @@
 	 $level = $result["level"];
   
   ?>
- <title>របាយការណ៍ ចំនាយ-ទិញ-លក់</title> 
+ <title>របាយការណ៍ ចំំណូល</title> 
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 		<div class="dashboard-stat green-haze">
@@ -71,7 +71,7 @@
 	</div>
 	
 	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-		<div class="dashboard-stat purple-plum">
+		<div class="dashboard-stat green-haze">
 			<a class="more" href="<?php echo $this->url(array('module'=>'report','controller'=>'income','action'=>'rpt-all-income'), null, true);?>">
 			<div class="visual">
 				<i class="fa fa-shopping-cart"></i>
@@ -81,6 +81,26 @@
 				</div>
 				<div class="desc">
 					<?php echo $tr->translate("របាយការណ៍ចំណូលសរុបទាំងអស់");?>
+				</div>
+			</div>
+			</a>
+			<a class="more" href="javascript:;">
+			View more <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+	</div>
+	
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="dashboard-stat red-intense">
+			<a class="more" href="<?php echo $this->url(array('module'=>'report','controller'=>'income','action'=>'rpt-balancesheet'), null, true);?>">
+			<div class="visual">
+				<i class="fa fa-shopping-cart"></i>
+			</div>
+			<div class="details">
+				<div class="number">
+				</div>
+				<div class="desc">
+					<?php echo $tr->translate("របាយការណ៍ចំណេញ-ខាត");?>
 				</div>
 			</div>
 			</a>

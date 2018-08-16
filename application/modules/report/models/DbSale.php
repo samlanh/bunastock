@@ -243,6 +243,10 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		
+		if(!empty($search['branch_id'])){
+			$where .= " AND s.branch_id =".$search['branch_id'];
+		}
+		
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		
@@ -264,6 +268,10 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 	
+		if(!empty($search['branch_id'])){
+			$where .= " AND m.branch_id =".$search['branch_id'];
+		}
+		
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 	
@@ -282,6 +290,10 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 		$to_date = (empty($search['end_date']))? '1': " d.paid_date <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 	
+		if(!empty($search['branch_id'])){
+			$where .= " AND d.branch_id =".$search['branch_id'];
+		}
+		
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 	

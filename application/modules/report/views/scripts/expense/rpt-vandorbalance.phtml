@@ -149,6 +149,7 @@ $brach_name =  $this->branch;
 			                 <tr bgcolor="#b0bdfd" align="center" style="font-weight:bold; line-height: 26px; font-size:14px !important;white-space: nowrap; ">
 			                    <td>&nbsp;<?php echo $tr->translate("ល.រ	");?></td>
 								<td><?php echo $tr->translate("សាខា");?></td>
+								<td>&nbsp;<?php echo $tr->translate("ទីតាំងបុណ្យ");?></td>
 								<td>&nbsp;<?php echo $tr->translate("លេខលក់");?></td>
 								<td>&nbsp;<?php echo $tr->translate("ដៃគូរសេវាកម្ម");?></td>
 								<td>&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
@@ -161,6 +162,7 @@ $brach_name =  $this->branch;
 							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="font-size:13px;border:1px solid #000; white-space: nowrap;">
 							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
 							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["branch_name"];?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["place_bun"];?></td>
 							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $rs["sale_no"];?></td>
 							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["partner_name"];?></td>
 							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["tel"];?></td>

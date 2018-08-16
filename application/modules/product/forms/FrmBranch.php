@@ -69,7 +69,7 @@ class Product_Form_FrmBranch extends Zend_Form
 				'class'=>'form-control',
 				//'required'=>'required'
 		));
-		$opt = array('1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
+		$opt = array('1'=>$tr->translate("ប្រើប្រាស់"),'0'=>$tr->translate("មិនប្រើប្រាស់"));
 		$status->setMultiOptions($opt);
 		
 		$remark = new Zend_Form_Element_Text("remark");

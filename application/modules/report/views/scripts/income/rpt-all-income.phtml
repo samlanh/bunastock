@@ -29,7 +29,8 @@ $brach_name =  $this->branch;
 			<div class="portlet-body form frmfilter">
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
-						<?php $formFilter = $this->form_purchase; ?>
+						<?php $formFilter = $this->formFilter1; ?>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch_id');?></label>
 						<label class="control-label col-md-3">
 							<select name="type" id="type" class="form-control select2me" >
 								<option value="0" <?php if($this->rssearch['type']==0){echo "selected='selected'";}?>>ចំណូលទាំងអស់</option>
@@ -38,8 +39,8 @@ $brach_name =  $this->branch;
 								<option value="3" <?php if($this->rssearch['type']==3){echo "selected='selected'";}?>>ចំណូលពីសប្បុរសជន</option>
 							</select>
 						</label>
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
 						
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>

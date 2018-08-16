@@ -17,7 +17,7 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$user_type_filter->setMultiOptions($options);
     	$user_type_filter->setAttribs(array(
     		'id'=>'user_type_filter',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
     		'onchange'=>'this.form.submit()',
     	));
     	$user_type_filter->setValue($usertype);
@@ -32,7 +32,7 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$location->setMultiOptions($options);
     	$location->setAttribs(array(
     		'id'=>'user_type_filter',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
     		'onchange'=>'this.form.submit()',
     	));
     	$location->setValue($location_r);
@@ -44,7 +44,7 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$status_se->setMultiOptions($options);
     	$status_se->setAttribs(array(
     		'id'=>'user_type_filter',
-    		'class'=>'validate[required] form-control',
+    		'class'=>' form-control',
     		'onchange'=>'this.form.submit()',
     	));
     	$status_se->setValue($status_r);
@@ -53,13 +53,13 @@ class Rsvacl_Form_FrmUser extends Zend_Form
 		$ad_search=new Zend_Form_Element_Text('ad_search');
     	$ad_search->setAttribs(array(
     		'id'=>'username',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
     	));
     	$this->addElement($ad_search);
 
     	//uer title
     	$user_title = new Zend_Form_Element_Select("title");
-    	$user_title->setAttribs(array('class'=>'form-control'));
+    	$user_title->setAttribs(array('class'=>'form-control select2me'));
     	$user_title->setMultiOptions(array("Mr"=>"Mr","Ms"=>"Ms"));
     	$this->addElement($user_title);
 
@@ -67,7 +67,8 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$user_fullname = new Zend_Form_Element_Text("fullname");
     	$user_fullname->setAttribs(array(
     		'id'=>'fullname',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
+    		'placeholder'=>'Name',
     	));
     	$this->addElement($user_fullname);
     	
@@ -75,7 +76,8 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$user_name=new Zend_Form_Element_Text('username');
     	$user_name->setAttribs(array(
     		'id'=>'username',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
+    		'placeholder'=>'Username for Login',
     	));
     	$this->addElement($user_name);
     	
@@ -83,7 +85,8 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$email=new Zend_Form_Element_Text('email');
     	$email->setAttribs(array(
     		'id'=>'email',
-    		'class'=>'validate[required] form-control centerRight',
+    		'class'=>' form-control centerRight',
+    		'placeholder'=>'email',
     	));
     	$this->addElement($email);
     	 
@@ -92,43 +95,44 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     	$password=new Zend_Form_Element_Password('password');
     	$password->setAttribs(array(
     		'id'=>'password',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
+    		'placeholder'=>'password',
     	));
     	$this->addElement($password);
 //confirm password    	
     	$confirm_password=new Zend_Form_Element_Password('confirm_password');
     	$confirm_password->setAttribs(array(
     		'id'=>'confirm_password',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control',
+    		'placeholder'=>'confirm password',
     	));
     	$this->addElement($confirm_password);
     	
     	//user type
 		$sql = 'SELECT user_type_id,user_type FROM tb_acl_user_type';
 		$rs=$db->getGlobalDb($sql);
-		$options=array(''=>$tr->translate('Please_Select'));
+		$options=array(''=>$tr->translate('Please Select'));
 		foreach($rs as $read) $options[$read['user_type_id']]=$read['user_type'];
 		$user_type_id=new Zend_Form_Element_Select('user_type_id');		
     	$user_type_id->setMultiOptions($options);
     	$user_type_id->setAttribs(array(
     		'id'=>'user_type_id',
-    		'class'=>'validate[required] form-control',
+    		'class'=>'form-control select2me',
     	));
     	$this->addElement($user_type_id);
 		
 		$status = new Zend_Form_Element_Select("status");
-    	$status->setAttribs(array('class'=>'form-control'));
-    	$status->setMultiOptions(array("1"=>"Active","0"=>"Deactive"));
+    	$status->setAttribs(array('class'=>'form-control select2me'));
+    	$status->setMultiOptions(array("1"=>"ប្រើប្រាស់","0"=>"មិនប្រើប្រាស់"));
     	$this->addElement($status);
 
     	
     	//location 
-    	$rs=$db->getGlobalDb('SELECT id, name FROM tb_sublocation WHERE name!="" AND status=1 ORDER BY id DESC');
-    	$option =array("1"=>$tr->translate("Please_Select"),"-1"=>$tr->translate("Add_New_Location"));
+    	$rs=$db->getGlobalDb('SELECT id, name FROM tb_sublocation WHERE name!="" AND status=1 ORDER BY id ASC');
     	if(!empty($rs)) foreach($rs as $read) $option[$read['id']]=$read['name'];
     	$locationID= new Zend_Form_Element_Select('LocationId');
     	$locationID->setMultiOptions($option);
-    	$locationID->setattribs(array('id'=>'LocationId','Onchange'=>'AddLocation()','class'=>'form-control'));
+    	$locationID->setattribs(array('id'=>'LocationId','class'=>'form-control select2me'));
     	$this->addElement($locationID);
     	
     	if($data!=null){

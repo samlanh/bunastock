@@ -1,4 +1,4 @@
-<title>List User </title>
+<title>អ្នកប្រើប្រាស់</title>
 <?php 
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$url_new = $this->url(array(
@@ -15,7 +15,7 @@
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("LIST_OF_USER_IN_SYSTEM");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("អ្នកប្រើប្រាស់");?>
 				</div>
 				<a href="<?php echo $url_new;?>" class="btn btn-sm green  pull-right">
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
@@ -24,8 +24,7 @@
 			<div class="portlet-body form frmfilter">
 				<form method="post" action="">
 					<div class="form-group" style="padding-top: 6px;">
-						<label class="control-label col-md-2"></label>
-						<label class="control-label col-md-2"><?php echo $formfilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formfilter->getElement('ad_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formfilter->getElement('location');?></label>
 						<label class="control-label col-md-2"><?php echo $formfilter->getElement('user_type_filter');?></label>
 						<label class="control-label col-md-2"><?php echo $formfilter->getElement('status_se');?></label>

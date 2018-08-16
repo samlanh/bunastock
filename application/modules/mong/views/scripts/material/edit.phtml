@@ -4,13 +4,13 @@
 	$controller=$request->getControllerName();
 	$result=$this->material;
 ?>						 
-<title>ដៃគូសេវាកម្មខាងក្រៅ</title>
+<title>កែប្រែសម្ភារៈសំណង់</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>កែប្រែតម្លៃសម្ភារ</strong>
+					<i class="fa fa-gift"></i><strong>កែប្រែសម្ភារៈសំណង់</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -24,10 +24,10 @@
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6" style="text-align: left !important;border:1px solid #ccc;">
-										<h3 style="border-bottom: 1px solid #ccc;" class="center">តារាងតម្លៃសម្ភារ</h3>
+										<h3 style="border-bottom: 1px solid #ccc;" class="center">សម្ភារៈសំណង់</h3>
 									<div class="form-group" >
 										<label class="col-md-4 control-label">
-											<strong>ឈ្មោះសម្ភារ*</strong>
+											<strong>ឈ្មោះសម្ភារៈ</strong>
 										</label>
 										<div class="col-md-8">
 											<input type="text" id="material_title" name="material_title" value="<?php echo $result['title']?>" class="validate[required] form-control" />	
@@ -55,8 +55,8 @@
 										</label>
 										<div class="col-md-8">
 											<select name="status" id="status" class="form-control">
-											    <option value="1" value="1" <?php if($this->row['status']==1){echo "selected='selected'";}?> label="Active">ប្រើប្រាស់</option>
-											    <option value="0" value="1" <?php if($this->row['status']==0){echo "selected='selected'";}?> label="Deactive">មិនប្រើសប្រាស់</option>
+											    <option value="1" <?php if($result['status']==1){echo "selected='selected'";}?> label="Active">ប្រើប្រាស់</option>
+											    <option value="0" <?php if($result['status']==0){echo "selected='selected'";}?> label="Deactive">មិនប្រើសប្រាស់</option>
 											</select>	
 										</div>
 									</div>

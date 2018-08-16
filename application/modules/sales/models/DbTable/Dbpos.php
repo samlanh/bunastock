@@ -52,6 +52,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$sql=" SELECT * FROM tb_prolocation WHERE pro_id = $product_id AND location_id = $location ";
 		return $this->getAdapter()->fetchRow($sql);
 	}
+	
+	
 	public function addSaleOrder($data)
 	{
 		//print_r($data);exit();
@@ -500,13 +502,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	}	
 	function getAllSaleagent(){
 		$db = $this->getAdapter();
-//<<<<<<< .mine
-		$sql=" SELECT id,CONCAT(name_saleagent,' - ',phone) AS name FROM tb_sale_agent WHERE name_saleagent!='' ";
-///||||||| .r140
-		$sql=" SELECT id,name_saleagent AS name FROM tb_sale_agent WHERE name_saleagent!='' ";
-//=======
 		$sql=" SELECT id,name FROM tb_sale_agent WHERE name!='' ";
-//>>>>>> .r141
 		return $db->fetchAll($sql);
 	}
 	

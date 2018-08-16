@@ -54,6 +54,8 @@ class Mong_IndexController extends Zend_Controller_Action
 		$last_receipt_id = $db->getLastReceipt($id,2); // 2=mong receipt
 		if(!empty($last_receipt_id)){
 			$this->_redirect("/mong/customerpayment/receipt/id/".$last_receipt_id);
+		}else{
+			Application_Form_FrmMessage::Sucessfull("មិនមានទិន្នន័យ", '/mong/index/index');
 		}
 	}
 	

@@ -40,14 +40,21 @@ class IndexController extends Zend_Controller_Action
 						$session_user->branch=$user_info['LocationId'];
 						$session_user->branch_id=$user_info['LocationId'];
 						$session_user->email=$user_info['email'];
+						
+						$arr_actin = array();
+						
 						for($i=0; $i<count($arr_acl);$i++){
 							$arr_module[$i]=$arr_acl[$i]['module'];
 						}
 						$arr_module = array_unique($arr_module);
+						$arr_module=$this->sortMenu($arr_module);
+						
+						$arr_actin=(array_unique($arr_actin));
 						
 						$session_user->arr_acl = $arr_acl;
 						$session_user->arr_module = $arr_module;
-												
+						$session_user->arr_actin = $arr_actin;
+						
 						$session_user->lock();
 						//echo $session_user->user_name;sales/sales-order
 						//echo $session_user->user_id=$user_id;exit();
@@ -70,7 +77,24 @@ class IndexController extends Zend_Controller_Action
 // 				$this->view->msg  = $tr->translate('EMAIL_NOT');
 // 			}
 		}
-	}		 
+	}		
+
+	protected function sortMenu($menus){
+		$menus_order = Array ( 'default','product','purchase','sales','donors','mong','report','rsvacl');
+		$temp_menu = Array();
+		$menus=array_unique($menus);
+		foreach ($menus_order as $i => $val){
+			foreach ($menus as $k => $v){
+				if($val == $v){
+					$temp_menu[] = $val;
+					unset($menus[$k]);
+					break;
+				}
+			}
+		}
+		return $temp_menu;
+	}
+	
  	public function logoutAction()
     {
     	if($this->getRequest()->getParam('value')==1){

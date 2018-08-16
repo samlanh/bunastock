@@ -110,38 +110,20 @@ class RsvAcl_Model_DbTable_DbUser extends Zend_Db_Table_Abstract
 	//add user
 	public function insertUser($arr)
 	{ 
-		$arr['password']=md5($arr['password']);
      	$db = $this->getAdapter();
      	$array_data = array(
      			"title"			=>	$arr["title"],
      			"fullname"		=>	$arr["fullname"],
      			"username"		=>	$arr["username"],
-     			"password"		=>	$arr['password'],
+     			"password"		=>	md5($arr['password']),
      			"email"			=>	$arr["email"],
      			"user_type_id"	=>	$arr["user_type_id"],
      			"LocationId"	=>	$arr["LocationId"],
-     			"status"		=>	$arr["status"],
-     			"created_date"	=>	date("Y-m-d H:i:s")
-     			);
-     	$id=$this->insert($array_data);
-     	$ids = explode(",", $arr["identity"]);
-		if($arr["identity"]!=""){
-			foreach ($ids as $i){
-				$exist=$this->getUserBranchExist($id, $arr["location_id_".$i]);
-				if($exist=="" AND $arr["LocationId"]!==$arr["location_id_".$i]){
-					$_arrdata = array(
-							"user_id"=>$id,
-							"location_id"=>$arr["location_id_".$i]
-					);
-					$db->insert("tb_acl_ubranch", $_arrdata);
-				}
-			}
-		}
-     	$_arrdata = array(
-     			"user_id"=>$id,
-     			"location_id"=>$arr["LocationId"]
-     	);
-     	$db->insert("tb_acl_ubranch", $_arrdata);
+     			"status"		=>	1,
+     			"created_date"	=>	date("Y-m-d H:i:s"),
+     			"modified_date"	=>	date("Y-m-d H:i:s")
+     		);
+     	$this->insert($array_data);
      	
 	}
 	public function getUserBranchExist($user_id, $location_id){
@@ -154,7 +136,6 @@ class RsvAcl_Model_DbTable_DbUser extends Zend_Db_Table_Abstract
 	{
 		try{
 			$db=$this->getAdapter();
-			$db->beginTransaction();
 			$data = array(
 					"title"			=>	$arr["title"],
 					"fullname"		=>	$arr["fullname"],
@@ -164,40 +145,14 @@ class RsvAcl_Model_DbTable_DbUser extends Zend_Db_Table_Abstract
 					"user_type_id"	=>	$arr["user_type_id"],
 					"LocationId"	=>	$arr["LocationId"],
 					"status"		=>	$arr["status"],
-					"created_date"	=>	date("Y-m-d H:i:s")
+					"modified_date"	=>	date("Y-m-d H:i:s")
 			);
 			$where=$this->getAdapter()->quoteInto('user_id=?',$user_id);
 			$id=$this->update($data, $where);
-			$ids = explode(",", $arr["identity"]);
-			$db->query("DELETE FROM tb_acl_ubranch WHERE user_id = $user_id");
-			if($arr["identity"]!=""){
-				foreach ($ids as $i){
-					$exist=$this->getUserBranchExist($user_id, $arr["location_id_".$i]);
-					if($exist=="" AND $arr["LocationId"]!==$arr["location_id_".$i]){
-						$_arrdata = array(
-								"user_id"=>$user_id,
-								"location_id"=>$arr["location_id_".$i]
-						);
-						$db->insert("tb_acl_ubranch", $_arrdata);
-					}
-						
-				}
-			}
-			$_arrdata = array(
-					"user_id"=>$user_id,
-					"location_id"=>$arr["LocationId"]
-			);
-			$db->insert("tb_acl_ubranch", $_arrdata);
-			
-			$db->commit();
 		}
 		catch (Exception $e){
-			$db->rollBack();
-			$err = $e->getMessage();
-			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			echo $e->getMessage();
 		}
-		
-		
 	}
 	
 	//function dupdate field status user to force use become inaction

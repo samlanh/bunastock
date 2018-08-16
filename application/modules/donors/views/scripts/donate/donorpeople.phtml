@@ -7,6 +7,7 @@
 	$controller=$request->getControllerName();
 	$row = $this->row
 ?>	
+<title>ប្រគល់អោយសព</title>
 <div id="Printdonate">
 	<div  class="wrapper" id="borderimg1" style="background: #fff; width:25cm; margin: 0 auto;min-height: 36cm;padding: 0.5cm;">
 		<style>
@@ -91,8 +92,8 @@
 	  				</tr>
 	  				<tr>
 	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color: #black !important;">
-	  						<i style="color: red !important;">លំនៅដ្ឋាន៖ </i>
-	  						<i style="color: #6A5ACD !important;"> <?php echo $this->row['donor_address']?></i>
+	  						<span style="color: red !important;">លំនៅដ្ឋាន៖ </span>
+	  						<span style="color: #6A5ACD !important;"> <?php echo $this->row['donor_address']?></span>
 	  					</td>
 	  				</tr>
 	  				<tr>
@@ -109,8 +110,8 @@
 	  				</tr>
 	  				<tr>
 	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:#black !important;">
-	  						 <i style="color: red !important;">លំនៅដ្ឋានព៖ </i>
-	  						<i style="color: #6A5ACD !important;"> <?php echo $this->row['dead_address']?></i>
+	  						 <span style="color: red !important;">លំនៅដ្ឋានព៖ </span>
+	  						<span style="color: #6A5ACD !important;"> <?php echo $this->row['dead_address']?></span>
 	  					</td>
 	  				</tr>
 	  				<tr>

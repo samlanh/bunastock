@@ -5,13 +5,13 @@
 	$result=$this->result;
 //	print_r($this->result);exit();
 ?>						 
-<title>ដៃគូសេវាកម្មខាងក្រៅ</title>
+<title>កែប្រែដៃគូសេវាកម្មខាងក្រៅ</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" >				
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>ដៃគូសេវាកម្មខាងក្រៅ</strong>
+					<i class="fa fa-gift"></i><strong>កែប្រែដៃគូសេវាកម្មខាងក្រៅ</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -25,7 +25,7 @@
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-7" style="text-align: left !important;border:1px solid #ccc;">
-										<h2 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្មខាងក្រៅ</h2>
+										<h2 style="border-bottom: 1px solid #ccc;" class="center">ដៃគូសេវាកម្ម</h2>
 									<div style="margin-right: 34px;">
 									<div class="form-group" >
 										<label class="col-md-4 control-label">
@@ -83,7 +83,7 @@
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ប្រភេទសេវាកម្ម
+											សេវាកម្ម
 										</label>
 										<div class="col-md-8">
 											<select  name="service_id" id="service_id" onchange="addProductRow();"  class="form-control select2me" value="1">
@@ -181,14 +181,14 @@
 	function initilize(){
 		<?php if(!empty($this->partner_cost)){foreach ($this->partner_cost as $key=> $rs){?>
 			index++;
-			var txt_br = "<?php echo $rs['service_name']." - ".$rs['service_barcode'];?>";
+			var txt_br = "<?php echo $rs['service_name']." - ".$rs['service_code'];?>";
 			var pro_id = '<?php echo $rs['service_id'];?>';
 			
 			if(pro_id<=0){return false;}
 			template='<tr id="row_location_'+index+'">';
 			template+='<td>'+index+'</td>';
 			template+='<td>'+txt_br+'<input type="hidden" id="service_id'+index+'" name="service_id'+index+'" value="'+pro_id+'" </td>';		
-			template+='<td><input type="text" onkeyup="totalQty('+index+');" id="prices_'+index+'" name="prices_'+index+'" class=" form-control"></td>'; 
+			template+='<td><input type="text" onkeyup="" id="prices_'+index+'" name="prices_'+index+'" class=" form-control"></td>'; 
 			template+='<td><input type="text" id="notes_'+index+'" name="notes_'+index+'" class="form-control"></td>';
 			template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
 			template+='</tr>';
@@ -214,7 +214,7 @@
 		template='<tr id="row_location_'+index+'">';
 		template+='<td>'+index+'</td>';
 		template+='<td>'+txt_br+'<input type="hidden" id="service_id'+index+'" name="service_id'+index+'" value="'+pro_id+'" </td>';		
-		template+='<td><input type="text" onkeyup="totalQty('+index+');" id="prices_'+index+'" name="prices_'+index+'" class=" form-control"></td>'; 
+		template+='<td><input type="text" onkeyup="" id="prices_'+index+'" name="prices_'+index+'" class=" form-control"></td>'; 
 		template+='<td><input type="text" id="notes_'+index+'" name="notes_'+index+'" class="form-control"></td>';
 		template+='<td><button type="button" onClick="deleteRecord('+index+')" name="save_close" class="btn default red">លុប</button></td>';
 		template+='</tr>';
@@ -225,8 +225,6 @@
 			$('#identity').val(identity+','+index);
 		} else {$('#identity').val(index);}
 		
-		$('#service_id').val(-1).select2();
-		getServicePrice(index,pro_id);
 	}
 
 	function deleteRecord(index) {

@@ -1129,6 +1129,7 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 					ps.id,
 					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = s.branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
 					s.sale_no,
+					s.place_bun,
 					p.partner_name,
 					p.tel,
 					(select item_name from tb_product as p where p.id = ps.service_id) as service_name,

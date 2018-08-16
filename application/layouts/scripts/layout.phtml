@@ -134,27 +134,38 @@
 body {-webkit-print-color-adjust: exact;}
 }
 </style>
-<body class="page-header-fixed page-quick-sidebar-over-content soria ">
-	<?php  if($controller!='possales'){?>
-	<div class="page-header navbar navbar-fixed-top">
-		<?php echo $this->render('head-toolbar.phtml')?>
-	</div>
-	<div class="clearfix">
-	</div>
-	<div class="page-container">
-		<?php echo $this->render('left-toolbar.phtml')?>
-		<div class="page-content-wrapper" >
-			<div class="page-content" style="height: auto;" >
-				<?php echo $this->layout()->content; ?>
+
+
+	<body class="page-header-fixed page-quick-sidebar-over-content soria ">
+		<div class="page-header navbar navbar-fixed-top">
+			<?php echo $this->render('head-toolbar.phtml')?>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div class="page-container">
+			<?php echo $this->render('left-toolbar.phtml')?>
+			<div class="page-content-wrapper" >
+				<div class="page-content" style="height: auto;" >
+					<?php 
+						if($module!='default'){
+				            $db = new Application_Model_DbTable_DbUsers();
+		            		$rs = $db->getAccessUrl($module,$controller,$action);
+		            		if(!empty($rs)){
+		             			echo $this->layout()->content;
+		            		}else{
+		            			echo $this->render('pagenotfund.phtml');
+		            		}
+						}else{
+							echo $this->layout()->content;
+						}
+		              	//echo $this->layout()->content;
+					?>
+				</div>
 			</div>
 		</div>
-	</div>
-	<?php }else{?>
-			<div class="page-content" style="height: auto;" >
-				<?php echo $this->layout()->content; ?>
-			</div>
-	<?php }?>
-</body>
+	</body>
+
+
 <script>
 $(document).ready(function() { 
    $("#frm").validationEngine();

@@ -222,6 +222,8 @@ Class report_Model_DbPurchase extends Zend_Db_Table_Abstract{
 		$sql=" SELECT
 					(SELECT name FROM `tb_sublocation` WHERE id=m.branch_id) AS branch_name,
 					m.invoice_no,
+					(select name from tb_constructor as c where c.id = m.constructor) as constructor_name,
+					(select phone from tb_constructor as c where c.id = m.constructor) as constructor_tel,
 					mp.date_payment,
 					mp.payment_type,
 					mp.note,

@@ -4,14 +4,14 @@
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
 ?>						 
-<title>អ្នកខ្ចី</title>
+<title>កែប្រែអ្នកសងប្រាក់</title>
 <body>
 	<form class="form-horizontal" id="frm" method="post" action="" autocomplete="off">				
 		
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-gift"></i><strong>បញ្ចីឈ្មោះអ្នកខ្ចី</strong>
+					<i class="fa fa-gift"></i><strong>កែប្រែអ្នកសងប្រាក់</strong>
 				</div>
 				<div class="tools">
 					<label><a href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
@@ -28,11 +28,11 @@
 										<h2 style="border-bottom: 1px solid #ccc;" class="center">ព័ត៌មានអ្នកសងប្រាក់</h2>
 									<div class="form-group" style="">
 											<label class="col-md-4 control-label">
-												ឈ្មោះអ្នកខ្ចី
+												ឈ្មោះអ្នកសង
 											</label>
 											<div class="col-md-8">
 												<select class="form-control select2me" id="name_borrow" name="name_borrow" onchange="getPopupBorrowers()" value="1">
-													<option value="">ជ្រើសរើសឈ្មោះអ្នកខ្ចី</option>
+													<option value="">ជ្រើសរើសឈ្មោះអ្នកសងប្រាក់</option>
 													<option value="-1">បន្ថែមឈ្មោះ</option>
 													<?php if(!empty($this->name_pay)){foreach($this->name_pay as $rs){?>
 														<option <?php if($rs["name"]==$this->row['name_borrow']){echo"selected";}?>
@@ -73,7 +73,7 @@
 									</div>																
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
-											ចំនួនទឹកប្រាក់ខ្ចី
+											ចំនួនទឹកប្រាក់សង
 										</label>
 										<div class="col-md-8">
 											<input type="text" id="qtys" name="qtys" value="<?php echo $this->row['qtys']?>" class="form-control" />
