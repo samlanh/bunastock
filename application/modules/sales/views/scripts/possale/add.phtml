@@ -23,6 +23,40 @@ td{padding: 1px !important;}
 white-space: nowrap;font-size: 14px;line-height:33px;}
 .hover:hover{background: #eee;}
 .full_width{width:100%;}
+
+.spinner input {
+  text-align: right;
+}
+
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 2%;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.input-group-btn-vertical > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 1px;
+  margin-left: 5px;
+  position: relative;
+  border-radius: 0;
+}
+
+.input-group-btn-vertical > .btn:first-child {
+  border-top-right-radius: 4px;
+}
+
+.input-group-btn-vertical > .btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 4px;
+}
+
+
 </style>
 <title>បន្ថែមការលក់</title>
 <script src="<?php echo $base_url;?>/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
@@ -35,7 +69,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 			<i class="fa fa-gift"></i><strong>បន្ថែមការលក់</strong>
 		</div>
 		<div class="tools">
-			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"index",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"possale",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
 		</div>
 	</div>
 	<div class="portlet-body">
@@ -197,7 +231,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 											<div class="col-md-7">
 												<textarea name="other_note" id="other_note" class="form-control" rows="5"></textarea>
 											</div>
-										</div>																				
+										</div>		
 									</div>
 								</div>
 								<div class="row">
@@ -241,7 +275,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 										<table width="100%" id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;width:100%;">
 											<thead>
 												<tr id="head-title" class="table table-bordered" align="right" style="border:1px solid #4c6184 !important;font-weight:bold">
-													<td width="3%" class="aligncenter">#</td>
+													<td width="5%" class="aligncenter">#</td>
 													<td width="20%" class="aligncenter">មុខទំនិញ/សេវាកម្ម</td>
 													<td width="7%"  class="aligncenter">ស្តុក</td>
 													<td width="7%" class="aligncenter">បរិ.ដុំ</td>
@@ -251,7 +285,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													<td width="7%"  class="aligncenter">តម្លៃលក់($)</td>
 													<td width="8%"  class="aligncenter">សរុប</td>
 													<td width="8%"  class="aligncenter">ប.តម្លៃ($)</td>
-													<td width="10%" class="aligncenter">តម្លៃសរុប</td>
+													<td width="8%" class="aligncenter">តម្លៃសរុប</td>
 													<td width="6%" class="aligncenter">លុប</td>
 												</tr>
 												<tr>
@@ -315,7 +349,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 								<div class="form-group">
 									<div class="col-md-3"></div>
 									<div class="col-md-3">
-										<a href="<?php echo $this->url(array('module'=>$module,'controller'=>'index','action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>
+										<a href="<?php echo $this->url(array('module'=>$module,'controller'=>'possale','action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>
 									</div>
 									<div class="col-md-3">
 										<div class="input-icon right">
@@ -404,8 +438,8 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 		identity =$("#identity").val();
 		if(identity=='' || identity==-1){
 			alert("Please add product row");
-			//$('#product_id').select2('open');
-			dijit.byId("product_id").focus();
+			$('#product_id').select2('open');
+			//dijit.byId("product_id").focus();
 			return false;
 		}
 		
@@ -563,6 +597,7 @@ function addNewCustomer(){
 		$("#txt_name").focus();
 		return false;
 	} 
+	txt_name = $("#txt_name").val() + " - " + $("#txt_phone").val();
 	
 	$('#save_customer').attr("disabled", true);
 	
@@ -574,6 +609,10 @@ function addNewCustomer(){
 			rs = $.parseJSON(data);
 			$('#customer_id').append($("<option></option>").attr("value",rs['cus_id']).attr("selected",true).text(txt_name));                       
 			$("#customer_id").select2();
+			
+			$("#phone").val($('#txt_phone').val());
+			$("#address").val($('#txt_address').val());
+			
 			$('#customerpopup').modal('hide');
 			$('#save_customer').attr("disabled", false);
 		},
@@ -651,17 +690,17 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	if(product_id<0){return false;}
 	col++;no++;
 	template='';
-	template+='<td width="3%"  style="text-align:center">'+col+'</td>';
+	template+='<td width="5%"  style="text-align:right">'+col+'</td>';
 	template+='<td width="20%" style="font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'" class="form-control">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" class="form-control" /></td>';
 	template+='<td width="7%" style=""><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control"/><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="unit_label'+col+'" id="unit_label'+col+'" class="form-control"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
-	template+='<td width="7%"  style=""><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
-	template+='<td width="7%"  style=""><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="7%"  style=""><input type="number" step="any" value="'+qty+'" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qty_'+col+'" class="form-control" id="qty_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
+	template+='<td width="7%"  style=""><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qtydetail_'+col+'" class="form-control" id="qtydetail_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="10%" style=""><input required="1" readonly name="qty_sold'+col+'" class="form-control" id="qty_sold'+col+'" placeholder=""/></td>';
 	template+='<td width="7%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" onkeypress="return isNumberKey(event);" placeholder=""/></td>';
 	template+='<td width="7%" style=""><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" class="form-control" id="price_'+col+'" onkeypress="return isNumberKey(event);" placeholder=""/><input type="hidden" name="'+col+'" id="cost_price'+col+'" /></td>';
 	template+='<td width="8%" style=""><input type="text" name="total_'+col+'" class="form-control" id="total_'+col+'" readonly/></td>';
 	template+='<td width="8%" style=""><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
-	template+='<td width="10%" style=""><input type="text" name="sub_total_'+col+'" class="form-control" id="sub_total_'+col+'" readonly/></td>';
+	template+='<td width="8%" style=""><input type="text" name="sub_total_'+col+'" class="form-control" id="sub_total_'+col+'" readonly/></td>';
 	template+='<td width="6%"  ><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
@@ -1049,6 +1088,30 @@ function getCustomerInfo(){
 		});
 	}
 }
+
+$(function(){
+
+    $('.spinner .btn:first-of-type').on('click', function() {
+      var btn = $(this);
+      var input = btn.closest('.spinner').find('input');
+      if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {    
+        input.val(parseInt(input.val(), 10) + 1);
+      } else {
+        btn.next("disabled", true);
+      }
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+      var btn = $(this);
+      var input = btn.closest('.spinner').find('input');
+      if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {    
+        input.val(parseInt(input.val(), 10) - 1);
+      } else {
+        btn.prev("disabled", true);
+      }
+    });
+
+})
+
 </script>
 
 

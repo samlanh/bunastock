@@ -86,7 +86,7 @@ class Mong_IndexController extends Zend_Controller_Action
 
 		
 		$db = new Sales_Model_DbTable_Dbpos();
-		$this->view->rsproduct = $db->getAllProductName(2);
+		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->rscustomer = $db->getAllCustomerName();
 		$this->view->category = $db->getAllProductCategory();
@@ -117,10 +117,10 @@ class Mong_IndexController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->editMong($data,$id);
-					Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/index/index');
-					Application_Form_FrmMessage::message("កែប្រែដោយជោគជ័យ");
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/mong/index/index');
 			  }catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
+			  	Application_Form_FrmMessage::message("កែប្រែមិនត្រឹមត្រូវ");
+			  	echo $e->getMessage();exit();
 			  }			 
 		}
 		$this->view->row = $db->getMongAll($id);
@@ -140,7 +140,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->khmer_year = $_db->getAllKhmerYear();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
-		$this->view->rsproduct = $db->getAllProductName(2);
+		$this->view->rsproduct = $db->getAllProductName();
 		$this->view->rsservice = $db->getAllProductName(1);
 		$this->view->customer_id = $db->getAllCustomerName();
 		$this->view->category = $db->getAllProductCategory();

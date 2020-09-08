@@ -50,10 +50,10 @@ class Donors_DonateController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addDonate($data);
-					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/donors/donate/index');
-					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/donors/donate/index');
 			  }catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនត្រឹមត្រូវ",$err = $e->getMessage());
+			  	Application_Form_FrmMessage::message("បញ្ចូលមិនត្រឹមត្រូវ");
+			  	echo $e->getMessage();exit();
 			  }
 		}
 

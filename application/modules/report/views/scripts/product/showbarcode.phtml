@@ -1,19 +1,5 @@
 <?php 
-// $tr = Application_Form_FrmLanguages::getCurrentlanguage();
-//   $rpt_product_list=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptproductlist'), null, true);
-//   $rpt_current=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptcurrentstock'), null, true);
-//   $rpt_current_all=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptallcurrentstock'), null, true);
-//   $rpt_ajust=$this->url(array('module'=>'report','controller'=>'product','action'=>'rptadjuststock'), null, true);
-//   $rpt_transfer=$this->url(array('module'=>'report','controller'=>'product','action'=>'rpttransfer'), null, true);
-  
-  
-//   $user_info = new Application_Model_DbTable_DbGetUserInfo();
-// 	$result = $user_info->getUserInfo();
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage(); 
-// 	$session_user=new Zend_Session_Namespace('auth');
-// 	$request=Zend_Controller_Front::getInstance()->getRequest();
-// 	 $level = $result["level"];
-  
   ?>
 <div class="row">
 	<h2 style="font-size: 14px;text-align: center;font-family:'Khmer MEF2'">
@@ -24,7 +10,7 @@
 	<?php 
 	$cate_id='';
 	if(!empty($this->rsproduct)) foreach($this->rsproduct as $key => $rs){?>	
-	 <?php $url_barcode = $this->url(array("module"=>"report","controller"=>"product","action"=>"generate-barcode","pro_code"=>$rs['barcode']),null,true); ?>
+	 <?php $url_barcode = $this->url(array("module"=>"report","controller"=>"product","action"=>"generate-barcode","pro_code"=>$rs['item_code']),null,true); ?>
 		<?php if($rs['cate_id']!=$cate_id){?>		
 		<?php if($key>0){?></ul><?php }?>				
 		<h2 style="clear:left;font-size: 14px;text-align: center;font-family:'Khmer MEF2'"><?php echo $rs['cate_name'];?></h2>

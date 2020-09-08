@@ -35,7 +35,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 			<i class="fa fa-gift"></i><strong>កែប្រែការលក់</strong>
 		</div>
 		<div class="tools">
-			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"index",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
+			<label><a href="<?php echo $this->url(array('module'=>"sales",'controller'=>"possale",'action'=>'index'),null,true); ?>"><button type="button" name="calcel" class="btn red"><i class="fa fa-times"></i>ត្រលប់ក្រោយ</button></a></label>
 		</div>
 	</div>
 	<div class="portlet-body">
@@ -314,7 +314,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 								<div class="form-group">
 									<div class="col-md-3"></div>
 									<div class="col-md-3">
-										<a href="<?php echo $this->url(array('module'=>$module,'controller'=>'index','action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>
+										<a href="<?php echo $this->url(array('module'=>$module,'controller'=>'possale','action'=>'index'),null,true); ?>"><button type="button" class="btn red btn-block btn-lg"><i class="icon-refresh icon-white"></i> ត្រឡប់ក្រោយ</button></a>
 									</div>
 									<div class="col-md-3">
 										<div class="input-icon right">
@@ -541,7 +541,7 @@ function setValue(){
 	$('#saleagent_id').val('<?php echo $this->row['saleagent_id']?>').select2();
 	$('#comission').val('<?php echo $this->row['comission']?>');
 	$('#receiver_name').val('<?php echo $this->row['receiver_name']?>').select2();
-	$('#other_note').val('<?php echo $this->row['other_note']?>');
+	$('#other_note').val('<?php echo preg_replace( "/\r|\n/", "", strip_tags(htmlspecialchars($this->row['other_note'])));?>');
 	$('#place_bun').val('<?php echo $this->row['place_bun']?>');
 	
 	$('#type_pjos').val('<?php echo $this->row['type_pjos']?>').select2();
@@ -562,10 +562,14 @@ function setValue(){
 function addNewCustomer(){
 	txt_name = $("#txt_name").val();
 	if(txt_name==''){
+		alert("សូមបញ្ជូលឈ្មោះអតិថិជន!");
 		$("#txt_name").focus();
 		return false;
 	} 
+	txt_name = $("#txt_name").val() + " - " + $("#txt_phone").val();
+	
 	$('#save_customer').attr("disabled", true);
+	
 	$.ajax({
 		url: "<?php echo $url_add_customer;?>",
 		type: "post",
@@ -574,6 +578,10 @@ function addNewCustomer(){
 			rs = $.parseJSON(data);
 			$('#customer_id').append($("<option></option>").attr("value",rs['cus_id']).attr("selected",true).text(txt_name));                       
 			$("#customer_id").select2();
+			
+			$("#phone").val($('#txt_phone').val());
+			$("#address").val($('#txt_address').val());
+			
 			$('#customerpopup').modal('hide');
 			$('#save_customer').attr("disabled", false);
 		},
@@ -649,18 +657,18 @@ function initializeProduct(){
 		col++;no++;
 		template='';
 		
-		template+='<td style="min-width:20px;text-align:center">'+col+'</td>';
-		template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-		template+='<td style="min-width:100px"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
-		template+='<td style="min-width:50px"><input type="hidden" class="form-control" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control" placeholder=""/></td>';
-		template+='<td style="min-width:50px"><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control" /></td>';
-		template+='<td style="min-width:50px"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control" placeholder=""/></td>';
-		template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" placeholder=""/></td>';
-		template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control" /></td>';
-		template+='<td style="min-width:60px"><input type="text" name="total_'+col+'" id="total_'+col+'" class="form-control" readonly/></td>';
-		template+='<td style="min-width:60px"><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
-		template+='<td style="min-width:60px"><input type="text" name="sub_total_'+col+'" id="sub_total_'+col+'" class="form-control" readonly/></td>';
-		template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
+		template+='<td width="5%" style="text-align:right">'+col+'</td>';
+		template+='<td width="20%"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
+		template+='<td width="7%"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
+		template+='<td width="7%"><input type="hidden" class="form-control" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control" placeholder=""/></td>';
+		template+='<td width="7%"><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control" /></td>';
+		template+='<td width="10%"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control" placeholder=""/></td>';
+		template+='<td width="7%"><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control" placeholder=""/></td>';
+		template+='<td width="7%"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control" placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control" /></td>';
+		template+='<td width="8%"><input type="text" name="total_'+col+'" id="total_'+col+'" class="form-control" readonly/></td>';
+		template+='<td width="8%"><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
+		template+='<td width="8%"><input type="text" name="sub_total_'+col+'" id="sub_total_'+col+'" class="form-control" readonly/></td>';
+		template+='<td width="6%"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 		tmp='<tr id="row'+col+'" class="hover">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -702,18 +710,18 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	col++;no++;
 	template='';
 	
-	template+='<td style="min-width:20px;text-align:center">'+col+'</td>';
-	template+='<td style="min-width:230px;font-size:13px;"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-	template+='<td style="min-width:100px"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control " /><input type="hidden" readonly class="form-control " id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" class="form-control " name="measur_name'+col+'" id="measur_name'+col+'"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
-	template+='<td style="min-width:50px"><input type="hidden" class="form-control " name="unit_label'+col+'" id="unit_label'+col+'"/><input type="text" value="'+qty+'" onkeyup="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control " placeholder=""/></td>';
-	template+='<td style="min-width:50px"><input type="text" onkeyup="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control " placeholder=""/></td>';
-	template+='<td style="min-width:50px"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control " placeholder=""/></td>';
-	template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control " placeholder=""/></td>';
-	template+='<td style="min-width:50px"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control " placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control " /></td>';
-	template+='<td style="min-width:60px"><input type="text" name="total_'+col+'" id="total_'+col+'" class="form-control" readonly/></td>';
-	template+='<td style="min-width:60px"><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
-	template+='<td style="min-width:60px"><input type="text" name="sub_total_'+col+'" id="sub_total_'+col+'" class="form-control" readonly/></td>';
-	template+='<td width="60px"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
+	template+='<td width="5%" style="text-align:right">'+col+'</td>';
+	template+='<td width="20%"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
+	template+='<td width="7%"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control " /><input type="hidden" readonly class="form-control " id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" class="form-control " name="measur_name'+col+'" id="measur_name'+col+'"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
+	template+='<td width="7%"><input type="hidden" class="form-control " name="unit_label'+col+'" id="unit_label'+col+'"/><input type="number" step="any" value="'+qty+'" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control " placeholder=""/></td>';
+	template+='<td width="7%"><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control " placeholder=""/></td>';
+	template+='<td width="10%"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control " placeholder=""/></td>';
+	template+='<td width="7%"><input required="1" type="text" tabindex="'+col+'"  onkeyup="convertToDollar('+col+');" name="price_reil_'+col+'" id="price_reil_'+col+'" class="form-control " placeholder=""/></td>';
+	template+='<td width="7%"><input required="1" type="text" tabindex="'+col+'"  onkeyup="calCualtePrice('+col+');" name="price_'+col+'" id="price_'+col+'" class="form-control " placeholder=""/><input type="hidden" name="cost_price'+col+'" id="cost_price'+col+'" class="form-control " /></td>';
+	template+='<td width="8%"><input type="text" name="total_'+col+'" id="total_'+col+'" class="form-control" readonly/></td>';
+	template+='<td width="8%"><input type="text" name="discount_'+col+'" id="discount_'+col+'" class="form-control" onkeyup="calCualtePrice('+col+');" /></td>';
+	template+='<td width="8%"><input type="text" name="sub_total_'+col+'" id="sub_total_'+col+'" class="form-control" readonly/></td>';
+	template+='<td width="6%"><button style="height:30px" type="button" onclick="deleteRecord('+col+')" name="save_close" class="btn default red">លុប</button></td>';
 	tmp='<tr id="row'+col+'" class="hover">';
 	tmp+="</tr>";
 	dojo.query("#table_row").append(tmp);
@@ -767,7 +775,7 @@ function netTotal() {//use
 		}
 	}
 	$('#sub_total').val(netTotal.toFixed(0));
-	$('#paid').val(netTotal.toFixed(0));
+	//$('#paid').val(netTotal.toFixed(0));
 	calCualtepaid();
 }
 function calCualtepaid(){

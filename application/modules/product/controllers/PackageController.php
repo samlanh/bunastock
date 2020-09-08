@@ -28,7 +28,7 @@ public function init()
     			'model'		=>	'',
     			'color'		=>	'',
     			'size'		=>	'',
-    			'status'	=>	1
+    			'status'	=>	-1
     		);
     	}
 			$rows = $db->getAllProductForAdmin($data);
@@ -59,6 +59,8 @@ public function init()
 			$db = new Product_Model_DbTable_DbProduct();
 			$this->view->caters = $db->getCategory();
 			$this->view->pro_code = $db->getProductCode();
+			
+			$test = $this->view->barcode = $db->getProductbarcode();
 			
 			$db = new Sales_Model_DbTable_Dbpos();
 			$this->view->rsproduct = $db->getAllProductName();

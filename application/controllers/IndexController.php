@@ -117,9 +117,7 @@ class IndexController extends Zend_Controller_Action
     	
     }
     
-    public function dashboadAction(){
-
-    }
+   
     function changelangeAction(){
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
@@ -131,5 +129,38 @@ class IndexController extends Zend_Controller_Action
     	}
     }
    
+    public function dashboadAction(){
+    	
+    	if($this->getRequest()->isPost()){
+    		$search = $this->getRequest()->getPost();
+    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+    	}
+    	else{
+    		$search = array(
+    			'start_date'	=>date("Y-m-01"),
+    			'end_date'		=>date("Y-m-d"),
+    		);
+    	}
+    	
+    	$this->view->search = $search;
+    	
+    	$db = new Application_Model_DbTable_DbGlobal();
+    	$this->view->amount_sale = $db->getAllAmountSale($search);
+    	$this->view->amount_mong = $db->getAllAmountMong($search);
+    	$this->view->amount_program = $db->getAllAmountProgram($search);
+    	$this->view->amount_donor = $db->getAllAmountDonor($search);
+    	
+    	$this->view->product_type = $db->getAllProductType();
+    }
+    
+    
+    
+    
   
 }
+
+
+
+
+

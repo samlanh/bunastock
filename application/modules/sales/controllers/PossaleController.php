@@ -33,13 +33,13 @@ class Sales_PossaleController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbSaleOrder();
 		$rows = $db->getAllSaleOrder($search);
-		$columns=array("BRANCH_NAME","ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","ឈ្មោះសព","លេខវិក័យបត្រ","ថ្ងៃលក់","តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");
+		$columns=array("BRANCH_NAME","ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខវិក័យបត្រ","ថ្ងៃលក់","តម្លៃសរុប","ប្រាក់បានបង់","ប្រាក់នៅខ្វះ","អ្នកប្រើប្រាស់");
 		$link=array(
 			'module'=>'sales','controller'=>'possale','action'=>'edit',
 		);
 		
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'program_name'=>$link,'place_bun'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows, array('phone'=>$link,'branch_name'=>$link,'customer_name'=>$link,'sale_no'=>$link,'place_bun'=>$link));
 		
 	    $formFilter = new Product_Form_FrmProduct();
 	    $this->view->formFilter = $formFilter->productFilter();
@@ -64,7 +64,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->addSaleOrder($data);
 				}
-				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ",'/sales/index');
+				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ",'/sales/possale');
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
 				$err =$e->getMessage();
@@ -115,7 +115,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->editSale($data,$id);
 				}
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/index/index');
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/possale/index');
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
 				echo $e->getMessage();

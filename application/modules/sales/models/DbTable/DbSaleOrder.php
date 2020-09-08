@@ -11,8 +11,6 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 						place_bun,
 						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) AS customer_name,
 						s.phone,
-						(SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) as program_name,
-						
 						s.sale_no,
 						s.date_sold,
 						s.all_total,
@@ -30,6 +28,8 @@ class Sales_Model_DbTable_DbSaleOrder extends Zend_Db_Table_Abstract
 				$s_where = array();
 				$s_search = trim(addslashes($search['ad_search']));
 				$s_where[] = " s.sale_no LIKE '%{$s_search}%'";
+				$s_where[] = " s.place_bun LIKE '%{$s_search}%'";
+				$s_where[] = " s.phone LIKE '%{$s_search}%'";
 				$s_where[] = " s.all_total LIKE '%{$s_search}%'";
 				$s_where[] = " (SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=s.customer_id LIMIT 1 ) LIKE '%{$s_search}%'";
 				$s_where[] = " (SELECT (dead_name) FROM `tb_program` WHERE tb_program.id=s.program_id LIMIT 1) LIKE '%{$s_search}%'";

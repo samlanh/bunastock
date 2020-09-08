@@ -4,9 +4,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>វិក្កយបត្រលក់</title>
-<style>
-	#print-footer{display: none !important;}
-</style>
+
 <div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 0px; margin-bottom:30px; width:23cm;margin: 0 auto;min-height: 26cm; ">
 	<table class="print" cellspacing="0" cellpadding="0" style="width:99%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top: 10px; white-space:nowrap; margin-top: 6px;">
 		<tbody>
@@ -14,22 +12,21 @@
 			    <td colspan="10" style="" align="center" valign="top">
 					<table width="100%" border="0" style="font-size: 14px;margin-bottom: 0px; white-space: nowrap;"   >
 						<tr>
-							<td width="35%" valign="top">
+							<td width="30%" valign="top">
 								
 							</td>
-							<td width="30%" align="center" valign="top" style="line-height: 35px;">
+							<td width="40%" align="center" valign="top" style="line-height: 35px;">
 								<div style="font-size: 32px;font-family:'Khmer OS Muol Light'; color:red !important;"><?php echo $tr->translate("JAV_BONA");?></div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light'; color:black;"><?php echo $tr->translate("NAME_COMPANT_BUNA");?></div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:red !important;"><?php echo $tr->translate("NAME_CHINESE");?></div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:blue !important;"><span class="iconprint"><i class="fa fa-facebook-square" style="font-size: 32px;"></i></span> <?php echo $tr->translate("JAV_NOA_FUNERAL");?></div>
-								<div style="font-size: 20px;font-family:Times New Roamn;font-weight: bold; color: black !important;"><?php echo $tr->translate("INVOICE");?></div>
+								<div style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
+								<div style="font-size: 20px;font-family:Times New Roman;font-weight: bold; color: black !important;"><?php echo $tr->translate("INVOICE");?></div>
 							</td>
-							<td width="35%" valign="top" align="center">
-								<img style="height:115px; width:150px; alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br />
-								<div style="font-size: 19px;font-family:'Khmer OS Muol Light';text-align: center;width:90%;"><?php echo $tr->translate("PHONE_BUNA");?></div>
-								
+							<td width="30%" valign="top" align="center">
+								<img style="height:115px; width:150px; alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"> </img><br />
+								<div style="font-size: 17px;font-family:'Khmer OS Battambang';text-align: center;width:90%;"><?php echo $tr->translate("PHONE_BUNA");?></div>
 							</td>
-							
 						</tr>
 					</table>                
 			    </td>
@@ -42,7 +39,10 @@
 				.one{line-height: 15px;font-weight: bold;font-size: 16px;}
 				
 				table { page-break-before: avoid; }
-				tr{ page-break-inside:avoid; page-break-after:avoid;}
+				tr{ 
+					page-break-inside:auto;
+					page-break-after:avoid;
+				}
 				
 				#print-footer {
 					display: block;
@@ -53,8 +53,8 @@
 				
 			</style>						
 			<tr height="80px">
-				<td colspan="6" width="65%" valign="top">
-					<table width="100%" height="100%" style=" ;font-size: 17px;border: 1px solid #000;">
+				<td colspan="6" width="60%" valign="top">
+					<table width="100%" height="100%" style=" ;font-size: 17px;border: 1px solid #000;white-space:nowrap;">
 						<tbody>
 							<tr>
 								<td>&nbsp;ទីតាំងបុណ្យ</td>
@@ -87,8 +87,8 @@
 						</tbody>
 					</table>
 				</td>
-				<td colspan="4" width="35%" valign="top">
-					<table width="100%" style="margin-left:5px;font-size: 17px;border: 1px solid #000;">
+				<td colspan="4" width="40%" valign="top">
+					<table width="100%" style="margin-left:5px;font-size: 17px;border: 1px solid #000;white-space: nowrap;">
 						<tbody>
 							<tr>
 								<td width="90px;" style="white-space: nowrap;">&nbsp;លេខវិក្កយបត្រ</td>
@@ -105,6 +105,13 @@
 								<td colspan="1"> :</td>
 								<td>
 									<label class="one">&nbsp;&nbsp;<?php echo $rs['user_name']?></label>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;<img style="height:33px; width:38px;margin-top: -5px;" src="<?php echo $this->baseUrl()?>/images/aba_logo.png"> </img>គណនី</td>
+								<td colspan="1"> :</td>
+								<td>
+									<label class="one">&nbsp;&nbsp;<?php echo ABA_ACC;?></label>
 								</td>
 							</tr>
 						</tbody>
@@ -145,9 +152,9 @@
 												<td style="border:1px solid #000;text-align:left;"><strong style="color:#000;">&nbsp;<?php if($item['package_id']>0){echo "&nbsp;&nbsp;&nbsp; - ";}echo $item['pro_name'];?> </strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;"><?php echo number_format($item['qty_order'],0);if(/*$item['is_service']==0 && */ $item['is_package']==0){echo " ".$item['measure_name'];}?></strong></td>
 												<?php /*?><td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['price']>0){if($item['price_reil']>0){echo number_format($item['price_reil'])." ៛";}else{echo "$ ".number_format($item['price'],3);}}?></strong></td>	<?php */?>	
-												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['total']>0){echo "$ ".number_format($item['total'],3);}?></strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['total']>0){echo "$ ".number_format($item['total'],2);}?></strong></td>
 												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['discount']>0){echo "$ ".$item['discount'];}?></strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['sub_total']>0){echo "$ ".number_format($item['sub_total'],3);}?></strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;"><?php if($item['sub_total']>0){echo "$ ".number_format($item['sub_total'],2);}?></strong></td>
 											</tr>
 											<?php } } 
 											for($index;$index<15;$index++){
@@ -167,17 +174,17 @@
 											<tr style=" font-size:15px; text-align:right;font-weight:bold;">
 												<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="5" valign="bottom" >- សូមពិនិត្យទំនិញ និង សេវាកម្មអោយបានត្រឹមត្រូវ</td>
 												<td style="border:1px solid #000;"><strong style="color:#000;">សរុប/总额&nbsp;</strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['all_total'],3)?></strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['all_total'],2)?></strong></td>
 											</tr>
 											<tr style=" font-size:15px; text-align:right;font-weight:bold;">
 												<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="5" valign="bottom">- ប្រាក់ដែលបានបង់រួចហើយមិនអាចដកវិញបានទេ</td>
 												<td style="border:1px solid #000;"><strong style=" color:#000;">កក់ប្រាក់/定金&nbsp;</strong></td>
-												<td style="border:1px solid #000;"><strong style=" color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['paid'],3)?></strong></td>
+												<td style="border:1px solid #000;"><strong style=" color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['paid'],2)?></strong></td>
 											</tr>
 											<tr style=" font-size:15px; text-align:right;font-weight:bold;">
 												<td style="border:1px solid #fff;border-right:1px solid #000;text-align:left;" colspan="5">អត្រាប្តូរប្រាក់ : 1$ = <?php echo $this->exchange_rate?> ៛</td>
 												<td style="border:1px solid #000;"><strong style="color:#000;">នៅខ្វះ/余额&nbsp;</strong></td>
-												<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['balance_after'],3)?></strong></td>
+												<td style="border:1px solid #000;"><strong style="color:#000;font-family:arial;font-weight:bold;">$ <?php echo number_format($rs['balance_after'],2)?></strong></td>
 											</tr>	
 										</tbody>
 									</table>
@@ -204,20 +211,13 @@
 				</td>
 			</tr>
 		</tbody>
-		<footer>
-			<tr height="20px">
-				<td colspan="10">
-					<div id="print-footer" style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
-				</td>
-			</tr>
-		</footer>
 	</table>	
 </div>
 
     <div style="padding-left:16%; margin: 0 auto;"> 
     	<lable class="col-md-3" style=""></lable>
     	<div class="col-md-2">
-			<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
+			<a href="<?php echo $this->baseUrl();?>/sales/possale"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
 		</div>
     	<lable class="col-md-2" style="">
              <button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i>បោះ ពុម្ភ </button>

@@ -124,7 +124,7 @@ $brach_name =  $this->branch;
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date("d/m/Y",strtotime($rs["date_sold"]));?></td>
 						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["all_total"],2);?></td>
 						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?></td>
-						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["balance"],2);?></td>
+						   <td style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;<?php echo "$ ".number_format($rs["balance_after"],2);?></td>
 						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
 						   <td>&nbsp;<?php echo $rs["status_name"];?></td>
 						   <td class="displaynone" align="center" style="white-space: nowrap;"><a style="color:#0c1cdc;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">វិក័យបត្រ</a></td>

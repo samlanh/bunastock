@@ -34,13 +34,13 @@ public function init()
 			$data = $this->getRequest()->getPost();
 			$db = new Purchase_Model_DbTable_Dbexpensetitle();
 			$db->add($data);
-			if($data['save_close']){
+			//if($data['save_close']){
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				Application_Form_FrmMessage::redirectUrl('/purchase/expensetitle/index');
-			}
-			else{
-				Application_Form_FrmMessage::message("INSERT_SUCCESS");
-			}
+			// }
+			// else{
+				// Application_Form_FrmMessage::message("INSERT_SUCCESS");
+			// }
 		}
 	}
 	public function editAction()

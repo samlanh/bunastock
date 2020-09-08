@@ -67,7 +67,7 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$receipt = $_db->getReceiptNumber();
 		$arr=array(
 				'branch_id'			=> $this->getBranchId(),
- 				'donor'				=> $data['donor'],
+ 				'donor'				=> $data['type']."".$data['donor'],
 				'tel'				=> $data['tel'],
 				'address'			=> $data['address'],
 				'required_using'	=> $data['required_using'],
@@ -138,5 +138,16 @@ class Donors_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
     	return $db->fetchRow($sql);
     }
     
+	function getAllDonorName(){
+		$db = $this->getAdapter();
+		$sql=" SELECT DISTINCT(donor) AS name,tel FROM tb_donors WHERE donor!='' ";
+		return $db->fetchAll($sql);
+	}
+	
+	function getDonorInfoByName($donor_name){
+		$db = $this->getAdapter();
+		$sql= "SELECT donor AS name,tel,address FROM tb_donors WHERE donor='$donor_name' limit 1 ";
+		return $db->fetchRow($sql);
+	}	
 
 }

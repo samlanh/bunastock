@@ -489,6 +489,16 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			$this->_name="tb_product";
     		$where = $db->quoteInto("id=?", $data["id"]);
     		$this->update($arr, $where);
+    		
+    ///////////////////////// update product package //////////////////////////		
+    		$array = array(
+    				"price"	=>$data["selling_price"],
+    			);
+    		$this->_name="tb_product_package";
+    		$where1 = $db->quoteInto("product_id=?", $data["id"]);
+    		$this->update($array, $where1);
+    
+    ////////////////////////////////////////////////////////////////////////////
     
     		$sql = "DELETE FROM tb_prolocation WHERE pro_id=".$data["id"];
     		$db->query($sql);

@@ -13,9 +13,9 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 		$db= $this->getAdapter();
 		$sql=" SELECT 
 					r.id,
-					(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND name!='' LIMIT 1) AS branch_name,
 					r.`receipt_no`,
-					(select invoice_no from tb_mong where tb_mong.id = r.invoice_id) as invoice,
+					(select place_bun from tb_mong where tb_mong.id = r.invoice_id LIMIT 1) as place_bun,
+					(select invoice_no from tb_mong where tb_mong.id = r.invoice_id LIMIT 1 ) as invoice,
 					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
 					r.`date_input`,
 					r.`total`,
@@ -29,7 +29,7 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 				where 
 					r.type=2
 			";
-			
+		//(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND name!='' LIMIT 1) AS branch_name,	
 		$from_date =(empty($search['start_date']))? '1': " r.`receipt_date` >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " r.`receipt_date` <= '".$search['end_date']." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
@@ -44,6 +44,8 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 			$s_where[] = " r.`remark` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`cheque_number` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`type` LIKE '%{$s_search}%'";
+			$s_where[] = " (select place_bun from tb_mong where tb_mong.id = r.invoice_id LIMIT 1) LIKE '%{$s_search}%'";
+			$s_where[] = " (select invoice_no from tb_mong where tb_mong.id = r.invoice_id LIMIT 1 ) LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 // 		if($search['branch_id']>0){
@@ -220,7 +222,17 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 	
 	function getMongCustomerName(){
 		$db = $this->getAdapter();
-		$sql = "SELECT id,(select cust_name from tb_customer where tb_customer.id = customer_id) as name FROM tb_mong WHERE balance_after>0 and status=1 ";
+		$sql = "SELECT 
+					id,
+					(select cust_name from tb_customer where tb_customer.id = customer_id) as name,
+					place_bun,
+					phone  
+				FROM 
+					tb_mong 
+				WHERE 
+					balance_after>0 
+					and status=1 
+			";
 		return $db->fetchAll($sql);
 	}
 	

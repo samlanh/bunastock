@@ -57,6 +57,9 @@ class Donors_IndexController extends Zend_Controller_Action
 			  	Application_Form_FrmMessage::messageError("បញ្ចូលមិនត្រឹមត្រូវ",$err = $e->getMessage());
 			  }
 		}
+		$this->view->donor = $db->getAllDonorName();
+		//print_r($this->view->donor);
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$receipt = $_db->getReceiptNumber();
 		$this->view->receipt_no =  $receipt;
@@ -85,5 +88,14 @@ class Donors_IndexController extends Zend_Controller_Action
 	    $dbq = new Donors_Model_DbTable_DbIndex();
 	    $id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 	    $this->view->row = $dbq->getdonorpeopleById($id);
+	}
+	function getDonorinfoAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$db = new Donors_Model_DbTable_DbIndex();
+			$rs =$db->getDonorInfoByName($post['donor_name']);
+			print_r(Zend_Json::encode($rs));
+			exit();
+		}
 	}
 }

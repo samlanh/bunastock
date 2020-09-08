@@ -597,6 +597,104 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		}
 		return $num;
 	}
+	function getAllAmountSale($search){
+		$db = $this->getAdapter();
+		
+		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+		$sql = "select count(id) from tb_sales_order as s where status=1 $where ";
+		return $db->fetchOne($sql);
+	}
+	function getAllAmountMong($search){
+		$db = $this->getAdapter();
+		
+		$from_date =(empty($search['start_date']))? '1': " sale_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " sale_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+		$sql = "select count(id) from tb_mong where status=1 $where";
+		return $db->fetchOne($sql);
+	}
+	function getAllAmountProgram($search){
+		$db = $this->getAdapter();
+		
+		$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " create_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+    	$where = " AND ".$from_date." AND ".$to_date;
+		
+		$sql = "select count(id) from tb_program where status=1 $where ";
+		return $db->fetchOne($sql);
+	}
+	function getAllAmountDonor($search){
+		$db = $this->getAdapter();
+		
+		$from_date =(empty($search['start_date']))? '1': " create_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " create_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+		$sql = "select count(id) from tb_donors where status=1 $where ";
+		return $db->fetchOne($sql);
+	}
+	
+	function getAllProductType(){
+		$db = $this->getAdapter();
+		$sql = "select id,name from tb_category where status=1";
+		return $db->fetchAll($sql);
+	}
+	function getDataByProType($pro_type,$start_date,$end_date){
+		$db = $this->getAdapter();
+		
+		$from_date =(empty($start_date))? '1': " s.date_sold >= '".date("Y-m-d",strtotime($start_date))." 00:00:00'";
+		$to_date = (empty($end_date))? '1': " s.date_sold <= '".date("Y-m-d",strtotime($end_date))." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+		$sql = " SELECT 
+					  SUM(soi.qty_order)
+					FROM
+					  tb_sales_order as s,
+					  `tb_salesorder_item` AS soi,
+					  `tb_product` AS p 
+					WHERE 
+					  s.id = soi.saleorder_id
+					  and p.id = soi.`pro_id` 
+					  and p.is_package = 0
+					  AND p.`cate_id` = $pro_type
+					  $where
+					ORDER BY 
+						p.id 
+			";
+		$sale_qty = $db->fetchOne($sql);
+		
+		$from_date1 =(empty($start_date))? '1': " m.sale_date >= '".date("Y-m-d",strtotime($start_date))." 00:00:00'";
+		$to_date1 = (empty($end_date))? '1': " m.sale_date <= '".date("Y-m-d",strtotime($end_date))." 23:59:59'";
+		$where1 = " AND ".$from_date1." AND ".$to_date1;
+		
+		$sql1 = " SELECT 
+					  SUM(msi.qty_order)
+					FROM
+					  tb_mong as m,
+					  `tb_mong_sale_item` AS msi,
+					  `tb_product` AS p 
+					WHERE 
+					  m.id = msi.mong_id
+					  and p.id = msi.`pro_id` 
+					  and p.is_package = 0
+					  AND p.`cate_id` = $pro_type
+					  $where1
+					ORDER BY 
+						p.id 
+			";
+		$mong_qty = $db->fetchOne($sql1);
+		
+		$total_qty = $sale_qty + $mong_qty;
+		return $total_qty;
+	}
+	
 	
 }
 ?>
+
+
+

@@ -29,7 +29,7 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		}
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("BRANCH_NAME","លេខបង្កាន់ដៃ","បង់លើវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
+		$columns=array("លេខបង្កាន់ដៃ","ទីតាំងបុណ្យ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
 		
 		$link=array(
 			'module'=>'mong','controller'=>'customerpayment','action'=>'edit',
@@ -85,7 +85,7 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 			$data['id']=$id;
 			try {
 				$db->updateCustomerPayment($data,$id);
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ","/sales/payment");
+				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ","/mong/customerpayment");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
 				$err =$e->getMessage();

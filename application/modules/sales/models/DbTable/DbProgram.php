@@ -119,7 +119,6 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'type_romleay_sop'      => $data['type_romleay_sop'],
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
 	    			'membersone'           	=> $data['membersone'],
-	    			'memberstwo'           	=> $data['memberstwo'],
 	    			'note'           		=> $data['note'],
 	    			
 	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),
@@ -184,7 +183,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    	
     	}catch (Exception $e){
     		$db->rollBack();
-    		echo $e->getMessage();
+    		echo $e->getMessage();exit();
     	}
     }
     
@@ -217,7 +216,6 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
 	    			'type_romleay_sop'      => $data['type_romleay_sop'],
 	    			'place_pjos_sop'	    => $data['place_pjos_sop'],
 	    			'membersone'           	=> $data['membersone'],
-	    			'memberstwo'           	=> $data['memberstwo'],
 	    			'note'           		=> $data['note'],
 	    			
 	    			'lerk_sop_date'      	=> empty($data['lerk_sop_date'])?null:date("Y-m-d",strtotime($data['lerk_sop_date'])),

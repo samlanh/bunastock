@@ -61,7 +61,13 @@
 											<div class="form-group" style="">
 												<label class="col-md-4 control-label">លេខកូដ</label>
 												<div class="col-md-8">
-													<input type="text" value="<?php echo $rsitem['item_code'];?>" readonly="readonly" class="form-control" name="product_code" id="product_code" value="<?php echo $this->pro_code;?>" />
+													<input type="text" value="<?php echo $rsitem['item_code'];?>" class="form-control" name="product_code" id="product_code" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">លេខបារកូដ</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" name="barcode" id="barcode" value="<?php echo $rsitem['barcode'];?>" />
 												</div>
 											</div>
 											<div class="form-group" style="">
@@ -102,6 +108,17 @@
 												</label>
 												<div class="col-md-8">
 													<input type="text" value="<?php echo $rsitem['note'];?>" class="form-control" name="noted" id="noted" />
+												</div>
+											</div>
+											<div class="form-group" style="">
+												<label class="col-md-4 control-label">
+													ស្ថានភាព
+												</label>
+												<div class="col-md-8">
+													<select name="status" id="status" class="form-control select2me">
+														<option value="1" <?php if($rsitem['status']==1){echo "selected";}?>>ប្រើប្រាស់</option>
+														<option value="0" <?php if($rsitem['status']==0){echo "selected";}?>>មិនប្រើប្រាស់</option>
+									    			</select>
 												</div>
 											</div>
 										</div>
@@ -248,7 +265,7 @@ function addProductRow(){
 		$('#identity').val(identity+','+index);
 	} else {$('#identity').val(index);}
 	
-	$('#product_id').val(-1).select2();
+	//$('#product_id').val(-1).select2();
 	getProductPrice(index,pro_id);
 }
 var url_getproduct = '<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'getproduct')); ?>';

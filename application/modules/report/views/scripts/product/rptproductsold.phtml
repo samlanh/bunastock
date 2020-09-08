@@ -107,6 +107,7 @@ $formFilter = $this->formFilter;
 							<td><?php echo $tr->translate("From Sale");?></td>
 							<td><?php echo $tr->translate("From Mong");?></td>
 							<td><?php echo $tr->translate("Total Qty Sold");?></td>
+							<td><?php echo $tr->translate("TOTAL");?></td>
 		                </tr>
 		                </thead>
 		                 <tbody>
@@ -128,6 +129,7 @@ $formFilter = $this->formFilter;
 								<td align="center"><?php echo $row["from_sale"];?></td>
 								<td align="center"><?php echo $row["from_mong"];?></td>
 								<td style="background: #dfffecc4" align="center"><?php echo $row["from_sale"]+$row["from_mong"];?></td>
+								<td style="background: #dfffecc4" align="center"><?php echo "$ ".number_format($row["total_from_sale"]+$row["total_from_mong"],2);?></td>
 							</tr>
 						  <?php }?> 
 		                </tbody>

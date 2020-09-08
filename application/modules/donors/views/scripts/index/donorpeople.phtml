@@ -69,37 +69,40 @@
 	  	<tr>
 	  		<td>
 	  			<table style="font-size:15px;font-family:  Khmer OS Muol;">	
-		  				<tr>
+		  			<tr>
   						<td colspan="3" align="left" style="list-style:25px; font-family:  Khmer OS Muol; font-size:30px;font-weight: bold; color:black;">
   							热心者　(សប្បុរសជន):
-  							</td>
-  						</tr>
-			  			<tr>
+						</td>
+					</tr>
+			  		<tr>
   						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:38px;font-weight: bold; color:red !important;">
   							<?php echo $this->row['donor']?>
-  							</td>
-  						</tr>
-  						<tr>
+						</td>
+					</tr>
+  					<tr>
 	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:32px;font-weight: bold; color:#C70039 !important;">
 	  						<?php echo $this->row['tel']?>
 	  					</td>
-	  					</tr>			  			
-		  				<tr>
-	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:36px; font-weight: bold; color:#22B424 !important;">
-	  						<?php echo $this->row['detail_chi']?>
-	  					</td>
-	  					<tr>
-  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:36px;font-weight: bold; color:#22B424 !important;">
-  							<?php echo $this->row['detail_kh']?>
-  							</td>
-  						</tr>
-  						<tr>
+	  				</tr>		
+					<?php if(!empty($this->row['address'])){?>
+					<tr>
 	  					<td align="center" style="list-style:20px; font-family:  Khmer OS Muol; font-weight: bold; color: red !important;">
 	  						<span style="color: #6A5ACD !important; font-size: 34px;">លំនៅដ្ឋាន៖ </span>
 	  						<span style="color: red !important; font-size:34px;"> <?php echo $this->row['address']?></span>
 	  					</td>
 	  				</tr>	
-	  				</tr>	  				
+					<?php }?>					
+		  			<tr>
+	  					<td align="center" style="list-style:23px; font-family:  Khmer OS Muol; font-size:36px; font-weight: bold; color:#22B424 !important;">
+	  						<?php echo $this->row['detail_chi']?>
+	  					</td>
+					</tr>	
+	  				<tr>
+  						<td colspan="3" align="center" style="list-style:25px; font-family:  Khmer OS Muol; font-size:36px;font-weight: bold; color:#22B424 !important;">
+  							<?php echo $this->row['detail_kh']?>
+						</td>
+					</tr>
+  					
 	  				<tr>
 	  					<td style="list-style:23px; font-family:  Khmer OS Muol; font-size:34px;font-weight: bold; color:#22B424 !important;">
 	  						ព័ត៌មានមានការបង់ប្រាក់៖

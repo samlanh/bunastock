@@ -50,6 +50,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " mong_code LIKE '%{$s_search}%'";
 			$s_where[] = " invoice_no LIKE '%{$s_search}%'";
+			$s_where[] = " place_bun LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) LIKE '%{$s_search}%'";
 			$s_where[] = " (select dead_name from tb_program as p where p.id=m.dead_id LIMIT 1) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT name FROM `tb_person_in_charge` AS p WHERE p.id=m.person_in_charge LIMIT 1 ) LIKE '%{$s_search}%'";
@@ -282,6 +283,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		try{
 			$db = $this->getAdapter();
 			$db->beginTransaction();				
+			
 			$db_global = new Application_Model_DbTable_DbGlobal();
 			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
 			$receipt = $db_global->getReceiptNumber($this->getBranchId());
@@ -341,22 +343,25 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					'constructor_paid'		=> 0,
 					'constructor_balance'	=> $data['constructor_price'],
 					'total_construct_item'	=> $data['total_construct_item'],						
-					'user_id'			=> $this->getUserId(),
-					'status'			=> 1,
-					'create_date'		=> date("Y-m-d H:i:s"),
+					'user_id'				=> $this->getUserId(),
+					'status'				=> 1,
+					'create_date'			=> date("Y-m-d H:i:s"),
 			);
 			$where=" id = ".$mong_id;
 			$this->update($array, $where);
-				
+
+			$db_sale = new Sales_Model_DbTable_Dbpos();
+			$rsreceipt = $db_sale->getReceiptBySaleId($mong_id,2);
+			
 			if($data['paid']>0){
 				$arr_receipt = array(
 						"branch_id"   		=> $this->getBranchId(),
 						"invoice_id"    	=> $mong_id,
 						"customer_id"   	=> $data['customer_id'],
 						"payment_id"    	=> 1,//payment by cash/paypal/cheque
-						"receipt_no"    	=> $receipt,
+						
 						"receipt_date"  	=> date("Y-m-d",strtotime($data['sale_date'])),
-						"date_input"    	=> date("Y-m-d"),
+						
 						"begining_balance"	=> $data['sub_total'],
 						"total"         	=> $data['sub_total'],
 						"paid"          	=> $data['paid'],
@@ -372,7 +377,15 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 						"type"        		=> 2, // from mong sale
 				);
 				$this->_name="tb_receipt";
-				$this->insert($arr_receipt);
+				if(!empty($rsreceipt)){
+					$where = " type = 2 and id = ".$rsreceipt['id'];
+					$this->update($arr_receipt, $where);
+				}else{
+					$arr_receipt['receipt_no'] = $receipt;
+					$arr_receipt['date_input'] = date("Y-m-d");
+					
+					$reciept_id = $this->insert($arr_receipt);
+				}
 			}
 	
 			$this->_name="tb_mong_sale_item";

@@ -26,7 +26,7 @@
 									<select name="customer_id" id="customer_id" class="form-control select2me" onchange="getCustomerInfo(1);" >
 										<option value="-1">ជ្រើសរើសអតិថិជន</option>
 										<?php if(!empty($this->customer_name)){foreach($this->customer_name as $customer){?>
-										<option value="<?php echo $customer['id']?>" <?php if($customer['id']==$this->row['invoice_id']){echo "selected='selected'";}?>><?php echo $customer['name']?></option>
+										<option value="<?php echo $customer['id']?>" <?php if($customer['id']==$this->row['invoice_id']){echo "selected='selected'";}?>><?php echo $customer['name']." - ".$customer['place_bun']." - ".$customer['phone']?></option>
 										<?php }}?>
 									</select>
 								</div>

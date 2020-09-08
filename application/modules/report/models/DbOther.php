@@ -108,16 +108,16 @@ function getAllDonors($search){
     	$sql=" SELECT
 		    	id,
 		    	partner_name,
-		    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
+		    	(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender limit 1) AS gender,
 		    	tel,
 		    	addresss,
 		    	description,
-		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id =`user_id`) AS user_name,
-		    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status) AS STATUS
+		    	(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = tb_partnerservice.`user_id` ) AS user_name,
+		    	(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_partnerservice.status limit 1) AS STATUS
 		    	FROM
-		    	tb_partnerservice 
+		    		tb_partnerservice 
 		    	WHERE 
-		    	partner_name!=''
+		    		partner_name!=''
     		";
     	$where = ''; 	
     	if(!empty($search['ad_search'])){
@@ -186,7 +186,7 @@ function getAllDonors($search){
 			$where .= " AND m.balance_after > 0 ";
 		}
 		$order=" ORDER BY id DESC ";
-	//	echo $sql.$where.$order; exit();
+		//echo $sql.$where.$order;// exit();
 		return $db->fetchAll($sql.$where.$order);
 	}
 	

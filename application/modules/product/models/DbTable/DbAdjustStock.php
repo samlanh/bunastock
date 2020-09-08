@@ -85,6 +85,80 @@ class Product_Model_DbTable_DbAdjustStock extends Zend_Db_Table_Abstract
 			echo $e->getMessage();exit();
 		}
 	}
+	public function edit($data,$id){
+		$db = $this->getAdapter();
+		$db->beginTransaction();
+		try{
+			$array = array(
+					'branch_id'		=>	$data["branch_id"],
+					'code'			=>	$data["code"],
+					'note'			=>	$data["note"],
+					'user_id'		=>	$this->getUserId(),
+					'status'		=>	$data["status"],
+			);
+			$this->_name = "tb_product_adjust";
+			$where = " id = $id";
+			$this->update($array, $where);
+			
+			// update adjust stock back
+			$rs = $this->getAdjustByID($id);
+			$row_detail = $this->getAdjustDetailByID($id);
+			if(!empty($row_detail)){foreach ($row_detail as $row){
+				$sql="select id,qty from tb_prolocation where pro_id = ".$row["pro_id"]." and location_id=".$rs["branch_id"];
+				$qty = $db->fetchRow($sql);
+				if(!empty($qty)){
+					$arr_p = array(
+						'qty'	=>	$qty['qty'] + $row['total_qty'],
+					);
+					$this->_name="tb_prolocation";
+					$where=" id = ".$qty['id'];
+					$this->update($arr_p, $where);
+				}
+			}}
+			
+			if($data['status']==1){
+				// delete detail old record
+				$this->_name="tb_product_adjust_detail";
+				$where1 = " adj_id = $id";
+				$this->delete($where1);
+					
+				if(!empty($data['identity'])){
+					$identitys = explode(',',$data['identity']);
+					foreach($identitys as $i)
+					{
+						$arr = array(
+								'adj_id'		=>	$id,
+								'pro_id'		=>	$data["pro_id_".$i],
+								'cur_qty'		=>	$data["current_qty_".$i],
+								'qty_unit'		=>	$data["qty_unit_".$i],
+								'qty_detail'	=>	$data["qty_detail_".$i],
+								'total_qty'		=>	$data["total_qty_".$i],
+								'qty_remain'	=>	$data["qty_remain_".$i],
+								'remark'		=>	$data["remark_".$i],
+						);
+						$this->_name="tb_product_adjust_detail";
+						$this->insert($arr);
+		
+						$sql="select id,qty from tb_prolocation where pro_id = ".$data["pro_id_".$i]." and location_id=".$data["branch_id"];
+						$qty = $db->fetchRow($sql);
+						if(!empty($qty)){
+							$arr_pro = array(
+								'qty'	=>	$qty['qty'] - $data['total_qty_'.$i],
+							);
+							$this->_name="tb_prolocation";
+							$where=" id = ".$qty['id'];
+							$this->update($arr_pro, $where);
+						}
+					}
+				}
+			}
+			$db->commit();
+		}catch (Exception $e){
+			$db->rollBack();
+			Application_Model_DbTable_DbUserLog::writeMessageError($e);
+			echo $e->getMessage();exit();
+		}
+	}
 	function getProductName(){
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$user_info = new Application_Model_DbTable_DbGetUserInfo();
@@ -150,7 +224,16 @@ class Product_Model_DbTable_DbAdjustStock extends Zend_Db_Table_Abstract
 		
 		return $db->fetchRow($sql);
 	}
-	
+	function getAdjustByID($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM tb_product_adjust where id = $id";
+		return $db->fetchRow($sql);
+	}
+	function getAdjustDetailByID($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM tb_product_adjust_detail where adj_id = $id";
+		return $db->fetchAll($sql);
+	}
 }
 
 

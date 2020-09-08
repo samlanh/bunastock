@@ -43,37 +43,36 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
-    	$_arr=array(
-    			'partner_name' 		 => $post['partner_name'],
-    			'gender'			 => $post['gender'],
-    			'tel' 				 => $post['tel'],
-    			'addresss'	      	 => $post['addresss'],
-    	//		'service_cate'	     => $post['service_cate'],
-    	//		'service_fee'	     => $post['service_fee'],
-    			'description'	     => $post['description'],
-    	);
-    	$this->_name="tb_partnerservice";
-    	$id = $this->insert($_arr);
-    	
-    	if(!empty($post['identity'])){
-    		$iden = explode(",", $post['identity']);
-    		foreach ($iden as $i){
-    			$arra=array(
-    					'partner_id'		=> $id,
-    					'service_id'		=> $post['service_id'.$i],
-    					'prices'			=> $post['prices_'.$i],
-    					'notes'				=> $post['notes_'.$i],
-    			);
-    			$this->_name="tb_partner_cost";
-    			$this->insert($arra);
-    		}
-    	//	print_r($this->$post); exit();
-    	}
-    	$db->commit();
+	    	$_arr=array(
+	    			'partner_name' 		 => $post['partner_name'],
+	    			'gender'			 => $post['gender'],
+	    			'tel' 				 => $post['tel'],
+	    			'addresss'	      	 => $post['addresss'],
+	    			'user_id'	     	 => $this->getUserId(),
+	    			'create_date'	     => date("Y-m-d"),
+	    			'modify_date'	     => date("Y-m-d"),
+	    			'description'	     => $post['description'],
+	    	);
+	    	$this->_name="tb_partnerservice";
+	    	$id = $this->insert($_arr);
+	    	
+	    	if(!empty($post['identity'])){
+	    		$iden = explode(",", $post['identity']);
+	    		foreach ($iden as $i){
+	    			$arra=array(
+	    					'partner_id'		=> $id,
+	    					'service_id'		=> $post['service_id'.$i],
+	    					'prices'			=> $post['prices_'.$i],
+	    					'notes'				=> $post['notes_'.$i],
+	    			);
+	    			$this->_name="tb_partner_cost";
+	    			$this->insert($arra);
+	    		}
+	    	}
+	    	$db->commit();
     	}catch (Exception $e){
     		$db->rollBack();
     		echo $e->getMessage();exit();
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }  
     function getPartnerCostById($id){
@@ -88,11 +87,7 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     		";
     	return $db->fetchAll($sql);
     }
-//     function getServices($data){
-//     	$db = $this->getAdapter();
-//     	$sql = "SELECT id,partner_name,gender,tel,addresss,service_cate,service_fee,description FROM tb_partnerservice";
-//     	return $db->fetchAll($sql);
-//     }
+
     function getAllService(){
     	$db = $this->getAdapter();
     	$sql = "SELECT id,barcode,item_name FROM tb_product WHERE item_name!='' AND status=1 AND is_service=1 AND is_package=0 ORDER BY item_name ASC";
@@ -102,43 +97,40 @@ class Sales_Model_DbTable_DbPartnerservice extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
-    //	print_r($post);exit();
-    	$_arr=array(
-    			'partner_name' 		 => $post['partner_name'],
-    			'gender'			 => $post['gender'],
-    			'tel' 				 => $post['tel'],
-    			'addresss'	      	 => $post['addresss'],
-//     			'service_cate'	 	=> $post['service_cate'],
-//     			'service_fee'	     => $post['service_fee'],
-    			'description'	     => $post['description'],
-    			"status"			=>	$post["status"],
-    	);
-    	$where="id= $id";
-		$this->update($_arr, $where);
-		
-		$this->_name="tb_partner_cost";
-		$where=" partner_id = $id";
-		$this->delete($where);
-		
-		if(!empty($post['identity'])){
-			$iden = explode(",", $post['identity']);
-			foreach ($iden as $i){
-				$arra=array(
-						'partner_id'		=> $id,
-						'service_id'		=> $post['service_id'.$i],
-						'prices'			=> $post['prices_'.$i],
-						'notes'				=> $post['notes_'.$i],
-				);
-				$this->_name="tb_partner_cost";
-				$this->insert($arra);
+	    	$_arr=array(
+	    			'partner_name' 		 => $post['partner_name'],
+	    			'gender'			 => $post['gender'],
+	    			'tel' 				 => $post['tel'],
+	    			'addresss'	      	 => $post['addresss'],
+	    			'description'	     => $post['description'],
+	    			'user_id'	     	 => $this->getUserId(),
+	    			'modify_date'	     => date("Y-m-d"),
+	    			"status"			 =>	$post["status"],
+	    	);
+	    	$where="id= $id";
+			$this->update($_arr, $where);
+			
+			$this->_name="tb_partner_cost";
+			$where=" partner_id = $id";
+			$this->delete($where);
+			
+			if(!empty($post['identity'])){
+				$iden = explode(",", $post['identity']);
+				foreach ($iden as $i){
+					$arra=array(
+							'partner_id'		=> $id,
+							'service_id'		=> $post['service_id'.$i],
+							'prices'			=> $post['prices_'.$i],
+							'notes'				=> $post['notes_'.$i],
+					);
+					$this->_name="tb_partner_cost";
+					$this->insert($arra);
+				}
 			}
-			//	print_r($this->$post); exit();
-		}
-		$db->commit();
+			$db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
 			echo $e->getMessage();exit();
-			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
     }
     public function getServiceById($id){

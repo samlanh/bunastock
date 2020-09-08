@@ -55,6 +55,29 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		$group = " GROUP BY p.`id` ORDER BY p.`id`";
 		return $db->fetchAll($sql.$where.$group);
 	}
+	function getOneProduct($data){
+		$db = $this->getAdapter();
+		$sql ="SELECT
+					p.`id`,
+					p.`barcode`,
+					p.`item_code`,
+					p.`item_name` ,
+					p.`status`,
+					p.`unit_label`,
+					p.`qty_perunit`,
+					p.`price`,
+					p.selling_price,
+					p.is_service,
+					(SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
+					(SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
+					(SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure
+				FROM
+					`tb_product` AS p
+				WHERE
+					p.status=1
+					and p.id = ".$data['pro_id'];
+		return $db->fetchRow($sql);
+	}
 	function getAllProductSold($data){
 		$db = $this->getAdapter();
 		
@@ -71,8 +94,11 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 					(SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
 					(SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
 					(SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
-					(SELECT SUM(si.qty_order) FROM `tb_salesorder_item` AS si,`tb_sales_order` AS s WHERE s.id = si.saleorder_id AND si.pro_id = p.id $sale ) AS from_sale,
-					(SELECT SUM(msi.qty_order) FROM `tb_mong_sale_item` AS msi,`tb_mong` AS m WHERE m.id = msi.mong_id AND msi.pro_id = p.id $mong) AS from_mong
+					(SELECT SUM(si.qty_order) FROM `tb_salesorder_item` AS si,`tb_sales_order` AS s WHERE s.id = si.saleorder_id AND si.pro_id = p.id $sale limit 1) AS from_sale,
+					(SELECT SUM(msi.qty_order) FROM `tb_mong_sale_item` AS msi,`tb_mong` AS m WHERE m.id = msi.mong_id AND msi.pro_id = p.id $mong limit 1) AS from_mong,
+					
+					(SELECT SUM(si.sub_total) FROM `tb_salesorder_item` AS si,`tb_sales_order` AS s WHERE s.id = si.saleorder_id AND si.pro_id = p.id $sale limit 1) AS total_from_sale,
+					(SELECT SUM(msi.sub_total) FROM `tb_mong_sale_item` AS msi,`tb_mong` AS m WHERE m.id = msi.mong_id AND msi.pro_id = p.id $mong limit 1) AS total_from_mong
 				FROM
 					`tb_product` AS p 
 				WHERE 

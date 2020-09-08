@@ -1,6 +1,7 @@
 <?php
 class Product_AdjustController extends Zend_Controller_Action
 {
+	const REDIRECT_URL_ADD_CLOSE ='/product/adjust/';
 	public function init()
     {
         /* Initialize action controller here */
@@ -38,22 +39,47 @@ class Product_AdjustController extends Zend_Controller_Action
    	
     public function addAction()
     {   
-    	$db_adjust= new Product_Model_DbTable_DbAdjustStock();
-    	if($this->getRequest()->isPost()){   
-    		$post=$this->getRequest()->getPost();
-    		$db_adjust->add($post);
-    		if(isset($post["save_close"])){
-    			Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ",self::REDIRECT_URL_ADD_CLOSE);
-    		}else{
-				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
-			}
-    		
+    	try{
+	    	$db_adjust= new Product_Model_DbTable_DbAdjustStock();
+	    	if($this->getRequest()->isPost()){   
+	    		$post=$this->getRequest()->getPost();
+	    		$db_adjust->add($post);
+	    		if(isset($post["save_close"])){
+	    			Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ",self::REDIRECT_URL_ADD_CLOSE);
+	    		}else{
+					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
+				}
+	    	}
+	    	$db_global = new Application_Model_DbTable_DbGlobal();
+	    	$this->view->branch = $db_global->getAllBranch();
+	    	$this->view->adjcode = $db_global->getAdjustCode();
+    	}catch (Exception $e){
+    		echo $e->getMessage();exit();
     	}
-    	$db_global = new Application_Model_DbTable_DbGlobal();
-    	$this->view->branch = $db_global->getAllBranch();
-    	$this->view->adjcode = $db_global->getAdjustCode();
-    	
 	}
+	
+	public function editAction()
+	{
+		try{
+			$id = $this->getRequest()->getParam("id");
+			$db_adjust= new Product_Model_DbTable_DbAdjustStock();
+			if($this->getRequest()->isPost()){
+				$post=$this->getRequest()->getPost();
+				$db_adjust->edit($post,$id);
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ",self::REDIRECT_URL_ADD_CLOSE);
+			}
+			
+			$db_global = new Application_Model_DbTable_DbGlobal();
+			$this->view->branch = $db_global->getAllBranch();
+			$this->view->adjcode = $db_global->getAdjustCode();
+			 
+			$this->view->row = $db_adjust->getAdjustByID($id);
+			$this->view->row_detail = $db_adjust->getAdjustDetailByID($id);
+		}catch (Exception $e){
+			echo $e->getMessage();exit();
+		}
+	}
+	
 	/// Ajax Section
 	public function getproductAction(){
 		if($this->getRequest()->isPost()) {

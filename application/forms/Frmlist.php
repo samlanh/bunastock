@@ -190,7 +190,7 @@ class Application_Form_Frmlist
 		 
 		$head='<form name="list">
 		<div class="dataTables_scrollBody" style="position: relative;background:#fff;     padding: 10px 0px; ">
-		<table border="1" id="datatable-responsive" style="  border-collapse: collapse;   border-color: #ddd;"  class="display nowrap dataTable dtr-inline collapsed" cellspacing="0" width="100%" >
+		<table border="1" id="" style="  border-collapse: collapse;   border-color: #ddd;"  class="display nowrap dataTable dtr-inline collapsed" cellspacing="0" width="100%" >
 		';
 		$col_str='';
 		$col_str .='<thead><tr style="background:#f0f0f0;">';

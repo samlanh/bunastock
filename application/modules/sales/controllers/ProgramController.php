@@ -52,7 +52,7 @@ class Sales_ProgramController extends Zend_Controller_Action
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addProgram($data);
-					Application_Form_FrmMessage::Sucessfull("បញ្ជូលដោយជោគជ័យ", '/sales/program/index');
+				Application_Form_FrmMessage::Sucessfull("បញ្ជូលដោយជោគជ័យ", '/sales/program/index');
 			  }catch (Exception $e){
 			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			  	echo $e->getMessage();exit();

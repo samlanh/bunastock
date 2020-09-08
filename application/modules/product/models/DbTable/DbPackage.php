@@ -22,7 +22,7 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
 		(SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=16  AND p.`is_service`=v.`key_code` LIMIT 1) AS is_service,
 		p.selling_price AS master_price,
 		(SELECT `fullname` FROM `tb_acl_user` WHERE `user_id`=p.`user_id` LIMIT 1) AS user_name,
-		(SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status
+		(SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status
 		FROM
 		`tb_product` AS p 
 		WHERE p.is_package=1 ";
@@ -46,6 +46,7 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
 		}
 		
 		$group_by = " GROUP BY p.id DESC ";
+		//echo $sql.$where.$group_by;
 		return $db->fetchAll($sql.$where.$group_by);
 	}
   public function getProductCode(){
@@ -83,9 +84,9 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
     		$arr = array(
     			'item_name'		=>	$data["product_name"],
     			'item_code'		=>	$data["product_code"],
-    			'barcode'		=>	"",
+    			'barcode'		=>	$data["barcode"],
     			'cate_id'		=>	$data["cate_id"],
-    			'measure_id'	=>0,
+    			'measure_id'	=>  0,
     			'brand_id'		=>	1,
     			'color_id'		=>	0,
     			'is_package'	=>	1,
@@ -131,7 +132,7 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
     		$arr = array(
     				'item_name'		=>	$data["product_name"],
     				'item_code'		=>	$data["product_code"],
-    				'barcode'		=>	"",
+    				'barcode'		=>	$data["barcode"],
     				'cate_id'		=>	$data["cate_id"],
     				'measure_id'	=>	0,
     				'brand_id'		=>	1,
@@ -144,11 +145,11 @@ class Product_Model_DbTable_DbPackage extends Zend_Db_Table_Abstract
     				'unit_label'	=>	"",
     				'user_id'		=>	$this->getUserId(),
     				'note'			=>	$data["noted"],
-    				'status'		=>	1,
+    				'status'		=>	$data["status"],
     		);
     		$this->_name="tb_product";
     		$where="id = ".$data['id'];
-    		 $this->update($arr, $where);
+    		$this->update($arr, $where);
 
     		$this->_name = "tb_product_package";
     		$where="package_id = ".$data['id'];

@@ -15,7 +15,8 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			$sql=" SELECT 
 						r.id,
 						r.`receipt_no`,
-						(SELECT sale_no FROM `tb_sales_order` WHERE id=r.invoice_id) AS invoice_no,
+						(SELECT place_bun FROM `tb_sales_order` WHERE tb_sales_order.id=r.invoice_id limit 1) AS place_bun,
+						(SELECT sale_no FROM `tb_sales_order` WHERE tb_sales_order.id=r.invoice_id limit 1) AS invoice_no,
 						(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=r.customer_id LIMIT 1 ) AS customer_name,
 						r.`date_input`,
 						r.`total`,
@@ -41,6 +42,8 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 				$s_where[] = " r.`paid` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`balance` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`remark` LIKE '%{$s_search}%'";
+				$s_where[] = " (SELECT sale_no FROM `tb_sales_order` WHERE tb_sales_order.id=r.invoice_id) LIKE '%{$s_search}%'";
+				$s_where[] = " (SELECT place_bun FROM `tb_sales_order` WHERE tb_sales_order.id=r.invoice_id limit 1) LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['branch_id']>0){
@@ -249,7 +252,17 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 	
 	function getSaleCustomerName(){
 		$db = $this->getAdapter();
-		$sql = "SELECT id,(select cust_name from tb_customer where tb_customer.id = customer_id) as name FROM tb_sales_order WHERE balance_after>0 and status=1 ";
+		$sql = "SELECT 
+					id,
+					(select cust_name from tb_customer where tb_customer.id = customer_id) as name,
+					place_bun,
+					phone 
+				FROM 
+					tb_sales_order 
+				WHERE 
+					balance_after>0 
+					and status=1 
+			";
 		return $db->fetchAll($sql);
 	}
 	

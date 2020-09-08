@@ -2,6 +2,7 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>						 
 <title>ការឧបត្ថមរបស់សប្បុរសជន</title>
 <body>
@@ -20,18 +21,31 @@
 					<div class="portlet-body form">
 						<div class="form-body">
 							<div class="row">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-5" style="text-align: left !important;border:1px solid #ccc;">
+								<div class="col-md-6" style="text-align: left !important;border:1px solid #ccc;">
 										<h4 style="border-bottom: 1px solid #ccc;" class="center">ការឧបត្ថមរបស់សប្បុរសជន</h4>
 									<div class="form-group" >
 										<label class="col-md-4 control-label">សប្បុរសជន</label>
-										<div class="col-md-8">
-											<input type="text" class="validate[required] form-control " id="donor" name="donor"  />
+										<div class="col-md-3">
+											<select name="type" id="type" class="form-control select2me" >
+												<option value=""></option>
+												<option value="លោក">លោក</option>
+												<option value="លោកស្រី">លោកស្រី</option>
+												<option value="អ្នកនាង">អ្នកនាង</option>
+												<option value="កញ្ញា">កញ្ញា</option>
+											</select>
+										</div>
+										<div class="col-md-5">
+											<select class="form-control select2me" id="donor" name="donor" onchange="getPopupDonor()" >
+												<option value="">ជ្រើសរើសសប្បុរសជន</option>
+												<option value="-1">បន្ថែមថ្មី</option>
+												<?php if(!empty($this->donor)){foreach($this->donor as $rs){?>
+													<option value="<?php echo $rs['name'];?>"><?php echo $rs['name']."-".$rs['tel'];?></option>
+												<?php }}?>
+											</select>
 										</div>
 									</div>
 									<div class="form-group" style="">
-										<label class="validate[required] col-md-4 control-label">លេខទូរស័ព្ទ</label>
+										<label class="col-md-4 control-label">លេខទូរស័ព្ទ</label>
 										<div class="col-md-8">
 											<input type="text" class="form-control " id="tel" name="tel"  />
 										</div>
@@ -44,12 +58,13 @@
 											<input type="text" class="form-control " id="address" name="address"  />
 										</div>
 									</div>
+									<div style="display:none">
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
 											តម្រូវការប្រើប្រាស់
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control " id="required_using" name="required_using"  />
+											<input type="hidden" class="form-control " id="required_using" name="required_using"  />
 										</div>
 									</div>
 									<div class="form-group" >
@@ -57,16 +72,17 @@
 										<div class="col-md-8">
 											<div class="input-icon right">
 												<i class="fa fa-calendar"></i>
-												<input type="text" class="form-control date-picker" name="invalid_date" id="invalid_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
+												<input type="hidden" class="form-control date-picker" name="invalid_date" id="invalid_date" value="<?php echo date("d-m-Y")?>" data-date-format="dd-mm-yyyy" />
 											</div>
 										</div>
+									</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
 											សម្គាល់(ខ្មែរ)
 										</label>
 										<div class="col-md-8">
-											<textarea class="form-control " name="detail_kh" id="detail_kh" style="height: 60px;" > <?php echo "មានចិត្តសន្ធាជ្រះថ្លាជួយក្តារជូនសពក្រីក្រ"?></textarea>
+											<textarea class="form-control " name="detail_kh" id="detail_kh" style="height: 60px;" > <?php echo "មានចិត្តសន្ធាជ្រះថ្លាជួយក្តារជូនសពក្រីក្រ ជួបសុខសប្បាយ ជៀសផុតគ្រោះឆុង និង ជាន់ឆ្នាំទាំងឡាយ"?></textarea>
 										</div>
 									</div>
 									<div class="form-group" style="">
@@ -102,7 +118,7 @@
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">ចំនួនឧបត្ថម</label>
 										<div class="col-md-8">
-											<input type="text" class="validate[required] form-control " name="qtys" id="qtys" onkeyup="calculateTotal();" />
+											<input type="number" class="validate[required] form-control " name="qtys" id="qtys" onkeyup="calculateTotal();" onkeyup="calculateTotal();" onClick="calculateTotal();" />
 										</div>
 									</div>									
 									<div class="form-group" style="">
@@ -156,22 +172,10 @@
 </html>
 <script>
 	$('#frm').submit(function() {
-		donor_name=$("#donor_name").val();
-		if(donor_name<=0){
-			alert("Please input name husband");
-			$('#donor_name').focus();
-			return false;	
-		}
-		donor_female=$("#donor_female").val();
-		if(donor_female<=0){
-			alert("Please input name wife");
-			$('#donor_female').focus();
-			return false;	
-		}
-		tel=$("#tel").val();
-		if(tel<=0){
-			alert("Please input phone number");
-			$('#tel').focus();
+		donor=$("#donor").val();
+		if(donor<=0){
+			alert("Please input name");
+			$('#donor').focus();
 			return false;	
 		}
 		qty=$("#qty").val();
@@ -194,8 +198,7 @@
 		   return false;	    
 		}
 	});
-</script>
-<script>
+
 	function calculateTotal(){
 		var qtys = $('#qtys').val();
 		var unit_price = $('#unit_price').val();
@@ -205,6 +208,116 @@
 		total = qtys * unit_price;
 		$('#total_amount').val(total);	
 	}	
+	function getPopupDonor(){
+		val = $('#donor').val();
+		if(val==-1){
+			$('#donorpopup').modal('show');
+		}else{
+			getDonorInfo(val);
+		}
+	}
+	function addNewDonor(){
+		name = $("#donor_name").val();
+		if(name==''){
+			$("#donor_name").focus();
+			return false;
+		} 
+		$('#save_donor').attr("disabled", true);
+		$('#donor').append($("<option></option>").attr("value",name).attr("selected",true).text(name));  
+		$("#donor").select2();	
+		$('#donorpopup').modal('hide');
+		$('#save_donor').attr("disabled", false);
+	}
+	
+	function getDonorInfo(donor_name){
+		if(donor_name!=''){
+			$.ajax({
+				url: "<?php echo $this->baseUrl()?>/donors/index/get-donorinfo",
+				type: "post",
+				data: {donor_name:donor_name},
+				success: function(data){
+					rs = $.parseJSON(data);
+					if(data){
+						$('#tel').val(rs.tel);
+						$('#address').val(rs.address);
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
+	}
+	
+	
+	function getDeadPersonDetail(){		
+		var dead_id  = $("#dead_id").val();
+
+		if(dead_id>0){
+			$.ajax({
+				url: "<?php echo $this->baseUrl()?>/mong/index/get-dead-detail",
+				type: "post",
+				data: {dead_id:dead_id},
+				success: function(data){
+					rs = $.parseJSON(data);
+					if(data){
+						$("#dead_ids").val(rs.dead_name);
+						$('#dead_name_chinese').val(rs.dead_name_chinese);
+					}
+				},
+				error:function(err){
+					alert("failed");
+				}
+			});
+		}
+		
+	}
+	
+	
 </script>
 
-
+ <div id="donorpopup" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">   
+				<div class="row">
+					<div class="col-md-12">
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមសប្បុរសជន");?>
+								</div>
+								<div class="caption pull-right">
+									<a href="<?php ?>" >
+										 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+									</a>
+								</div>
+							</div>
+							<div class="portlet-body form">
+								<form id="frmreceiver" name="frmreceiver" dojoType="dijit.form.Form" autoComplete="off" enctype="application/x-www-form-urlencoded" class="form-horizontal" enctype="multipart/form-data" method="post">
+									<div class="form-body">
+										<div class="form-group">
+											<label class="control-label col-md-3">
+												<?php echo $tr->translate("ឈ្មោះសប្បុរសជន");?>
+											</label>
+											<div class="col-md-9">
+												<div class="input-icon right">
+													<input name="donor_name" id="donor_name" class="form-control" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label  class="col-md-12 center">
+												<button type="button" id="save_donor" name="save_donor" onclick="addNewDonor();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("រក្សាទុក")?> </button>
+											</label>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+ </div>

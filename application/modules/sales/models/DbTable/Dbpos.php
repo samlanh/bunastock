@@ -127,21 +127,21 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				$this->insert($info_purchase_order);
 			}
 	
-			if($data['total_partner_service']>0){
-				$arra=array(
-						"sale_order_id"  => $sale_id,
-						"date_payment"  => date("Y-m-d",strtotime($data['sale_date'])),
-						"total_payment" => $data['total_partner_service'],
-						"paid"          => 0,
-						"balance"       => $data['total_partner_service'],
-						"user_id"       => $this->getUserId(),
-						"status"        => 1,
-						"bank_name"     => 	'',
-						"cheque_number" => 	'',
-				);
-				$this->_name="tb_partnerservice_payment";
-				$this->insert($arra);
-			}
+// 			if($data['total_partner_service']>0){
+// 				$arra=array(
+// 						"sale_order_id"  => $sale_id,
+// 						"date_payment"  => date("Y-m-d",strtotime($data['sale_date'])),
+// 						"total_payment" => $data['total_partner_service'],
+// 						"paid"          => 0,
+// 						"balance"       => $data['total_partner_service'],
+// 						"user_id"       => $this->getUserId(),
+// 						"status"        => 1,
+// 						"bank_name"     => 	'',
+// 						"cheque_number" => 	'',
+// 				);
+// 				$this->_name="tb_partnerservice_payment";
+// 				$this->insert($arra);
+// 			}
 			
 			if(!empty($data['identity'])){
 				$ids=explode(',',$data['identity']);
@@ -268,7 +268,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$where=" id = ".$sale_id;
 			$this->update($info_purchase_order, $where);
 				
-			$rsreceipt = $this->getReceiptBySaleId($sale_id);
+			$rsreceipt = $this->getReceiptBySaleId($sale_id,1);
 			
 			if($data['paid']>0){
 				$db_global = new Application_Model_DbTable_DbGlobal();
@@ -465,7 +465,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$where=" id = ".$sale_id;
 			$this->delete($where);
 			
-			$rsreceipt = $this->getReceiptBySaleId($sale_id);
+			$rsreceipt = $this->getReceiptBySaleId($sale_id,1);
 			if(!empty($rsreceipt)){
 				$this->_name='tb_receipt';
 				$where=" id =".$rsreceipt['receipt_id'];
@@ -484,8 +484,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			$db->rollBack();
 		}
 	}
-	function getReceiptBySaleId($sale_id){
-		$sql=" SELECT * FROM tb_receipt WHERE invoice_id = $sale_id and type=1 LIMIT 1 ";
+	function getReceiptBySaleId($sale_id,$type){
+		$sql=" SELECT * FROM tb_receipt WHERE invoice_id = $sale_id and type=$type ORDER BY id DESC LIMIT 1 ";
 		return $this->getAdapter()->fetchRow($sql);				
 	}
 	

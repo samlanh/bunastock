@@ -173,5 +173,12 @@
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
-function doPrint() {var divToPrint = document.getElementById('divPrint');var htmlToPrint = '' +'<style type="text/css">' +'</style>';htmlToPrint += divToPrint.outerHTML;window.document.write(htmlToPrint);window.print();window.close();}
+function doPrint() {
+	var divToPrint = document.getElementById('divPrint');
+	var htmlToPrint = '' +'<style type="text/css">' +'</style>';
+	htmlToPrint += divToPrint.outerHTML;
+	window.document.write(htmlToPrint);
+	window.print();
+	window.close();
+}
 </script>

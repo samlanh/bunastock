@@ -52,6 +52,7 @@ class report_ProductController extends Zend_Controller_Action
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);    
     }    
+    
     public function rptadjuststockAction()
     {
     	$db = new report_Model_DbProduct();
@@ -109,10 +110,87 @@ class report_ProductController extends Zend_Controller_Action
     	$_db = new Application_Model_DbTable_DbGlobal();
     	$this->view->product = $_db->getAllProduct();
     }
-    
+    public function productBarcodeAction()
+    {
+    	$db = new report_Model_DbProduct();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    	}else{
+    		$data = array(
+    				'ad_search'		=>	'',
+    				'brand'			=>	'',
+    				'category'		=>	'',
+    				'type'			=>	-1,
+    		);
+    	}
+    	$this->view->product = $db->getAllProduct($data);
+    	$this->view->search = $data;
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    public function allBarcodeAction()
+    {
+    	$db = new report_Model_DbProduct();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    	}else{
+    		$data = array(
+    				'ad_search'		=>	'',
+    				'brand'			=>	'',
+    				'category'		=>	'',
+    				'type'			=>	-1,
+    		);
+    	}
+    	$this->view->product = $db->getAllProduct($data);
+    	$this->view->search = $data;
+    	$formFilter = new Product_Form_FrmProduct();
+    	$this->view->formFilter = $formFilter->productFilter();
+    	Application_Model_Decorator::removeAllDecorator($formFilter);
+    }
+    public function oneBarcodeAction()
+    {
+    	$db = new report_Model_DbProduct();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    	}else{
+    		$data = array(
+    				'pro_id'	=>	0,
+    				'qty'		=>	1,
+    		);
+    	}
+    	if(!empty($data['pro_id'])){
+	    	$this->view->product = $db->getOneProduct($data);
+    	}
+    	$this->view->search = $data;
+    	
+    	$db = new Sales_Model_DbTable_Dbpos();
+    	$this->view->rsproduct = $db->getAllProductName(2);
+    	//print_r($this->view->rsproduct);exit();
+    }
+	public function oneBarcodeRowAction()
+    {
+    	$db = new report_Model_DbProduct();
+    	if($this->getRequest()->isPost()){
+    		$data = $this->getRequest()->getPost();
+    	}else{
+    		$data = array(
+    				'pro_id'	=>	0,
+    				'qty'		=>	1,
+    		);
+    	}
+    	if(!empty($data['pro_id'])){
+	    	$this->view->product = $db->getOneProduct($data);
+    	}
+    	$this->view->search = $data;
+    	
+    	$db = new Sales_Model_DbTable_Dbpos();
+    	$this->view->rsproduct = $db->getAllProductName(2);
+    	//print_r($this->view->rsproduct);exit();
+    }
     function showbarcodeAction(){
     	$id = ($this->getRequest()->getParam('id'));
-    	$sql ="SELECT id,barcode,item_name,cate_id,
+    	$sql ="SELECT id,barcode,item_name,item_code,cate_id,
 			((SELECT name FROM `tb_category` WHERE id=cate_id)) as cate_name
     	FROM `tb_product` WHERE id IN (".$id.")";
     	$db = new Application_Model_DbTable_DbGlobal();
@@ -120,11 +198,11 @@ class report_ProductController extends Zend_Controller_Action
     	$this->view->rsproduct = $db->getGlobalDb($sql);
     }
     public function generateBarcodeAction(){
-    	$loan_code = $this->getRequest()->getParam('pro_code');
+    	$pro_code = $this->getRequest()->getParam('pro_code');
     	header('Content-type: image/png');
     	$this->_helper->layout()->disableLayout();
     	//$barcodeOptions = array('text' => "$_itemcode",'barHeight' => 30);
-    	$barcodeOptions = array('text' => "$loan_code",'barHeight' => 40);
+    	$barcodeOptions = array('text' => "$pro_code",'barHeight' => 40);
     	//'font' => 4(set size of label),//'barHeight' => 40//set height of img barcode
     	$rendererOptions = array();
     	$renderer = Zend_Barcode::factory(

@@ -185,7 +185,7 @@ function addProductRow(){
 		$('#identity').val(identity+','+index);
 	} else {$('#identity').val(index);}
 	
-	$('#product_id').val(-1).select2();
+	//$('#product_id').val(-1).select2();
 	getProductPrice(index,pro_id);
 }
 var url_getproduct = '<?php echo $this->url(array('module'=>'product','controller'=>'package','action'=>'getproduct')); ?>';

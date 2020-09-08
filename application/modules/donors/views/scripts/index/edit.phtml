@@ -44,12 +44,13 @@
 											<input type="text" class="form-control " id="address" name="address" value="<?php echo $this->row['address']?>" />
 										</div>
 									</div>
+									<div style="display:none">
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">
 											តម្រូវការប្រើប្រាស់
 										</label>
 										<div class="col-md-8">
-											<input type="text" class="form-control " id="required_using" name="required_using" value="<?php echo $this->row['required_using']?>" />
+											<input type="hidden" class="form-control " id="required_using" name="required_using" value="<?php echo $this->row['required_using']?>" />
 										</div>
 									</div>
 									<div class="form-group" >
@@ -57,9 +58,10 @@
 										<div class="col-md-8">
 											<div class="input-icon right">
 												<i class="fa fa-calendar"></i>
-												<input type="text" class="form-control date-picker" name="invalid_date" id="invalid_date" value="<?php echo date("d-m-Y",strtotime($this->row['invalid_date']));?>" data-date-format="dd-mm-yyyy" />
+												<input type="hidden" class="form-control date-picker" name="invalid_date" id="invalid_date" value="<?php echo date("d-m-Y",strtotime($this->row['invalid_date']));?>" data-date-format="dd-mm-yyyy" />
 											</div>
 										</div>
+									</div>
 									</div>
 									<div class="form-group" style="">
 										<label class="col-md-4 control-label">

@@ -4,9 +4,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title>បញ្ជីទំនិញ</title>
-<style>
-	#print-footer{display: none !important;}
-</style>
+
 <div id="PrintReceipt" style="border:1px dashed #ccc;width:25cm !important; padding: 1px; margin-bottom:30px; ">
 
 	<table class="print" cellspacing="0" cellpadding="0" style="width:99%;font-family: 'Khmer OS Battambang' !important; font-size:11px !important; margin-top:10px;white-space:nowrap;">
@@ -15,19 +13,20 @@
 			    <td colspan="10" style="" align="center" valign="top">
 					<table width="100%" border="0" style="font-size: 14px;margin-bottom: 0px; white-space: nowrap;"   >
 						<tr>
-							<td width="35%" valign="top">
+							<td width="30%" valign="top">
 								
 							</td>
-							<td width="30%" align="center" valign="top" style="line-height: 35px;">
+							<td width="40%" align="center" valign="top" style="line-height: 35px;">
 								<div style="font-size: 32px;font-family:'Khmer OS Muol Light'; color:red !important;"><?php echo $tr->translate("JAV_BONA");?></div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light'; color:black;"><?php echo $tr->translate("NAME_COMPANT_BUNA");?></div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:red !important;"><?php echo $tr->translate("NAME_CHINESE");?></div>
 								<div style="font-size: 23px;font-family:'Khmer OS Muol Light';font-weight: bold; color:blue !important;"><span class="iconprint"><i class="fa fa-facebook-square" style="font-size: 32px;"></i></span> <?php echo $tr->translate("JAV_NOA_FUNERAL");?></div>
+								<div style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
 								<div style="font-size: 20px;font-family:Khmer OS Muol Light; color: black !important;"><?php echo $tr->translate("COM_LISTING");?></div>
 							</td>
-							<td width="35%" valign="top" align="center">
+							<td width="30%" valign="top" align="center">
 								<img style="height:115px; width:150px; alt="<?php ?>" src="<?php echo $this->baseUrl()?>/images/logosbona.jpg"><br />
-								<div style="font-size: 19px;font-family:'Khmer OS Muol Light';text-align: center;width:90%;"><?php echo $tr->translate("PHONE_BUNA");?></div>
+								<div style="font-size: 17px;font-family:'Khmer OS Battambang';text-align: center;width:90%;"><?php echo $tr->translate("PHONE_BUNA");?></div>
 								
 							</td>
 							
@@ -41,33 +40,13 @@
 					}
 				.tablesorter td{font-family:'khmer os battambang' !important;}
 				.one{line-height: 15px;font-weight: bold;font-size: 16px;}
-				table { page-break-inside:auto }
-				  tr{ page-break-inside:avoid; page-break-after:auto; }
-				#header {
-				  display: table-header-group;
-				  page-break-inside:avoid; page-break-after:auto;
-				}
-				footer {
-				  font-size: 9px;
-				  color: black !important;
-				 text-align:center;
-				}
-				#print-footer {
-					display: block;
-					position: fixed;
-					bottom:0;
-					left:13%;
-				}
-				@page {
-				  size: A4;
-				  margin: 11mm 17mm 17mm 17mm;				
-					
-				}
+				table { page-break-before:avoid }
+				tr{ page-break-inside:auto; page-break-after:avoid; }
 			</style>			
 			
 			<tr height="80px">
 				<td colspan="4" width="65%" valign="top">
-					<table width="100%" style=" font-size: 16px;border: 1px solid #000;">
+					<table width="100%" style=" font-size: 16px;border: 1px solid #000;white-space: nowrap;">
 						<tbody>
 							<tr>
 								<td>&nbsp;ទីតាំងបុណ្យ</td>
@@ -107,7 +86,7 @@
 					</table>
 				</td>
 				<td colspan="6" width="35%" valign="top">
-					<table width="100%" style="margin-left:5px;font-size: 16px;border: 1px solid #000;">
+					<table width="100%" style="margin-left:5px;font-size: 16px;border: 1px solid #000;white-space:nowrap;">
 						<tbody>
 							<tr>
 								<td width="90px;" style="white-space: nowrap;">&nbsp;លេខវិក្កយបត្រ</td>
@@ -124,6 +103,13 @@
 								<td colspan="1"> :</td>
 								<td>
 									<label class="one">&nbsp;&nbsp;<?php echo $rs['user_name']?></label>
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;<img style="height:33px; width:38px;margin-top: -5px;" src="<?php echo $this->baseUrl()?>/images/aba_logo.png"> </img>គណនី</td>
+								<td colspan="1"> :</td>
+								<td>
+									<label class="one">&nbsp;&nbsp;<?php echo ABA_ACC;?></label>
 								</td>
 							</tr>
 						</tbody>
@@ -184,19 +170,12 @@
 				</td>
 			</tr>
 		</tbody>
-		<footer>
-			<tr height="20px">
-				<td colspan="10">
-					<div id="print-footer" style="font-size:15px; color:blue !important;"><?php echo $tr->translate("FOOTER_BUNA");?></div>
-				</td>
-			</tr>
-		</footer>	
 	</table>
 </div>
     <div style="padding-left:14%; margin: 0 auto;"> 
     	<lable class="col-md-3" style=""></lable>
     	<div class="col-md-2">
-			<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
+			<a href="<?php echo $this->baseUrl();?>/sales/dn"><button type="button" class="btn red btn-block btn-lg"><i class="fa fa-times"></i>ចាកចេញ</button></a>
 		</div>
     	<lable class="col-md-2" style="">
              <button type="button" onclick="printinvoice();" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-print"></i>បោះ ពុម្ភ </button>

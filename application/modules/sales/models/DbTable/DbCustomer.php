@@ -7,7 +7,10 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 	{
 		$this->_name=$name;
 	}
-	
+	function getUserID(){
+		$session_user=new Zend_Session_Namespace('auth');
+		return $session_user->user_id;
+	}
 	public function getCustomerCode($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT s.`prefix` FROM `tb_sublocation` AS s WHERE s.id=$id";
@@ -79,38 +82,32 @@ class Sales_Model_DbTable_DbCustomer extends Zend_Db_Table_Abstract
 	}
 	public function addCustomer($post)
 	{
-		$session_user=new Zend_Session_Namespace('auth');
-		$userName=$session_user->user_name;
-		$GetUserId= $session_user->user_id;
 		$db=$this->getAdapter();
 		$data=array(
+				'branch_id'		=> $post['branch_id'],
  				'cu_code'		=> $post['cu_code'],
 				'cust_name'		=> $post['txt_name'],
 				'phone'			=> $post['contact_phone'],
 				'email'			=> $post['txt_mail'],
 				'address'		=> $post['txt_address'],
 				'remark'		=> $post['remark'],
-				'user_id'		=> $GetUserId,
+				'user_id'		=> $this->getUserID(),
 				'date'			=> date("Y-m-d"),
-				'branch_id'		=> $post['branch_id'],
 		);
 		$this->insert($data);
 	}
 	public function updateCustomer($post){
-		$session_user=new Zend_Session_Namespace('auth');
-		$userName=$session_user->user_name;
-		$GetUserId= $session_user->user_id;
 		$db = $this->getAdapter();
 		$data=array(
+				'branch_id'		=> $post['branch_id'],
 				'cu_code'		=> $post['cu_code'],
 				'cust_name'		=> $post['txt_name'],
 				'phone'			=> $post['contact_phone'],
 				'email'			=> $post['txt_mail'],
 				'address'		=> $post['txt_address'],
 				'remark'		=> $post['remark'],
-				'user_id'		=> $GetUserId,
-				'date'			=> date("Y-m-d"),
-				'branch_id'		=> $post['branch_id'],
+				'user_id'		=> $this->getUserID(),
+				'status'		=> $post['status'],
 		);
 		$where=$this->getAdapter()->quoteInto('id=?',$post["id"]);
 		$this->_name="tb_customer";
