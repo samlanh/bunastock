@@ -84,10 +84,11 @@ $formFilter = $this->formFilter;
 							<div class="form-body">
 								<div class="form-group">
 									<?php if(!empty($this->product))foreach ($this->product AS $index => $row){?>
-									<div class="col-md-3 center" style="margin-bottom: 50px;white-space: nowrap;font-family: Khmer OS Battambang;">
+									<div class="center" style="margin-bottom: 50px;white-space: nowrap; font-family: 'Times New Roman','Khmer OS Battambang'; width:188px; height:94px;">
 										<?php $url_barcode = $this->url(array("module"=>"report","controller"=>"product","action"=>"generate-barcode","pro_code"=>$row['item_code']),null,true); ?>
-										<div style="font-size: 11px;"><?php echo $row['item_name']?></div>
-										<img style="max-width: 125px;height:46px;" src="<?php echo $url_barcode;?>" /><div class="label_price" style="font-size: 11px;"><?php echo $row['selling_price']."$"?></div>
+										<div style="font-size: 11px;white-space: pre-line;width: 100%;line-height: 12px;"><?php echo $row['item_name']?></div>
+										<img style="max-width: 125px;height:46px;" src="<?php echo $url_barcode;?>" />
+										<div class="label_price" style="font-size: 11px;"><?php echo $row['selling_price']."$"?></div>
 									</div>
 									<?php }?>
 								</div>
