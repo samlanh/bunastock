@@ -47,6 +47,9 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 // 		if($search['branch_id']>0){
 // 			$where .= " AND branch_id =".$search['branch_id'];
 // 		}
+		if(!empty($search['branch'])){
+			$where .= " AND branch_id =".$search['branch'];
+		}
 		if($search['is_complete']==1){
 			$where .= " AND s.balance_after = 0 ";
 		}

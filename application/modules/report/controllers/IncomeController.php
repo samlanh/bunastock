@@ -67,6 +67,7 @@ class report_IncomeController extends Zend_Controller_Action
     				'end_date'		=>date("Y-m-d"),
     				'customer_id'	=>0,
     				'is_complete'	=>'',
+    				'branch'	=>'',
     		);
     	}
     	$this->view->rssearch = $data;

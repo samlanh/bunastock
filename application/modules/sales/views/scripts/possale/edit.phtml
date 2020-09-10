@@ -23,6 +23,16 @@ td{padding: 1px !important;}
 white-space: nowrap;font-size: 14px;line-height:33px;}
 .hover:hover{background: #eee;}
 .full_width{width:100%;}
+
+span.lblcurrent_qty {
+    background: #eeeeee;
+    width: 100%;
+    min-height: 34px;
+    height: 100%;
+    display: block;
+    border: solid 1px #d0d1d2;
+    color: #000;
+}
 </style>
 <title>កែប្រែការលក់</title>
 <script src="<?php echo $base_url;?>/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
@@ -658,8 +668,8 @@ function initializeProduct(){
 		template='';
 		
 		template+='<td width="5%" style="text-align:right">'+col+'</td>';
-		template+='<td width="20%"><input type="hidden" value="'+product_name+'" id="product_name'+col+'">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-		template+='<td width="7%"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
+		template+='<td width="20%">'+product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
+		template+='<td width="7%"><span class="lblcurrent_qty" id="lblcurrent_qty'+col+'"></span><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control" /><input type="hidden" readonly id="current_qty'+col+'" name="current_qty'+col+'" class="form-control" /><input type="hidden" name="measur_name'+col+'" id="measur_name'+col+'" class="form-control" /><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="" class="form-control" /></td>';
 		template+='<td width="7%"><input type="hidden" class="form-control" name="unit_label'+col+'" id="unit_label'+col+'"/><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control" placeholder=""/></td>';
 		template+='<td width="7%"><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control" /></td>';
 		template+='<td width="10%"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control" placeholder=""/></td>';
@@ -711,8 +721,8 @@ function addProductRow(product_id=null,txt_product_name=null,qty=1,is_package=0,
 	template='';
 	
 	template+='<td width="5%" style="text-align:right">'+col+'</td>';
-	template+='<td width="20%"><input type="hidden" value="'+txt_product_name+'" id="product_name'+col+'">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
-	template+='<td width="7%"><input style="font-size:12px;" id="lblcurrent_qty'+col+'" name="lblcurrent_qty'+col+'" readonly class="form-control " /><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control " /><input type="hidden" readonly class="form-control " id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" class="form-control " name="measur_name'+col+'" id="measur_name'+col+'"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
+	template+='<td width="20%">'+txt_product_name+'<input type="hidden"  value="'+product_id+'" id="product_id'+col+'" name="product_id'+col+'" /></td>';
+	template+='<td width="7%"><span class="lblcurrent_qty" id="lblcurrent_qty'+col+'"></span><input type="hidden" name="qty_perunit'+col+'" id="qty_perunit'+col+'" class="form-control " /><input type="hidden" readonly class="form-control " id="current_qty'+col+'" name="current_qty'+col+'" /><input type="hidden" class="form-control " name="measur_name'+col+'" id="measur_name'+col+'"/><input type="hidden" name="is_package_cost_'+col+'" id="is_package_cost_'+col+'" value="'+is_package_cost+'" class="form-control" /><input type="hidden" name="is_package_'+col+'" id="is_package_'+col+'" value="'+is_package+'" class="form-control" /><input type="hidden" name="packageid_'+col+'" id="packageid_'+col+'" value="'+package_id+'" class="form-control" /></td>';
 	template+='<td width="7%"><input type="hidden" class="form-control " name="unit_label'+col+'" id="unit_label'+col+'"/><input type="number" step="any" value="'+qty+'" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qty_'+col+'" id="qty_'+col+'" class="form-control " placeholder=""/></td>';
 	template+='<td width="7%"><input type="number" step="any" onkeyup="calCualtePrice('+col+');" onClick="calCualtePrice('+col+');" name="qtydetail_'+col+'" id="qtydetail_'+col+'" class="form-control " placeholder=""/></td>';
 	template+='<td width="10%"><input required="1" readonly name="qty_sold'+col+'" id="qty_sold'+col+'" class="form-control " placeholder=""/></td>';
@@ -850,7 +860,8 @@ function getProductinfo(index,product_id,old_price,is_package=0,package_id=0,is_
 			}else if(qty>0 && qty_unitlable!=''){
 				current_stock = current_stock + " និង ";
 			}
-			$("#lblcurrent_qty"+index).val(current_stock+""+qty_unitlable);
+			//$("#lblcurrent_qty"+index).val(current_stock+""+qty_unitlable);
+			$("#lblcurrent_qty"+index).html(current_stock+""+qty_unitlable);
 			$("#qty_perunit"+index).val(data.qty_perunit);
 			
 			if(old_price<=0 ){

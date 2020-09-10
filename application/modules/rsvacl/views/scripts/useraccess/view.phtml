@@ -12,31 +12,6 @@ table.user td{
 }
 </style>       
 
-<script src="/stock/public/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
-<link rel="stylesheet" type="text/css" href="/stock/public/js/dojo-1.6.1/dijit/themes/soria/soria.css"/>
-
-<script>
-
-	dojo.require("dijit.form.ValidationTextBox");
-	dojo.require('dijit.form.Form');
-	dojo.require('dijit.form.FilteringSelect');	
-	dojo.require('dijit.form.Button');
-	dojo.require('dijit.form.NumberTextBox');
-	
-	dojo.require("dijit.form.CheckBox");     
-	dojo.require("dojo.number");
-	////dojo.require('dojox.form.BusyButton');
-	dojo.require("dijit.form.RadioButton");
-	dojo.require("dijit.Dialog");
-	
-	dojo.require("dijit.layout.BorderContainer");
-	dojo.require("dijit.layout.TabContainer");
-	dojo.require("dijit.layout.AccordionContainer");
-	dojo.require("dijit.layout.ContentPane");
-	dojo.require("dojo.parser");
-</script>
-
-
 <?php $rs=$this->rs;
 	
 	  $acl=($this->acl=='')? array():$this->acl;
@@ -121,7 +96,7 @@ table.user td{
 			<?php 
 				$old_module = "";
 			?>
-			<div data-dojo-type="dijit/layout/TabContainer" style="width: 98%; height: 400px;" tabPosition="left-h" tabStrip="true">
+			<div data-dojo-type="dijit/layout/TabContainer" style="width: 98%;height: 400px; overflow-y: auto;" tabPosition="left-h" tabStrip="true">
 				
 				<?php if(!empty($this->rows)){foreach ($this->rows as $key=>$rs){ ?>
 					<?php if($old_module != $rs['module']){

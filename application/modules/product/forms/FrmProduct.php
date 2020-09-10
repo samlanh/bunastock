@@ -197,6 +197,12 @@ class Product_Form_FrmProduct extends Zend_Form
 		return $this;
 	}
 	function productFilter(){
+		
+		$session_user=new Zend_Session_Namespace('auth');
+		$userId = $session_user->user_id;
+		$branchId = $session_user->branch_id;
+		$level = $session_user->level;
+		
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$request=Zend_Controller_Front::getInstance()->getRequest();
 		$db = new Product_Model_DbTable_DbProduct();
@@ -219,10 +225,17 @@ class Product_Form_FrmProduct extends Zend_Form
 		));
 		$branch->setMultiOptions($opt);
 		$branch->setValue($request->getParam("branch"));
+		if ($level!=1){
+			$branch->setValue($branchId);
+			$branch->setAttribs(array(
+					'disabled'=>'disabled',
+			));
+		}
+		
 		
 		
 		$status = new Zend_Form_Element_Select("status");
-		$opt = array('-1'=>$tr->translate("ស្ថានភាព"),'1'=>$tr->translate("ប្រើប្រាស់"),'0'=>$tr->translate("មិនប្រើប្រាស់"));
+		$opt = array('-1'=>$tr->translate("STATUS"),'1'=>$tr->translate("ACTIVE"),'0'=>$tr->translate("DEACTIVE"));
 		$status->setAttribs(array(
 				'class'=>'form-control select2me',
 		));
@@ -230,7 +243,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		$status->setValue($request->getParam("status"));
 		
 		$type = new Zend_Form_Element_Select("type");
-		$opt = array('-1'=>$tr->translate("ប្រភេទ"),'0'=>$tr->translate("ផលិតផល"),'1'=>$tr->translate("សេវាកម្ម"));
+		$opt = array('-1'=>$tr->translate("TYPE"),'0'=>$tr->translate("ផលិតផល"),'1'=>$tr->translate("សេវាកម្ម"));
 		$type->setAttribs(array(
 				'class'=>'form-control select2me',
 		));

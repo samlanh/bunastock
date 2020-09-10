@@ -18,22 +18,25 @@
 			</div>
 			<div class="portlet-body form">
 				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
-					<div class="form-group" style="padding-top: 6px;">
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
-						<label class="control-label col-md-2">
-							<select name="is_complete" id="is_complete" class="form-control select2me">
-								<option value="">ស្ថានភាព</option>
-								<option value="1" <?php if($this->search['is_complete']==1){echo "selected='selected'";}?>>បង់ដាច់</option>
-								<option value="2" <?php if($this->search['is_complete']==2){echo "selected='selected'";}?>>មិនទាន់បង់ដាច់</option>
-							</select>
-						</label>
-						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
-						<label class="control-label col-md-2">
-							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
-						</label>
-					</div>		
+						<div class="form-group" style="padding-top: 6px;">
+							<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
+							<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
+							<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
+							<label class="control-label col-md-2">
+								<select name="is_complete" id="is_complete" class="form-control select2me">
+									<option value="">ស្ថានភាព</option>
+									<option value="1" <?php if($this->search['is_complete']==1){echo "selected='selected'";}?>>បង់ដាច់</option>
+									<option value="2" <?php if($this->search['is_complete']==2){echo "selected='selected'";}?>>មិនទាន់បង់ដាច់</option>
+								</select>
+							</label>
+						</div>
+						<div class="form-group" style="padding-top: 6px;">
+							<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+							<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+							<label class="control-label col-md-2">
+								<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+							</label>
+						</div>
 				</form> 
 					<div class="contain_form" style="clear: both;">
 						<?php echo $this->list; ?>

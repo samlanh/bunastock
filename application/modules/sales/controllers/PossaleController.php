@@ -24,7 +24,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 					'ad_search'		=>'',
 					'start_date'	=>date("Y-m-d"),
 					'end_date'		=>date("Y-m-d"),
-					'branch'		=>-1,
+					'branch'		=>'',
 					'customer_id'	=>-1,
 					'is_complete'	=>'',
 					);
