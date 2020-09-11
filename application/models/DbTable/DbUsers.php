@@ -169,5 +169,13 @@ class Application_Model_DbTable_DbUsers extends Zend_Db_Table_Abstract
 		//echo $sql;
 		return $rows;
 	}
+	
+	public function checkUserLogin($username,$password)
+	{
+		$db = $this->getAdapter();
+		$sql = "SELECT user_id FROM ". $this->_name ." WHERE username = '". $username ."' AND password = '".md5($password)."'";
+		$row = $db->fetchRow($sql);
+		return $row;
+	}
 }
 

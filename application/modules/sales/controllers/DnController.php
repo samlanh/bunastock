@@ -23,7 +23,7 @@ class Sales_DnController extends Zend_Controller_Action
 					'ad_search'		=>'',
 					'start_date'	=>date("Y-m-d"),
 					'end_date'		=>date("Y-m-d"),
-					'branch'		=>-1,
+					'branch'		=>0,
 					'customer_id'	=>-1,
 					'is_complete'	=>'',
 					);
@@ -32,7 +32,7 @@ class Sales_DnController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbDn();
 		$rows = $db->getAllDn($search);
-		$columns=array("ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខ DN","ថ្ងៃដឹកទំនិញ","អ្នកប្រើប្រាស់");
+		$columns=array("BRANCH_NAME","ទីតាំងបុណ្យ","ឈ្មោះអតិថិជន","លេខទូរស័ព្ទ","លេខ DN","ថ្ងៃដឹកទំនិញ","អ្នកប្រើប្រាស់");
 		$link=array(
 			'module'=>'sales','controller'=>'dn','action'=>'edit',
 		);
@@ -74,8 +74,8 @@ class Sales_DnController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->dn_num = $db->getDnNumber();
 		$this->view->exchange_rate = $db->getExchangeRate();
+		$this->view->branch = $db->getAllBranch();
 		
 	}
 	
@@ -98,7 +98,12 @@ class Sales_DnController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbDn();
 		
-		$this->view->row = $db->getDnById($id);
+		$row = $db->getDnById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/dn");
+			exit();
+		}
 		$this->view->row_detail = $db->getDnDetailById($id);
 		
 		$this->view->category = $db->getAllProductCategory();
@@ -111,8 +116,8 @@ class Sales_DnController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->quote_num = $db->getQuoteNumber();
 		$this->view->exchange_rate = $db->getExchangeRate();
+		$this->view->branch = $db->getAllBranch();
 	}
 	
 	public function convertAction()
@@ -159,7 +164,13 @@ class Sales_DnController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbDn();
 		
-		$this->view->rs = $db->getDnById($id);
+		$row = $db->getDnById($id);
+		$this->view->rs =$row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/dn");
+			exit();
+		}
+		
 		$this->view->rsdetail = $db->getDnDetailById($id);
 		
 	}
@@ -212,6 +223,17 @@ class Sales_DnController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_DbQuotation();
 			$rs = $db->getProductByCategoryId($post['category'],$post['type']);
 			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
+	
+	function getdnnoAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$_db = new Application_Model_DbTable_DbGlobal();
+			$rs = $_db->getDnNumber($post['branch_id']);
+			echo $rs;
 			exit();
 		}
 	}

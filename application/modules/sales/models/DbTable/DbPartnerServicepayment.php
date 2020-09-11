@@ -63,8 +63,9 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$branch_id = empty($data['branch_id'])?1:$data['branch_id'];
 			$array=array(
-					'branch_id'			=> $this->getBranchId(),
+					'branch_id'			=> $branch_id,//$this->getBranchId(),
 					'partner_id'		=> $data['partner_id'],
 					'payment_type'		=> $data['payment_type'],
 					'cheque_number'		=> $data['cheque_number'],
@@ -268,11 +269,14 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 	
 	function getPartnerSerivcePaymentById($id){
 		$db = $this->getAdapter();
-		$sql = "SELECT * FROM tb_partnerservice_payment where id = $id limit 1";
+		$sql = "SELECT * FROM tb_partnerservice_payment where id = $id ";
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('branch_id');
+		$sql.=" LIMIT 1";
 		return $db->fetchRow($sql);
 	}
 	
-	function getAllService($partner_id,$action){
+	function getAllService($partner_id,$action,$branch_id=1){
 		$db = $this->getAdapter();
 		$sql = "SELECT 
 					sps.*,
@@ -288,6 +292,7 @@ class Sales_Model_DbTable_DbPartnerServicepayment extends Zend_Db_Table_Abstract
 					and is_paid=0 
 					and price>0
 			";
+		$sql.=" AND s.branch_id = $branch_id ";
 		return $db->fetchAll($sql);
 	}
 	function getPaidService($id){

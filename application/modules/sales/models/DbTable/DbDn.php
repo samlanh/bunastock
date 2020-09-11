@@ -17,6 +17,7 @@ class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 			$db= $this->getAdapter();
 			$sql=" SELECT 
 						dn.id,
+						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = dn.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 						place_bun,
 						(SELECT cust_name FROM `tb_customer` WHERE tb_customer.id=dn.customer_id LIMIT 1 ) AS customer_name,
 						phone,	
@@ -42,7 +43,9 @@ class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 			if($search['customer_id']>=0){
 				$where .= " AND dn.customer_id =".$search['customer_id'];
 			}
-			
+			if(!empty($search['branch'])){
+				$where .= " AND dn.branch_id =".$search['branch'];
+			}
 			$dbg = new Application_Model_DbTable_DbGlobal();
 			$where.=$dbg->getAccessPermission();
 			$order=" ORDER BY id DESC ";
@@ -89,10 +92,11 @@ class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$branch_id = empty($data['branch'])?1:$data['branch'];
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$dn_num = $db_global->getDnNumber();
+			$dn_num = $db_global->getDnNumber($branch_id);
 			$info_purchase_order=array(
-					"branch_id"   	=> $this->getBranchId(),
+					"branch_id"   	=> $branch_id,//$this->getBranchId(),
 					
 					'place_bun'		=> $data['place_bun'],
 					'type_pjos'		=> $data['type_pjos'],
@@ -143,8 +147,10 @@ class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$branch_id = empty($data['branch'])?1:$data['branch'];
+			
 			$info_purchase_order=array(
-					"branch_id"   	=> $this->getBranchId(),
+					"branch_id"   	=> $branch_id,//$this->getBranchId(),
 					
 					'place_bun'		=> $data['place_bun'],
 					'type_pjos'		=> $data['type_pjos'],
@@ -206,8 +212,11 @@ class Sales_Model_DbTable_DbDn extends Zend_Db_Table_Abstract
 					tb_dn AS s 
 				WHERE 
 					s.id = $id
-				limit 1	
 			";
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('s.branch_id');
+		$sql.=" LIMIT 1";
+		
 		return $this->getAdapter()->fetchRow($sql);
 	}
 	function getDnDetailById($id){

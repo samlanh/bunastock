@@ -64,9 +64,9 @@ class Sales_PossaleController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->addSaleOrder($data);
 				}
-				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ",'/sales/possale');
+				Application_Form_FrmMessage::message("INSERT_SUCESS",'/sales/possale');
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
@@ -90,12 +90,12 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getInvoiceNumber(1);
+// 		$this->view->invoice = $db->getInvoiceNumber(1);
 //		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
 	
-		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->exchange_rate = $db->getExchangeRate();
+		$this->view->branch = $db->getAllBranch();
 		
 	}
 
@@ -115,15 +115,21 @@ class Sales_PossaleController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->editSale($data,$id);
 				}
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/possale/index');
+				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS", '/sales/possale/index');
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				Application_Form_FrmMessage::message('UPDATE_FAIL');
 				echo $e->getMessage();
 			}
 		}
 		$db = new Sales_Model_DbTable_Dbpos();
 		
-		$this->view->row = $db->getSaleById($id);
+		$row = $db->getSaleById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/possale");
+			exit();
+		}
+		
 		$this->view->row_detail = $db->getSaleDetailById($id);
 		$this->view->row_partner = $db->getPartnerServiceById($id);
 		
@@ -146,6 +152,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$this->view->invoice = $db->getInvoiceNumber(1);
 //		$this->view->saleagent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
+		$this->view->branch = $db->getAllBranch();
 	
 		$db = new Sales_Model_DbTable_Dbexchangerate();
 		$this->view->rsrate= $db->getExchangeRate();
@@ -197,7 +204,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		$db = new Sales_Model_DbTable_Dbpos();
 		echo "<script language='javascript'>
 		var txt;
-		var r = confirm('áž�áž¾áž›áŸ„áž€áž¢áŸ’áž“áž€áž–áž·áž�áž…áž„áŸ‹áž›áž»áž”ážœáž·áž€áŸ’áž€áž™áž”áž�áŸ’ážšáž“áŸ�áŸ‡áž«!');
+		var r = confirm('តើលោកអ្នកពិតចង់លុបប្រតិបត្តិការណ៍នេះឫ!');
 		if (r == true) {";
 			echo "window.location ='".Zend_Controller_Front::getInstance()->getBaseUrl()."/sales/possale/deleteitem/id/".$id."'";
 		echo"}";
@@ -309,6 +316,17 @@ class Sales_PossaleController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_Dbpos();
 			$rs = $db->getProductByCategoryId($post['category'],$post['type']);
 			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
+	
+	function getinvocenoAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$_db = new Application_Model_DbTable_DbGlobal();
+			$rs = $_db->getInvoiceNumber($post['branch_id']);
+			echo $rs;
 			exit();
 		}
 	}

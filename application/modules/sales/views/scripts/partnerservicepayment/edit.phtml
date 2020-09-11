@@ -17,6 +17,21 @@
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
+							<label class="control-label col-md-2"><?php echo $tr->translate("BRANCH_NAME");?><span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<select name="branch_id" id="branch_id" class="form-control select2me" onchange="getAllBranchFunction();" >
+										<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+										<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+										<option value="<?php echo $branch['id']?>" <?php if($branch['id']==$this->row['branch_id']){echo "selected='selected'";}?>><?php echo $branch['name'];?></option>
+										<?php }}?>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
 							
 							<label class="control-label col-md-2"><?php echo $tr->translate("ដៃគូរសេវាកម្ម");?><span class="required">
 								</span>
@@ -139,6 +154,7 @@
 	});
 	
 	function setReadonly(){
+		$('#branch_id').prop('readonly', true);
 		$('#partner_id').prop('readonly', true);
 		$('#date_payment').prop('readonly', true);
 		$('#payment_type').prop('readonly', true);

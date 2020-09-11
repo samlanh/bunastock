@@ -59,10 +59,10 @@ class Sales_PaymentController extends Zend_Controller_Action
 			try {
 				$dbq = new Sales_Model_DbTable_Dbpayment();
 				$dbq->addReceiptPayment($data);
-				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
+				Application_Form_FrmMessage::message("INSERT_SUCESS");
 				Application_Form_FrmMessage::redirectUrl("/sales/payment/index");
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				Application_Form_FrmMessage::message('INSERT_FAIL');
 				echo $e->getMessage();
 			}
 		}
@@ -86,9 +86,9 @@ class Sales_PaymentController extends Zend_Controller_Action
 			$data['id']=$id;
 			try {
 				$db->updatePayment($data,$id);
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ","/sales/payment");
+				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/payment");
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('កែប្រែមិនត្រឹមត្រូវ');
+				Application_Form_FrmMessage::message('UPDATE_FAIL');
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}

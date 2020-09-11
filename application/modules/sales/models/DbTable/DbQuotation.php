@@ -44,6 +44,9 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 			if($search['customer_id']>=0){
 				$where .= " AND s.customer_id =".$search['customer_id'];
 			}
+			if(!empty($search['branch'])){
+				$where .= " AND s.branch_id =".$search['branch'];
+			}
 			
 			$dbg = new Application_Model_DbTable_DbGlobal();
 			$where.=$dbg->getAccessPermission();
@@ -91,10 +94,12 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$branch_id = empty($data['branch'])?1:$data['branch'];
+			
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$quote_num = $db_global->getQuoteNumber();
+			$quote_num = $db_global->getQuoteNumber($branch_id);
 			$info_purchase_order=array(
-					"branch_id"   	=> $this->getBranchId(),
+					"branch_id"   	=> $branch_id,//$this->getBranchId(),
 					
 					'place_bun'		=> $data['place_bun'],
 					'type_pjos'		=> $data['type_pjos'],
@@ -155,8 +160,10 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			
+			$branch_id = empty($data['branch'])?1:$data['branch'];
 			$info_purchase_order=array(
-					"branch_id"   	=> $this->getBranchId(),
+					"branch_id"   	=> $branch_id,//$this->getBranchId(),
 					
 					'place_bun'		=> $data['place_bun'],
 					'type_pjos'		=> $data['type_pjos'],
@@ -230,8 +237,10 @@ class Sales_Model_DbTable_DbQuotation extends Zend_Db_Table_Abstract
 					tb_quotation AS s 
 				WHERE 
 					s.id = $id
-				limit 1	
 			";
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('s.branch_id');
+		$sql.=" LIMIT 1";
 		return $this->getAdapter()->fetchRow($sql);
 	}
 	function getQuoteDetailById($id){

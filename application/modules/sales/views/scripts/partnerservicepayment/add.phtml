@@ -17,7 +17,22 @@
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
-							
+							<label class="control-label col-md-2"><?php echo $tr->translate("BRANCH_NAME");?><span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<select name="branch_id" id="branch_id" class="form-control select2me" onchange="getAllBranchFunction();" >
+										<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+										<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+										<option value="<?php echo $branch['id']?>"><?php echo $branch['name'];?></option>
+										<?php }}?>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("ដៃគូរសេវាកម្ម");?><span class="required">
 								</span>
 							</label>
@@ -231,11 +246,17 @@
 	<?php $urlpartner =  $this->url(array('module'=>'sales','controller'=>'partnerservicepayment','action'=>'get-allservice')); ?>
 	function getAllPartnerService(){
 		partner_id=$("#partner_id").val();
+		branch_id = $("#branch_id").val();
+		if(branch_id=="" || branch_id=="0"){
+			alert("<?php echo $tr->translate("Please select branch");?> !!!");
+			$('#branch_id').select2('open');
+			return false;
+		}
 		if(partner_id>0){
 			$.ajax({
 				url:"<?php echo $urlpartner;?>",
 				type:"post",
-				data:{'partner_id':partner_id,'action':"add"},
+				data:{'partner_id':partner_id,'action':"add",'branch_id':branch_id},
 				success: function(data){	
 					$("#table_order").html("");
 					template='<tr height="33px" align="center" style="font-weight: bold;white-space:nowrap;">';
@@ -349,4 +370,9 @@
 		}	
 	}
 
+
+	function getAllBranchFunction(){
+		getAllPartnerService();
+	}
+	
 </script>	

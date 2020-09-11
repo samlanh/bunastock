@@ -64,7 +64,8 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		$this->view->partner = $db->getAllPartner();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+// 		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 		
 	}
 	function editAction(){
@@ -83,13 +84,19 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 			}
 		}
 		
-		$this->view->row = $db->getPartnerSerivcePaymentById($id);
+		$row= $db->getPartnerSerivcePaymentById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/partnerservicepayment");
+			exit();
+		}
 		
 		$this->view->invoice = $db->getSaleInvoice();
 		$this->view->partner = $db->getAllPartner();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+// 		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 	}	
 	
 	function printAction(){
@@ -113,7 +120,8 @@ class Sales_PartnerservicepaymentController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_DbPartnerServicepayment();
-			$rs = $db->getAllService($post['partner_id'],$post['action']);
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$rs = $db->getAllService($post['partner_id'],$post['action'],$post['branch_id']);
 			echo Zend_Json::encode($rs);
 			exit();
 		}

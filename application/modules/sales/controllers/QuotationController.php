@@ -23,7 +23,7 @@ class Sales_QuotationController extends Zend_Controller_Action
 					'ad_search'		=>'',
 					'start_date'	=>date("Y-m-d"),
 					'end_date'		=>date("Y-m-d"),
-					'branch'		=>-1,
+					'branch'		=>0,
 					'customer_id'	=>-1,
 					'is_complete'	=>'',
 					);
@@ -54,9 +54,9 @@ class Sales_QuotationController extends Zend_Controller_Action
 				if(!empty($data['identity'])){
 					$db->addQuote($data);
 				}
-				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ",'/sales/index');
+				Application_Form_FrmMessage::message("INSERT_SUCESS",'/sales/index');
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				Application_Form_FrmMessage::message('INSERT_FAIL');
 				echo $e->getMessage();exit();
 			}
 		}
@@ -74,7 +74,7 @@ class Sales_QuotationController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->quote_num = $db->getQuoteNumber();
+		$this->view->branch = $db->getAllBranch();
 	
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->exchange_rate = $db->getExchangeRate();
@@ -89,9 +89,9 @@ class Sales_QuotationController extends Zend_Controller_Action
 			$data = $this->getRequest()->getPost();
 			try {
 				$db->editQuote($data,$id);
-				Application_Form_FrmMessage::Sucessfull("កែប្រែដោយជោគជ័យ", '/sales/quotation/index');
+				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS", '/sales/quotation/index');
 			}catch (Exception $e){
-				Application_Form_FrmMessage::message('បញ្ចូលមិនត្រឹមត្រូវ');
+				Application_Form_FrmMessage::message('UPDATE_FAIL');
 				echo $e->getMessage();exit();
 			}
 		}
@@ -100,7 +100,12 @@ class Sales_QuotationController extends Zend_Controller_Action
 		
 		$db = new Sales_Model_DbTable_DbQuotation();
 		
-		$this->view->row = $db->getQuoteById($id);
+		$row = $db->getQuoteById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/quotation");
+			exit();
+		}
 		$this->view->row_detail = $db->getQuoteDetailById($id);
 		
 		$this->view->category = $db->getAllProductCategory();
@@ -113,7 +118,7 @@ class Sales_QuotationController extends Zend_Controller_Action
 		$this->view->form_customer = $formpopup;
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->quote_num = $db->getQuoteNumber();
+		$this->view->branch = $db->getAllBranch();
 		$this->view->exchange_rate = $db->getExchangeRate();
 	}
 	
@@ -182,6 +187,17 @@ class Sales_QuotationController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_DbQuotation();
 			$rs = $db->getProductByCategoryId($post['category'],$post['type']);
 			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
+	
+	function getquotationnoAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$_db = new Application_Model_DbTable_DbGlobal();
+			$rs = $_db->getQuoteNumber($post['branch_id']);
+			echo $rs;
 			exit();
 		}
 	}

@@ -195,8 +195,12 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 					tb_receipt AS d 
 				WHERE 
 					d.id = $reciept_id
-				limit 1	
+				
 			";
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('d.branch_id');
+		$sql.=" LIMIT 1	";
+		
 		return $db->fetchRow($sql);
 	}
 	function getRecieptDetailforPrint($reciept_id){

@@ -62,11 +62,16 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		try{
 			
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
-			$receipt = $db_global->getReceiptNumber($this->getBranchId());
+			
+			$branch_id = empty($data['branch'])?1:$data['branch'];
+			$invoice = $db_global->getInvoiceNumber($branch_id);
+			$receipt = $db_global->getReceiptNumber($branch_id);
+			
+// 			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
+// 			$receipt = $db_global->getReceiptNumber($this->getBranchId());
 			
 			$info_purchase_order=array(
-					"branch_id"     => $this->getBranchId(),
+					"branch_id"     => $branch_id,//$this->getBranchId(),
 					
 					'place_bun'		=> $data['place_bun'],
 					'type_pjos'		=> $data['type_pjos'],
@@ -102,7 +107,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			
 			if($data['paid']>0){
 				$info_purchase_order=array(
-						"branch_id"   	=> $this->getBranchId(),
+						"branch_id"   	=> $branch_id,//$this->getBranchId(),
 						'invoice_id'    => $sale_id,
 						"customer_id"   => $data["customer_id"],
 						"payment_id"    => 1,	//payment by cash/paypal/cheque
@@ -149,7 +154,10 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				{
 					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
 					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
-						$rs = $this->getProductByProductId($data['product_id'.$i], $this->getBranchId());//check if service not need update stock
+						
+						
+// 						$rs = $this->getProductByProductId($data['product_id'.$i], $this->getBranchId());//check if service not need update stock
+						$rs = $this->getProductByProductId($data['product_id'.$i], $branch_id);//check if service not need update stock
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
@@ -213,12 +221,14 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$branch_id = empty($data['branch'])?1:$data['branch'];
 			$rsdetail = $this->getSaleDetailById($sale_id);
 			if(!empty($rsdetail)){
 				foreach($rsdetail as $row){
 					$is_service = $this->getType($row['pro_id']);
 					if($is_service['is_service']==0){ // product បានចូលធ្វើ
-						$rs = $this->getProductByProductId($row['pro_id'], 1);
+// 						$rs = $this->getProductByProductId($row['pro_id'], 1);
+						$rs = $this->getProductByProductId($row['pro_id'], $branch_id);
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
@@ -233,7 +243,7 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 	
 			$info_purchase_order=array(
 				/////////////////////////////////////////////////////////////////	
-					"branch_id"     => $this->getBranchId(),
+					"branch_id"     => $branch_id,//$this->getBranchId(),
 						
 					'place_bun'		=> $data['place_bun'],
 					'type_pjos'		=> $data['type_pjos'],
@@ -272,9 +282,10 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 			
 			if($data['paid']>0){
 				$db_global = new Application_Model_DbTable_DbGlobal();
-				$receipt = $db_global->getReceiptNumber(1);
+// 				$receipt = $db_global->getReceiptNumber(1);
+				$receipt = $db_global->getReceiptNumber($branch_id);
 				$info_purchase_order=array(
-						"branch_id"   	=> $this->getBranchId(),
+						"branch_id"   	=> $branch_id,//$this->getBranchId(),
 						'invoice_id'    => $sale_id,
 						"customer_id"   => $data["customer_id"],
 						"payment_id"    => 1,	//payment by cash/paypal/cheque						
@@ -316,7 +327,8 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 				{
 					$is_service = $this->getType($data['product_id'.$i]);//check if service not need update stock
 					if($is_service['is_service']==0 && $is_service['is_package']==0){ // product បានចូលធ្វើ
-						$rs = $this->getProductByProductId($data['product_id'.$i], $this->getBranchId());
+// 						$rs = $this->getProductByProductId($data['product_id'.$i], $this->getBranchId());
+						$rs = $this->getProductByProductId($data['product_id'.$i], $branch_id);
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
@@ -387,8 +399,10 @@ class Sales_Model_DbTable_Dbpos extends Zend_Db_Table_Abstract
 					tb_sales_order AS s 
 				WHERE 
 					s.id = $id
-				limit 1	
 			";
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('s.branch_id');
+		$sql.=" LIMIT 1";
 		return $this->getAdapter()->fetchRow($sql);
 	}
 	function getSaleDetailById($id){

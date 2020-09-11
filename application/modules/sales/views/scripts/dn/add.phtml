@@ -57,6 +57,22 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 									<div class="col-md-6" style="text-align: left !important;">
 										<div class="form-group" style="">
 											<label class="col-md-4 control-label">
+												<?php echo $tr->translate("BRANCH_NAME");?>
+											</label>
+											<div class="col-md-8">
+												<select name="branch" id="branch" class="form-control select2me" onchange="getAllBranchFunction();" >
+													<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+													<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+													<option value="<?php echo $branch['id']?>"><?php echo $branch['name'];?></option>
+													<?php }}?>
+												</select>
+												<!-- 
+												 <input type="hidden" name="branch" id="branch" value="<?php //echo $this->branch_id;?>" />
+												 -->
+											</div>
+										</div>
+										<div class="form-group" style="">
+											<label class="col-md-4 control-label">
 												ទីតាំងបុណ្យ
 											</label>
 											<div class="col-md-8">
@@ -116,7 +132,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 												លេខDN
 											</label>
 											<div class="col-md-8">
-												<input type="text" class="form-control" readOnly value="<?php echo $this->dn_num?>" style="color:red;"/>
+												<input type="text" class="form-control" readOnly id="dnNumber" name="dnNumber" value="<?php //echo $this->dn_num?>" style="color:red;"/>
 											</div>
 										</div>
 										<div class="form-group" style="">
@@ -160,7 +176,7 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 													<?php }}?>
 											  </select>											  
 											  <input type="hidden" name="identity" id="identity" />
-											  <input type="hidden" name="branch" id="branch" value="<?php echo $this->branch_id;?>" />
+											 
 										</div>										
 										<div class="col-md-2" style="text-align: left !important;">
 											<button type="button" onclick="popupProduct();" class="btn red delete col-md-12">
@@ -224,22 +240,30 @@ white-space: nowrap;font-size: 14px;line-height:33px;}
 
 <script>
 	$('#frm').submit(function() {
+
+		branch_id = $('#branch').val();
+		if(branch_id=="" || branch_id=="0"){
+			alert("<?php echo $tr->translate("Please select branch");?> !!!");
+			$('#branch').select2('open');
+			return false;
+		}
+		
 		customer_id=$("#customer_id").val();
 		if(customer_id<0){
-			alert("Please select customer name");
+			alert("<?php echo $tr->translate("Please select customer name");?>");
 			$('#customer_id').select2('open');
 			return false;	
 		}
 		identity =$("#identity").val();
 		if(identity=='' || identity==-1){
-			alert("Please add product row");
+			alert("<?php echo $tr->translate("Please add product row");?>");
 			$('#product_id').select2('open');
 			return false;
 		}
 		
 		order_date=$("#sale_date").val();
 		if(order_date==''){
-			alert("Please select date");
+			alert("<?php echo $tr->translate("Please select date");?>");
 			$('#sale_date').select2('open');
 			return false;
 		}
@@ -524,6 +548,13 @@ function getType(){
 	var product_name = $("#product_id");
 	var txt_product_name = $("option:selected",product_name).text();
 	var product_id = $("#product_id").val();
+
+	branch_id = $('#branch').val();
+	if(branch_id=="" || branch_id=="0"){
+		alert("<?php echo $tr->translate("Please select branch");?> !!!");
+		$('#branch').select2('open');
+		return false;
+	}
 	
 	if(product_id>0){
 		dojo.xhrPost({
@@ -602,6 +633,30 @@ function isNumberKey(evt)
 	}
 }
 
+function getAllBranchFunction(){
+	getInvoiceByBranch();
+	getType();
+}
+
+<?php $urlGetReceipt =  $this->url(array('module'=>'sales','controller'=>'dn','action'=>'getdnno')); ?>
+function getInvoiceByBranch(){
+	branch_id = $("#branch").val();
+	if(branch_id=="" || branch_id=="-1"){
+		return false;
+	}
+	$.ajax({
+		url: "<?php echo $urlGetReceipt;?>",
+		type: "post",
+		data: {'branch_id':branch_id,},
+		success: function(data){
+			 $("#dnNumber").val(data);
+		},
+		error:function(err){
+			 alert(err);
+		}
+	});
+	
+}
 </script>
 
 
