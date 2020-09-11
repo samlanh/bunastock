@@ -45,11 +45,9 @@ public function init()
 		));
 		$this->addElement($startDateElement);
 		
-		$options="";
-		$sql = "SELECT id, name FROM tb_sublocation WHERE name!='' ";
-		$sql.=" ORDER BY id DESC ";
-		$rs=$db->getGlobalDb($sql);
-		$options=array(0=>"Choose Branch");
+		$_dbgb = new Application_Model_DbTable_DbGlobal();
+		$rs = $_dbgb->getAllBranch();
+		$options=array(0=>$tr->translate('SELECT_BRANCH'));
 		if(!empty($rs)) foreach($rs as $read) $options[$read['id']]=$read['name'];
 		$locationID = new Zend_Form_Element_Select('branch_id');
 		$locationID ->setAttribs(array('class'=>'validate[required] form-control select2me'));

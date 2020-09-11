@@ -18,16 +18,34 @@
 					
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
+							<label class="control-label col-md-2"> <?php echo $tr->translate("BRANCH_NAME");?><span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<select name="branch_id" id="branch_id" class="form-control select2me" onchange="getAllBranchFunction();" >
+										<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+										<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+										<option value="<?php echo $branch['id']?>"><?php echo $branch['name'];?></option>
+										<?php }}?>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
 							<label class="control-label col-md-2"> <?php echo $tr->translate("អតិថិជន");?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
 									<select name="customer_id" id="customer_id" class="form-control select2me" onchange="getCustomerInfo(1);" >
-										<option value="-1">ជ្រើសរើសអតិថិជន</option>
-										<?php if(!empty($this->customer_name)){foreach($this->customer_name as $customer){?>
-										<option value="<?php echo $customer['id']?>"><?php echo $customer['name']." - ".$customer['place_bun']." - ".$customer['phone']?></option>
-										<?php }}?>
+										<option value="0">ជ្រើសរើសអតិថិជន</option>
+										<!-- 
+										<?php //if(!empty($this->customer_name)){foreach($this->customer_name as $customer){?>
+										<option value="<?php //echo $customer['id']?>"><?php //echo $customer['name']." - ".$customer['place_bun']." - ".$customer['phone']?></option>
+										<?php //}}?>
+										 -->
 									</select>
 								</div>
 							</div>
@@ -38,10 +56,12 @@
 							<div class="col-md-4">
 								<div class="input-icon right">
 									<select name="invoice_id" id="invoice_id" class="form-control select2me" onchange="getCustomerInfo(2);" >
-										<option value="-1">ជ្រើសរើសវិក័យបត្រ</option>
-										<?php if(!empty($this->customer_invoice)){foreach($this->customer_invoice as $invoice){?>
-										<option value="<?php echo $invoice['id']?>"><?php echo $invoice['name']?></option>
-										<?php }}?>
+										<option value="0">ជ្រើសរើសវិក័យបត្រ</option>
+										<!-- 
+										<?php //if(!empty($this->customer_invoice)){foreach($this->customer_invoice as $invoice){?>
+										<option value="<?php //echo $invoice['id']?>"><?php //echo $invoice['name']?></option>
+										<?php //}}?>
+										 -->
 									</select>
 								</div>
 							</div>
@@ -59,7 +79,7 @@
 								 </span>
 							</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" style="color:red" name="receipt" id="receipt" readonly value="<?php echo $this->receipt;?>" />
+								<input type="text" class="form-control" style="color:red" name="receipt" id="receipt" readonly value="" />
 							</div>
 						</div>
 						
@@ -195,16 +215,23 @@
 <script>
 
 	$('#frm').submit(function() {
+		branch_id=$("#branch_id").val();
+		if(branch_id<=0){
+			alert("<?php echo $tr->translate("Please select branch");?> !!!");
+			$('#branch_id').select2('open');
+			return false;	
+		}
+		
 		customer_id=$("#customer_id").val();
 		if(customer_id<=0){
-			alert("Please select customer !!!");
+			alert("<?php echo $tr->translate("Please select customer");?> !!!");
 			$('#customer_id').select2('open');
 			return false;	
 		}
 		
 		paid=$("#paid").val();
 		if(paid<=0){
-			alert("Please input paid amount");
+			alert("<?php echo $tr->translate("Please input paid amount");?>");
 			$('#paid').focus();
 			return false;	
 		}
@@ -376,7 +403,60 @@
 		$('#receiverpopup').modal('hide');
 		$('#save_receiver').attr("disabled", false);
 	}
-
+	$( document ).ready(function() {
+		getAllBranchFunction();
+	});
+	function getAllBranchFunction(){
+		getReceiptByBranch();
+		getPOsaleByBranch(1);
+		getPOsaleByBranch(2);
+	}
+	<?php $urlGetReceipt =  $this->url(array('module'=>'sales','controller'=>'payment','action'=>'getreceiptnumber')); ?>
+	function getReceiptByBranch(){
+		branch_id = $("#branch_id").val();
+		if(branch_id=="" || branch_id=="-1"){
+			return false;
+		}
+		$.ajax({
+			url: "<?php echo $urlGetReceipt;?>",
+			type: "post",
+			data: {'branch_id':branch_id,},
+			success: function(data){
+				 $("#receipt").val(data);
+			},
+			error:function(err){
+				 alert(err);
+			}
+		});
+		
+	}
+	<?php $urlGetposbybranch = $this->url(array('module'=>'sales','controller'=>'payment','action'=>'getposbybranch'));?>
+	function getPOsaleByBranch(postype=0){
+		branch_id = $("#branch_id").val();
+		if(branch_id=="" || branch_id=="-1"){
+			return false;
+		}
+		$.ajax({
+			url: "<?php echo $urlGetposbybranch;?>",
+			type: "post",
+			data: {'branch_id':branch_id,'postype':postype},
+			dataType:"json",
+			success: function(data){
+				if(postype==1){
+					//$('#customer_id').append(data);
+					$("#customer_id").html(data)
+				}else{
+					//$('#invoice_id').append(data);
+					$("#invoice_id").html(data)
+				}
+				
+			},
+			error:function(err){
+				 alert(err);
+			}
+		});
+		
+	}
 </script>	
 
 

@@ -30,7 +30,7 @@ class Sales_PaymentController extends Zend_Controller_Action
 		}
 		$db = new Sales_Model_DbTable_Dbpayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("លេខបង្កាន់ដៃ","ទីតាំងបុណ្យ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
+		$columns=array("BRANCH_NAME","លេខបង្កាន់ដៃ","ទីតាំងបុណ្យ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
 		$link=array(
 			'module'=>'sales','controller'=>'payment','action'=>'edit',
 		);
@@ -67,15 +67,15 @@ class Sales_PaymentController extends Zend_Controller_Action
 			}
 		}
 		
-		$db = new Sales_Model_DbTable_Dbpayment();
-		$this->view->customer_name = $db->getSaleCustomerName();
-		$this->view->customer_invoice = $db->getSaleInvoice();
+// 		$db = new Sales_Model_DbTable_Dbpayment();
+// 		$this->view->customer_name = $db->getSaleCustomerName();
+// 		$this->view->customer_invoice = $db->getSaleInvoice();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 		
 	}
 	function editAction(){
@@ -93,16 +93,30 @@ class Sales_PaymentController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$this->view->row = $db->getRecieptDetail($id);
+		$row = $db->getRecieptDetail($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/payment");
+			exit();
+		}
+		$post = array(
+				'branch_id' =>$row['branch_id'],
+				'notOpt' 	=>1,
+				'postype' 	=>1,
+				'edit' 	=>1,
+				);
+		$this->view->customer_name = $db->getPOSByBranch($post);
+		$post['postype'] =2;
+		$this->view->customer_invoice = $db->getPOSByBranch($post);
 		
-		$this->view->customer_name = $db->getSaleCustomerName();
-		$this->view->customer_invoice = $db->getSaleInvoice();
+// 		$this->view->customer_name = $db->getSaleCustomerName();
+// 		$this->view->customer_invoice = $db->getSaleInvoice();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 	}	
 	
 	function invoiceprintAction(){
@@ -165,6 +179,31 @@ class Sales_PaymentController extends Zend_Controller_Action
 			$db = new Sales_Model_DbTable_Dbpayment();
 			$rs = $db->getReceipt($post['mong_id'],$post['cus_id'],$post['type_id'],$post['action']);
 			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	function getreceiptnumberAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$_db = new Application_Model_DbTable_DbGlobal();
+			$rs = $_db->getReceiptNumber($post['branch_id']);
+			echo $rs;
+			exit();
+		}
+	}
+	
+	function getposbybranchAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$post['postype'] = empty($post['postype'])?1:$post['postype'];
+			
+			$db = new Sales_Model_DbTable_Dbpayment();
+			$rs = $db->getPOSByBranch($post);
+// 			echo Zend_Json::encode($rs);
+			print_r(Zend_Json::encode($rs));
 			exit();
 		}
 	}

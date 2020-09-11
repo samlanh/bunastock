@@ -14,6 +14,7 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 			$db= $this->getAdapter();
 			$sql=" SELECT 
 						r.id,
+						(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = r.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 						r.`receipt_no`,
 						(SELECT place_bun FROM `tb_sales_order` WHERE tb_sales_order.id=r.invoice_id limit 1) AS place_bun,
 						(SELECT sale_no FROM `tb_sales_order` WHERE tb_sales_order.id=r.invoice_id limit 1) AS invoice_no,
@@ -63,10 +64,11 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$receipt = $db_global->getReceiptNumber(1);
+			$branch_id = empty($data['branch_id'])?1:$data['branch_id'];
+			$receipt = $db_global->getReceiptNumber($branch_id);
 			
 			$array=array(
-					'branch_id'			=> 1,
+					'branch_id'			=> $branch_id,
 					'invoice_id'		=> $data['invoice_id'],
 					'customer_id'		=> $data['cus_id'],
 					'payment_id'		=> $data['payment_id'],
@@ -293,6 +295,54 @@ class Sales_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = "select invoice_id from tb_receipt where id = $id and type=$type order by id DESC limit 1";
 		return $db->fetchOne($sql);
+	}
+	
+	
+	function getPOSByBranch($_data){
+		$db = $this->getAdapter();
+		$sql = "
+				SELECT
+					id,
+					CONCAT(
+						COALESCE( (select cust_name from tb_customer where tb_customer.id = customer_id LIMIT 1) ,''),
+						'-',
+						COALESCE(place_bun,''),
+						'-',
+						COALESCE(phone,'')
+					
+					) as name,
+					sale_no
+				
+				FROM
+					tb_sales_order
+				WHERE
+					 status=1
+		";
+		if (empty($_data['edit'])){
+			$sql.=" AND balance_after>0";
+		}
+		$sql.=" AND branch_id = ".$_data['branch_id'];
+		$row = $db->fetchAll($sql);
+		
+		if (!empty($_data['notOpt'])){
+			return $row;
+		}else{
+			$postype = $_data['postype'];
+			$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសអតិថិជន", ENT_QUOTES).'</option>';
+			if ($postype!=1){
+				$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសវិក័យបត្រ", ENT_QUOTES).'</option>';
+			}
+			if(!empty($row)){
+				foreach ($row as $rs){
+					if ($postype==1){
+						$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['name'], ENT_QUOTES).'</option>';
+					}else{
+						$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['sale_no'], ENT_QUOTES).'</option>';
+					}
+				}
+			}
+			return $option;
+		}
 	}
 	
 }

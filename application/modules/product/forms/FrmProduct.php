@@ -205,7 +205,10 @@ class Product_Form_FrmProduct extends Zend_Form
 		
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$request=Zend_Controller_Front::getInstance()->getRequest();
+		
+		$_dbgb = new Application_Model_DbTable_DbGlobal();
 		$db = new Product_Model_DbTable_DbProduct();
+		
 		$ad_search = new Zend_Form_Element_Text("ad_search");
 		$ad_search->setAttribs(array(
 				'class'=>'form-control',
@@ -214,7 +217,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		
 		$branch = new Zend_Form_Element_Select("branch");
 		$opt = array(''=>$tr->translate("SELECT_BRANCH"));
-		$row_branch = $db->getBranch();
+		$row_branch = $_dbgb->getAllBranch();;
 		if(!empty($row_branch)){
 			foreach ($row_branch as $rs){
 				$opt[$rs["id"]] = $rs["name"];

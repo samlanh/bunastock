@@ -15,7 +15,22 @@
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
-					
+					<div class="form-body" style="background:#fbf9f9;">
+						<div class="form-group">
+							<label class="control-label col-md-2"> <?php echo $tr->translate("BRANCH");?><span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<select name="branch_id" id="branch_id" class="form-control select2me" onchange="getAllBranchFunction();" >
+										<option value=""><?php echo $tr->translate("BRANCH_NAME");?></option>
+										<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+										<option value="<?php echo $branch['id']?>" <?php if($branch['id']==$this->row['branch_id']){echo "selected='selected'";}?> ><?php echo $branch['name'];?></option>
+										<?php }}?>
+									</select>
+								</div>
+							</div>
+						</div>
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
 							<label class="control-label col-md-2"> <?php echo $tr->translate("អតិថិជន");?><span class="required">
@@ -26,7 +41,7 @@
 									<select name="customer_id" id="customer_id" class="form-control select2me" onchange="getCustomerInfo(1);" >
 										<option value="-1">ជ្រើសរើសអតិថិជន</option>
 										<?php if(!empty($this->customer_name)){foreach($this->customer_name as $customer){?>
-										<option value="<?php echo $customer['id']?>" <?php if($customer['id']==$this->row['invoice_id']){echo "selected='selected'";}?>><?php echo $customer['name']." - ".$customer['place_bun']." - ".$customer['phone']?></option>
+										<option value="<?php echo $customer['id']?>" <?php if($customer['id']==$this->row['invoice_id']){echo "selected='selected'";}?>><?php echo $customer['name']?></option>
 										<?php }}?>
 									</select>
 								</div>
@@ -40,7 +55,7 @@
 									<select name="invoice_id" id="invoice_id" class="form-control select2me" onchange="getCustomerInfo(2);" >
 										<option value="-1">ជ្រើសរើសវិក័យបត្រ</option>
 										<?php if(!empty($this->customer_invoice)){foreach($this->customer_invoice as $invoice){?>
-										<option value="<?php echo $invoice['id']?>" <?php if($invoice['id']==$this->row['invoice_id']){echo "selected='selected'";}?>><?php echo $invoice['name']?></option>
+										<option value="<?php echo $invoice['id']?>" <?php if($invoice['id']==$this->row['invoice_id']){echo "selected='selected'";}?>><?php echo $invoice['sale_no']?></option>
 										<?php }}?>
 									</select>
 								</div>
@@ -204,6 +219,7 @@
 	});
 	
 	function setReadonly(){
+		$('#branch_id').prop('readonly', true);
 		$('#customer_id').prop('readonly', true);
 		$('#invoice_id').prop('readonly', true);
 		$('#payment_id').prop('readonly', true);
