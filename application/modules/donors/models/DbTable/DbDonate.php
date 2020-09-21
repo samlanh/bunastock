@@ -13,6 +13,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql=" SELECT 
 					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = d.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 					dead_name,
 					(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
 					dead_age,
@@ -47,7 +48,7 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		if($search['status']>-1){
 			$where .= " AND status = ".$search['status'];
 		}
-		if($search['branch']>0){
+		if(!empty($search['branch'])){
 			$where .= " AND branch_id = ".$search['branch'];
 		}
 		$order=" ORDER BY id DESC ";
@@ -58,7 +59,10 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 	public function addDonate($data)
 	{
 		$db=$this->getAdapter();
+		
+		$branch_id = empty($data["branch"])?1:$data["branch"];
 		$arr=array(
+				'branch_id'	=>	$branch_id,
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
 				'dead_age'			=> $data['dead_age'],
@@ -92,8 +96,10 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 		$this->update($array, $where);
 	}
 	public function editDonate($data,$id){
-// 		print_r($data);exit();
+		
+		$branch_id = empty($data["branch"])?1:$data["branch"];
 		$arr=array(
+				'branch_id'	=>	$branch_id,
 				'dead_name'			=> $data['dead_name'],
  				'dead_sex'			=> $data['dead_sex'],
 				'dead_age'			=> $data['dead_age'],

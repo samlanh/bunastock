@@ -13,6 +13,7 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql = " SELECT 
     					id,
+    					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = p.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
     					dead_name,
     					dead_name_chinese,
     					(select name_kh from tb_view as v where v.type=19 and v.key_code = dead_sex) as dead_sex,
@@ -62,7 +63,9 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     	if($search['status']>-1){
     		$where.= " AND status = ".$db->quote($search['status']);
     	}
-    	
+    	if(!empty($search['branch'])){
+    		$where .= " AND p.branch_id = ".$search['branch'];
+    	}
     	return $db->fetchAll($sql.$where.$order);
     }
     
@@ -94,7 +97,10 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     	}
     	
     	try{
+    		$branch_id = empty($data["branch"])?1:$data["branch"];
+    		
 	    	$_arr=array(
+	    			'branch_id'	=>	$branch_id,
 	    			'dead_name' 			=> $data['dead_name'],
 	    			'dead_name_chinese' 	=> $data['dead_name_chinese'],
 	    			'dead_sex' 				=> $data['dead_sex'],
@@ -191,7 +197,9 @@ class Sales_Model_DbTable_DbProgram extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$db->beginTransaction();
     	try{
+    		$branch_id = empty($data["branch"])?1:$data["branch"];
 	    	$_arr=array(
+	    			'branch_id'	=>	$branch_id,
 	    			'dead_name' 			=> $data['dead_name'],
 	    			'dead_name_chinese' 	=> $data['dead_name_chinese'],
 	    			'dead_sex' 				=> $data['dead_sex'],

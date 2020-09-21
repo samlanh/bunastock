@@ -18,6 +18,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql=" SELECT 
 					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = m.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 					invoice_no,
 					place_bun,
 					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
@@ -66,6 +67,9 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 		if($search['is_complete']==2){
 			$where .= " AND m.balance_after > 0 ";
 		}
+		if(!empty($search['branch'])){
+			$where .= " AND m.branch_id = ".$search['branch'];
+		}
 		$order=" ORDER BY id DESC ";
 // 		echo $sql.$where.$order;exit();
 		return $db->fetchAll($sql.$where.$order);
@@ -77,9 +81,15 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$db = $this->getAdapter();
 			$db->beginTransaction();
 			
+			$branch_id = empty($data["branch"])?$this->getBranchId():$data["branch"];
+			
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
-			$receipt = $db_global->getReceiptNumber($this->getBranchId());
+// 			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
+// 			$receipt = $db_global->getReceiptNumber($this->getBranchId());
+
+			$invoice = $db_global->getInvoiceNumber($branch_id);
+			$receipt = $db_global->getReceiptNumber($branch_id);
+				
 			
 			$array_photo_name = "";
 			 
@@ -104,7 +114,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			}
 			
 			$array=array(
-				'branch_id'   			=> $this->getBranchId(),
+				'branch_id'   			=> $branch_id,
 					
 				'place_bun'				=> $data['place_bun'],
 				'type_pjos'				=> $data['type_pjos'],
@@ -168,7 +178,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			
 			if($data['paid']>0){
 				$arr_receipt = array(
-						"branch_id"   		=> $this->getBranchId(),
+						"branch_id"   		=> $branch_id,
 						"invoice_id"    	=> $mong_id,
 						"customer_id"   	=> $data['customer_id'],
 						"payment_id"    	=> 1,//payment by cash/paypal/cheque
@@ -200,7 +210,10 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$_db = new Sales_Model_DbTable_Dbpos();
 					$is_service = $_db->getType($data['pro_'.$i]); //check if service not need update stock
 					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
-						$rs = $_db->getProductByProductId($data['pro_'.$i], $this->getBranchId());
+						
+						
+// 						$rs = $_db->getProductByProductId($data['pro_'.$i], $this->getBranchId());
+						$rs = $_db->getProductByProductId($data['pro_'.$i], $branch_id);
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
@@ -254,7 +267,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			
 			if($data['constructor_price']>0){
 				$arr = array(
-						"branch_id"   		=> $this->getBranchId(),
+						"branch_id"   		=> $branch_id,
 						"mong_id"    		=> $mong_id,
 						"date_payment"  	=> date("Y-m-d",strtotime($data['sale_date'])),
 						"payment_type"    	=> "Cash",
@@ -284,13 +297,17 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$db = $this->getAdapter();
 			$db->beginTransaction();				
 			
+			$branch_id = empty($data["branch"])?$this->getBranchId():$data["branch"];
 			$db_global = new Application_Model_DbTable_DbGlobal();
-			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
-			$receipt = $db_global->getReceiptNumber($this->getBranchId());
+// 			$invoice = $db_global->getInvoiceNumber($this->getBranchId());
+// 			$receipt = $db_global->getReceiptNumber($this->getBranchId());
+
+// 			$invoice = $db_global->getInvoiceNumber($branch_id);
+			$receipt = $db_global->getReceiptNumber($branch_id);
+			
 			
 			$array=array(
-					'branch_id'   			=> $this->getBranchId(),
-
+					'branch_id'   			=> $branch_id,
 					'place_bun'				=> $data['place_bun'],
 					'type_pjos'				=> $data['type_pjos'],
 					'place_pjos'			=> $data['place_pjos'],
@@ -355,7 +372,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			
 			if($data['paid']>0){
 				$arr_receipt = array(
-						"branch_id"   		=> $this->getBranchId(),
+						"branch_id"   		=> $branch_id,
 						"invoice_id"    	=> $mong_id,
 						"customer_id"   	=> $data['customer_id'],
 						"payment_id"    	=> 1,//payment by cash/paypal/cheque
@@ -399,7 +416,8 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 					$_db = new Sales_Model_DbTable_Dbpos();
 					$is_service = $_db->getType($data['pro_'.$i]); //check if service not need update stock
 					if($is_service['is_service'] == 0 && $is_service['is_package'] == 0){ // product បានចូលធ្វើ
-						$rs = $_db->getProductByProductId($data['pro_'.$i], $this->getBranchId());
+// 						$rs = $_db->getProductByProductId($data['pro_'.$i], $this->getBranchId());
+						$rs = $_db->getProductByProductId($data['pro_'.$i], $branch_id);
 						if(!empty($rs)){
 							$this->_name='tb_prolocation';
 							$arr = array(
@@ -451,7 +469,7 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 				
 			if($data['constructor_price']>0){
 				$arr = array(
-						"branch_id"   		=> $this->getBranchId(),
+						"branch_id"   		=> $branch_id,
 						"mong_id"    		=> $mong_id,
 						"date_payment"  	=> date("Y-m-d",strtotime($data['sale_date'])),
 						"payment_type"    	=> "Cash",
@@ -473,7 +491,6 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 			$db->rollBack();
 			echo $e->getMessage();
 		}
-	//	print_r($data); exit();
 	}
 	
 	public function editConstructor($data,$id)

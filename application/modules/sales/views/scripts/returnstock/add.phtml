@@ -1,4 +1,5 @@
 <?php 
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$module = $request->getModuleName();
 	$controller=$request->getControllerName();
@@ -26,6 +27,17 @@
 										<div class="col-md-3" style="text-align: left !important;">
 										</div>
 										<div class="col-md-6" style="text-align: left !important;">
+											<div class="form-group" >
+												<label class="col-md-4 control-label"><?php echo $tr->translate("BRANCH_NAME");?></label>
+												<div class="col-md-8">
+													<select name="branch" id="branch" class="form-control select2me" onchange="getAllBranchFunction();" >
+														<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+														<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+														<option value="<?php echo $branch['id']?>"><?php echo $branch['name'];?></option>
+														<?php }}?>
+													</select>
+												</div>
+											</div>
 											<div class="form-group" >
 												<label class="col-md-4 control-label">លេខកូដ</label>
 												<div class="col-md-8">
@@ -138,6 +150,13 @@
 <script>
 
 $('#frm').submit(function() {	
+	branch_id=$("#branch").val();
+	if(branch_id==0 || branch_id=="" || branch_id=="-1"){
+		alert("<?php echo $tr->translate("Please select branch");?> !!!");
+		$('#branch').select2('open');
+		return false;	
+	}
+	
 	title = $("#title").val();
 	if(title==''){
 		$('#title').focus();
@@ -157,7 +176,10 @@ $('#frm').submit(function() {
 	   return false;
 	}
 });
-			
+
+function getAllBranchFunction(){
+	
+}
 
 index=0;
 title=0;

@@ -16,6 +16,7 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
 		$user_id = $this->getUserId();
 		$sql ="SELECT
 					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = rs.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 					return_code,
 					title,
 					total_amount,
@@ -43,6 +44,9 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
 		}
 		if($data["status"]!=-1){
 			$where.=' AND status='.$data["status"];
+		}
+		if(!empty($data['branch'])){
+			$where .= " AND rs.branch_id = ".$data['branch'];
 		}
 		
 		$group_by = " GROUP BY id DESC ";
@@ -77,7 +81,9 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try {
+    		$branch_id = empty($data["branch"])?1:$data["branch"];
     		$arr = array(
+    			'branch_id'	=>	$branch_id,
     			'return_code'	=>	$this->getReturnCode(),
     			'title'			=>	$data["title"],
     			'total_amount'	=>	$data["total_amount"],
@@ -93,7 +99,8 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     			$identitys = explode(',',$data['identity']);
     			foreach($identitys as $i)
     			{
-    				$rs = $this->getProductByProductId($data['product_id'.$i], 1);
+//     				$rs = $this->getProductByProductId($data['product_id'.$i], 1);
+    				$rs = $this->getProductByProductId($data['product_id'.$i], $branch_id);
     				if(!empty($rs)){
     					$this->_name='tb_prolocation';
     					$arr = array(
@@ -125,7 +132,26 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try {
+    		
+    		$rsdetail = $this->getReturnStockDetailById($id);
+    		if(!empty($rsdetail)){ // reset old return
+    			foreach($rsdetail as $row){
+    				//  $rs = $this->getProductByProductId($row['product_id'], 1);
+    				$rs = $this->getProductByProductId($row['product_id'], $row['branch_id']);
+    				if(!empty($rs)){
+    					$this->_name='tb_prolocation';
+    					$arr = array(
+    							'qty'=>$rs['qty']-$row['qty']
+    					);
+    					$where=" id =".$rs['id'];
+    					$this->update($arr, $where);
+    				}
+    			}
+    		}
+    		
+    		$branch_id = empty($data["branch"])?1:$data["branch"];
     		$arr = array(
+    			'branch_id'	=>	$branch_id,
     			'title'			=>	$data["title"],
     			'total_amount'	=>	$data["total_amount"],
     			'note'			=>	$data["note"],
@@ -137,20 +163,6 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     		$where = " id = $id ";
     		$this->update($arr, $where);
     		
-    		$rsdetail = $this->getReturnStockDetailById($id);
-    		if(!empty($rsdetail)){
-    			foreach($rsdetail as $row){
-    				$rs = $this->getProductByProductId($row['product_id'], 1);
-    				if(!empty($rs)){
-    					$this->_name='tb_prolocation';
-    					$arr = array(
-    						'qty'=>$rs['qty']-$row['qty']
-    					);
-    					$where=" id =".$rs['id'];
-    					$this->update($arr, $where);
-    				}
-    			}
-    		}
 
     		$this->_name = "tb_return_stock_detail";
     		$where = " return_id = $id ";
@@ -160,7 +172,8 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     			$identitys = explode(',',$data['identity']);
     			foreach($identitys as $i)
     			{
-    				$rs = $this->getProductByProductId($data['product_id'.$i], 1);
+//     				$rs = $this->getProductByProductId($data['product_id'.$i], 1);
+    				$rs = $this->getProductByProductId($data['product_id'.$i], $branch_id);
     				if(!empty($rs)){
     					$this->_name='tb_prolocation';
     					$arr = array(
@@ -195,7 +208,10 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     	return $this->getAdapter()->fetchRow($sql);
     }
     function getReturnStockDetailById($return_id){
-    	$sql=" SELECT *,(select item_name from tb_product where tb_product.id = product_id) as pro_name FROM tb_return_stock_detail WHERE return_id = $return_id";
+    	$sql=" SELECT *,
+    			(select branch_id from tb_return_stock where tb_return_stock.id = return_id LIMIT 1) as branch_id,
+    			(select item_name from tb_product where tb_product.id = product_id LIMIT 1) as pro_name 
+    		FROM tb_return_stock_detail WHERE return_id = $return_id";
     	return $this->getAdapter()->fetchAll($sql);
     }
     

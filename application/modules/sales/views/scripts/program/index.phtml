@@ -47,6 +47,7 @@
 						<thead>
 							<tr style="white-space:nowrap;">
 								<th rowspan="2" class="tdheader">ល.រ</th>
+								<th rowspan="2" class="tdheader"><?php echo $tr->translate("BRANCH_NAME");?></th>
 								<th colspan="6" class="tdheader">ព័ត៌មានលម្អិតរបស់សព</th>
 								<th colspan="6" class="tdheader">ព័ត៌មានលម្អិតរបស់ដៃគូសព</th>
 								<th colspan="2" class="tdheader">ព័ត៌មានទីតាំង</th>
@@ -83,6 +84,7 @@
 							<?php $i=0;if(!empty($this->rs)){foreach ($this->rs as $rs){ $i++; ?>
 							<tr oncontextmenu="setrowdata(<?php echo $rs['id'];?>);return false;" class="context-menu-one normal" style="white-space:nowrap;height:40px;"> 
 								<td class="items-no"><?php echo $i;?></td>
+								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['branch_name'];?></a></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name'];?></a></td>
 								<td class="items" ><a href="<?php echo $link.$rs['id'];?>" target="_blank"><?php echo $rs['dead_name_chinese'];?></a></td>
 								<td class="items" align="center" ><?php echo $rs['dead_sex'];?></td>

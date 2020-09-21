@@ -454,10 +454,10 @@ span.lblcurrent_qty {
 <script>
 	$('#frm').submit(function() {
 
-		branch_id=$("#branch_id").val();
+		branch_id=$("#branch").val();
 		if(branch_id<=0){
 			alert("<?php echo $tr->translate("Please select branch");?> !!!");
-			$('#branch_id').select2('open');
+			$('#branch').select2('open');
 			return false;	
 		}
 		

@@ -30,7 +30,7 @@ class Donors_DonateController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllDonate($data);
-		$columns=array("ឈ្មោះសព","ភេទ","អាយុ","ថ្ងៃស្លាប់","អាស័យដ្ឋាន","ឈ្មោះសប្បុរសជន","ថ្ងៃឧបត្ថម","ថ្ងៃបង្កើត","USER","STATUS");
+		$columns=array("BRANCH_NAME","ឈ្មោះសព","ភេទ","អាយុ","ថ្ងៃស្លាប់","អាស័យដ្ឋាន","ឈ្មោះសប្បុរសជន","ថ្ងៃឧបត្ថម","ថ្ងៃបង្កើត","USER","STATUS");
 		$link=array(
 				'module'=>'donors','controller'=>'donate','action'=>'edit',
 		);
@@ -63,6 +63,9 @@ class Donors_DonateController extends Zend_Controller_Action
 		$khmer_year = $db->getAllKhmerYear();
 		$this->view->khmer_year = $khmer_year;
 		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $db->getAllBranch();
+		
 	}
 	public function editAction()
 	{
@@ -86,6 +89,9 @@ class Donors_DonateController extends Zend_Controller_Action
 		$db=new Sales_Model_DbTable_DbProgram();
 		$khmer_year = $db->getAllKhmerYear();
 		$this->view->khmer_year = $khmer_year;
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $db->getAllBranch();
 	}
 	function donorpeopleAction(){
 		$id = $this->getRequest()->getParam("id");

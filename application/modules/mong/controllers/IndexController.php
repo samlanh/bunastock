@@ -27,6 +27,7 @@ class Mong_IndexController extends Zend_Controller_Action
     			'ad_search'		=>	'',
     			'customer_id'	=>	-1,
     			'is_complete'	=>	'',
+    			'branch'	=>	'',
     			'start_date'	=>date("Y-m-d"),
 				'end_date'		=>date("Y-m-d"),
     		);
@@ -34,13 +35,13 @@ class Mong_IndexController extends Zend_Controller_Action
     	$this->view->search = $data;
     	
 		$rows = $db->getAllMong($data);
-		$columns=array("វិក័យបត្រ","ទីតាំងបុណ្យ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដម៉ុង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","សម្គាល់","USER","STATUS");
+		$columns=array("BRANCH_NAME","វិក័យបត្រ","ទីតាំងបុណ្យ","អតិថិជន","ឈ្មោះអ្នកស្លាប់","ប្រភេទ","លេខកូដម៉ុង","អ្នកទទួលខុសត្រូរ","ជាង","ថ្ងៃលក់","តម្លៃសរុប","បានបង់","នៅខ្វះ","សម្គាល់","USER","STATUS");
 		$link=array(
 				'module'=>'mong','controller'=>'index','action'=>'edit',
 		);
 
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(10, $columns, $rows,array('invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'place_bun'=>$link));
+		$this->view->list=$list->getCheckList(10, $columns, $rows,array('branch_name'=>$link,'invoice_no'=>$link,'customer_name'=>$link,'sale_date'=>$link,'dead_id'=>$link,'place_bun'=>$link));
     	
 		$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
@@ -95,9 +96,8 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->receiver_name = $db->getAllReceiverName();
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->invoice = $db->getInvoiceNumber(1);
-// 		$this->view->sale_agent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
+		$this->view->branch = $db->getAllBranch();
 		
 		$form = new Sales_Form_FrmCustomer(null);
 		$formpopup = $form->Formcustomer(null);
@@ -153,6 +153,7 @@ class Mong_IndexController extends Zend_Controller_Action
 		$this->view->invoice = $db->getInvoiceNumber(1);
 //		$this->view->sale_agent = $db->getSaleAgent();
 		$this->view->diepeople = $db->getAllDiePeople();
+		$this->view->branch = $db->getAllBranch();
 		
 		$form = new Sales_Form_FrmCustomer(null);
 		$formpopup = $form->Formcustomer(null);

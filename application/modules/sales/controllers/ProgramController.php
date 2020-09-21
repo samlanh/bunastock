@@ -63,6 +63,9 @@ class Sales_ProgramController extends Zend_Controller_Action
 		$khmer_year = $db->getAllKhmerYear();
 		$this->view->khmer_year = $khmer_year;
 		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $db->getAllBranch();
+		
 	}
 	public function editAction()
 	{
@@ -86,6 +89,8 @@ class Sales_ProgramController extends Zend_Controller_Action
 		$khmer_year = $db->getAllKhmerYear();
 		$this->view->khmer_year = $khmer_year;
 		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $db->getAllBranch();
 	}
 	
 	public function copyAction()
@@ -111,6 +116,8 @@ class Sales_ProgramController extends Zend_Controller_Action
 		$khmer_year = $db->getAllKhmerYear();
 		$this->view->khmer_year = $khmer_year;
 	
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $db->getAllBranch();
 	}
 	
 	function travelAction(){

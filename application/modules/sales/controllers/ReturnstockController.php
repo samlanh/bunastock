@@ -26,16 +26,17 @@ public function init()
     			'ad_search'	=>	'',
     			'start_date'=>date("Y-m-d"),
     			'end_date'	=>date("Y-m-d"),
-    			'status'	=>	-1
+    			'status'	=>	-1,
+    			'branch'		=>'',
     		);
     	}
 		$rows = $db->getAllReturnStock($data);
-		$columns=array("លេខកូដ","ចំណងជើង","តម្លៃសរុប","សម្គាល់","ថ្ងៃបង្កើត","អ្នកប្រើប្រាស់","ស្ថានការ");
+		$columns=array("BRANCH_NAME","លេខកូដ","ចំណងជើង","តម្លៃសរុប","សម្គាល់","ថ្ងៃបង្កើត","អ្នកប្រើប្រាស់","ស្ថានការ");
 		$link=array(
 				'module'=>'sales','controller'=>'returnstock','action'=>'edit',
 		);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows,array('title'=>$link,'total_amount'=>$link,'return_code'=>$link));
+		$this->view->list=$list->getCheckList(0, $columns, $rows,array('branch_name'=>$link,'title'=>$link,'total_amount'=>$link,'return_code'=>$link));
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter);
@@ -57,6 +58,9 @@ public function init()
 			$db = new Sales_Model_DbTable_DbReturnStock();
 			$this->view->rsproduct = $db->getAllProductName();
 			$this->view->return_code = $db->getReturnCode();
+			
+			$db = new Application_Model_DbTable_DbGlobal();
+			$this->view->branch = $db->getAllBranch();
 	}
 	public function editAction()
 	{
@@ -75,6 +79,9 @@ public function init()
 		$this->view->rs_detail = $db->getReturnStockDetailById($id);
 		
 		$this->view->rsproduct = $db->getAllProductName();
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $db->getAllBranch();
 	}
 	
 	function getproductAction(){
