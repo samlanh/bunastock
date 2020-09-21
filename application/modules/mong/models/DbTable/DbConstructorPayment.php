@@ -61,8 +61,10 @@ protected $_name="tb_receipt";
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			
+			$branch_id = empty($data['branch'])?1:$data['branch'];
 			$array=array(
-					'branch_id'			=> 1,
+					'branch_id'			=> $branch_id,
 					'mong_id'			=> $data['mong_id'],
 					'payment_type'		=> $data['payment_type'],
 					'cheque_number'		=> $data['cheque_number'],
@@ -178,8 +180,12 @@ protected $_name="tb_receipt";
 					tb_mong_constructor_payment
 				WHERE 
 					id = $id
-				limit 1	
 			";
+		
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('branch_id');
+		$sql.=" LIMIT 1	";
+		
 		return $db->fetchRow($sql);
 	}
 	
@@ -252,4 +258,39 @@ protected $_name="tb_receipt";
 	}
 	
 
+	function getAllMongInvoice($_data){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,
+					(SELECT name FROM tb_constructor WHERE tb_constructor.id = constructor LIMIT 1 ) as name,
+					invoice_no 
+			 FROM 
+				tb_mong WHERE  status=1 ";
+		
+		if (empty($_data['edit'])){
+			$sql.=" AND constructor_balance>0 ";
+		}
+		$sql.=" AND branch_id = ".$_data['branch_id'];
+		$row = $db->fetchAll($sql);
+		 
+		if (!empty($_data['notOpt'])){
+			return $row;
+		}else{
+			$postype = $_data['postype'];
+			$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសអតិថិជន", ENT_QUOTES).'</option>';
+			if ($postype!=1){
+				$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសវិក័យបត្រ", ENT_QUOTES).'</option>';
+			}
+			if(!empty($row)){
+				foreach ($row as $rs){
+					if ($postype==1){
+						$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['name'], ENT_QUOTES).'</option>';
+					}else{
+						$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['invoice_no'], ENT_QUOTES).'</option>';
+					}
+				}
+			}
+			return $option;
+		}
+		return $db->fetchAll($sql);
+	}
 }

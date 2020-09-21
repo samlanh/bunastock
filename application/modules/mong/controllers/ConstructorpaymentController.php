@@ -64,7 +64,7 @@ public function init()
 		$this->view->constructor = $db->getConstructorInvoice();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 		
 	}
 	function editAction(){
@@ -81,13 +81,29 @@ public function init()
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$this->view->row = $db->getConstructorPaymentById($id);
+		$row = $db->getConstructorPaymentById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/mong/constructorpayment");
+			exit();
+		}
+// 		$this->view->invoice = $db->getMongInvoice();
+// 		$this->view->constructor = $db->getConstructorInvoice();
 		
-		$this->view->invoice = $db->getMongInvoice();
-		$this->view->constructor = $db->getConstructorInvoice();
+		$post = array(
+				'branch_id' =>$row['branch_id'],
+				'mong_id' =>$row['mong_id'],
+				'notOpt' 	=>1,
+				'postype' 	=>1,
+				'edit' 	=>1,
+		);
+		$this->view->invoice = $db->getAllMongInvoice($post);
+		$post['postype'] =2;
+		$this->view->constructor = $db->getAllMongInvoice($post);
+		
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 	}	
 	
 	public function getinvoiceAction(){
@@ -141,6 +157,23 @@ public function init()
 			$db = new Mong_Model_DbTable_DbConstructorPayment();
 			$rs = $db->getConstructorPayment($post['mong_id'],$post['action']);
 			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	function getconstructbybranchAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$post['postype'] = empty($post['postype'])?1:$post['postype'];
+	
+			$db = new Mong_Model_DbTable_DbConstructorPayment();
+			$rs = $db->getAllMongInvoice($post);
+			
+// 			$db = new Mong_Model_DbTable_DbCustomerPayment();
+// 			$rs = $db->getMongAllCustomerName($post);
+			// 			echo Zend_Json::encode($rs);
+			print_r(Zend_Json::encode($rs));
 			exit();
 		}
 	}
