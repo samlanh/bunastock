@@ -671,8 +671,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 					  AND p.`cate_id` = $pro_type
 					  $where
 					ORDER BY 
-						p.id 
-			";
+						p.id ";
 		$sale_qty = $db->fetchOne($sql);
 		
 		$from_date1 =(empty($start_date))? '1': " m.sale_date >= '".date("Y-m-d",strtotime($start_date))." 00:00:00'";
@@ -692,17 +691,10 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 					  AND p.`cate_id` = $pro_type
 					  $where1
 					ORDER BY 
-						p.id 
-			";
+						p.id ";
 		$mong_qty = $db->fetchOne($sql1);
-		
 		$total_qty = $sale_qty + $mong_qty;
 		return $total_qty;
 	}
-	
-	
 }
 ?>
-
-
-

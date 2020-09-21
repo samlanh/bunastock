@@ -70,12 +70,32 @@ $formFilter = $this->formFilter;
 					}
 					.center {
 					    text-align: center !important;
+						width:150px; height:70px;
+						page-break-inside:avoid; page-break-after:auto;
 					}
 					.label_price{
-						margin-top: -15%;
-						margin-left: 75%;
-						text-align: left;
+						text-align: right;
+						display: block;
+						width: 100%;
 					}
+					@media print {
+						 .center {
+							text-align: center !important;
+							display:block;
+							width:125px; 
+							margin-bottom: 50px;
+							page-break-inside:avoid; page-break-after:auto;
+						}
+						.productName{
+							text-align: center !important;
+							width:100%;
+							display: block;
+						}
+					 }
+					 @page {
+						  margin:1cm 1cm 1cm 1cm; '
+						   page-break-before: avoid;
+						}
 				</style>
 				
 				<div class="row">
@@ -84,10 +104,19 @@ $formFilter = $this->formFilter;
 							<div class="form-body">
 								<div class="form-group">
 									<?php if(!empty($this->product))foreach ($this->product AS $index => $row){?>
-									<div class="col-md-3 center" style="margin-bottom: 50px;white-space: nowrap;font-family: Khmer OS Battambang;">
+									<div class="center" style="<?php if($index>0){?><?php }else{?> margin-bottom: 50px;<?php } ?>  white-space: nowrap;font-family: 'Times New Roman','Khmer OS Battambang'; ">
 										<?php $url_barcode = $this->url(array("module"=>"report","controller"=>"product","action"=>"generate-barcode","pro_code"=>$row['item_code']),null,true); ?>
-										<div style="font-size: 11px;"><?php echo $row['item_name']?></div>
-										<img style="max-width: 125px;height:46px;" src="<?php echo $url_barcode;?>" /><div class="label_price" style="font-size: 11px;"><?php echo $row['selling_price']."$"?></div>
+										
+										<?php if($index>0){?>
+										<div style="height:10px;">&nbsp;</div>
+										<?php }?>
+										
+										<div class="productName" style="font-size: 6px; line-height:12px;  text-align: center; display: block; width:100%;">
+											<span style="white-space: pre-wrap;"><?php echo $row['item_name']?></span> 
+											<?php echo $row['selling_price']."$"?>
+										</div> 
+										<img style="max-width: 135px;height:40px;" src="<?php echo $url_barcode;?>" />
+										
 									</div>
 									<?php }?>
 								</div>
