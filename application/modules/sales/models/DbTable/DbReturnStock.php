@@ -204,7 +204,12 @@ class Sales_Model_DbTable_DbReturnStock extends Zend_Db_Table_Abstract
     }
     
     function getReturnStockById($id){
-    	$sql="SELECT * FROM tb_return_stock WHERE id=$id limit 1";
+    	$sql="SELECT * FROM tb_return_stock WHERE id=$id "; 
+    	
+    	$dbg = new Application_Model_DbTable_DbGlobal();
+    	$sql.=$dbg->getAccessPermission('branch_id');
+    	$sql.=" LIMIT 1	";
+    	
     	return $this->getAdapter()->fetchRow($sql);
     }
     function getReturnStockDetailById($return_id){

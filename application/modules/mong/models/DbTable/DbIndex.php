@@ -546,6 +546,11 @@ class Mong_Model_DbTable_DbIndex extends Zend_Db_Table_Abstract
 	function getMongAll($id){
 		$db=$this->getAdapter();
 		$sql="select * from tb_mong where id = $id";
+		
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('branch_id');
+		$sql.=" LIMIT 1	";
+		
 		return $db->fetchRow($sql);
 	}
 		

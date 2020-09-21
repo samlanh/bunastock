@@ -123,7 +123,13 @@ class Mong_IndexController extends Zend_Controller_Action
 			  	echo $e->getMessage();exit();
 			  }			 
 		}
-		$this->view->row = $db->getMongAll($id);
+		$row = $db->getMongAll($id);
+		$this->view->row =$row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/mong/index");
+			exit();
+		}
+		
 		$this->view->row_detail = $db->getMongDetailById($id);
 		$this->view->row_price = $db->getItemCost($id);
 	

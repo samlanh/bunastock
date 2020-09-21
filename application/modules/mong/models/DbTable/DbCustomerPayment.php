@@ -13,6 +13,7 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 		$db= $this->getAdapter();
 		$sql=" SELECT 
 					r.id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = r.branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 					r.`receipt_no`,
 					(select place_bun from tb_mong where tb_mong.id = r.invoice_id LIMIT 1) as place_bun,
 					(select invoice_no from tb_mong where tb_mong.id = r.invoice_id LIMIT 1 ) as invoice,
@@ -54,6 +55,9 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 		if($search['customer_id']>0){
 			$where .= " AND r.customer_id =".$search['customer_id'];
 		}
+		if(!empty($search['branch'])){
+			$where .= " AND r.`branch_id` = ".$search['branch'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";
@@ -67,9 +71,11 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 		try{	
 			$db=$this->getAdapter();
 			$_db = new Application_Model_DbTable_DbGlobal();
-			$receipt = $_db->getReceiptNumber(1);
+			$branch_id = empty($post['branch'])?1:$post['branch'];
+			$receipt = $_db->getReceiptNumber($branch_id);
+			
 			$data=array(
-	 				'branch_id'			=> 1,
+	 				'branch_id'			=> $branch_id,
 					'invoice_id'		=> $post['invoice_id'],
 					'customer_id'		=> $post['cus_id'],
 					'payment_id'		=> $post['payment_id'],
@@ -167,8 +173,10 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
 					and m.id = r.invoice_id
 					and r.type=2
 					and r.id = $id 
-				LIMIT 1 
 			";
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('r.branch_id');
+		$sql.=" LIMIT 1	";
 		return $db->fetchRow($sql);
 	}
 	
@@ -271,5 +279,51 @@ class Mong_Model_DbTable_DbCustomerPayment extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql);
     }
     
+    function getMongAllCustomerName($_data){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT
+			    	id,
+			    	
+			    	CONCAT(
+						COALESCE( (select cust_name from tb_customer where tb_customer.id = customer_id LIMIT 1) ,''),
+						' - ',
+						COALESCE(place_bun,''),
+						' - ',
+						COALESCE(phone,'')
+					
+					) as name,
+			    	invoice_no,
+			    	phone
+		    	FROM
+		    		tb_mong
+		    	WHERE
+			    	 status=1
+    	";
+    	if (empty($_data['edit'])){
+    		$sql.=" AND balance_after>0";
+    	}
+    	$sql.=" AND branch_id = ".$_data['branch_id'];
+    	$row = $db->fetchAll($sql);
+    	
+    	if (!empty($_data['notOpt'])){
+    		return $row;
+    	}else{
+    		$postype = $_data['postype'];
+    		$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសអតិថិជន", ENT_QUOTES).'</option>';
+    		if ($postype!=1){
+    			$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសវិក័យបត្រ", ENT_QUOTES).'</option>';
+    		}
+    		if(!empty($row)){
+    			foreach ($row as $rs){
+    				if ($postype==1){
+    					$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['name'], ENT_QUOTES).'</option>';
+    				}else{
+    					$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['invoice_no'], ENT_QUOTES).'</option>';
+    				}
+    			}
+    		}
+    		return $option;
+    	}
+    }
 
 }

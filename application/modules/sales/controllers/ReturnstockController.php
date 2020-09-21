@@ -75,7 +75,12 @@ public function init()
 			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
 			  }
 		}
-		$this->view->rs = $db->getReturnStockById($id);
+		$row = $db->getReturnStockById($id);
+		$this->view->rs = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/returnstock");
+			exit();
+		}
 		$this->view->rs_detail = $db->getReturnStockDetailById($id);
 		
 		$this->view->rsproduct = $db->getAllProductName();

@@ -164,7 +164,12 @@ class Donors_Model_DbTable_DbDonate extends Zend_Db_Table_Abstract
 	
 	function getDonateById($id){
     	$db = $this->getAdapter();
-    	$sql = "SELECT * FROM tb_donor_donate where id = $id limit 1";
+    	$sql = "SELECT * FROM tb_donor_donate where id = $id ";
+    	
+    	$dbg = new Application_Model_DbTable_DbGlobal();
+    	$sql.=$dbg->getAccessPermission('branch_id');
+    	$sql.=" LIMIT 1	";
+    	
     	return $db->fetchRow($sql);
     }
     

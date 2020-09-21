@@ -17,6 +17,19 @@
 				<form id="frm" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					
 					<div class="form-body" style="background:#fbf9f9;">
+						<div class="form-group" style="">
+							<label class="control-label col-md-2"> 
+								<?php echo $tr->translate("BRANCH_NAME");?>
+							</label>
+							<div class="col-md-4">
+								<select name="branch" id="branch" class="form-control select2me" onchange="getAllBranchFunction();" >
+									<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+									<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+									<option value="<?php echo $branch['id']?>"><?php echo $branch['name'];?></option>
+									<?php }}?>
+								</select>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="control-label col-md-2"> <?php echo $tr->translate("អតិថិជន");?><span class="required">
 								</span>
@@ -59,7 +72,7 @@
 								 </span>
 							</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="receipt" id="receipt" readonly value="<?php echo $this->receipt;?>" style="color:red"/>
+								<input type="text" class="form-control" name="receipt" id="receipt" readonly value="" style="color:red"/>
 							</div>
 						</div>
 						
@@ -174,7 +187,67 @@
 <!-- end new product -->
 
 <script>
+$( document ).ready(function() {
+	getAllBranchFunction();
+});
+function getAllBranchFunction(){
+	getReceiptByBranch();
+	getPOsaleByBranch(1);
+	getPOsaleByBranch(2);
+}
+<?php $urlGetReceipt =  $this->url(array('module'=>'sales','controller'=>'payment','action'=>'getreceiptnumber')); ?>
+	function getReceiptByBranch(){
+		branch_id = $("#branch").val();
+		if(branch_id=="" || branch_id=="-1"){
+			return false;
+		}
+		$.ajax({
+			url: "<?php echo $urlGetReceipt;?>",
+			type: "post",
+			data: {'branch_id':branch_id,},
+			success: function(data){
+				 $("#receipt").val(data);
+			},
+			error:function(err){
+				 alert(err);
+			}
+		});
+		
+	}
+	<?php $urlGetposbybranch = $this->url(array('module'=>'mong','controller'=>'customerpayment','action'=>'getposbybranch'));?>
+	function getPOsaleByBranch(postype=0){
+		branch_id = $("#branch").val();
+		if(branch_id=="" || branch_id=="-1"){
+			return false;
+		}
+		$.ajax({
+			url: "<?php echo $urlGetposbybranch;?>",
+			type: "post",
+			data: {'branch_id':branch_id,'postype':postype},
+			dataType:"json",
+			success: function(data){
+				if(postype==1){
+					$("#customer_id").html(data)
+				}else{
+					$("#invoice_id").html(data)
+				}
+				
+			},
+			error:function(err){
+				 alert(err);
+			}
+		});
+		
+	}
+
 	$('#frm').submit(function() {
+
+		branch_id=$("#branch").val();
+		if(branch_id==0 || branch_id=="" || branch_id=="-1"){
+			alert("<?php echo $tr->translate("Please select branch");?> !!!");
+			$('#branch').select2('open');
+			return false;	
+		}
 		
 		customer_id=$("#customer_id").val();
 		if(customer_id==-1 || customer_id==0){

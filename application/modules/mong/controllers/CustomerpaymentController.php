@@ -25,11 +25,12 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 					'start_date'	=>date("Y-m-d"),
 					'end_date'		=>date("Y-m-d"),
 					'customer_id'	=>"",
+					'branch'	=>"",
 				);
 		}
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
 		$rows = $db->getAllReciept($search);
-		$columns=array("លេខបង្កាន់ដៃ","ទីតាំងបុណ្យ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
+		$columns=array("BRANCH_NAME","លេខបង្កាន់ដៃ","ទីតាំងបុណ្យ","លេខវិក័យបត្រ","CUSTOMER_NAME","DATE","TOTAL","PAID","BALANCE","NOTE","BY_USER","ស្ថានភាព");
 		
 		$link=array(
 			'module'=>'mong','controller'=>'customerpayment','action'=>'edit',
@@ -67,11 +68,11 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 		}
 		
 		$db = new Mong_Model_DbTable_DbCustomerPayment();
-		$this->view->customer_name = $db->getMongCustomerName();
-		$this->view->customer_invoice = $db->getMongInvoice();
+// 		$this->view->customer_name = $db->getMongCustomerName();
+// 		$this->view->customer_invoice = $db->getMongInvoice();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->receiver_name = $db->getAllReceiverName();
@@ -92,12 +93,27 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$this->view->row = $db->getRecieptById($id);
-		$this->view->customer_name = $db->getMongCustomerName();
-		$this->view->customer_invoice = $db->getMongInvoice();
+		$row = $db->getRecieptById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/mong/customerpayment");
+			exit();
+		}
+// 		$this->view->customer_name = $db->getMongCustomerName();
+// 		$this->view->customer_invoice = $db->getMongInvoice();
 		
+		$post = array(
+				'branch_id' =>$row['branch_id'],
+				'notOpt' 	=>1,
+				'postype' 	=>1,
+				'edit' 	=>1,
+		);
+		$this->view->customer_name = $db->getMongAllCustomerName($post);
+		$post['postype'] =2;
+		$this->view->customer_invoice = $db->getMongAllCustomerName($post);
+	
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->receipt = $_db->getReceiptNumber(1);
+		$this->view->branch = $_db->getAllBranch();
 		
 		$db = new Sales_Model_DbTable_Dbpos();
 		$this->view->receiver_name = $db->getAllReceiverName();
@@ -145,6 +161,20 @@ class Mong_CustomerpaymentController extends Zend_Controller_Action
 			$db = new Mong_Model_DbTable_DbCustomerPayment();
 			$rs = $db->getReceipt($post['mong_id'],$post['cus_id'],$post['type_id'],$post['action']);
 			echo Zend_Json::encode($rs);
+			exit();
+		}
+	}
+	
+	function getposbybranchAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$post['postype'] = empty($post['postype'])?1:$post['postype'];
+				
+			$db = new Mong_Model_DbTable_DbCustomerPayment();
+			$rs = $db->getMongAllCustomerName($post);
+			// 			echo Zend_Json::encode($rs);
+			print_r(Zend_Json::encode($rs));
 			exit();
 		}
 	}

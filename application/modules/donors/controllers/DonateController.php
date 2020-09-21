@@ -84,8 +84,13 @@ class Donors_DonateController extends Zend_Controller_Action
 			}
 		}
 		$this->view->donor = $db->getAllDonor();
-		$this->view->row = $db->getDonateById($id);
-
+		$row = $db->getDonateById($id);
+		$this->view->row = $row;
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD","/donors/donate");
+			exit();
+		}
+		
 		$db=new Sales_Model_DbTable_DbProgram();
 		$khmer_year = $db->getAllKhmerYear();
 		$this->view->khmer_year = $khmer_year;
