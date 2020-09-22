@@ -57,8 +57,8 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 				where
 					type=1
 			";
-		$from_date =(empty($search['start_date']))? '1': " r.receipt_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " r.receipt_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " r.receipt_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " r.receipt_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();
@@ -75,6 +75,9 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 // 		if($search['branch_id']>0){
 // 			$where .= " AND branch_id =".$search['branch_id'];
 // 		}
+		if(!empty($search['branch_id'])){
+			$where .= " AND r.branch_id =".$search['branch_id'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		if($search['order']==1){
@@ -107,8 +110,8 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 				where
 					type=2
 			";
-		$from_date =(empty($search['start_date']))? '1': " r.receipt_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " r.receipt_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " r.receipt_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " r.receipt_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();
@@ -125,6 +128,9 @@ Class report_Model_DbCustomerPayment extends Zend_Db_Table_Abstract{
 		//if($search['branch_id']>0){
 		//	$where .= " AND branch_id =".$search['branch_id'];
 		//}
+		if(!empty($search['branch_id'])){
+			$where .= " AND r.branch_id =".$search['branch_id'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		if($search['order']==1){

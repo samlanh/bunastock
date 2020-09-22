@@ -78,6 +78,9 @@ $brach_name =  $this->branch;
 				                		<ul>
 				                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 				                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("របាយការណ៍ចំណេញ-ខាត");?></li>
+				                			<li style="font-size:17px; text-align:center; font-size:14px; font-family:'Times New Roman','Khmer OS Muol Light'; color: #F31A1A  !important;">
+								                	<span id="projectName"></span>
+								                </li>
 				                			<li style="text-align:center; font-size:16px; color: #F31A1A  !important"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 				                		</ul>
 				                	</td>
@@ -135,5 +138,12 @@ $brach_name =  $this->branch;
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
+$(document).ready(function(){
+	branch_id = $("#branch_id").val();
+	 if(branch_id!=-1 && branch_id!=0){
+		 var bbr = $("#branch_id option:selected").text();
+		 document.getElementById('projectName').innerHTML = bbr+"<br />";
+	 }
+});
 function doPrint() {var divToPrint = document.getElementById('divPrint');var htmlToPrint = '' +'<style type="text/css">' +'</style>';htmlToPrint += divToPrint.outerHTML;window.document.write(htmlToPrint);window.print();window.close();}
 </script>

@@ -139,6 +139,7 @@ function getAllDonors($search){
 		$sql=" SELECT
 					id,
 					invoice_no,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = m.branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
 					(SELECT cust_name FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_name,
 					(SELECT phone FROM `tb_customer` AS c WHERE c.id=m.customer_id LIMIT 1 ) AS customer_phone,
 						
@@ -166,8 +167,8 @@ function getAllDonors($search){
 					1
 				";
 		$where= '';
-		$from_date =(empty($search['start_date']))? '1': " m.sale_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " m.sale_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where .= " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['ad_search'])){
 			$s_where = array();
@@ -184,6 +185,9 @@ function getAllDonors($search){
 		}
 		if($search['is_complete']==2){
 			$where .= " AND m.balance_after > 0 ";
+		}
+		if(!empty($search['branch'])){
+			$where .= " AND m.branch_id =".$search['branch'];
 		}
 		$order=" ORDER BY id DESC ";
 		//echo $sql.$where.$order;// exit();

@@ -30,27 +30,28 @@ $brach_name =  $this->branch;
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<?php $formFilter = $this->form_sale; ?>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
-						<label class="control-label col-md-2">
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch_id');?></label>
+						<label class="control-label col-md-3">
 							<select name="order" id="order" class="form-control select2me" >
 								<option value="1" <?php if($this->rssearch['order']==1){echo "selected='selected'";}?>>Order By Date</option>
 								<option value="2" <?php if($this->rssearch['order']==2){echo "selected='selected'";}?>>Order By Invoice</option>
 							</select>
 						</label>
-						<label class="control-label col-md-2">
+						<label class="control-label col-md-3">
 							<select name="type" id="type" class="form-control select2me" >
 								<option value="0" <?php if($this->rssearch['type']==1){echo "selected='selected'";}?>>All payment</option>
 								<option value="1" <?php if($this->rssearch['type']==1){echo "selected='selected'";}?>>Sale Payment</option>
 								<option value="2" <?php if($this->rssearch['type']==2){echo "selected='selected'";}?>>Mong Payment</option>
 							</select>
 						</label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
-						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
-						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
 						
-						<label class="control-label col-md-10">
-						</label>
-						<label class="control-label col-md-2">
+					</div>
+					<div class="form-group" >
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('customer_id');?></label>
+						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-3"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-3">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
 					</div>

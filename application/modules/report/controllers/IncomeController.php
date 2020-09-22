@@ -22,7 +22,7 @@ class report_IncomeController extends Zend_Controller_Action
     {
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+//     		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
@@ -58,7 +58,7 @@ class report_IncomeController extends Zend_Controller_Action
     {
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+//     		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
@@ -104,7 +104,7 @@ class report_IncomeController extends Zend_Controller_Action
     	$db = new report_Model_DbOther();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
+//     		$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']	= date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
@@ -113,6 +113,7 @@ class report_IncomeController extends Zend_Controller_Action
     				'start_date'	=>	date("Y-m-d"),
     				'end_date'		=>	date("Y-m-d"),
     				'customer_id'	=>  -1,
+    				'branch'	=>'',
     		);
     	}
     	$this->view->rssearch = $data;
@@ -139,7 +140,7 @@ class report_IncomeController extends Zend_Controller_Action
 		$db = new report_Model_DbCustomerPayment();
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();
-			$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
+// 			$data['start_date']	= date("Y-m-d",strtotime($data['start_date']));
 			$data['end_date']	= date("Y-m-d",strtotime($data['end_date']));
 		}else{
 			$data = array(
@@ -150,6 +151,7 @@ class report_IncomeController extends Zend_Controller_Action
 					'status'	=>	-1,
 					'order'		=>	1,
 					'type'		=>	0,
+					'branch_id'	=>'',
 			);
 		}
 		$this->view->rssearch = $data;
@@ -171,7 +173,7 @@ class report_IncomeController extends Zend_Controller_Action
 	{
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();
-			$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+// 			$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
 			$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
 		}else{
 			$data = array(

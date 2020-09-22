@@ -138,8 +138,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 				WHERE
 					v.status = 1
 			";
-		$from_date =(empty($search['start_date']))? '1': " v.expense_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " v.expense_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " v.expense_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " v.expense_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
 		if($search['branch_id']>0){
 			$where .= " AND v.branch_id =".$search['branch_id'];
@@ -159,8 +159,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 				WHERE
 					pp.status = 1
 			";
-		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " pp.date_payment <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " pp.date_payment <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if($search['branch_id']>0){
 			$where .= " AND pp.branch_id =".$search['branch_id'];
@@ -180,8 +180,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 				WHERE 
 				  m.status = 1
 			";
-		$from_date =(empty($search['start_date']))? '1': " m.date_payment >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " m.date_payment <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " m.date_payment >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " m.date_payment <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if($search['branch_id']>0){
 			$where .= " AND m.branch_id =".$search['branch_id'];
@@ -201,8 +201,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 				WHERE 
 				  e.status = 1
 		";
-		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if($search['branch_id']>0){
 			$where .= " AND e.branch_id =".$search['branch_id'];

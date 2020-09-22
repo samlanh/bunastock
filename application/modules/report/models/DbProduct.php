@@ -81,14 +81,20 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 	function getAllProductSold($data){
 		$db = $this->getAdapter();
 		
-		$from_date =(empty($data['start_date']))? '1': " s.date_sold >= '".$data['start_date']." 00:00:00'";
-		$to_date = (empty($data['end_date']))? '1': " s.date_sold <= '".$data['end_date']." 23:59:59'";
+		$from_date =(empty($data['start_date']))? '1': " s.date_sold >= '".date("Y-m-d",strtotime($data['start_date']))." 00:00:00'";
+		$to_date = (empty($data['end_date']))? '1': " s.date_sold <= '".date("Y-m-d",strtotime($data['end_date']))." 23:59:59'";
 		$sale = " AND ".$from_date." AND ".$to_date;
 		
-		$from_date =(empty($data['start_date']))? '1': " m.sale_date >= '".$data['start_date']." 00:00:00'";
-		$to_date = (empty($data['end_date']))? '1': " m.sale_date <= '".$data['end_date']." 23:59:59'";
-		$mong = " AND ".$from_date." AND ".$to_date;
+		if(!empty($data['branch'])){
+			$sale.= " AND s.branch_id =".$data['branch'];
+		}
 		
+		$from_date =(empty($data['start_date']))? '1': " m.sale_date >= '".date("Y-m-d",strtotime($data['start_date']))." 00:00:00'";
+		$to_date = (empty($data['end_date']))? '1': " m.sale_date <= '".date("Y-m-d",strtotime($data['end_date']))." 23:59:59'";
+		$mong = " AND ".$from_date." AND ".$to_date;
+		if(!empty($data['branch'])){
+			$mong.= " AND m.branch_id =".$data['branch'];
+		}
 		$sql ="SELECT 
 					p.*,
 					(SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,

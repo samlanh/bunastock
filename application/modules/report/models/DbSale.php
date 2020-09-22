@@ -28,8 +28,8 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 		
 			";
 		
-		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " WHERE ".$from_date." AND ".$to_date;
 		
 		if(!empty($search['ad_search'])){
@@ -242,8 +242,8 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 				WHERE 
 				  s.status = 1 
 			";
-		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " s.date_sold >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.date_sold <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		if(!empty($search['branch_id'])){
@@ -267,8 +267,8 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 				WHERE 
 				  m.status = 1 
 			";
-		$from_date =(empty($search['start_date']))? '1': " m.sale_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " m.sale_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " m.sale_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 	
 		if(!empty($search['branch_id'])){
@@ -289,8 +289,8 @@ Class report_Model_DbSale extends Zend_Db_Table_Abstract{
 				WHERE 
 				  d.status = 1 
 		";
-		$from_date =(empty($search['start_date']))? '1': " d.paid_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " d.paid_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " d.paid_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " d.paid_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 	
 		if(!empty($search['branch_id'])){

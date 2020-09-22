@@ -83,7 +83,9 @@ $brach_name =  $this->branch;
 		                		<ul>
 		                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 		                			<li style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("SALES_REPORT");?></li>
-		                			<li style="text-align:center; font-size:14px; color: #F31A1A  !important"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
+		                			<?php if(!empty($this->rssearch['start_date'])){?>
+		                			<li style="text-align:center; font-size:14px; color: #F31A1A  !important"><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));?></li>
+		                			<?php }?>
 		                		</ul>
 		                	</td>
 		                    <td width="20%" align="left"></td>
@@ -97,6 +99,7 @@ $brach_name =  $this->branch;
 		                 <thead>
 			                 <tr  align="center" style="background: #b0bdfd !important;font-weight:bold; line-height: 25px; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td>&nbsp;<?php echo $tr->translate("NUM");?></td>
+			                    <td>&nbsp;<?php echo $tr->translate("BRANCH_NAME");?></td>
 								<td width="10%">&nbsp;<?php echo $tr->translate("SALE_ORDER");?></td>
 								<td>&nbsp;<?php echo $tr->translate("CUSTOMER_NAME");?></td>
 								<td>&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
@@ -119,6 +122,7 @@ $brach_name =  $this->branch;
 		                if(!empty($this->repurchase))foreach ($this->repurchase AS $index => $rs){?>
 						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;font-size:13px;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
+						   <td align="center" style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">&nbsp;<?php echo $rs["branch_name"];?></a></td>
 						   <td align="center" style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">&nbsp;<?php echo $rs["sale_no"];?></a></td>
 						   <td style="white-space: nowrap;"><a style="color:#000;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/sales/possale/invoice/id/".$rs["id"];?>">&nbsp;<?php echo $rs["customer_name"];?></a></td>
 						   <td>&nbsp;<?php echo $rs["phone"];?></td>

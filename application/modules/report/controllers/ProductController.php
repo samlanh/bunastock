@@ -336,7 +336,7 @@ class report_ProductController extends Zend_Controller_Action
     	$db = new report_Model_DbProduct();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+//     		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
@@ -345,6 +345,7 @@ class report_ProductController extends Zend_Controller_Action
     				'category'		=>	'',
     				'start_date'	=>date("Y-m-d"),
     				'end_date'		=>date("Y-m-d"),
+    				'branch'		=>	'',
     		);
     	}
     	$this->view->product = $db->getAllProductSold($data);

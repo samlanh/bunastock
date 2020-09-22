@@ -34,19 +34,25 @@ $formFilter = $this->formFilter;
 							<label class="control-label col-md-3">
 								<?php echo $formFilter->getElement('ad_search');?>
 							</label>
-							<label class="control-label col-md-2">
+							<label class="control-label col-md-3">
+								<?php echo $formFilter->getElement('branch');?>
+							</label>
+							<label class="control-label col-md-3">
 								<?php echo $formFilter->getElement('category');?>
 							</label>
-							<label class="control-label col-md-2">
+							<label class="control-label col-md-3">
 								<?php echo $formFilter->getElement('type');?>
 							</label>
-							<label class="control-label col-md-2">
+						</div>
+						<div class="form-group">
+							
+							<label class="control-label col-md-3">
 								<div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div>
 							</label>
-							<label class="control-label col-md-2">
+							<label class="control-label col-md-3">
 								<div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div>
 							</label>
-							<label class="control-label col-md-1">
+							<label class="control-label col-md-3">
 								<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("ស្វែងរក");?></button>
 							</label>
 						</div>
@@ -85,6 +91,9 @@ $formFilter = $this->formFilter;
 			                		<ul>
 			                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 			                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important">របាយការណ៏លក់ផលិតផល</li>
+			                			<li style="font-size:17px; text-align:center; font-size:14px; font-family:'Times New Roman','Khmer OS Muol Light'; color: #F31A1A  !important;">
+						                	<span id="projectName"></span>
+						                </li>
 			                			<li style="text-align:center; font-size:14px; color: #F31A1A  !important"><?php if(!empty($this->search['start_date'])){?><?php echo date("d/m/Y",strtotime($this->search['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->search['end_date']));}?></li>
 			                		</ul>
 			                	</td>
@@ -171,6 +180,13 @@ $formFilter = $this->formFilter;
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
+$(document).ready(function(){
+	branch_id = $("#branch").val();
+	 if(branch_id!=-1 && branch_id!=0){
+		 var bbr = $("#branch option:selected").text();
+		 document.getElementById('projectName').innerHTML = bbr+"<br />";
+	 }
+});
 function doPrint() {
 	var divToPrint = document.getElementById('divPrint');var htmlToPrint = '' +'<style type="text/css">' +'</style>';htmlToPrint += divToPrint.outerHTML;window.document.write(htmlToPrint);window.print();window.close();
 }

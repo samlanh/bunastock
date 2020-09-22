@@ -31,6 +31,7 @@
 					<?php $formFilter = $this->form_salemong; ?>
 					<div class="form-group" style="padding-top: -6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
 						<label class="control-label col-md-2">
 							<select name="is_complete" id="is_complete" class="form-control select2me">
@@ -111,6 +112,7 @@
 		                 <thead>
 							<tr align="center" style="background: #b0bdfd !important;font-weight:bold; line-height: 30px; font-size:13px; padding:1px 0px; white-space: nowrap; ">
 								<td rowspan="2" style="border:1px solid #000;"><?php echo $tr->translate("NUM");?></td>
+								<td rowspan="2" style="border:1px solid #000;"><?php echo $tr->translate("BRANCH_NAME");?></td>
 								<td rowspan="2" style="border:1px solid #000;">វិក័យបត្រ</td>
 								<td rowspan="2" style="border:1px solid #000;">អតិថិជន</td>
 								<td rowspan="2" style="border:1px solid #000;">លេខទូរស័ព្ទ</td>
@@ -131,16 +133,17 @@
 		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>     
 						<tr align="center" class='row-format hover' style="border:1px solid #000;white-space: nowrap;">
 						   <td style="white-space: nowrap;border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["invoice_no"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["customer_name"];?></td>					  
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["customer_phone"];?></td>
-					       <td align="left" style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;&nbsp;<?php echo "$ ".number_format($rs["sub_total"],2);?></td>
-				           <td align="left" style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?></td>
-						   <td align="left" style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;&nbsp;<?php echo "$ ".number_format($rs["balance_after"],2);?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["other_note"];?></td>
-						   <td style="border:1px solid #000;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["sale_date"]));?></td>
-						   <td>&nbsp;<?php echo $rs["user_name"];?></td>
-						   <td>&nbsp;<?php echo $rs["status_name"];?></td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["branch_name"];?>&nbsp;</td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["invoice_no"];?>&nbsp;</td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["customer_name"];?>&nbsp;</td>					  
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["customer_phone"];?>&nbsp;</td>
+					       <td align="left" style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;&nbsp;<?php echo "$ ".number_format($rs["sub_total"],2);?>&nbsp;</td>
+				           <td align="left" style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;&nbsp;<?php echo "$ ".number_format($rs["paid"],2);?>&nbsp;</td>
+						   <td align="left" style="font-family: 'Open Sans', sans-serif;font-weight: bold;">&nbsp;&nbsp;<?php echo "$ ".number_format($rs["balance_after"],2);?>&nbsp;</td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["other_note"];?>&nbsp;</td>
+						   <td style="border:1px solid #000;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["sale_date"]));?>&nbsp;</td>
+						   <td>&nbsp;<?php echo $rs["user_name"];?>&nbsp;</td>
+						   <td>&nbsp;<?php echo $rs["status_name"];?>&nbsp;</td>
 						   <td class="displaynone" style="border:1px solid #000;"><a style="color:blue;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/mong/index/invoice/id/".$rs["id"];?>">វិក័យបត្រ</a></td>
 						   <td class="displaynone" style="border:1px solid #000;"><a style="color:blue;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/index/rpt-mong-payment/id/".$rs["id"];?>">ប្រវត្តិបង់ប្រាក់</a></td>
 						   <td class="displaynone" style="border:1px solid #000;"><a style="color:red;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/mong/index/goodtime/id/".$rs["id"];?>">សែនបើកឆាក</a></td>
