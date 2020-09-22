@@ -136,6 +136,7 @@ class IndexController extends Zend_Controller_Action
     		$search = array(
     			'start_date'	=>date("Y-m-01"),
     			'end_date'		=>date("Y-m-d"),
+    			'branch'		=>""	
     		);
     	}
     	
@@ -148,6 +149,8 @@ class IndexController extends Zend_Controller_Action
     	$this->view->amount_donor = $db->getAllAmountDonor($search);
     	
     	$this->view->product_type = $db->getAllProductType();
+    	
+    	$this->view->branch = $db->getAllBranch();
     }
     
     

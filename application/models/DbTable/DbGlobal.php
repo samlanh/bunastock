@@ -613,6 +613,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		$sql = "select count(id) from tb_sales_order as s where status=1 $where ";
+		$sql.=$this->getAccessPermission();
+		if(!empty($search['branch'])){
+			$sql.= " AND branch_id = ".$search['branch'];
+		}
+		
 		return $db->fetchOne($sql);
 	}
 	function getAllAmountMong($search){
@@ -623,6 +628,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		$sql = "select count(id) from tb_mong where status=1 $where";
+		$sql.=$this->getAccessPermission();
+		if(!empty($search['branch'])){
+			$sql.= " AND branch_id = ".$search['branch'];
+		}
+		
 		return $db->fetchOne($sql);
 	}
 	function getAllAmountProgram($search){
@@ -633,6 +643,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     	$where = " AND ".$from_date." AND ".$to_date;
 		
 		$sql = "select count(id) from tb_program where status=1 $where ";
+		$sql.=$this->getAccessPermission();
+		if(!empty($search['branch'])){
+			$sql.= " AND branch_id = ".$search['branch'];
+		}
+		
 		return $db->fetchOne($sql);
 	}
 	function getAllAmountDonor($search){
@@ -643,6 +658,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		$sql = "select count(id) from tb_donors where status=1 $where ";
+		$sql.=$this->getAccessPermission();
+		if(!empty($search['branch'])){
+			$sql.= " AND branch_id = ".$search['branch'];
+		}
+		
 		return $db->fetchOne($sql);
 	}
 	
