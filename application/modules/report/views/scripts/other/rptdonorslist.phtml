@@ -97,6 +97,7 @@
 		                 <thead>
 		                 	<tr  align="center" style="background: #b0bdfd !important;font-weight:bold; line-height: 24px; border:1px solid #000; font-size:14px; padding:1px 0px; white-space: nowrap; ">
 			                    <td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("ល.រ");?></td>
+			                    <td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("BRANCH_NAME");?></td>
 								<td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("ឈ្មោះសប្បុរសជន");?></td>
 								<td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("លេខទូរស័ព្ទ");?></td>
 								<td style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("ប្រើយូរបំផុត	");?></td>
@@ -114,6 +115,7 @@
 		                if(!empty($this->other))foreach ($this->other AS $index => $rs){?>		                
 						<tr class='row-format hover' style="border:1px solid #000; text-align:center;white-space: nowrap;font-size:13px;">
 						   <td align="center" style="border:1px solid #000;">&nbsp;<?php echo $index+1?></td>
+						   <td align="left" style="border:1px solid #000;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["branch_name"];?></a></td>
 						   <td align="left" style="border:1px solid #000;"><a style="color:#000080;text-decoration: none;" target="_blank" href="<?php echo $this->baseUrl()."/report/other/listsponorship/id/".$rs["id"];?>">&nbsp;<?php echo $rs["donor"];?></a></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo $rs["tel"];?></td>
 						   <td style="border:1px solid #000;">&nbsp;<?php echo date("d-m-Y",strtotime($rs["invalid_date"]));?></td>

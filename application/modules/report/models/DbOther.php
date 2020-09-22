@@ -10,6 +10,7 @@ function getAllDonors($search){
 		$db = $this->getAdapter();
 		$sql="  SELECT 
 					id,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = d.branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
 					donor,
 					tel,
 					address,
@@ -66,6 +67,7 @@ function getAllDonors($search){
 		$sql ="SELECT 
 					id,
 					dead_name,
+					(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = d.branch_id AND status=1 AND name!='' LIMIT 1) AS branch_name,
 					(select name_kh from tb_view where type=19 and key_code=dead_sex) as dead_sex,
 					dead_age,date_jom,
 					dead_address,
@@ -97,6 +99,9 @@ function getAllDonors($search){
 		}
 		if($search['status']>-1){
 			$where .= " AND status = ".$search['status'];
+		}
+		if(!empty($search['branch'])){
+			$where .= " AND d.branch_id =".$search['branch'];
 		}
 		$order=" ORDER BY id DESC ";
 		

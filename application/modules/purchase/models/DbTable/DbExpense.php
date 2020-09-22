@@ -52,10 +52,11 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 	function addexpense($data){
 		
 		$db = new Application_Model_DbTable_DbGlobal();
-		$receipt = $db->getExpenseReceiptNumber(1);
+		$branch_id = empty($data['branch'])?1:$data['branch'];
+		$receipt = $db->getExpenseReceiptNumber($branch_id);
 		
 		$arr = array(
-			'branch_id'		=>$this->getUserId(),
+			'branch_id'		=>$branch_id,//$this->getUserId(),
 			'expense_title'	=>$data['expense_title'],
 			'receipt'		=>$receipt,
 			'total_amount'	=>$data['total_amount'],
@@ -95,7 +96,12 @@ class Purchase_Model_DbTable_DbExpense extends Zend_Db_Table_Abstract
 
 	function getexpensebyid($id){
 		$db = $this->getAdapter();
-		$sql=" SELECT *,DATE_FORMAT(for_date, '%d-%m-%Y') AS for_date FROM tb_expense where id=$id limit 1 ";
+		$sql=" SELECT *,DATE_FORMAT(for_date, '%d-%m-%Y') AS for_date FROM tb_expense WHERE id=$id ";
+		
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$sql.=$dbg->getAccessPermission('branch_id');
+		$sql.=" LIMIT 1";
+		
 		return $db->fetchRow($sql);
 	}
 	

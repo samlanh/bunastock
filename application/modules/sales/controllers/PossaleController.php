@@ -320,7 +320,7 @@ class Sales_PossaleController extends Zend_Controller_Action
 		}
 	}
 	
-	function getinvocenoAction(){
+	function expensenumberAction(){
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];

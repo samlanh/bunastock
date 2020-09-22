@@ -90,13 +90,27 @@ class Purchase_ExpenseController extends Zend_Controller_Action
 		$db = new Purchase_Model_DbTable_DbExpense();
 		$row  = $db->getexpensebyid($id);
 		$this->view->row = $row;
-		
+		if (empty($row)){
+			Application_Form_FrmMessage::Sucessfull("NO_RECORD",self::REDIRECT_URL);
+			exit();
+		}
 		$this->view->row_detail = $db->getexpenseDetailbyid($id);
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->expense = $optexpense = $db->getAllExpense();
+		$this->view->branch = $db->getAllBranch();
     }
 
+    function getinvocenoAction(){
+    	if($this->getRequest()->isPost()){
+    		$post=$this->getRequest()->getPost();
+    		$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+    		$_db = new Application_Model_DbTable_DbGlobal();
+    		$rs = $_db->getExpenseReceiptNumber($post['branch_id']);
+    		echo $rs;
+    		exit();
+    	}
+    }
 }
 
 
