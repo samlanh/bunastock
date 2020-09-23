@@ -22,7 +22,7 @@ class Sales_RepayController extends Zend_Controller_Action
     		);
     	}
 		$rows = $db->getAllRepay($data);
-		$columns=array("ឈ្មោះអ្នកសង","ភេទ","លេខទូរស័ព្ទ","ថ្ងៃសង","ចំនួនទឹកប្រាក់ខ្ចី","កំណត់សម្គាល់","ស្ថានការ");
+		$columns=array("BRANCH_NAME","ឈ្មោះអ្នកសង","ភេទ","លេខទូរស័ព្ទ","ថ្ងៃសង","ចំនួនទឹកប្រាក់ខ្ចី","កំណត់សម្គាល់","ស្ថានការ");
 		$link=array('module'=>'sales','controller'=>'repay','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
@@ -48,13 +48,14 @@ class Sales_RepayController extends Zend_Controller_Action
 			$form = new Sales_Form_FrmCustomer(null);
 			$formpopup = $form->Formcustomer(null);
 			Application_Model_Decorator::removeAllDecorator($formpopup);
-	//	$this->view->rsservice = $db->getAllService();
+			
+			$db = new Application_Model_DbTable_DbGlobal();
+			$this->view->branch = $db->getAllBranch();
 	}
 	function editAction(){
 		$id = $this->getRequest()->getParam("id");
 		$db = new Sales_Model_DbTable_DbRepay();
 			if($this->getRequest()->isPost()){
-		//		$data["id"] = $id;
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->updateRepay($post, $id);
@@ -66,21 +67,47 @@ class Sales_RepayController extends Zend_Controller_Action
 				  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
 				  }
 			}	
-			$this->view->row = $db->getRepayById($id);	
-			$this->view->name_pay = $db->getAllRepays();
+			$row = $db->getRepayById($id);	
+			$this->view->row = $row;
+			if (empty($row)){
+				Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/repay/index");
+				exit();
+			}
+// 			$this->view->name_pay = $db->getAllRepays();
+			$post =array(
+					'branch_id' =>$row['branch_id'],
+					'notOpt' =>1
+					);
+			$this->view->name_pay = $db->getAllRepaysOption($post);
+			
 			$form = new Sales_Form_FrmCustomer(null);
 			$formpopup = $form->Formcustomer(null);
-			Application_Model_Decorator::removeAllDecorator($formpopup);		 
+			Application_Model_Decorator::removeAllDecorator($formpopup);	
+
+			$db = new Application_Model_DbTable_DbGlobal();
+			$this->view->branch = $db->getAllBranch();
 	}
 
 	function getRepayDetailAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_DbRepay();
-			$detail = $db->getRepayDetail($data['name_borrow']);
+// 			$detail = $db->getRepayDetail($data['name_borrow']);
+			$detail = $db->getRepayDetailByBranch($data);
 			print_r(Zend_Json::encode($detail));
 			exit();
 		}
 	}
 	
+	function getborrowerbybranchAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+				
+			$db = new Sales_Model_DbTable_DbRepay();
+			$rs = $db->getAllRepaysOption($post);
+			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
 }

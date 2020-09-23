@@ -12,6 +12,7 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     public function getAllBorrower($search){
     	$db = $this->getAdapter();
     	$sql=" SELECT id,
+    				(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 					name_borrow,
 					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
 					phone,
@@ -20,12 +21,12 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
 					notes,
 					(SELECT name_kh FROM tb_view AS v WHERE v.type=5 AND v.key_code = tb_borrowers.status) AS STATUS
 					FROM `tb_borrowers`
-					where name_borrow!='' AND type=1
+					WHERE name_borrow!='' AND type=1
     	";
     	$where = ''; 
 
-    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
     	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
@@ -33,15 +34,22 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     		$s_where[] = " name_borrow LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
     	}
+    	if(!empty($search['branch'])){
+    		$where .= " AND branch_id = ".$search['branch'];
+    	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];
     	}
+    	
+    	$dbg = new Application_Model_DbTable_DbGlobal();
+    	$where.=$dbg->getAccessPermission();
     	$order=" ORDER BY id DESC ";
-  //  	echo $sql.$where.$order;
+    	
     	return $db->fetchAll($sql.$where.$order);
     }
     public function addBorrowers($post){
     	$_arr=array(
+    			'branch_id' 		 => $post['branch'],
     			'name_borrow' 		 => $post['name_borrow'],
     			'gender'			 => $post['gender'],
     			'phone' 			 => $post['phone'],
@@ -77,7 +85,6 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql);
     }
     public function updateBorrow($post, $id){
-    //	print_r($post);exit();
     	$_arr=array(
     			'name_borrow' 		 => $post['name_borrow'],
     			'gender'			 => $post['gender'],
@@ -94,7 +101,12 @@ class Sales_Model_DbTable_DbBorrowers extends Zend_Db_Table_Abstract
     }
     public function getBorrowById($id){
     	$db = $this->getAdapter();
-    	$sql = "SELECT * FROM tb_borrowers WHERE id = $id LIMIT 1";
+    	$sql = "SELECT * FROM tb_borrowers WHERE id = $id ";
+    	
+    	$dbg = new Application_Model_DbTable_DbGlobal();
+    	$sql.=$dbg->getAccessPermission();
+    	$sql.=" LIMIT 1 ";
+    	
     	return $db->fetchRow($sql);
     }  
 }

@@ -10,18 +10,17 @@ class Sales_BorrowersController extends Zend_Controller_Action
     	$db = new Sales_Model_DbTable_DbBorrowers();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
-    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     			'ad_search'	=>	'',
+    			'branch'	=>	'',
     			'start_date'	=>	date("Y-m-d"),
     			'end_date'		=>	date("Y-m-d"),
      			'status'	=>	-1,
     		);
     	}
 		$rows = $db->getAllBorrower($data);
-		$columns=array("ឈ្មោះអ្នកខ្ចី","ភេទ","លេខទូរស័ព្ទ","ថ្ងៃខ្ចី","ចំនួនប្រាក់ខ្ចី","កំណត់សម្គាល់","ស្ថានការ");
+		$columns=array("BRANCH_NAME","ឈ្មោះអ្នកខ្ចី","ភេទ","លេខទូរស័ព្ទ","ថ្ងៃខ្ចី","ចំនួនប្រាក់ខ្ចី","កំណត់សម្គាល់","ស្ថានការ");
 		$link=array('module'=>'sales','controller'=>'borrowers','action'=>'edit',);
 		
 		$list = new Application_Form_Frmlist();
@@ -48,13 +47,14 @@ class Sales_BorrowersController extends Zend_Controller_Action
 			$form = new Sales_Form_FrmCustomer(null);
 			$formpopup = $form->Formcustomer(null);
 			Application_Model_Decorator::removeAllDecorator($formpopup);
-	//	$this->view->rsservice = $db->getAllService();
+			
+			$db = new Application_Model_DbTable_DbGlobal();
+			$this->view->branch = $db->getAllBranch();
 	}
 	function editAction(){
 		$id = $this->getRequest()->getParam("id");
 		$db = new Sales_Model_DbTable_DbBorrowers();
 			if($this->getRequest()->isPost()){
-		//		$data["id"] = $id;
 				try{
 					$post = $this->getRequest()->getPost();
 					$db->updateBorrow($post, $id);
@@ -66,12 +66,19 @@ class Sales_BorrowersController extends Zend_Controller_Action
 				  	Application_Form_FrmMessage::messageError("កែប្រែមិនត្រឹមត្រូវ",$err = $e->getMessage());
 				  }
 			}	
-			$this->view->row = $db->getBorrowById($id);	
+			$row = $db->getBorrowById($id);
+			$this->view->row = $row;
+			if (empty($row)){
+				Application_Form_FrmMessage::Sucessfull("NO_RECORD","/sales/borrowers/index");
+				exit();
+			}	
 			$this->view->name_borrow = $db->getAllBorrowers();
 			$form = new Sales_Form_FrmCustomer(null);
 			$formpopup = $form->Formcustomer(null);
 			Application_Model_Decorator::removeAllDecorator($formpopup);
-//	 		$this->view->rsservice = $db->getAllService();		 
+			
+			$db = new Application_Model_DbTable_DbGlobal();
+			$this->view->branch = $db->getAllBranch();
 	}	
 	function getBorrowersDetailAction(){
 		if($this->getRequest()->isPost()){

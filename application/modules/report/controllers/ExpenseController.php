@@ -91,8 +91,6 @@ class report_ExpenseController extends Zend_Controller_Action
     function rptPurchaseitemAction(){
     	if($this->getRequest()->isPost()){
     		$search = $this->getRequest()->getPost();
-    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
-    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
     	}else{
     		$search = array(
     				'ad_search'	=>'',
@@ -187,8 +185,6 @@ class report_ExpenseController extends Zend_Controller_Action
     	try{
     		if($this->getRequest()->isPost()){
     			$search=$this->getRequest()->getPost();
-    			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
-    			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
     		}
     		else{
     			$search = array(

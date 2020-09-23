@@ -30,7 +30,8 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 				<form method="post" action="<?php //echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<?php $formFilter = $this->form_borrowandpay; ?>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>		
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>	
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>	
 						<label class="control-label col-md-2">
 							<select name="paid_type" id="paid_type" class="form-control select2me" >
 								<option value="0" <?php if($this->rssearch['paid_type']==0){echo "selected='selected'";}?>>ជ្រើសរើសប្រភេទ</option>
@@ -70,6 +71,9 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 				                		<ul>
 				                			<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light';  color: #F31A1A   !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></li>
 				                			<li style="text-align:center; font-size:16px; font-family:'Khmer OS Muol Light';  color: #F31A1A   !important">របាយការណ៍ អ្នកខ្ចីប្រាក់ នឹង អ្នកសងប្រាក់</li>
+				                			<li style="font-size:17px; text-align:center; font-size:14px; font-family:'Times New Roman','Khmer OS Muol Light'; color: #F31A1A  !important;">
+							                	<span id="projectName"></span>
+							                </li>
 				                			<li style="text-align:center; font-size:14px; color: #F31A1A   !important"><?php if(!empty($this->rssearch['start_date'])){?><?php echo date("d/m/Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d/m/Y",strtotime($this->rssearch['end_date']));}?></li>
 				                		</ul>
 				                	</td>
@@ -210,5 +214,12 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
+$(document).ready(function(){
+	branch_id = $("#branch").val();
+	 if(branch_id!=-1 && branch_id!=0){
+		 var bbr = $("#branch option:selected").text();
+		 document.getElementById('projectName').innerHTML = bbr+"<br />";
+	 }
+});
 function doPrint() {var divToPrint = document.getElementById('divPrint');var htmlToPrint = '' +'<style type="text/css">' +'</style>';htmlToPrint += divToPrint.outerHTML;window.document.write(htmlToPrint);window.print();window.close();}
 </script>

@@ -24,8 +24,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					AND p.status=1
 			";
 //		$where= '';
-		$from_date =(empty($search['start_date']))? '1': " v.expense_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " v.expense_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " v.expense_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " v.expense_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
 		if(!empty($search['ad_search'])){
 			$s_where = array();
@@ -34,7 +34,7 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 			$s_where[] = " p.order_number LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['branch']>0){
+		if(!empty($search['branch'])){
 			$where .= " AND p.branch_id =".$search['branch'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
@@ -65,8 +65,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					AND pp.status=1
 			";
 //		$where= ' ';
-		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " pp.date_payment <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " pp.date_payment >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " pp.date_payment <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['ad_search'])){
 			$s_where = array();
@@ -75,13 +75,12 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 			$s_where[] = " tel LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['branch']>0){
-			$where .= " AND branch_id =".$search['brancd'];
+		if(!empty($search['branch'])){
+			$where.= " AND pp.branch_id =".$search['branch'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY pp.id ASC ";
-	//	echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
@@ -108,8 +107,8 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 					AND m.status=1
 			";
 //		$where= ' ';	
-		$from_date =(empty($search['start_date']))? '1': " mp.date_payment >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " mp.date_payment <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " mp.date_payment >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " mp.date_payment <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where = " and ".$from_date." AND ".$to_date;
 	
 		if(!empty($search['ad_search'])){
@@ -119,7 +118,7 @@ Class report_Model_DbPaidToSupplyer extends Zend_Db_Table_Abstract{
 			$s_where[] = " mp.payment_type LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		if($search['branch']>0){
+		if(!empty($search['branch'])){
 			$where .= " AND m.branch_id =".$search['branch'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();

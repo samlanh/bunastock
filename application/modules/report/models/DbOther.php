@@ -378,8 +378,8 @@ function getAllworker($search){
     	";
     	$where = '';
 
-    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
     	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
@@ -387,6 +387,9 @@ function getAllworker($search){
     		$s_search = str_replace(' ', '', $s_search);
     		$s_where[] = "REPLACE(name_borrow,'','') LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	if(!empty($search['branch'])){
+    		$where .= " AND branch_id = ".$search['branch'];
     	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];
@@ -412,14 +415,17 @@ function getAllworker($search){
     	";
     	$where = ''; 
 
-    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
     	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
     		$s_search = trim(addslashes($search['ad_search']));
     		$s_where[] = " name_borrow LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	if(!empty($search['branch'])){
+    		$where .= " AND branch_id = ".$search['branch'];
     	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];

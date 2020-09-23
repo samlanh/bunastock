@@ -54,6 +54,9 @@
 		                		<td  align="center">
 		                			<strong style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("COMPANY_CUSTOMER");?></strong><br>
 		                			<strong style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important"><?php echo $tr->translate("RPT_EXPENSE_TYPE");?></strong><br>
+		                			<strong style="text-align:center; font-size:17px; font-family:'Khmer OS Muol Light'; color: #F31A1A  !important">
+					                	<span id="projectName"></span>
+					                </strong>
 		                			<strong style="text-align:center; font-size:14px; color: #F31A1A  !important"><?php if(!empty($this->search['start_date'])){?><?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));}?></strong>
 		                		</td>
 		                    <td width="20%"></td>
@@ -78,7 +81,7 @@
 							<td colspan="3">
 								<table class="table2excel" border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
 									 
-									<?php $i=0;$expense_type_id=0;$total=1;if(!empty($this->expense_type)){foreach($this->expense_type as $key => $row){
+									<?php $i=0;$expense_type_id=0;$total=0;if(!empty($this->expense_type)){foreach($this->expense_type as $key => $row){
 											$i++;
 											if($expense_type_id != $row['expense_type_id']){
 												if($key>0){
@@ -167,6 +170,13 @@
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script type="text/javascript">
+	$(document).ready(function(){
+		branch_id = $("#branch_id").val();
+		 if(branch_id!=-1 && branch_id!=0){
+			 var bbr = $("#branch_id option:selected").text();
+			 document.getElementById('projectName').innerHTML = bbr+"<br />";
+		 }
+	});
 	function doPrint(){
 		var divToPrint = document.getElementById('divPrint');
 		var htmlToPrint = '' +'<style type="text/css">' +'</style>';

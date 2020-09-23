@@ -58,8 +58,9 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$branch_id = empty($data['branch_id'])?1:$data['branch_id'];
 			$array=array(
-					"branch_id"   	=> 	1,
+					"branch_id"   	=> 	$branch_id,
 					"purchase_id" 	=> 	$data['purchase_id'],
 					"payment_type"  => 	$data["payment_type"],//payment by cash/cheque/Credit/Bank Transtransfer
 					"bank_name" 	=> 	$data['bank_name'],
@@ -197,6 +198,41 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 		";
 		 
 		return  $db->fetchAll($sql);
+	}
+	
+	function getAllPurchaseNoByBranch($_data){ 
+		$db = $this->getAdapter();
+		$sql=" SELECT p.id,
+					p.order_number as name,
+					(SELECT v_name FROM tb_vendor WHERE tb_vendor.vendor_id = p.vendor_id LIMIT 1) AS vendor_name
+				FROM tb_purchase_order AS p WHERE p.status=1  ";
+		
+		if (empty($_data['edit'])){
+			$sql.=" AND p.balance>0 ";
+		}
+		$sql.=" AND p.branch_id = ".$_data['branch_id'];
+		$row = $db->fetchAll($sql);
+		
+		if (!empty($_data['notOpt'])){
+			return $row;
+		}else{
+			$postype = $_data['postype'];
+			$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសលេខបញ្ជាទិញ", ENT_QUOTES).'</option>';
+			if ($postype!=1){
+				$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសអ្នកផ្គត់ផ្គង់", ENT_QUOTES).'</option>';
+			}
+			if(!empty($row)){
+				foreach ($row as $rs){
+					if ($postype==1){
+						$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['name'], ENT_QUOTES).'</option>';
+					}else{
+						$option .= '<option value="'.$rs['id'].'">'.htmlspecialchars($rs['vendor_name'], ENT_QUOTES).'</option>';
+					}
+				}
+			}
+			return $option;
+		}
+		
 	}
 	
 }

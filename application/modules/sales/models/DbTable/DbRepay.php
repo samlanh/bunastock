@@ -12,6 +12,7 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     public function getAllRepay($search){
     	$db = $this->getAdapter();
     	$sql=" SELECT id,
+    				(SELECT name FROM `tb_sublocation` WHERE tb_sublocation.id = branch_id AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
 					name_borrow,
 					(SELECT name_kh FROM tb_view WHERE TYPE=19 AND key_code=gender) AS gender,
 					phone,
@@ -24,8 +25,8 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     	";
     	$where = '';
 
-    	$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
     	$where = " and ".$from_date." AND ".$to_date;
     	if(!empty($search['ad_search'])){
     		$s_where = array();
@@ -34,19 +35,25 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     		$s_where[] = "REPLACE(name_borrow,'','') LIKE '%{$s_search}%'";
     		$where .=' AND ('.implode(' OR ',$s_where).')';
     	}
+    	if(!empty($search['branch'])){
+    		$where .= " AND branch_id = ".$search['branch'];
+    	}
     	if($search['status']>-1){
     		$where .= " AND status = ".$search['status'];
     	}
+    	$dbg = new Application_Model_DbTable_DbGlobal();
+    	$where.=$dbg->getAccessPermission();
+    	
     	$order=" ORDER BY id DESC ";
-  //  	echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     public function addRepays($data){
     	$db = $this->getAdapter();
     	$db->beginTransaction();
 		try{
-			$rs= $this->getRepayDetails($data['name_borrow']);
-			//print_r($rows);exit();
+// 			$rs= $this->getRepayDetails($data['name_borrow']);
+			$data['branch_id'] = $data['branch'];
+			$rs= $this->getRepayDetailsByBranch($data);
 			$total=$data['qtys'];
 			$repay=0;
 	    	if(!empty($rs)) foreach($rs As $row){
@@ -68,6 +75,7 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
 	    		}
 	    	}
 	    	$_arr=array(
+	    			'branch_id' 		 => $data['branch'],
 	    			'name_borrow' 		 => $data['name_borrow'],
 	    			'gender'			 => $data['gender'],
 	    			'phone' 			 => $data['phone'],
@@ -130,9 +138,10 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     public function updateRepay($data, $id){
     	$db = $this->getAdapter();
     	try{
+    		
     	////////////////////// update old payment back ////////////////////////////////////////////////////////
 	    	$old_row = $this->getRepayById($id);
-	    	$sql = "select * from tb_borrowers where name_borrow = '".$old_row['name_borrow']."' and type=1 and status=1 order by id DESC limit 1";
+	    	$sql = "SELECT * from tb_borrowers where name_borrow = '".$old_row['name_borrow']."' and type=1 and status=1 order by id DESC limit 1";
 	    	$row = $db->fetchRow($sql);
 	    	$arr=array(
 		    			'qtys_after'	=> $row['qtys_after'] + $old_row['qtys'],
@@ -141,8 +150,10 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
 	    	$where = " id = ".$row['id'];
 	    	$this->update($arr, $where);
 	    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-	    		    	
-	    	$rs= $this->getRepayDetails($data['name_borrow']);
+	    	
+// 	    	$rs= $this->getRepayDetails($data['name_borrow']);
+	    	$data['branch_id'] = $data['branch'];
+	    	$rs= $this->getRepayDetailsByBranch($data);
 	    	$total=$data['qtys'];
 	    	if(!empty($rs)) foreach($rs As $row){
 	    		if($total>0){
@@ -164,6 +175,7 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
 	    	}
 	    	
 	    	$_arr=array(
+	    			'branch_id' 		 => $data['branch'],
 	    			'name_borrow' 		 => $data['name_borrow'],
 	    			'gender'			 => $data['gender'],
 	    			'phone' 			 => $data['phone'],
@@ -181,8 +193,76 @@ class Sales_Model_DbTable_DbRepay extends Zend_Db_Table_Abstract
     }
     public function getRepayById($id){
     	$db = $this->getAdapter();
-    	$sql = "SELECT * FROM tb_borrowers WHERE id = $id LIMIT 1";
+    	$sql = "SELECT * FROM tb_borrowers WHERE id = $id "; 
+    	$dbg = new Application_Model_DbTable_DbGlobal();
+    	$sql.=$dbg->getAccessPermission();
+    	$sql.=" LIMIT 1 ";
     	return $db->fetchRow($sql);
     } 
+    
+    function getAllRepaysOption($_data){
+    	$db = $this->getAdapter();
+    	$sql=" SELECT DISTINCT(name_borrow) AS name FROM tb_borrowers WHERE name_borrow!='' "; 
+    	
+    	$sql.=" AND branch_id = ".$_data['branch_id'];
+    	$row = $db->fetchAll($sql);
+    	
+    	if (!empty($_data['notOpt'])){
+    		return $row;
+    	}else{
+    		$option = '<option value="0">'.htmlspecialchars("ជ្រើសរើសឈ្មោះអ្នកសងប្រាក់", ENT_QUOTES).'</option>';
+    		$option = '<option value="-1">'.htmlspecialchars("បន្ថែមឈ្មោះ", ENT_QUOTES).'</option>';
+    		if(!empty($row)){
+    			foreach ($row as $rs){
+    					$option .= '<option value="'.$rs['name'].'">'.htmlspecialchars($rs['name'], ENT_QUOTES).'</option>';
+    			}
+    		}
+    		return $option;
+    	}
+    	
+    }
+    
+    public function getRepayDetailByBranch($dara){
+    	$db = $this->getAdapter();
+    	$name_borrow = empty($dara['name_borrow'])?"Null":$dara['name_borrow'];
+    	$branch_id = empty($dara['branch_id'])?1:$dara['branch_id'];
+    	$sql = "SELECT
+	    	*,
+	    	SUM(qtys_after)As total,
+	    	DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow
+	    	FROM
+	    	`tb_borrowers`
+	    	WHERE
+	    	status=1
+	    	AND name_borrow!=''
+	    	AND name_borrow='$name_borrow'
+	    	AND type=1
+	    	AND branch_id=$branch_id
+    	";
+    	$sql.=" LIMIT 1 ";
+    	return $db->fetchRow($sql);
+    }
+    public function getRepayDetailsByBranch($dara){
+    	$db = $this->getAdapter();
+    	$name_borrow = empty($dara['name_borrow'])?"Null":$dara['name_borrow'];
+    	$branch_id = empty($dara['branch_id'])?1:$dara['branch_id'];
+    	$sql = "SELECT
+	    	*,
+	    	qtys As total,
+	    	DATE_FORMAT(DATE, '%d-%m-%Y') AS date_borrrow
+	    	FROM
+	    	`tb_borrowers`
+	    	WHERE
+	    	status=1
+	    	AND name_borrow!=''
+	    	AND name_borrow='$name_borrow'
+	    	AND type=1
+	    	AND branch_id=$branch_id
+	    	and is_complete=0
+	    	order by
+	    	id ASC
+    	";
+    	return $db->fetchAll($sql);
+    }
 }
 

@@ -20,15 +20,25 @@
 					
 					<div class="form-body" style="background:#fbf9f9;">
 						<div class="form-group">
+							<label class="control-label col-md-2"><?php echo $tr->translate("BRANCH_NAME");?><span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<select name="branch_id" id="branch_id" class="form-control select2me" onchange="getAllBranchFunction();" >
+									<option value=""><?php echo $tr->translate("SELECT_BRANCH");?></option>
+									<?php if(!empty($this->branch)){foreach($this->branch as $branch){?>
+									<option value="<?php echo $branch['id']?>"><?php echo $branch['name'];?></option>
+									<?php }}?>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("លេខបញ្ជាទិញ");?><span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
 								<select name="purchase_id" id="purchase_id" class="form-control select2me" onchange="getInvoice(1);" >
 									<option value="">ជ្រើសរើសលេខបញ្ជាទិញ</option>
-									<?php if(!empty($this->purchase_num)){foreach($this->purchase_num as $rs){?>
-									<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
-									<?php }}?>
 								</select>
 							</div>
 							
@@ -38,9 +48,6 @@
 							<div class="col-md-4">
 								<select name="vendor_id" id="vendor_id" class="form-control select2me" onchange="getInvoice(2);" >
 									<option value="">ជ្រើសរើសអ្នកផ្គត់ផ្គង់</option>
-									<?php if(!empty($this->all_vendor)){foreach($this->all_vendor as $rs){?>
-									<option value="<?php echo $rs['id']?>"><?php echo $rs['name']?></option>
-									<?php }}?>
 								</select>
 							</div>
 						</div>
@@ -181,7 +188,44 @@
 <!-- end new product -->
 
 <script>
+function getAllBranchFunction(){
+	getPuschaseByBranch(1);
+	getPuschaseByBranch(2);
+}
+<?php $urlGetposbybranch = $this->url(array('module'=>'purchase','controller'=>'payment','action'=>'getpurchasebybranch'));?>
+function getPuschaseByBranch(postype=0){
+	branch_id = $("#branch_id").val();
+	if(branch_id=="" || branch_id=="-1"){
+		return false;
+	}
+	$.ajax({
+		url: "<?php echo $urlGetposbybranch;?>",
+		type: "post",
+		data: {'branch_id':branch_id,'postype':postype},
+		dataType:"json",
+		success: function(data){
+			if(postype==1){
+				$("#purchase_id").html(data)
+			}else{
+				$("#vendor_id").html(data)
+			}
+			
+		},
+		error:function(err){
+			 alert(err);
+		}
+	});
+	
+}
 $('#frm').submit(function() {
+
+	branch_id=$("#branch_id").val();
+	if(branch_id<=0){
+		alert("<?php echo $tr->translate("Please select branch");?> !!!");
+		$('#branch_id').select2('open');
+		return false;	
+	}
+	
 	paid=$("#paid").val();
 	if(paid=='' || paid==0){
 		alert("សូមបញ្ចុលទឹកប្រាក់ដែលបានបង់");

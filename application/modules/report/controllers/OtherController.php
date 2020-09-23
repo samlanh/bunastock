@@ -152,6 +152,7 @@ class report_OtherController extends Zend_Controller_Action
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
+    				'branch'		=>	'',
     				'start_date'	=>date("Y-m-d"),
     				'end_date'		=>date("Y-m-d"),
     				'paid_type'		=>	0,

@@ -66,8 +66,8 @@ class Purchase_PaymentController extends Zend_Controller_Action
 			echo $e->getMessage();
 		}
 		 
-		$this->view->all_vendor = $db->getAllVendor();
-		$this->view->purchase_num = $db->getAllPurchaseNo();
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $_db->getAllBranch();
 		
 	}
 	function editAction(){
@@ -87,6 +87,9 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		$this->view->row = $db->getPaymentById($id);
 		$this->view->all_vendor = $db->getAllVendor();
 		$this->view->purchase_num = $db->getAllPurchaseNo();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->branch = $_db->getAllBranch();
 	}
 	
 	public function getinvoiceAction(){
@@ -98,5 +101,18 @@ class Purchase_PaymentController extends Zend_Controller_Action
 			exit();
 		}
 	}	
+	
+	function getpurchasebybranchAction(){
+		if($this->getRequest()->isPost()){
+			$post=$this->getRequest()->getPost();
+			$post['branch_id'] = empty($post['branch_id'])?1:$post['branch_id'];
+			$post['postype'] = empty($post['postype'])?1:$post['postype'];
+				
+			$db = new Purchase_Model_DbTable_Dbpayment();
+			$rs = $db->getAllPurchaseNoByBranch($post);
+			print_r(Zend_Json::encode($rs));
+			exit();
+		}
+	}
 	
 }

@@ -94,8 +94,8 @@ Class report_Model_DbExpense extends Zend_Db_Table_Abstract{
 		
 		$order=" ORDER BY e.branch_id ASC , ed.expense_type_id ASC ";
 			
-		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".$search['end_date']." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " e.for_date >= '".date("Y-m-d",strtotime($search['start_date']))." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " e.for_date <= '".date("Y-m-d",strtotime($search['end_date']))." 23:59:59'";
 		$where .= "  AND ".$from_date." AND ".$to_date;
 			
 		if(empty($search)){
