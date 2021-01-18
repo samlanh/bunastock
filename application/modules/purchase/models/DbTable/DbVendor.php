@@ -84,12 +84,13 @@ class Purchase_Model_DbTable_DbVendor extends Zend_Db_Table_Abstract
 					'last_usermod'	=> $this->getUserId(),
 					'last_mod_date' => new Zend_Date(),
 					'create_date'	=>	date("Y-m-d"),
-					'status'		=>	1
 			);
 			if(!empty($post['id'])){
+				$data['status']=$post['status'];
 				$where = "vendor_id = ".$post["id"];
 				$this->update($data, $where);
 			}else{
+				$data['status']=1;
 				$db->insert("tb_vendor", $data);
 			}
 			return $db->commit();

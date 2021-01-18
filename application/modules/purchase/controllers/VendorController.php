@@ -67,7 +67,7 @@ class Purchase_vendorController extends Zend_Controller_Action
 		if($this->getRequest()->isPost())
 		{
 			$post = $this->getRequest()->getPost();
-			$post['ids']=$id;
+			$post['id']=$id;
 			$db->addVendor($post);
 			Application_Form_FrmMessage::Sucessfull('ការកែប្រែបានជោគជ័យ', self::REDIRECT_URL . '/vendor/index');
 		}
