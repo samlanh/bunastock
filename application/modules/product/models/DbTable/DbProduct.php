@@ -180,7 +180,11 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			  p.`id`,
 			  (SELECT b.name FROM `tb_sublocation` AS b WHERE b.id=pl.`location_id` LIMIT 1) AS branch,
 			  p.`item_code`,
-			  p.`item_name` ,
+			  
+			    CASE WHEN length(p.`item_name`) > 60 
+					THEN concat(SUBSTRING(p.`item_name`, 1, 60), '...')
+				ELSE p.`item_name` end as `item_name`,
+
 			  (SELECT v.`name_en` FROM tb_view AS v WHERE v.`type`=16  AND p.`is_service`=v.`key_code` LIMIT 1) AS is_service,
 			  (SELECT v.name FROM `tb_category` AS  v WHERE v.id= p.`cate_id` LIMIT 1) AS category,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
@@ -392,28 +396,23 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
 			
     		$arr = array(
     			'item_name'		=>	$data["name"],
-    				
     			'item_code'		=>	$data["pro_code"],
     			'barcode'		=>	$data["barcode"],
     			'cate_id'		=>	$data["category"],
     			'brand_id'		=>	$data["brand"],
     			'color_id'		=>	$data["color"],
     			'measure_id'	=>	$data["measure"],
-    				
     			'is_service'	=>	$data["product_type"],
     			'is_costprice'	=>	$data["cost_pricetype"],
-    				
     			"price"			=>  $data["price"],
     			'selling_price_khmer'=>	$data["selling_price_khmer"],
     			'selling_price'	=>	$data["selling_price"],
     			'exchange_rate'	=>	$data["exchange_rate"],
-    				
     			'qty_perunit'	=>	$data["qty_unit"],
     			'unit_label'	=>	$data["label"],
     			'note'			=>	$data["description"],
-    			
     			'user_id'		=>	$this->getUserId(),
-    			'status'		=>	$data["status"],
+    			//'status'		=>	$data["status"],
 				'photo'			=>	$photo,
     			'create_date'	=>	date("Y-m-d H:i:s"),
     		);
@@ -438,8 +437,8 @@ class Product_Model_DbTable_DbProduct extends Zend_Db_Table_Abstract
     		}
     		$db->commit();
     	}catch (Exception $e){
+    		Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
     		$db->rollBack();
-    		echo $e->getMessage();exit();
     	}
     }
     

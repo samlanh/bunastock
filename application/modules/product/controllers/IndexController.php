@@ -65,15 +65,14 @@ public function init()
 			try{
 				$post = $this->getRequest()->getPost();
 				$db->add($post);
-					Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/index');
-					Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
-			  }catch (Exception $e){
-			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-			  }
+				Application_Form_FrmMessage::Sucessfull("បញ្ចូលដោយជោគជ័យ", '/product/index');
+				Application_Form_FrmMessage::message("បញ្ចូលដោយជោគជ័យ");
+		  }catch (Exception $e){
+		  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+		  }
 		}
 		$rs_branch = $db->getBranch();
 		$this->view->branch = $rs_branch;
-		
 		
 		$formProduct = new Product_Form_FrmProduct();
 		$formStockAdd = $formProduct->add(null);
@@ -108,17 +107,17 @@ public function init()
 		$id = $this->getRequest()->getParam("id"); 
 		$db = new Product_Model_DbTable_DbProduct();
 		if($this->getRequest()->isPost()){ 
-				try{
-					$post = $this->getRequest()->getPost();
-					$post["id"] = $id;
-					$db->edit($post);
-					if(isset($post["save_close"]))
-					{
-						Application_Form_FrmMessage::Sucessfull("កែប្រែជោគជ័យ", '/product/index');
-					}
-				  }catch (Exception $e){
-				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
-				  }
+			try{
+				$post = $this->getRequest()->getPost();
+				$post["id"] = $id;
+				$db->edit($post);
+				if(isset($post["save_close"]))
+				{
+					Application_Form_FrmMessage::Sucessfull("កែប្រែជោគជ័យ", '/product/index');
+				}
+			  }catch (Exception $e){
+			  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());
+			  }
 		}
 		$this->view->rs_location = $db->getProductLocation($id);
 		$rs = $db->getProductById($id);
@@ -147,9 +146,6 @@ public function init()
 		$frmOther = $fmOther->add();
 		Application_Model_Decorator::removeAllDecorator($frmOther);
 		$this->view->frmOther = $frmOther;
-		
-		
-		
 	}
 	public function copyAction()
 	{

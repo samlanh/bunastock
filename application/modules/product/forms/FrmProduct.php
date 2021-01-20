@@ -122,7 +122,8 @@ class Product_Form_FrmProduct extends Zend_Form
 		 
 		$label = new Zend_Form_Element_Text("label");
 		$label->setAttribs(array(
-				'class'=>"form-control"
+				'class'=>"form-control",
+				'placeHolder'=>'ឈ្មោះខ្នាតបំបែក'
 		));
 		 
 		$description = new Zend_Form_Element_Text("description");
